@@ -1594,6 +1594,24 @@ body:not(.theme-light) .mnt-list{background:var(--b1dd)}
 .iron-hero .h1{white-space:normal;overflow-wrap:anywhere;font-size:clamp(28px,8.5vw,46px)!important;line-height:.95}
 .iron-hero .row{flex-wrap:wrap}
 
+/* barcode scanner & meal photos */
+.fscan-btns .btn{min-height:52px}
+.scan-box{position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:4/3}
+.scan-box[hidden]{display:none}
+.scan-box video{width:100%;height:100%;object-fit:cover;display:block}
+.scan-frame{position:absolute;inset:22% 10%;border:3px solid var(--b2);border-radius:12px;box-shadow:0 0 0 999px rgba(0,0,0,.35)}
+.scan-frame i{position:absolute;left:6%;right:6%;top:50%;height:2px;background:var(--b2);box-shadow:0 0 12px var(--b2);animation:scanline 1.6s ease-in-out infinite alternate}
+@keyframes scanline{from{top:12%}to{top:88%}}
+body.m-minimal .scan-frame i{animation:none}
+.fscan-prod{display:flex;align-items:center;gap:10px}.fscan-prod small{display:block;font-size:12.5px}
+.fph-take{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:200px;border:2px dashed rgba(var(--b2rgb),.6);border-radius:16px;cursor:pointer;text-align:center;padding:16px}
+.fph-take svg{width:40px;height:40px;color:var(--b2)}
+.fph-img{width:100%;max-height:300px;object-fit:cover;border-radius:14px;display:block}
+.fph-img.sm{max-height:140px}
+.fph-item{display:flex;align-items:flex-start;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.fph-item .input-unit .input{width:118px;padding-right:44px}
+.fsrc svg{width:13px;height:13px;vertical-align:-2px;color:var(--b2)}
+
 </style>
 </head>
 <body>
@@ -1685,7 +1703,7 @@ body:not(.theme-light) .mnt-list{background:var(--b1dd)}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 16 · 23:22';
+const BUILD_ID = 'Oct 20 · 19:28';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on every open (shorter in Minimal / reduced motion); tap to skip. */
@@ -1721,7 +1739,7 @@ const Splash = (() => {
    Features: every feature is open today. When paid levels arrive, the database turns its "paywall" on and
    each feature checks the athlete's level here (FEATURE_TIERS) and in social.sql (sx_need) — nothing else changes. */
 const BRAND_DEF = { slug: 'hokie-power', name: 'Hokie Power', app_name: 'Hokie Power', tagline: '', color1: '#861F41', color2: '#E87722', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
-const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold' };
+const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold', food_ai: 'gold' };
 const TIER_NAME = { free: 'Basic', silver: 'Silver', gold: 'Gold' };
 const Brand = {
   org: null, me: null,
@@ -8203,7 +8221,7 @@ const Food = {
       ${isToday ? `<div class="water-row"><span class="label">Water</span><div class="glasses" aria-label="${Water.get()} glasses">${Array.from({ length: 8 }, (_, i) => `<span class="glass ${i < Water.get() ? 'on' : ''}"></span>`).join('')}</div><button class="btn sm icon" type="button" data-act="water" data-v="1" aria-label="Add a glass of water">${icon('plus')}</button></div>` : ''}</section>`;
     const meal = ([k, l]) => { const items = L.filter(e => e.meal === k), t = this.total(items), want = tg.kcal ? Math.round(tg.kcal * MEAL_SPLIT[k] / 10) * 10 : null;
       return `<section class="panel food-meal" data-stg><div class="spread"><h3 class="h3">${l}</h3><span class="label">${fmtNum(t.kcal, 0)}${want ? ' / ~' + want : ''} kcal</span></div>
-        ${items.map(e => `<div class="food-i">${this.medalDot(e.medal)}<div class="grow"><b>${esc(e.name)}</b><small class="muted">${esc(e.serv || 'serving')} × ${fmtNum(+e.qty || 1, 1)} · ${fmtNum((e.kcal || 0) * (+e.qty || 1), 0)} kcal${e.protein ? ` · ${fmtNum(e.protein * (+e.qty || 1), 0)} g protein` : ''}</small></div>
+        ${items.map(e => `<div class="food-i">${this.medalDot(e.medal)}<div class="grow"><b>${esc(e.name)}</b>${e.src === 'ai' ? ` <span class="fsrc" title="AI estimate">${icon('sparkles')}</span>` : e.src === 'barcode' ? ` <span class="fsrc" title="Scanned">${icon('scan-barcode')}</span>` : ''}<small class="muted">${esc(e.serv || 'serving')} × ${fmtNum(+e.qty || 1, 1)} · ${fmtNum((e.kcal || 0) * (+e.qty || 1), 0)} kcal${e.protein ? ` · ${fmtNum(e.protein * (+e.qty || 1), 0)} g protein` : ''}</small></div>
           <button type="button" class="btn icon sm ghost" data-act="food-q" data-id="${e.id}" data-v="-0.5" aria-label="Less">−</button><button type="button" class="btn icon sm ghost" data-act="food-q" data-id="${e.id}" data-v="0.5" aria-label="More">+</button><button type="button" class="btn icon sm ghost" data-act="food-del" data-id="${e.id}" aria-label="Remove ${esc(e.name)}">${icon('x')}</button></div>`).join('')}
         <button type="button" class="btn sm" data-act="food-add" data-m="${k}">${icon('plus')} Add food</button></section>`; };
     const prev = this.day(addDays(d, -1));
@@ -8244,7 +8262,7 @@ const Food = {
       UI.icons($('#fpList', sh));
       $$('.food-pick', sh).forEach(b => b.onclick = () => { const f = b.dataset.src === 'r' ? rec[+b.dataset.i] : FOODS[+b.dataset.i]; add(f); b.classList.add('added'); setTimeout(() => b.classList.remove('added'), 600); });
     };
-    Sheet.open({ title: 'Add to ' + MEALS.find(m => m[0] === meal)[1].toLowerCase(), wide: true, html: `<div class="input-unit"><input class="input" type="search" id="fpQ" placeholder="Search foods" autocomplete="off"><span>${icon('search')}</span></div>
+    Sheet.open({ title: 'Add to ' + MEALS.find(m => m[0] === meal)[1].toLowerCase(), wide: true, html: `${FoodScan.buttons(meal)}<div class="input-unit"><input class="input" type="search" id="fpQ" placeholder="Search foods" autocomplete="off"><span>${icon('search')}</span></div>
       <div id="fpList" class="stack food-list"></div>
       <details class="panel flat" id="fpOwn"><summary class="label" style="cursor:pointer">${icon('plus')} Something else</summary><div class="stack" style="margin-top:8px">
         <div class="field"><label for="fpN">Food</label><input class="input" id="fpN" maxlength="60" placeholder="e.g. Chicken burrito bowl"></div>
@@ -8253,7 +8271,7 @@ const Food = {
         <p class="err-msg" id="fpErr"></p><button class="btn primary" type="button" id="fpGo">Add</button></div></details>
       <button class="btn big primary block" type="button" data-sheet-close>Done</button>`,
       onMount: sh => {
-        draw(sh); const qi = $('#fpQ', sh); qi.oninput = () => { q = qi.value.trim().toLowerCase(); draw(sh); const n = $('#fpN', sh); if (n && !n.dataset.typed) n.value = qi.value.trim(); };
+        FoodScan.bind(sh); draw(sh); const qi = $('#fpQ', sh); qi.oninput = () => { q = qi.value.trim().toLowerCase(); draw(sh); const n = $('#fpN', sh); if (n && !n.dataset.typed) n.value = qi.value.trim(); };
         let medal = null; const setM = m => { medal = m; $$('#fpM [data-m]', sh).forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m)); };
         const n = $('#fpN', sh); n.oninput = () => { n.dataset.typed = 1; setM(this.guess(n.value)); };
         $$('#fpM [data-m]', sh).forEach(b => b.onclick = () => setM(b.dataset.m));
@@ -8289,6 +8307,203 @@ Object.assign(Actions, {
   'food-day': el => { const d = addDays(UI.ui.foodDate || todayISO(), +el.dataset.v); if (d > todayISO()) return; UI.ui.foodDate = d; const y = scrollY; UI.render(); scrollTo(0, y); },
   'food-copy': () => { const d = UI.ui.foodDate || todayISO(); Food.day(addDays(d, -1)).forEach(e => Food.save(Object.assign({}, e, { id: uid('food'), date: d, createdAt: Date.now() }))); UI.toast('Copied.'); UI.render(); }
 });
+
+/* ============ FOOD LOG: BARCODE SCANNER & MEAL PHOTOS ============
+   Two quick ways to add food from the "Add food" sheet:
+   • Scan a barcode — the phone camera reads it (the browser's own reader where there is one, ZXing on
+     iPhone), and the product's nutrition comes from Open Food Facts, the free open food database.
+     Typed numbers and a photo of the barcode work too. Products are remembered on the phone.
+   • Photo of the plate — the picture goes to the "food-photo" Edge Function (Supabase), which asks
+     Google Gemini (free tier) or Claude to name the foods and estimate calories, protein, carbs and fat. The athlete checks and
+     edits the estimate before anything is added. Needs accounts; a daily allowance per athlete. */
+const ZXING_JS = 'https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js';
+const OFF_API = 'https://world.openfoodfacts.org/api/v2/product/';
+Object.entries({ 'scan-barcode': 'M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M8 7v10M12 7v10M17 7v10', sparkles: 'M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2zM19 3v4M21 5h-4' }).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+const FoodScan = {
+  stream: null, timer: null, reader: null, busy: false,
+  buttons(meal) {
+    return `<div class="grid2 fscan-btns"><button type="button" class="btn" data-fs-scan="${meal}">${icon('scan-barcode')} Scan barcode</button>
+      <button type="button" class="btn" data-fs-photo="${meal}" ${Cloud.on ? '' : 'disabled title="Needs accounts"'}>${icon('camera')} Photo of plate</button></div>`;
+  },
+  bind(sh) {
+    $$('[data-fs-scan]', sh).forEach(b => b.onclick = () => this.scan(b.dataset.fsScan));
+    $$('[data-fs-photo]', sh).forEach(b => b.onclick = () => this.photo(b.dataset.fsPhoto));
+  },
+  date() { return UI.ui.foodDate || todayISO(); },
+  mealName(m) { return (MEALS.find(x => x[0] === m) || [m, 'meal'])[1].toLowerCase(); },
+  add(meal, f) { Food.save(Object.assign({ id: uid('food'), date: this.date(), meal, qty: 1, createdAt: Date.now() }, f)); },
+  load() {
+    if (window.ZXing) return Promise.resolve();
+    return new Promise((res, rej) => { const s = document.createElement('script'); s.src = ZXING_JS; s.onload = () => res(); s.onerror = () => rej(new Error('The scanner could not load. Check your connection or type the number.')); document.head.appendChild(s); });
+  },
+  native: null,
+  async nativeOk() {
+    if (this.native != null) return this.native;
+    try { this.native = 'BarcodeDetector' in window && (await BarcodeDetector.getSupportedFormats()).includes('ean_13'); } catch (e) { this.native = false; }
+    return this.native;
+  },
+  stop() {
+    clearInterval(this.timer); this.timer = null;
+    try { this.reader && this.reader.reset(); } catch (e) { } this.reader = null;
+    if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; }
+  },
+  /* ---------- barcode ---------- */
+  scan(meal) {
+    let done = false;
+    const found = async (code, sh) => { if (done) return; done = true; this.stop(); Haptics.buzz(); Haptics.beep([880], .05); await this.lookup(code, meal, sh); };
+    Sheet.open({ title: 'Scan a barcode', html: `<div class="scan-box"><video id="scV" playsinline muted autoplay></video><div class="scan-frame" aria-hidden="true"><i></i></div></div>
+      <p class="muted" id="scMsg" role="status" style="font-size:13.5px;text-align:center">Starting the camera…</p>
+      <div class="row"><input class="input num grow" id="scCode" inputmode="numeric" maxlength="14" placeholder="Or type the barcode number" aria-label="Barcode number"><button type="button" class="btn primary" id="scGo">Look up</button></div>
+      <label class="btn block ghost" for="scFile">${icon('camera')} Take a photo of the barcode instead</label><input type="file" id="scFile" accept="image/*" capture="environment" class="sr-only">
+      <div id="scOut" class="stack"></div><p class="muted" style="font-size:11.5px">Nutrition from <b>Open Food Facts</b>, a free food database built by volunteers — check the label if something looks off.</p>`,
+      onMount: async sh => {
+        const v = $('#scV', sh), msg = $('#scMsg', sh);
+        $('#scGo', sh).onclick = () => { const c = $('#scCode', sh).value.replace(/\D/g, ''); if (c.length < 6) { msg.textContent = 'Type the numbers under the barcode.'; return; } found(c, sh); };
+        $('#scCode', sh).onkeydown = e => { if (e.key === 'Enter') $('#scGo', sh).click(); };
+        $('#scFile', sh).onchange = async e => { const f = e.target.files[0]; if (!f) return; msg.textContent = 'Reading the barcode…'; const c = await this.fromImage(f).catch(() => null); if (c) found(c, sh); else msg.textContent = 'No barcode found in that photo. Get closer, keep it sharp, or type the number.'; };
+        if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) { msg.textContent = 'This browser can\'t use the camera here. Type the number or take a photo of the barcode.'; $('.scan-box', sh).hidden = true; return; }
+        try {
+          this.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } }, audio: false });
+          if (done || !sh.isConnected) { this.stop(); return; }
+          v.srcObject = this.stream; await v.play().catch(() => { });
+          msg.textContent = 'Point the camera at the barcode.';
+          if (await this.nativeOk()) {
+            const det = new BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128'] });
+            this.timer = setInterval(async () => { if (done || v.readyState < 2) return; try { const r = await det.detect(v); if (r && r[0]) found(r[0].rawValue, sh); } catch (e) { } }, 250);
+          } else {
+            await this.load(); if (done) return;
+            const H = new Map(); H.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.EAN_8, ZXing.BarcodeFormat.UPC_A, ZXing.BarcodeFormat.UPC_E, ZXing.BarcodeFormat.CODE_128]);
+            this.reader = new ZXing.BrowserMultiFormatReader(H, 300);
+            this.reader.decodeFromStream(this.stream, v, r => { if (r) found(r.getText(), sh); });
+          }
+        } catch (e) {
+          $('.scan-box', sh).hidden = true;
+          msg.textContent = /denied|notallowed|permission/i.test(String(e && (e.name + e.message))) ? 'Camera access is off for this app. Allow it in your browser settings, or type the number.' : (e && e.message) || 'The camera could not start. Type the number instead.';
+        }
+      }, onClose: () => { done = true; this.stop(); const y = scrollY; UI.render(); scrollTo(0, y); } });
+  },
+  async fromImage(file) {
+    const bmp = await createImageBitmap(file);
+    if (await this.nativeOk()) { const r = await new BarcodeDetector().detect(bmp); if (r && r[0]) return r[0].rawValue; }
+    await this.load();
+    const cv = document.createElement('canvas'), k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height)); cv.width = bmp.width * k; cv.height = bmp.height * k; cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height);
+    const r = await new ZXing.BrowserMultiFormatReader().decodeFromImageUrl(cv.toDataURL('image/jpeg', .9)); return r && r.getText();
+  },
+  cache() { return LSX.get('bbp.offcache', {}) || {}; },
+  async product(code) {
+    const C = this.cache(); if (C[code]) return C[code];
+    const r = await fetch(`${OFF_API}${encodeURIComponent(code)}.json?fields=code,product_name,product_name_en,generic_name,brands,quantity,serving_size,serving_quantity,nutriments,nutriscore_grade`);
+    if (!r.ok && r.status !== 404) throw new Error('The food database did not answer. Try again.');
+    const j = await r.json().catch(() => ({}));
+    if (!j || j.status !== 1 || !j.product) return null;
+    const p = j.product, n = p.nutriments || {}, v = k => { const x = Number(n[k]); return isFinite(x) ? x : null; };
+    const kcal100 = v('energy-kcal_100g') != null ? v('energy-kcal_100g') : v('energy_100g') != null ? v('energy_100g') / 4.184 : null;
+    const out = { code, name: (p.product_name_en || p.product_name || p.generic_name || '').trim(), brand: String(p.brands || '').split(',')[0].trim(), qty: p.quantity || '',
+      serving: p.serving_size || '', sq: Number(p.serving_quantity) > 0 ? Number(p.serving_quantity) : null,
+      per100: { kcal: kcal100, protein: v('proteins_100g'), carbs: v('carbohydrates_100g'), fat: v('fat_100g') },
+      perServ: v('energy-kcal_serving') != null ? { kcal: v('energy-kcal_serving'), protein: v('proteins_serving'), carbs: v('carbohydrates_serving'), fat: v('fat_serving') } : null,
+      grade: String(p.nutriscore_grade || '').toLowerCase() };
+    C[code] = out; const keys = Object.keys(C); if (keys.length > 120) delete C[keys[0]]; LSX.set('bbp.offcache', C);
+    return out;
+  },
+  medal(p) { return { a: 'gold', b: 'gold', c: 'silver', d: 'bronze', e: 'bronze' }[p.grade] || Food.guess(p.name) || null; },
+  async lookup(code, meal, sh) {
+    const out = $('#scOut', sh), msg = $('#scMsg', sh); $('.scan-box', sh).hidden = true; msg.innerHTML = Kinetic.wave('LOOKING IT UP…');
+    let p; try { p = await this.product(code); } catch (e) { msg.textContent = e.message; return; }
+    if (!sh.isConnected) return;
+    if (!p || (!p.name && p.per100.kcal == null)) {
+      msg.textContent = `Barcode ${code} isn't in the database yet.`;
+      out.innerHTML = `<div class="field"><label for="scN">What is it?</label><input class="input" id="scN" maxlength="60"></div><div class="grid2"><div class="field"><label for="scK">Calories</label><input class="input num" id="scK" inputmode="numeric"></div><div class="field"><label for="scP">Protein g</label><input class="input num" id="scP" inputmode="numeric"></div></div><button type="button" class="btn primary block" id="scAdd">${icon('plus')} Add to ${this.mealName(meal)}</button>`;
+      $('#scAdd', sh).onclick = async () => { const n = $('#scN', sh).value.trim(); if (n.length < 2) return; this.add(meal, { name: n, serv: 'serving', kcal: +$('#scK', sh).value || 0, protein: +$('#scP', sh).value || 0, medal: Food.guess(n), barcode: code }); await Sheet.close(); UI.toast(`Added ${n}.`); };
+      return;
+    }
+    msg.textContent = '';
+    const md = this.medal(p), byServ = !!(p.sq || p.perServ);
+    let mode = byServ ? 'serv' : 'g', grams = p.sq || 100, servings = 1;
+    const calc = () => {
+      if (mode === 'serv') { const s = p.perServ || (p.sq && p.per100.kcal != null ? Object.fromEntries(Object.entries(p.per100).map(([k, x]) => [k, x == null ? null : x * p.sq / 100])) : p.per100); return Object.fromEntries(Object.entries(s).map(([k, x]) => [k, x == null ? 0 : x * servings])); }
+      return Object.fromEntries(Object.entries(p.per100).map(([k, x]) => [k, x == null ? 0 : x * grams / 100]));
+    };
+    const draw = () => {
+      const c = calc();
+      out.innerHTML = `<div class="fscan-prod">${Food.medalDot(md)}<div class="grow"><b>${esc(p.name || 'Product ' + code)}</b><small class="muted">${esc([p.brand, p.qty].filter(Boolean).join(' · '))}${p.grade ? ` · Nutri-Score ${p.grade.toUpperCase()}` : ''}</small></div></div>
+        ${byServ ? `<div class="seg" role="group"><button type="button" data-md="serv" aria-pressed="${mode === 'serv'}">Servings${p.serving ? ` (${esc(p.serving)})` : ''}</button><button type="button" data-md="g" aria-pressed="${mode === 'g'}">Grams</button></div>` : ''}
+        <div class="row" style="justify-content:center;gap:10px"><button type="button" class="btn icon" data-st="-1" aria-label="Less">−</button><input class="input num" id="scAmt" style="width:96px;text-align:center" inputmode="decimal" value="${mode === 'serv' ? servings : grams}" aria-label="${mode === 'serv' ? 'Servings' : 'Grams'}"><span>${mode === 'serv' ? 'serving' + (servings === 1 ? '' : 's') : 'g'}</span><button type="button" class="btn icon" data-st="1" aria-label="More">+</button></div>
+        <div class="food-big"><div><span class="label">Calories</span><b class="num">${fmtNum(c.kcal, 0)}</b></div><div><span class="label">Protein</span><b class="num">${fmtNum(c.protein, 0)}<small> g</small></b></div></div>
+        <div class="row wrap" style="gap:6px"><span class="badge">Carbs ${fmtNum(c.carbs, 0)} g</span><span class="badge">Fat ${fmtNum(c.fat, 0)} g</span></div>
+        <button type="button" class="btn big primary block" id="scAdd">${icon('plus')} Add to ${this.mealName(meal)}</button><button type="button" class="btn block ghost" id="scAgain">${icon('scan-barcode')} Scan another</button>`;
+      UI.icons(out);
+      $$('[data-md]', out).forEach(b => b.onclick = () => { mode = b.dataset.md; draw(); });
+      $$('[data-st]', out).forEach(b => b.onclick = () => { if (mode === 'serv') servings = Math.max(.5, Math.round((servings + +b.dataset.st * .5) * 2) / 2); else grams = Math.max(5, grams + +b.dataset.st * 10); draw(); });
+      const a = $('#scAmt', out); a.onchange = () => { const x = Number(a.value.replace(',', '.')); if (x > 0) { if (mode === 'serv') servings = Math.min(20, x); else grams = Math.min(3000, x); } draw(); };
+      $('#scAdd', out).onclick = async () => { const c2 = calc(); const nm = (p.name || 'Product ' + code) + (p.brand && !(p.name || '').toLowerCase().includes(p.brand.toLowerCase()) ? ' · ' + p.brand : '');
+        this.add(meal, { name: nm.slice(0, 60), serv: mode === 'serv' ? `${servings} × ${p.serving || 'serving'}` : `${grams} g`, kcal: Math.round(c2.kcal), protein: Math.round(c2.protein), carbs: Math.round(c2.carbs), fat: Math.round(c2.fat), medal: md, barcode: code, src: 'barcode' });
+        Haptics.tap(); await Sheet.close(); UI.toast(`Added ${p.name || 'product'} · ${fmtNum(c2.kcal, 0)} kcal.`); };
+      $('#scAgain', out).onclick = async () => { await Sheet.close(); setTimeout(() => this.scan(meal), 50); };
+    };
+    draw();
+  },
+  /* ---------- AI meal photo ---------- */
+  async shrink(file) {
+    let img; try { img = await createImageBitmap(file); } catch (e) { img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error('This photo could not be read. Try a JPEG.')); i.src = URL.createObjectURL(file); }); }
+    const k = Math.min(1, 1024 / Math.max(img.width, img.height)), cv = document.createElement('canvas'); cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+    cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height); return cv.toDataURL('image/jpeg', .8);
+  },
+  async ask(dataUrl, note) {
+    if (!(Cloud.sb && Cloud.user)) throw new Error('Meal photos need you to be logged in and online.');
+    const { data, error } = await Cloud.sb.functions.invoke('food-photo', { body: { image: dataUrl.split(',')[1], note } });
+    if (error) {
+      let m = ''; try { const j = await error.context.json(); m = j && j.error; } catch (e) { }
+      const st = error.context && error.context.status;
+      if (!m && (st === 404 || /fetch|relay|not found/i.test(String(error.message)))) m = 'Meal photos are not switched on yet. The admin needs to add the food-photo function in Supabase.';
+      throw new Error(m || 'The photo could not be analysed. Try again.');
+    }
+    if (data && data.error) throw new Error(data.error);
+    return data;
+  },
+  photo(meal) {
+    if (!Features.can('food_ai')) { Sheet.open({ title: 'Meal photos', html: Features.locked('food_ai', 'Meal photos') }); return; }
+    const st = { img: null, items: null, res: null, note: '' };
+    const draw = sh => {
+      const box = $('#phBox', sh); if (!box) return;
+      if (!st.items) {
+        box.innerHTML = `${st.img ? `<img class="fph-img" src="${st.img}" alt="Your meal">` : `<label class="fph-take" for="phFile">${icon('camera')}<b>Take a photo of your plate</b><small class="muted">From above, the whole plate in the picture</small></label>`}
+          <input type="file" id="phFile" accept="image/*" capture="environment" class="sr-only">
+          <div class="field"><label for="phNote">Anything the photo won't show? (optional)</label><input class="input" id="phNote" maxlength="200" placeholder="e.g. 2 cups of rice, fried in butter, a large Gatorade" value="${esc(st.note)}"></div>
+          <p class="err-msg" id="phErr" role="alert"></p>
+          ${st.img ? `<button type="button" class="btn big primary block" id="phGo">${icon('sparkles')} Work out the calories</button><label class="btn block ghost" for="phFile">${icon('camera')} Retake</label>` : ''}
+          <p class="muted" style="font-size:11.5px">The photo goes through your team's server to an AI service (Google Gemini or Claude, chosen by the admin) to estimate the meal. The app doesn't save it. You check the numbers before anything is added.</p>`;
+      } else {
+        const T = st.items.reduce((t, i) => ({ kcal: t.kcal + (+i.kcal || 0), protein: t.protein + (+i.protein || 0) }), { kcal: 0, protein: 0 });
+        box.innerHTML = `${st.img ? `<img class="fph-img sm" src="${st.img}" alt="">` : ''}
+          <div class="spread"><b>${esc(st.res.meal || 'Your meal')}</b><span class="badge ${st.res.confidence === 'high' ? 'ok' : st.res.confidence === 'low' ? 'warn' : ''}">${esc(st.res.confidence || 'medium')} confidence</span></div>
+          ${st.res.notes ? `<p class="muted" style="font-size:13px">${esc(st.res.notes)}</p>` : ''}
+          ${st.items.length ? st.items.map((i, k) => `<div class="fph-item">${Food.medalDot(i.medal)}<div class="grow stack" style="gap:4px"><input class="input" data-k="${k}" data-f="name" value="${esc(i.name)}" aria-label="Food"><small class="muted">${esc(i.portion || '')}</small>
+              <div class="row" style="gap:6px"><div class="input-unit"><input class="input num" data-k="${k}" data-f="kcal" inputmode="numeric" value="${i.kcal}" aria-label="Calories"><span>kcal</span></div><div class="input-unit"><input class="input num" data-k="${k}" data-f="protein" inputmode="numeric" value="${i.protein}" aria-label="Protein"><span>g P</span></div></div></div>
+              <button type="button" class="btn icon sm ghost" data-rm="${k}" aria-label="Remove ${esc(i.name)}">${icon('x')}</button></div>`).join('') : '<p>No food found in the photo. Try another angle, or add it by hand.</p>'}
+          <div class="spread"><span class="label">Total</span><b class="num" id="phTot">${fmtNum(T.kcal, 0)} kcal · ${fmtNum(T.protein, 0)} g protein</b></div>
+          ${st.items.length ? `<button type="button" class="btn big primary block" id="phAdd">${icon('plus')} Add ${st.items.length} item${st.items.length === 1 ? '' : 's'} to ${this.mealName(meal)}</button>` : ''}
+          <button type="button" class="btn block ghost" id="phRe">${icon('camera')} Another photo</button>
+          <p class="muted" style="font-size:11.5px">An AI estimate from one photo — portions can be off by a lot. Fix anything that looks wrong.${st.res.left != null ? ` ${st.res.left} photo${st.res.left === 1 ? '' : 's'} left today.` : ''}</p>`;
+      }
+      UI.icons(box);
+      const f = $('#phFile', box); if (f) f.onchange = async () => { const file = f.files[0]; if (!file) return; try { st.note = ($('#phNote', box) || {}).value || st.note; st.img = await this.shrink(file); } catch (e) { $('#phErr', box).textContent = e.message; return; } draw(sh); };
+      const go = $('#phGo', box); if (go) go.onclick = async () => {
+        st.note = $('#phNote', box).value.trim(); go.disabled = true; go.innerHTML = Kinetic.wave('LOOKING AT YOUR PLATE…');
+        try { const r = await this.ask(st.img, st.note); st.res = r; st.items = (r.items || []).map(i => Object.assign({}, i)); draw(sh); }
+        catch (e) { go.disabled = false; go.innerHTML = `${icon('sparkles')} Try again`; UI.icons(go); $('#phErr', box).textContent = e.message; }
+      };
+      $$('[data-f]', box).forEach(i => i.oninput = () => { const it = st.items[+i.dataset.k]; it[i.dataset.f] = i.dataset.f === 'name' ? i.value : Math.max(0, Math.round(+i.value || 0)); if (i.dataset.f === 'name') it.medal = it.medal || Food.guess(i.value); const T = st.items.reduce((t, x) => ({ kcal: t.kcal + (+x.kcal || 0), protein: t.protein + (+x.protein || 0) }), { kcal: 0, protein: 0 }); const tt = $('#phTot', box); if (tt) tt.textContent = `${fmtNum(T.kcal, 0)} kcal · ${fmtNum(T.protein, 0)} g protein`; });
+      $$('[data-rm]', box).forEach(b => b.onclick = () => { st.items.splice(+b.dataset.rm, 1); draw(sh); });
+      const add = $('#phAdd', box); if (add) add.onclick = async () => {
+        st.items.filter(i => String(i.name || '').trim()).forEach(i => this.add(meal, { name: String(i.name).trim().slice(0, 60), serv: i.portion || 'portion', kcal: +i.kcal || 0, protein: +i.protein || 0, carbs: +i.carbs || 0, fat: +i.fat || 0, medal: i.medal || Food.guess(i.name), src: 'ai' }));
+        Haptics.beep([660, 880], .06); await Sheet.close(); UI.toast(`Added to ${this.mealName(meal)}.`);
+      };
+      const re = $('#phRe', box); if (re) re.onclick = () => { Object.assign(st, { img: null, items: null, res: null }); draw(sh); setTimeout(() => { const fi = $('#phFile', sh); fi && fi.click(); }, 50); };
+    };
+    Sheet.open({ title: 'Photo of your plate', html: '<div id="phBox" class="stack"></div>', onMount: sh => draw(sh), onClose: () => { const y = scrollY; UI.render(); scrollTo(0, y); } });
+  }
+};
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
