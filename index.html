@@ -1705,6 +1705,26 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 .switch::before{content:"";position:absolute;inset:-7px -4px}
 .linkish{min-height:44px;display:inline-flex;align-items:center}
 
+/* ================= RELEASE 2 · swap, add exercise, free workout ================= */
+.swap-list{gap:0}
+.swap-pick{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:10px 6px;border:0;border-bottom:1px solid var(--line);background:none;color:inherit;font:inherit;cursor:pointer;text-align:left}
+.swap-pick small{display:block;font-size:12.5px;margin-top:2px}
+.swap-pick svg{width:18px;height:18px;flex:none;color:var(--b2)}
+.swap-pick.dim{opacity:.62}
+.swap-pick.back{background:rgba(var(--b2rgb),.08);border-radius:12px}
+.swap-pick .badge{flex:none}
+.swap-more summary{padding:0 6px}
+.wrap-chips{flex-wrap:wrap;overflow:visible;margin:0;padding-inline:0}
+.tpl-row{display:flex;align-items:center;gap:6px}
+.free-row{margin-top:10px}
+.swap-note{display:flex;align-items:center;gap:6px;margin-top:4px;color:var(--b2)}
+.swap-note svg{width:14px;height:14px}
+.eq-pick summary{padding:0}
+.flag-why{display:flex;gap:8px;align-items:flex-start;margin:10px 0;font-size:14px}
+.flag-why svg{width:16px;height:16px;flex:none;margin-top:2px;color:var(--b2)}
+.flag-row{display:flex;flex-direction:column;gap:2px}
+.flag-note{align-items:flex-start}
+
 </style>
 </head>
 <body>
@@ -1796,7 +1816,7 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 21 · 13:53';
+const BUILD_ID = 'Oct 21 · 16:17';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
@@ -9057,6 +9077,432 @@ const A11y = {
   }
 };
 A11y.init();
+
+/* ============ RELEASE 2 · EXERCISE ALTERNATIVES ============
+   • 45 common alternatives (dumbbell, band and bodyweight versions) so a session can be finished with
+     whatever the gym has. They are marked src:'alt' and never appear in the VT program itself.
+   • Every exercise gets a movement pattern (squat, hinge, push, pull…). Swaps stay inside the pattern.
+   • Each athlete keeps a short "I don't have" equipment list (settings.noEquip); swaps and the library
+     can hide exercises that need it. */
+const ALT_LIB = {
+  // squat / single-leg
+  goblet_squat: { name: 'Goblet Squat', cat: 'strength', pat: 'squat', equip: 'Dumbbell', muscles: 'Quads, glutes, trunk', notes: 'Hold one dumbbell at the chest, sit between the heels, elbows inside the knees, stand tall.' },
+  db_split_squat: { name: 'Dumbbell Split Squat', cat: 'strength', pat: 'squat', equip: 'Dumbbells', muscles: 'Quads, glutes', notes: 'Long stance, drop the back knee straight down, front heel stays planted. Each leg.' },
+  rear_foot_split_squat: { name: 'Rear-Foot-Elevated Split Squat', cat: 'strength', pat: 'squat', equip: 'Dumbbells, bench', muscles: 'Quads, glutes', notes: 'Back foot on a bench, torso tall, front knee tracks over the toes. Each leg.' },
+  bodyweight_squat: { name: 'Bodyweight Squat', cat: 'strength', pat: 'squat', equip: 'Bodyweight', muscles: 'Quads, glutes', notes: 'Feet shoulder width, sit to parallel, drive up fast. Add reps or a pause to make it harder.' },
+  db_walking_lunge: { name: 'Dumbbell Walking Lunge', cat: 'strength', pat: 'squat', equip: 'Dumbbells', muscles: 'Quads, glutes, hamstrings', notes: 'Step long, back knee just off the floor, push through the front heel into the next step.' },
+  reverse_lunge: { name: 'Reverse Lunge', cat: 'strength', pat: 'squat', equip: 'Bodyweight', muscles: 'Quads, glutes', notes: 'Step back, lower under control, drive the front foot to stand. Each leg.' },
+  band_squat: { name: 'Band Squat', cat: 'strength', pat: 'squat', equip: 'Band', muscles: 'Quads, glutes', notes: 'Stand on the band, loop it over the shoulders, squat to parallel against the tension.' },
+  db_step_up: { name: 'Dumbbell Step-Up', cat: 'strength', pat: 'squat', equip: 'Dumbbells, box', muscles: 'Quads, glutes', notes: 'Whole foot on the box, drive up without pushing off the back leg. Each leg.' },
+  // hinge / hamstrings / lower back
+  db_rdl: { name: 'Dumbbell Romanian Deadlift', cat: 'strength', pat: 'hinge', equip: 'Dumbbells', muscles: 'Hamstrings, glutes, lower back', notes: 'Soft knees, push the hips back, dumbbells close to the legs, flat back, stand by squeezing the glutes.' },
+  single_leg_rdl: { name: 'Single-Leg Romanian Deadlift', cat: 'strength', pat: 'hinge', equip: 'Dumbbell', muscles: 'Hamstrings, glutes, balance', notes: 'Hinge on one leg, free leg straight behind, hips square. Each leg.' },
+  db_swing: { name: 'Dumbbell Swing', cat: 'strength', pat: 'hinge', equip: 'Dumbbell', muscles: 'Glutes, hamstrings, hips', notes: 'Hike the bell back, snap the hips forward, arms only guide it to chest height.' },
+  glute_bridge: { name: 'Glute Bridge', cat: 'strength', pat: 'hinge', equip: 'Bodyweight', muscles: 'Glutes, hamstrings', notes: 'Heels close, drive the hips up until knees, hips and shoulders line up, pause one second.' },
+  single_leg_glute_bridge: { name: 'Single-Leg Glute Bridge', cat: 'strength', pat: 'hinge', equip: 'Bodyweight', muscles: 'Glutes, hamstrings', notes: 'One foot planted, other knee to the chest, drive the hips up level. Each leg.' },
+  nordic_curl: { name: 'Nordic Hamstring Curl', cat: 'strength', pat: 'hinge', equip: 'Partner', muscles: 'Hamstrings', notes: 'Partner holds the ankles, lower the body as slowly as possible, push back up with the hands. A glute-ham raise without the bench.' },
+  band_good_morning: { name: 'Band Good Morning', cat: 'strength', pat: 'hinge', equip: 'Band', muscles: 'Hamstrings, lower back', notes: 'Band under the feet and behind the neck, hinge with a flat back, stand tall.' },
+  db_hip_thrust: { name: 'Dumbbell Hip Thrust', cat: 'strength', pat: 'hinge', equip: 'Dumbbell, bench', muscles: 'Glutes, hamstrings', notes: 'Upper back on the bench, dumbbell on the hips, drive up and pause at the top.' },
+  superman_hold: { name: 'Superman Back Extension', cat: 'strength', pat: 'hinge', equip: 'Bodyweight', muscles: 'Lower back, glutes', notes: 'Face down, lift chest and legs together, hold two seconds. A back extension without the hyper bench.' },
+  ball_leg_curl: { name: 'Stability Ball Leg Curl', cat: 'strength', pat: 'hinge', equip: 'Swiss ball', muscles: 'Hamstrings, glutes', notes: 'Heels on the ball, hips up, curl the ball in without letting the hips drop.' },
+  // horizontal push
+  push_ups: { name: 'Push-Ups', cat: 'strength', pat: 'hpush', equip: 'Bodyweight', muscles: 'Chest, shoulders, triceps', notes: 'Hands under the shoulders, body in one line, chest to a fist from the floor.' },
+  db_floor_press: { name: 'Dumbbell Floor Press', cat: 'strength', pat: 'hpush', equip: 'Dumbbells', muscles: 'Chest, triceps', notes: 'Lie on the floor, lower until the upper arms touch, press straight up. A bench press with no bench.' },
+  band_push_ups: { name: 'Band-Resisted Push-Ups', cat: 'strength', pat: 'hpush', equip: 'Band', muscles: 'Chest, shoulders, triceps', notes: 'Band across the upper back, hands pinning the ends, push hard at the top.' },
+  decline_push_ups: { name: 'Feet-Elevated Push-Ups', cat: 'strength', pat: 'hpush', equip: 'Bench', muscles: 'Upper chest, shoulders, triceps', notes: 'Feet on a bench, body straight, chest to the floor.' },
+  db_fly: { name: 'Dumbbell Fly', cat: 'strength', pat: 'hpush', equip: 'Dumbbells, bench', muscles: 'Chest', notes: 'Slight bend in the elbows, open wide to a stretch, squeeze back together. Light weight.' },
+  band_chest_press: { name: 'Band Chest Press', cat: 'strength', pat: 'hpush', equip: 'Band', muscles: 'Chest, triceps', notes: 'Band anchored behind at chest height, split stance, press forward and control back.' },
+  // vertical push
+  db_standing_press: { name: 'Standing Dumbbell Press', cat: 'strength', pat: 'vpush', equip: 'Dumbbells', muscles: 'Shoulders, triceps', notes: 'Brace, ribs down, press straight overhead and finish with the biceps by the ears.' },
+  pike_push_ups: { name: 'Pike Push-Ups', cat: 'strength', pat: 'vpush', equip: 'Bodyweight', muscles: 'Shoulders, triceps', notes: 'Hips high, head travels between the hands, press back up.' },
+  band_overhead_press: { name: 'Band Overhead Press', cat: 'strength', pat: 'vpush', equip: 'Band', muscles: 'Shoulders, triceps', notes: 'Stand on the band, press overhead, lock out without leaning back.' },
+  db_lateral_raise: { name: 'Dumbbell Lateral Raise', cat: 'strength', pat: 'vpush', equip: 'Dumbbells', muscles: 'Shoulders', notes: 'Raise to shoulder height leading with the elbows, lower slowly.' },
+  half_kneeling_db_press: { name: 'Half-Kneeling Dumbbell Press', cat: 'strength', pat: 'vpush', equip: 'Dumbbell', muscles: 'Shoulders, trunk', notes: 'One knee down, glute squeezed, press the dumbbell on the same side as the down knee.' },
+  // pull
+  inverted_row: { name: 'Inverted Row', cat: 'strength', pat: 'pull', equip: 'Bar in a rack', muscles: 'Upper back, lats, biceps', notes: 'Hang under a bar, body straight, pull the chest to the bar. Feet further forward to make it harder.' },
+  band_row: { name: 'Band Row', cat: 'strength', pat: 'pull', equip: 'Band', muscles: 'Upper back, lats', notes: 'Band anchored at chest height, pull the elbows back, squeeze the shoulder blades.' },
+  db_bent_over_row: { name: 'Dumbbell Bent-Over Row', cat: 'strength', pat: 'pull', equip: 'Dumbbells', muscles: 'Upper back, lats, biceps', notes: 'Hinge to 45°, flat back, row both dumbbells to the hips.' },
+  band_pulldown: { name: 'Band Lat Pulldown', cat: 'strength', pat: 'pull', equip: 'Band', muscles: 'Lats, upper back', notes: 'Band anchored high, kneel, pull the hands to the chest with the elbows down.' },
+  chin_ups: { name: 'Chin-Ups', cat: 'strength', pat: 'pull', equip: 'Pull-up bar', muscles: 'Lats, biceps', notes: 'Palms facing you, full hang to chin over the bar.' },
+  band_face_pull: { name: 'Band Face Pull', cat: 'strength', pat: 'pull', equip: 'Band', muscles: 'Rear shoulders, upper back', notes: 'Pull the band to the forehead, elbows high, thumbs back.' },
+  // arms
+  band_curl: { name: 'Band Curl', cat: 'strength', pat: 'arms', equip: 'Band', muscles: 'Biceps', notes: 'Stand on the band, elbows pinned, curl and lower slowly.' },
+  hammer_curl: { name: 'Hammer Curl', cat: 'strength', pat: 'arms', equip: 'Dumbbells', muscles: 'Biceps, forearms', notes: 'Palms facing each other, elbows still, no swing.' },
+  diamond_push_ups: { name: 'Diamond Push-Ups', cat: 'strength', pat: 'arms', equip: 'Bodyweight', muscles: 'Triceps, chest', notes: 'Hands together under the chest, elbows close to the body.' },
+  band_pushdown: { name: 'Band Triceps Pushdown', cat: 'strength', pat: 'arms', equip: 'Band', muscles: 'Triceps', notes: 'Band anchored high, elbows at the sides, push down to straight arms.' },
+  // neck · calves
+  self_neck_iso: { name: 'Self-Resisted Neck Iso', cat: 'strength', pat: 'neck', equip: 'Bodyweight', muscles: 'Neck', notes: 'Hand on the forehead, back, then each side of the head; push the head into the hand without moving, 10 s each way.' },
+  single_leg_calf_raise: { name: 'Single-Leg Calf Raise', cat: 'strength', pat: 'calves', equip: 'Step', muscles: 'Calves', notes: 'Ball of the foot on a step, full stretch down, rise as high as possible. Each leg.' },
+  db_calf_raise: { name: 'Dumbbell Calf Raise', cat: 'strength', pat: 'calves', equip: 'Dumbbells', muscles: 'Calves', notes: 'Dumbbells at the sides, pause at the top and at the bottom.' },
+  // power
+  db_hang_clean: { name: 'Dumbbell Hang Clean', cat: 'strength', pat: 'power', equip: 'Dumbbells', muscles: 'Hips, legs, upper back', notes: 'Dumbbells at the knees, jump and shrug, catch on the shoulders in a quarter squat.' },
+  db_snatch: { name: 'Single-Arm Dumbbell Snatch', cat: 'strength', pat: 'power', equip: 'Dumbbell', muscles: 'Hips, legs, shoulders', notes: 'One explosive pull from the floor to overhead, punch up, finish tall. Each arm.' },
+  db_push_press: { name: 'Dumbbell Push Press', cat: 'strength', pat: 'power', equip: 'Dumbbells', muscles: 'Legs, shoulders, triceps', notes: 'Short dip, drive with the legs, press to lockout.' },
+  squat_jump: { name: 'Squat Jump', cat: 'strength', pat: 'plyo', equip: 'Bodyweight', muscles: 'Legs, hips', notes: 'Quarter squat, jump as high as possible, land soft and reset each rep.' },
+  broad_jump_reps: { name: 'Broad Jump', cat: 'strength', pat: 'plyo', equip: 'Bodyweight', muscles: 'Legs, hips', notes: 'Swing the arms, jump as far as possible, stick the landing.' }
+};
+Object.keys(ALT_LIB).forEach(k => { if (!EXERCISES[k]) EXERCISES[k] = Object.assign({ src: 'alt' }, ALT_LIB[k]); });
+
+/* the equipment an athlete can say they don't have; tested against an exercise's equipment and name */
+const MY_EQUIP = [['barbell', 'Barbell'], ['dumbbell', 'Dumbbells'], ['bench', 'Bench'], ['rack', 'Rack'], ['band', 'Bands'], ['machine', 'Machines'], ['cable', 'Cable station'],
+  ['glute-ham', 'Glute-ham bench'], ['hyperextension', 'Hyper bench'], ['neck machine', 'Neck machine'], ['chain', 'Chains'], ['pull-up', 'Pull-up bar'], ['dip', 'Dip rack'],
+  ['medicine', 'Medicine ball'], ['swiss', 'Swiss ball'], ['box', 'Box'], ['partner', 'Partner']];
+const ExLib = {
+  RULES: [   // movement pattern from the exercise id (first match wins)
+    ['neck', /neck/], ['calves', /calf/], ['arms', /^(?!leg_).*(curl|tricep|pushdown|wrist|gripper|21s)/],
+    ['power', /clean|snatch|jerk|push_press|shrug|high_pull|dominator/], ['plyo', /box_jump|bear_jump|jumps?$|plyo_pushups|clapping|throws?/],
+    ['hinge', /deadlift|hyperext|glute_ham|leg_curl|good_morning|swing|bridge|rdl|pull_through/],
+    ['squat', /squat|lunge|step_up|leg_press|leg_extension/], ['pull', /row|pullup|pull_up|chin|pulldown|bar_hang|towel/],
+    ['vpush', /military|shoulder_press|behind_neck|overhead|plate_raise|lateral_raise|swiss_ball_alternate_dumbbell_press/],
+    ['hpush', /bench|push_?ups?|dips?$|_dips|plyo_press|pullover|punch|fly|chest/]
+  ],
+  NAMES: { squat: 'Squat & lunge', hinge: 'Hips & hamstrings', hpush: 'Chest & push', vpush: 'Shoulders', pull: 'Back & pull', arms: 'Arms', neck: 'Neck', calves: 'Calves', power: 'Power', plyo: 'Jumps', core: 'Core', agility: 'Agility', conditioning: 'Conditioning' },
+  pattern(id) {
+    const e = EXERCISES[id] || (typeof Program !== 'undefined' ? Program.exDef(id) : null) || {};
+    if (e.pat) return e.pat;
+    if (e.cat && e.cat !== 'strength') return e.cat;
+    const r = this.RULES.find(([, re]) => re.test(id)); return r ? r[0] : 'strength';
+  },
+  missing() { return (State.settings.noEquip || []).filter(k => MY_EQUIP.some(m => m[0] === k)); },
+  needs(id) {   // which of MY_EQUIP keys this exercise needs
+    const e = EXERCISES[id] || Program.exDef(id) || {}, t = `${e.equip || ''} ${e.name || ''}`.toLowerCase();
+    if (/bodyweight/.test(t) && !/bench|box|bar|band|dumbbell/.test(t)) return [];
+    return MY_EQUIP.map(m => m[0]).filter(k => t.includes(k) || (k === 'barbell' && /olympic bar|curl bar|\bbar\b(?! in)|barbell/.test(t)));
+  },
+  canDo(id) { const miss = this.missing(); return !miss.length || !this.needs(id).some(k => miss.includes(k)); },
+  /* alternatives for a slot: the program's own alternatives first, then same-pattern exercises the athlete has the kit for */
+  alternatives(exId, progAlts = []) {
+    const pat = this.pattern(exId), cat = (EXERCISES[exId] || {}).cat, seen = new Set([exId]);
+    const out = progAlts.filter(a => !seen.has(a) && (seen.add(a), true)).map(id => ({ id, prog: true, ok: this.canDo(id) }));
+    Object.keys(EXERCISES).forEach(id => {
+      const e = EXERCISES[id]; if (seen.has(id) || e.cat === 'test' || e.cat !== cat) return;
+      if (this.pattern(id) !== pat) return;
+      seen.add(id); out.push({ id, prog: false, ok: this.canDo(id) });
+    });
+    const lift = (EXERCISES[exId] || {}).lift, sameLift = id => !!lift && EXERCISES[id].lift === lift, vt = id => EXERCISES[id].src !== 'alt';
+    return out.sort((a, b) => (b.prog - a.prog) || (b.ok - a.ok) || (sameLift(b.id) - sameLift(a.id)) || (vt(b.id) - vt(a.id)) || EXERCISES[a.id].name.localeCompare(EXERCISES[b.id].name));
+  },
+  equipChips(prefix = 'eq') {
+    const miss = this.missing();
+    return `<div class="chips wrap-chips" role="group" aria-label="Equipment you don't have">${MY_EQUIP.map(([k, l]) => `<button type="button" class="chip" data-act="${prefix}-toggle" data-v="${k}" aria-pressed="${miss.includes(k)}">${miss.includes(k) ? icon('x') + ' ' : ''}${l}</button>`).join('')}</div>`;
+  },
+  toggleMissing(k) {
+    const L = new Set(State.settings.noEquip || []); if (L.has(k)) L.delete(k); else L.add(k);
+    State.settings.noEquip = [...L]; Store.saveSettings();
+  }
+};
+
+/* Library: filter by body area, "works with what I have", and a badge on the added alternatives */
+(() => {
+  const lib = Screens.library; Screens.library = function () {
+    const h = lib.call(Screens), f = UI.ui, pats = ['squat', 'hinge', 'hpush', 'vpush', 'pull', 'arms', 'power', 'plyo', 'calves', 'neck'];
+    const areas = `<div class="chips" role="group" aria-label="Body area"><button class="chip" type="button" data-act="ui" data-k="libPat" data-v="all" aria-pressed="${(f.libPat || 'all') === 'all'}">Any area</button>${pats.map(p => `<button class="chip" type="button" data-act="ui" data-k="libPat" data-v="${p}" aria-pressed="${f.libPat === p}">${ExLib.NAMES[p]}</button>`).join('')}</div>
+      <div class="toggle"><span><b style="font-weight:600">Only what I can do here</b><br><span class="muted" style="font-size:12.5px">${ExLib.missing().length ? `Hiding exercises that need: ${ExLib.missing().map(k => MY_EQUIP.find(m => m[0] === k)[1].toLowerCase()).join(', ')}` : 'Tell the app what your gym doesn\'t have'}</span></span><button class="switch" type="button" role="switch" aria-checked="${!!f.libMine}" data-act="lib-mine" aria-label="Only exercises I can do here"></button></div>
+      <details class="eq-pick"${ExLib.missing().length ? '' : ' open'}><summary class="label" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${icon('dumbbell')} Equipment my gym doesn't have</summary>${ExLib.equipChips('libeq')}</details>`;
+    return h.replace(/(<div class="chips">[\s\S]*?<\/div>)/, '$1' + areas);
+  };
+  const ll = Screens.libList; Screens.libList = function () {
+    const f = UI.ui, pat = f.libPat || 'all', mine = !!f.libMine;
+    if (pat === 'all' && !mine) return ll.call(Screens);
+    const keep = {}; Object.keys(EXERCISES).forEach(id => { keep[id] = (pat === 'all' || ExLib.pattern(id) === pat) && (!mine || ExLib.canDo(id)); });
+    const saved = Object.assign({}, EXERCISES); Object.keys(EXERCISES).forEach(id => { if (!keep[id]) delete EXERCISES[id]; });
+    try { return ll.call(Screens); } finally { Object.keys(EXERCISES).forEach(k => delete EXERCISES[k]); Object.assign(EXERCISES, saved); }   // same keys, same order as before
+  };
+})();
+Object.assign(Actions, {
+  'lib-mine': () => { UI.ui.libMine = !UI.ui.libMine; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'libeq-toggle': el => { ExLib.toggleMissing(el.dataset.v); const y = scrollY; UI.render(); scrollTo(0, y); }
+});
+
+/* ============ RELEASE 2 · TRAIN YOUR WAY ============
+   • Swap: any exercise not started yet can be swapped for one that trains the same movement — the
+     program's own alternatives first, then library alternatives the athlete has the equipment for.
+     The swap is recorded on the exercise (swappedFrom) and can be undone (back to the original).
+   • Add exercise: anything from the library, appended to today's session.
+   • Free workout: start empty or from a saved template. It is a normal finished workout for training
+     days, XP, squad goals and challenges, but never counts toward completing the program.
+   • My templates: save any finished session as a template (Profile & settings → history, or the
+     session page). Templates sync with the account like saved meals. */
+const Templates = {
+  key() { return `bbp.${(typeof Cloud !== 'undefined' && Cloud.ns) || 'local'}.templates`; },
+  raw() { return LSX.get(this.key(), []) || []; },
+  put(list) { LSX.set(this.key(), list); if (typeof Cloud !== 'undefined') Cloud.dirty(); State.version++; },
+  all() { return this.raw().filter(t => !t.del).sort((a, b) => (b.usedAt || b.updatedAt || 0) - (a.usedAt || a.updatedAt || 0)); },
+  save(t) { const L = this.raw(), i = L.findIndex(x => x.id === t.id); t.updatedAt = Date.now(); if (i >= 0) L[i] = t; else L.push(t); this.put(L); },
+  del(id) { const L = this.raw(), i = L.findIndex(x => x.id === id); if (i >= 0) { L[i] = { id, del: true, updatedAt: Date.now() }; this.put(L); } },
+  merge(incoming) {
+    if (!Array.isArray(incoming)) return false;
+    const by = new Map(this.raw().map(x => [x.id, x])); let changed = false;
+    incoming.forEach(x => { if (!x || !x.id) return; const m = by.get(x.id); if (!m || (x.updatedAt || 0) > (m.updatedAt || 0)) { by.set(x.id, x); changed = true; } });
+    if (changed) LSX.set(this.key(), [...by.values()]);
+    return changed;
+  },
+  /* one logged exercise → a plain spec that can be rebuilt later (percent work becomes sets × reps with your own weight) */
+  specOf(x) {
+    const work = x.sets.filter(t => !t.warm), n = Math.max(1, work.length), first = work[0] || {};
+    if (x.type === 'pct' || x.type === 'reps') return { ex: x.exId, type: 'reps', sets: n, reps: first.pReps || first.reps || 8 };
+    if (x.type === 'timed') return { ex: x.exId, type: 'timed', sets: n, sec: first.pSec || first.sec || 30 };
+    if (x.type === 'sprint') return { ex: x.exId, type: 'sprint', sets: n, yards: x.dist || first.dist || 40, dist: x.distLabel || `${x.dist || first.dist || 40} yd` };
+    return { ex: x.exId, type: 'check', sets: n };
+  },
+  fromSession(s, name) {
+    const ex = s.ex.filter(x => !x.skipped && x.type !== 'test').map(x => this.specOf(x));
+    return { id: uid('tpl'), name, ex, from: s.title, createdAt: Date.now() };
+  }
+};
+
+const Train = {
+  REST: { strength: 90, core: 45, agility: 60, conditioning: 60 },
+  /* the grey line under an exercise name: muscles, else equipment, else its kind */
+  sub(e) { const ok = v => v && v.trim() && v.trim() !== '—'; return ok(e.muscles) ? e.muscles : ok(e.equip) ? e.equip : ({ strength: 'Strength', core: 'Core', agility: 'Agility', conditioning: 'Conditioning', recovery: 'Recovery' }[e.cat] || ''); },
+  /* the plain spec for a swap target, keeping the slot's sets and reps */
+  specFor(s, x, newId) {
+    const def = Program.exDef(newId) || {}, w = Program.byId(s.tid), prog = w && (w.exercises || []).find(e => e.uid === (x.orig ? x.orig.uid : x.uid));
+    const base = { uid: x.uid, ex: newId, rest: x.rest || this.REST[def.cat] || 60 };
+    if (x.type === 'pct') {
+      if (prog && prog.type === 'pct' && def.lift && def.lift === x.lift) return Object.assign({}, prog, base, { title: undefined, alts: undefined });
+      const work = (x.orig || x).sets.filter(t => !t.warm);
+      return Object.assign(base, { type: 'reps', sets: Math.max(1, work.length), reps: (work[0] && work[0].pReps) || 8 });
+    }
+    if (prog && prog.type === x.type) return Object.assign({}, prog, base, { title: undefined, alts: undefined });
+    return Object.assign(base, Templates.specOf(x), { ex: newId });
+  },
+  canSwap(x) { return x && !x.skipped && ['pct', 'reps', 'timed', 'check'].includes(x.type); },
+  strip(x) { const o = JSON.parse(JSON.stringify(x)); delete o.alts; delete o.orig; delete o.pair; delete o.swappedFrom; return o; },
+  swap(s, ei, newId) {
+    const x = s.ex[ei]; if (!x) return;
+    const orig = x.orig || this.strip(x);
+    let nx;
+    if (newId === orig.exId) nx = JSON.parse(JSON.stringify(orig));
+    else {
+      const pa = (x.alts || []).find(a => a.exId === newId);
+      nx = pa ? JSON.parse(JSON.stringify(pa)) : Workout.buildEx(this.specFor(s, x, newId));
+      delete nx.alts; nx.orig = orig; nx.swappedFrom = { exId: orig.exId, name: orig.name };
+    }
+    nx.uid = orig.uid; nx.alts = x.alts; nx.pair = x.pair; nx.notes = x.notes || ''; if (x.added) nx.added = true;
+    s.ex[ei] = nx; Workout.persist(s, true);
+  },
+  add(s, id, o) {
+    const def = Program.exDef(id) || {};
+    const spec = { uid: uid('add'), ex: id, type: o.mode === 'sec' ? 'timed' : 'reps', sets: o.sets, reps: o.reps, sec: o.sec, rest: this.REST[def.cat] || 60 };
+    const x = Workout.buildEx(spec); x.added = true;
+    s.ex.push(x); s.cur = s.ex.length - 1; Workout.persist(s, true);
+    return x;
+  },
+  /* a free workout: same shape as a program session, tid 'free' */
+  async startFree(tpl) {
+    if (Workout.active()) { UI.toast('Finish or discard the workout in progress first.', 'bad'); Nav.go('workout'); return; }
+    const st = Stats.get(), wk = st.programWeek;
+    const s = { id: uid('ses'), tid: 'free', kind: 'free', week: wk, day: 0, cycle: (State.program.workouts.find(w => w.week === wk) || {}).cycle || null, title: tpl ? tpl.name : 'Free workout', category: 'free',
+      date: todayISO(), startedAt: Date.now(), endedAt: null, pausedAt: Date.now(), pausedMs: 0, clockOn: false, status: 'in_progress', cur: 0, notes: '', ex: [], createdAt: Date.now() };
+    if (tpl) { tpl.ex.forEach(e => { if (Program.exDef(e.ex)) s.ex.push(Workout.buildEx(Object.assign({ uid: uid('tex'), rest: this.REST[(Program.exDef(e.ex) || {}).cat] || 60 }, e))); }); tpl.usedAt = Date.now(); Templates.save(tpl); }
+    await Workout.persist(s, true);
+    State.meta.activeSessionId = s.id; Store.saveMeta(); WakeLock.on();
+    Nav.go('workout', null, { big: true });
+    if (!s.ex.length) setTimeout(() => this.addSheet(), Motion.off ? 0 : 400);
+  },
+  /* ---------- sheets ---------- */
+  swapSheet(ei) {
+    const s = Workout.active(); if (!s) return; const x = s.ex[ei]; if (!this.canSwap(x)) return;
+    if (x.sets.some(t => t.done)) { UI.toast('Swap before logging sets on this exercise'); return; }
+    const orig = x.orig || x, progAlts = (x.alts || []).map(a => a.exId);
+    const draw = sh => {
+      const L = ExLib.alternatives(orig.exId, progAlts).filter(a => a.id !== x.exId), ok = L.filter(a => a.ok), no = L.filter(a => !a.ok);
+      const row = a => { const e = Program.exDef(a.id) || {}; const need = a.ok ? '' : ExLib.needs(a.id).filter(k => ExLib.missing().includes(k)).map(k => MY_EQUIP.find(m => m[0] === k)[1].toLowerCase()).join(', ');
+        return `<button type="button" class="swap-pick ${a.ok ? '' : 'dim'}" data-id="${a.id}"><span class="grow" style="text-align:left"><b>${esc(e.name || a.id)}</b><small class="muted">${esc(e.equip && e.equip.trim() !== '—' ? e.equip : Train.sub(e))}${need ? ` · needs ${esc(need)}` : ''}</small></span>${a.prog ? '<span class="badge blue">Program option</span>' : ''}${icon('repeat')}</button>`; };
+      $('#swList', sh).innerHTML = (x.swappedFrom ? `<button type="button" class="swap-pick back" data-id="${orig.exId}"><span class="grow" style="text-align:left"><b>${esc(orig.name)}</b><small class="muted">Back to the original exercise</small></span>${icon('undo-2')}</button>` : '')
+        + (ok.length ? ok.map(row).join('') : `<p class="muted">No alternative for this movement with the equipment you have. Change your equipment below, or skip the exercise.</p>`)
+        + (no.length ? `<details class="swap-more"><summary class="label" style="cursor:pointer;min-height:44px;display:flex;align-items:center">Needs equipment you don't have (${no.length})</summary>${no.map(row).join('')}</details>` : '');
+      $('#swEq', sh).innerHTML = ExLib.equipChips('sweq'); UI.icons(sh);
+      $$('.swap-pick', sh).forEach(b => b.onclick = async () => { this.swap(s, ei, b.dataset.id); await Sheet.close(); UI.renderLogger({ dir: 1 }); UI.toast(`Swapped to ${(Program.exDef(b.dataset.id) || {}).name || 'the new exercise'}`); });
+      $$('[data-act="sweq-toggle"]', sh).forEach(b => b.onclick = e => { e.stopPropagation(); ExLib.toggleMissing(b.dataset.v); draw(sh); });
+    };
+    Sheet.open({ title: `Swap ${x.name}`, wide: true, html: `<p class="muted" style="font-size:13.5px">${esc(ExLib.NAMES[ExLib.pattern(orig.exId)] || 'Same movement')} · same sets and reps${x.type === 'pct' ? ' (percentages need the same lift, so other exercises use your own weight)' : ''}.</p>
+      <div id="swList" class="stack swap-list"></div>
+      <details class="panel flat"><summary class="label" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${icon('dumbbell')} Equipment my gym doesn't have</summary><div id="swEq"></div></details>
+      <button class="btn block" type="button" data-sheet-close>Cancel</button>`, onMount: draw });
+  },
+  addSheet() {
+    const s = Workout.active(); if (!s) return; let q = '', pat = 'all', mine = ExLib.missing().length > 0, pick = null;
+    const draw = sh => {
+      if (pick) {
+        const e = Program.exDef(pick) || {}, timed = e.cat === 'core' || e.cat === 'conditioning';
+        $('#axBody', sh).innerHTML = `<div class="panel flat stack"><b style="font-size:17px">${esc(e.name)}</b><small class="muted">${esc(e.muscles || e.equip || '')}</small>
+          <div class="seg" role="group" id="axMode"><button type="button" data-v="reps" aria-pressed="${!timed}">Reps</button><button type="button" data-v="sec" aria-pressed="${timed}">Seconds</button></div>
+          <div class="grid2"><div class="field"><label for="axSets">Sets</label><input class="input num" id="axSets" inputmode="numeric" value="3"></div><div class="field"><label for="axN" id="axNL">${timed ? 'Seconds' : 'Reps'}</label><input class="input num" id="axN" inputmode="numeric" value="${timed ? 30 : 10}"></div></div>
+          <p class="err-msg" id="axErr"></p><div class="grid2"><button class="btn" type="button" id="axBack">Back</button><button class="btn primary" type="button" id="axGo">${icon('plus')} Add</button></div></div>`;
+        UI.icons(sh);
+        let mode = timed ? 'sec' : 'reps';
+        $$('#axMode [data-v]', sh).forEach(b => b.onclick = () => { mode = b.dataset.v; $$('#axMode [data-v]', sh).forEach(z => z.setAttribute('aria-pressed', z === b)); $('#axNL', sh).textContent = mode === 'sec' ? 'Seconds' : 'Reps'; $('#axN', sh).value = mode === 'sec' ? 30 : 10; });
+        $('#axBack', sh).onclick = () => { pick = null; draw(sh); };
+        $('#axGo', sh).onclick = async () => {
+          const n = Math.round(+$('#axSets', sh).value), v = Math.round(+$('#axN', sh).value);
+          if (!(n >= 1 && n <= 20)) { $('#axErr', sh).textContent = 'Sets: 1 to 20.'; return; }
+          if (mode === 'reps' && !(v >= 1 && v <= 100)) { $('#axErr', sh).textContent = 'Reps: 1 to 100.'; return; }
+          if (mode === 'sec' && !(v >= 5 && v <= 900)) { $('#axErr', sh).textContent = 'Seconds: 5 to 900.'; return; }
+          const x = this.add(s, pick, { mode, sets: n, reps: v, sec: v }); await Sheet.close(); UI.renderLogger({ dir: 1 }); UI.toast(`Added ${x.name}`);
+        };
+        return;
+      }
+      const ids = Object.keys(EXERCISES).filter(id => { const e = EXERCISES[id]; if (e.cat === 'test') return false; if (pat !== 'all' && ExLib.pattern(id) !== pat) return false; if (mine && !ExLib.canDo(id)) return false; return !q || (e.name + ' ' + (e.muscles || '') + ' ' + (e.equip || '')).toLowerCase().includes(q); })
+        .sort((a, b) => EXERCISES[a].name.localeCompare(EXERCISES[b].name)).slice(0, 80);
+      const pats = ['all', 'squat', 'hinge', 'hpush', 'vpush', 'pull', 'arms', 'core', 'power', 'plyo', 'conditioning', 'agility'];
+      $('#axBody', sh).innerHTML = `<div class="input-unit"><input class="input" type="search" id="axQ" placeholder="Search exercise or muscle" value="${esc(q)}" autocomplete="off"><span>${icon('search')}</span></div>
+        <div class="chips" role="group" aria-label="Body area">${pats.map(p => `<button type="button" class="chip" data-pat="${p}" aria-pressed="${pat === p}">${p === 'all' ? 'All' : ExLib.NAMES[p]}</button>`).join('')}</div>
+        <div class="toggle"><span><b style="font-weight:600">Only what I can do here</b></span><button class="switch" type="button" role="switch" aria-checked="${mine}" id="axMine" aria-label="Only exercises I can do here"></button></div>
+        <div class="stack swap-list">${ids.map(id => `<button type="button" class="swap-pick" data-id="${id}"><span class="grow" style="text-align:left"><b>${esc(EXERCISES[id].name)}</b><small class="muted">${esc(Train.sub(EXERCISES[id]))}</small></span>${icon('plus')}</button>`).join('') || '<p class="muted">Nothing matches.</p>'}</div>`;
+      UI.icons(sh);
+      const qi = $('#axQ', sh); qi.oninput = () => { q = qi.value.trim().toLowerCase(); const c = qi.selectionStart; draw(sh); const n = $('#axQ', sh); n.focus(); n.setSelectionRange(c, c); };
+      $$('[data-pat]', sh).forEach(b => b.onclick = () => { pat = b.dataset.pat; draw(sh); });
+      $('#axMine', sh).onclick = () => { mine = !mine; draw(sh); };
+      $$('.swap-pick', sh).forEach(b => b.onclick = () => { pick = b.dataset.id; draw(sh); });
+    };
+    Sheet.open({ title: 'Add an exercise', wide: true, html: `<div id="axBody" class="stack"></div><button class="btn block" type="button" data-sheet-close>Cancel</button>`, onMount: draw });
+  },
+  startSheet() {
+    const T = Templates.all();
+    Sheet.open({ title: 'Free workout', html: `<p class="muted" style="font-size:13.5px">Train anything you like. It counts for training days, XP, squad goals and challenges — not for completing the program.</p>
+      <button class="btn big primary block" type="button" id="fwEmpty">${icon('plus')} Start empty</button>
+      ${T.length ? `<div class="label" style="margin-top:6px">My templates</div><div class="stack swap-list">${T.map(t => `<div class="tpl-row"><button type="button" class="swap-pick grow tpl-go" data-id="${t.id}"><span class="grow" style="text-align:left"><b>${esc(t.name)}</b><small class="muted">${t.ex.length} exercise${t.ex.length === 1 ? '' : 's'}${t.from && t.from !== t.name ? ' · from ' + esc(t.from) : ''}</small></span>${icon('circle-play')}</button><button type="button" class="btn icon sm ghost tpl-del" data-id="${t.id}" aria-label="Delete template ${esc(t.name)}">${icon('trash-2')}</button></div>`).join('')}</div>`
+        : '<p class="muted" style="font-size:13px">Tip: open any finished workout and tap <b>Save as template</b> to repeat it here.</p>'}
+      <button class="btn block" type="button" data-sheet-close>Cancel</button>`,
+      onMount: sh => {
+        $('#fwEmpty', sh).onclick = async () => { await Sheet.close(); this.startFree(null); };
+        $$('.tpl-go', sh).forEach(b => b.onclick = async () => { const t = Templates.all().find(x => x.id === b.dataset.id); await Sheet.close(); if (t) this.startFree(t); });
+        $$('.tpl-del', sh).forEach(b => b.onclick = () => { Templates.del(b.dataset.id); b.closest('.tpl-row').remove(); UI.toast('Template deleted.'); });
+      } });
+  },
+  saveTemplate(sid) {
+    const s = State.sessions.find(x => x.id === sid); if (!s) return;
+    Sheet.open({ title: 'Save as template', html: `<p class="muted">${s.ex.filter(x => !x.skipped && x.type !== 'test').length} exercises from ${esc(s.title)}. Percent-based lifts are saved as sets × reps with your own weight.</p>
+      <div class="field"><label for="tpN">Name</label><input class="input" id="tpN" maxlength="40" value="${esc(s.kind === 'free' ? 'My workout' : s.title)}"></div><p class="err-msg" id="tpErr"></p>
+      <button class="btn big primary block" type="button" id="tpGo">${icon('bookmark')} Save template</button>`,
+      onMount: sh => {
+        const n = $('#tpN', sh); setTimeout(() => { n.focus(); n.select(); }, 60);
+        $('#tpGo', sh).onclick = async () => {
+          const name = n.value.trim(); if (name.length < 2) { $('#tpErr', sh).textContent = 'Give it a name.'; return; }
+          const t = Templates.fromSession(s, name); if (!t.ex.length) { $('#tpErr', sh).textContent = 'This workout has no exercises to save.'; return; }
+          Templates.save(t); await Sheet.close(); UI.toast(`Saved "${name}" — start it from Free workout.`);
+        };
+      } });
+  }
+};
+
+/* ---------- wiring ---------- */
+(() => {
+  /* free sessions are found by the logger like speed sessions; they never count toward the program */
+  const by = Program.byId; Program.byId = id => id === 'free' ? { id: 'free', title: 'Free workout', week: Stats.get ? (Stats._c ? Stats._c.programWeek : 1) : 1, day: 0, category: 'free', exercises: [], free: true } : by(id);
+  const so = Stats.statusOf.bind(Stats); Stats.statusOf = function (tid) { if (tid === 'free') return 'upcoming'; return so(tid); };
+  const cp = Stats.compute.bind(Stats); Stats.compute = function () {
+    const r = cp(); const ids = new Set(State.program.workouts.map(w => w.id));
+    r.doneUnique = new Set(r.completed.filter(s => ids.has(s.tid)).map(s => s.tid)).size;   // free and speed sessions are extra work, not program progress
+    return r;
+  };
+  /* logger: Swap for every exercise, Add exercise, an empty free workout, "Free workout" instead of "Day 0" */
+  const lg = Screens.logger; Screens.logger = function (s) {
+    if (!s.ex.length) return `<div class="screen focus"><header class="hud"><div class="row"><button class="btn icon sm" type="button" data-act="save-exit" aria-label="Save and exit">${icon('chevron-left')}</button><div class="grow"><div class="label">Free workout</div><div class="h3">${esc(s.title)}</div></div></div></header>
+      <div class="empty" style="padding:34px 16px">${icon('dumbbell')}<span class="display">Add your first exercise</span><span>Pick anything from the library. Sets and reps are up to you.</span></div>
+      <button class="btn big primary block" type="button" data-act="ex-add">${icon('plus')} Add exercise</button>
+      <button class="btn block danger" type="button" data-act="discard" style="margin-top:10px">${icon('trash-2')} Discard</button></div>`;
+    let h = lg.call(Screens, s); const x = s.ex[s.cur] || s.ex[0], ei = s.ex.indexOf(x);
+    if (s.kind === 'free') h = h.replace(`${wkLabel(s.week)} · Day ${s.day}`, 'Free workout');
+    const old = h.match(/<button class="tool" type="button" data-act="swap-alt"[\s\S]*?<\/button>/);
+    const tool = this.canSwap(x) ? `<button class="tool" type="button" data-act="ex-swap" data-e="${ei}" aria-label="Swap ${esc(x.name)}">${icon('repeat')}<span>Swap</span></button>` : '';
+    h = old ? h.replace(old[0], tool) : h.replace(/(<div class="ex-tools" data-rev>)/, '$1' + tool);
+    if (x.swappedFrom) h = h.replace(/(<h2 class="ex-name" data-rev>[\s\S]*?<\/h2>)/, `$1<div class="label swap-note" data-rev>${icon('repeat')} Swapped for ${esc(x.swappedFrom.name)}</div>`);
+    if (x.added) h = h.replace(/(<h2 class="ex-name" data-rev>[\s\S]*?<\/h2>)/, `$1<div class="label swap-note" data-rev>${icon('plus')} Added today</div>`);
+    return h.replace(/(<div class="row wrap set-extra">)/, `$1<button class="btn sm ghost" type="button" data-act="ex-add">${icon('plus')} Exercise</button>`);
+  }.bind(Train);
+  Screens.canSwap = x => Train.canSwap(x);
+  /* "Free workout" next to the day's mission (Home and the idle Workout screen) */
+  const mc = Screens.missionCard; Screens.missionCard = function (st, act) {
+    const h = mc.call(Screens, st, act); if (act) return act.kind === 'free' ? h.replace(`${wkLabel(act.week)} · Day ${act.day}`, 'Free workout') : h;
+    return h + `<div class="row free-row" data-stg><button class="btn block" type="button" data-act="free-start">${icon('dumbbell')} Free workout${Templates.all().length ? ` · ${Templates.all().length} template${Templates.all().length === 1 ? '' : 's'}` : ''}</button></div>`;
+  };
+  /* finished sessions: Save as template; swapped / added exercises are labelled */
+  const se = Screens.session; Screens.session = function (id) {
+    let h = se.call(Screens, id); const s = State.sessions.find(x => x.id === id);
+    if (!s || s.kind === 'active') return h;
+    if (s.kind === 'free') h = h.split(`${wkLabel(s.week)} · Day ${s.day}`).join('Free workout');
+    (s.ex || []).forEach(x => { if (x.swappedFrom || x.added) h = h.replace(`<h3 class="h3">${esc(x.name)}</h3>`, `<h3 class="h3">${esc(x.name)}</h3><span class="badge">${x.swappedFrom ? 'Swap for ' + esc(x.swappedFrom.name) : 'Added'}</span>`); });
+    if (s.status === 'completed' && (s.ex || []).length) h = h.replace(/<\/div>$/, `<button class="btn block" type="button" data-act="tpl-save" data-id="${s.id}" data-stg>${icon('bookmark')} Save as template</button></div>`);
+    return h;
+  };
+  const snap = Cloud.snapshot.bind(Cloud); Cloud.snapshot = function () { const o = snap(); o.templates = Templates.raw(); return o; };
+  const mg = Cloud.merge.bind(Cloud); Cloud.merge = async function (r) { const f = r && r.app === APP_ID ? Templates.merge(r.templates) : false; const ch = await mg(r); return ch || f; };
+})();
+Object.assign(Actions, {
+  'ex-swap': el => Train.swapSheet(+el.dataset.e),
+  'swap-alt': el => Train.swapSheet(+el.dataset.e),
+  'ex-add': () => Train.addSheet(),
+  'free-start': () => Train.startSheet(),
+  'tpl-save': el => Train.saveTemplate(el.dataset.id)
+});
+
+/* ============ RELEASE 2 · FAIR CHALLENGE SCORES ============
+   The server flags unusual workouts (social.sql §13b) and leaves them out of challenges, leaderboards and
+   XP until a coach approves them. Daily caps still apply after approval.
+   • Coaches and admins: Social → Coach → Flagged results (Count it / Don't count / Undo).
+   • Athletes: a finished workout that isn't counted says why on its page. Their own log never changes. */
+const FLAG_WHY = {
+  long: 'More than 3 hours on the clock', sets: 'More than 60 working sets', reps: 'More than 100 reps in one set',   // reps: older reviews only (no longer flagged)
+  fast: '20 or more sets logged in under 5 minutes', late: 'Logged more than 3 days after the workout date',
+  history: 'Far above this athlete\'s usual workout (2.5× their normal sets)'
+};
+const Flags = {
+  list() { return Social.get('flags', () => Social.rpc('flag_list', { p_days: 30 }), 30000); },
+  mine() { return Social.get('myflags', () => Social.rpc('my_flags', { p_days: 60 }), 120000); },
+  canReview() { return Cloud.on && Cloud.profile && (Brand.isCoach() || Cloud.isAdmin() || Brand.isHead()); },
+  waiting() { const e = this.list(); return e.v ? e.v.filter(f => f.status === 'flagged').length : 0; },
+  screen() {
+    if (!Social.on()) return `<div class="screen">${backBar('Flagged results')}${Social.empty('cloud-off', 'You\'re offline', 'Reviewing needs a connection.')}</div>`;
+    if (!this.canReview()) return `<div class="screen">${backBar('Flagged results')}${Social.empty('shield', 'For coaches', 'Coaches review unusual workouts from their athletes here.')}</div>`;
+    const e = this.list();
+    if (!e.v) return `<div class="screen soc">${backBar('Flagged results')}${e.err ? Social.errBox(e.err, 'flags') : Social.skel(2)}</div>`;
+    const wait = e.v.filter(f => f.status === 'flagged'), done = e.v.filter(f => f.status !== 'flagged');
+    const row = f => `<section class="panel flag-row" data-stg data-flag="${esc(f.sid)}"><div class="row">${Social.avatar(f.user, 40)}<div class="grow"><b>${esc(f.user.name)}</b><div class="muted" style="font-size:12.5px">${esc(f.title || 'Workout')} · ${fmtDate(f.date)} · ${f.sets} sets · ${f.minutes} min</div></div>
+        ${f.status === 'approved' ? '<span class="badge ok">Counts</span>' : f.status === 'rejected' ? '<span class="badge">Not counted</span>' : '<span class="badge warn">Waiting</span>'}</div>
+      <p class="flag-why">${icon('flag')} ${esc(FLAG_WHY[f.reason] || 'Unusual workout')}</p>
+      <div class="row wrap" style="gap:8px">${f.status === 'flagged'
+        ? `<button class="btn sm primary" type="button" data-act="flag-do" data-u="${f.user.id}" data-sid="${esc(f.sid)}" data-v="approved">${icon('check')} Count it</button><button class="btn sm" type="button" data-act="flag-do" data-u="${f.user.id}" data-sid="${esc(f.sid)}" data-v="rejected">${icon('x')} Don't count</button>`
+        : `<button class="btn sm ghost" type="button" data-act="flag-do" data-u="${f.user.id}" data-sid="${esc(f.sid)}" data-v="flagged">${icon('undo-2')} Undo</button>`}</div></section>`;
+    return `<div class="screen soc">${backBar('Flagged results')}
+      <p class="muted" data-stg style="font-size:13.5px">Workouts that look unusual stay out of challenges, leaderboards and XP until you decide. The athlete's own log is never changed. Last 30 days.</p>
+      ${wait.length ? `<h2 class="label" data-stg>Waiting for you · ${wait.length}</h2>${wait.map(row).join('')}` : Social.empty('shield', 'Nothing to review', 'Every workout from your athletes in the last 30 days looks normal.')}
+      ${done.length ? `<h2 class="label" data-stg style="margin-top:8px">Reviewed</h2>${done.map(row).join('')}` : ''}</div>`;
+  }
+};
+Screens.flags = () => Flags.screen();
+After.flags = view => Social.hydrate(view);
+Social.live.add('flags'); TAB_OF.flags = 'social'; Kinetic.NAMES.flags = 'FLAGGED';
+(() => {
+  /* entry point at the top of the Coach screen */
+  const co = Screens.coach; Screens.coach = function () {
+    const h = co.call(Screens); if (!Flags.canReview() || !Social.on() || Social.missing) return h;
+    const n = Flags.waiting(), i = h.indexOf('</h1>'), j = i < 0 ? -1 : h.indexOf('</div>', i);
+    if (j < 0) return h;
+    const card = `<button class="panel team-card flag-card" type="button" data-act="go" data-r="flags" data-stg><span class="lib-ico">${icon('flag')}</span><div class="grow" style="text-align:left"><b>Flagged results</b><div class="muted" style="font-size:12.5px">${n ? `${n} workout${n === 1 ? '' : 's'} waiting — not counted until you decide` : 'Unusual workouts from your athletes show up here'}</div></div>${n ? `<span class="badge warn">${n}</span>` : ''}${icon('chevron-right')}</button>`;
+    return h.slice(0, j + 6) + card + h.slice(j + 6);
+  };
+  /* a finished workout that isn't counted says why */
+  const se = Screens.session; Screens.session = function (id) {
+    const h = se.call(Screens, id); if (!(Cloud.on && Social.on())) return h;
+    const e = Flags.mine(), f = e.v && e.v.find(x => x.sid === id); if (!f || f.status === 'approved') return h;
+    const note = `<div class="resume-banner flag-note" data-stg>${icon('flag')}<div class="grow"><b>${f.status === 'rejected' ? 'Not counted in challenges' : 'Not counted in challenges yet'}</b><br><span style="font-size:13px">${esc(FLAG_WHY[f.reason] || 'Unusual workout')}. ${f.status === 'rejected' ? 'Your coach reviewed it.' : 'Your coach can approve it.'} Your log is kept as it is.</span></div></div>`;
+    const i = h.indexOf('</h1>'), j = i < 0 ? -1 : h.indexOf('</div>', i);
+    return j < 0 ? h : h.slice(0, j + 6) + note + h.slice(j + 6);
+  };
+  Social.live.add('session');
+})();
+Object.assign(Actions, {
+  'flag-do': async el => {
+    const v = el.dataset.v;
+    const r = await Social.act(el, () => Social.rpc('flag_review', { p_user: el.dataset.u, p_sid: el.dataset.sid, p_status: v }));
+    if (!r) return;
+    Social.drop('flags'); UI.toast(v === 'approved' ? 'Counted — it now scores in challenges.' : v === 'rejected' ? 'Left out of challenges.' : 'Back to waiting.');
+    const y = scrollY; UI.render(); scrollTo(0, y);
+  }
+});
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
