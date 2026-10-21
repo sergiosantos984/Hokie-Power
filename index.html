@@ -844,7 +844,7 @@ body.amb .awards .award-medal.on{animation:bob 3s ease-in-out infinite}
 .chart .hline{stroke:var(--vt-stone)}
 
 /* ---- light theme (default): white & warm off-white surfaces, charcoal text, maroon identity ---- */
-body.theme-light{--bg:var(--vt-off);--fg:var(--vt-charcoal);--muted:var(--vt-stone);--line:rgba(183,190,195,.6)}
+body.theme-light{--bg:var(--vt-off);--fg:var(--vt-charcoal);--muted:#646769;--line:rgba(183,190,195,.6)}
 body.theme-light #env{background:radial-gradient(120% 55% at 50% -10%,rgba(var(--b1rgb),.08),transparent 60%),var(--g-neutral)}
 body.theme-light :where(#app,#sheet-root) :is(.h1,.h2,.h3,.calc-out,.season-pct,.display.motto){color:var(--vt-maroon)}
 body.theme-light :where(#app) :is(.hero,.excard,.mhead,.quote-hero,.c-stats) :is(.h1,.h2,.h3,.display){color:inherit}
@@ -889,7 +889,7 @@ body.theme-light :where(#app) .ticker{background:var(--vt-charcoal);border-color
 body.theme-light :where(#app) .input:focus{border-color:var(--vt-maroon);box-shadow:0 0 0 3px rgba(var(--b1rgb),.15)}
 body.theme-light :where(#app) .switch[aria-checked="true"]{background:var(--vt-maroon)}
 body.theme-light #nav .bar{background:var(--vt-white);border-color:rgba(183,190,195,.6)}
-body.theme-light #nav button{color:var(--vt-stone)}
+body.theme-light #nav button{color:#646769}
 body.theme-light #nav .ind::before{background:var(--vt-maroon);box-shadow:0 8px 18px -8px rgba(var(--b1rgb),.8)}
 body.theme-light #rest .dock{background:var(--g-dark);border-color:var(--vt-deep)}
 body.theme-light #toast{background:var(--vt-charcoal);border-color:var(--vt-charcoal)}
@@ -1271,9 +1271,9 @@ body.theme-light #app details.panel.flat.more-opts{background:#fff!important;bor
 
 /* ================= SOCIAL (feed · arena · squads · profiles) — same tokens as the rest of the app ================= */
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-#nav .bar{grid-template-columns:repeat(7,1fr)}
-#nav .ind{width:calc(100% / 7)}
-@media (min-width:1024px){#nav .bar{grid-template-columns:1fr;grid-template-rows:auto repeat(7,56px) 1fr}}
+#nav .bar{grid-template-columns:repeat(var(--tabs,5),1fr)}
+#nav .ind{width:calc(100% / var(--tabs,5))}
+@media (min-width:1024px){#nav .bar{grid-template-columns:1fr;grid-template-rows:auto repeat(var(--tabs,5),56px) 1fr}}
 #nav .sdot,.sdot{position:absolute;top:8px;right:calc(50% - 22px);min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--vt-orange);color:var(--vt-charcoal);font:800 10.5px/17px var(--f-mono,monospace);text-align:center;box-shadow:0 0 0 2px #fff}
 .sdot.in{position:static;display:inline-block;margin-left:4px;box-shadow:none}
 @media (min-width:1024px){#nav .sdot{top:50%;right:14px;margin-top:-8px}}
@@ -1672,6 +1672,39 @@ body.m-minimal .ov-bar>i,body.m-minimal .ov-bar .ov-over{transition:none}
 @media (min-width:900px){.ov{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ov>.ov-range{grid-column:1/-1}.ov>.grid2{grid-column:1/-1;max-width:520px}}
 .ov-warn{display:flex;align-items:flex-start;gap:6px;font-size:13px;margin-top:10px;padding:8px 10px;border-radius:10px;background:rgba(var(--b2rgb),.12)}.ov-warn svg{width:15px;height:15px;flex:none;margin-top:2px;color:var(--b2)}
 
+/* ================= RELEASE 1 · five tabs, resume bar, profile button ================= */
+#resumeBar{position:fixed;left:0;right:0;bottom:calc(var(--nav-h) + var(--safe-b) + 14px);z-index:29;padding:0 12px;pointer-events:none}
+#resumeBar[hidden]{display:none}
+#resumeBar .rb-in{pointer-events:auto;display:flex;align-items:center;gap:12px;width:100%;max-width:520px;margin:0 auto;padding:10px 12px 10px 14px;min-height:56px;border:0;border-radius:18px;text-align:left;color:#fff;
+  background:linear-gradient(100deg,var(--b1d,var(--b1d)),var(--b1,var(--b1)));box-shadow:0 12px 30px -10px rgba(0,0,0,.55);font:inherit;cursor:pointer}
+#resumeBar .label{color:rgba(255,255,255,.78);display:block}
+#resumeBar b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#resumeBar .grow{min-width:0}
+#resumeBar .rb-go{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:var(--b2,var(--b2));color:#1b1b1b;font-weight:800;font-size:13px;white-space:nowrap}
+#resumeBar .rb-go svg{width:16px;height:16px}
+.rb-dot{width:10px;height:10px;border-radius:50%;background:var(--b2,var(--b2));flex:none;box-shadow:0 0 0 4px rgba(var(--b2rgb),.25)}
+body.amb .rb-dot{animation:livePulse 1.6s infinite}
+body.has-resume #view{padding-bottom:calc(var(--nav-h) + var(--safe-b) + 100px)}
+@media (min-width:1024px){#resumeBar{left:236px;bottom:20px}}
+.prof-btn{width:40px;height:40px;min-width:44px;min-height:44px;border-radius:50%;border:2px solid var(--b2,var(--b2));background:var(--b1,var(--b1));color:#fff;font:800 16px/1 var(--f-display,inherit);display:inline-grid;place-items:center;cursor:pointer;flex:none}
+.chips.sub{margin-top:-4px}
+.chips.sub .chip{font-size:12px;padding:6px 11px}
+.meal-acts{gap:6px}
+.my-meal{display:flex;align-items:center;gap:6px;width:100%;padding:10px 4px;border-bottom:1px solid var(--line);transition:background var(--d-std)}
+.my-meal.added{background:rgba(var(--b2rgb),.18)}
+.my-meal .mm-add{display:flex;flex-direction:column;align-items:flex-start;gap:2px;border:0;background:none;color:inherit;font:inherit;padding:2px 0;cursor:pointer}
+.my-meal .mm-add svg{width:15px;height:15px;color:var(--b2)}
+#offlineBar{position:fixed;left:0;right:0;top:0;z-index:60;padding:calc(var(--safe-t) + 6px) 16px 7px;background:#2B2B2B;color:#fff;font-size:13px;font-weight:600;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+#offlineBar[hidden]{display:none}
+#offlineBar svg{width:15px;height:15px;vertical-align:-3px;margin-right:6px}
+/* night theme: rows above 100% in the calculator were maroon on near-black (contrast 2:1) */
+body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{color:var(--b2l)!important}
+/* touch targets: every chip, segment button and switch is at least 44 px tall to tap (WCAG 2.5.5 / Apple HIG) */
+#app .chip,.chip,.chips .chip,.chips.sub .chip,.seg button{min-height:44px}
+.switch{position:relative}
+.switch::before{content:"";position:absolute;inset:-7px -4px}
+.linkish{min-height:44px;display:inline-flex;align-items:center}
+
 </style>
 </head>
 <body>
@@ -1763,15 +1796,16 @@ body.m-minimal .ov-bar>i,body.m-minimal .ov-bar .ov-over{transition:none}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 21 · 11:14';
+const BUILD_ID = 'Oct 21 · 13:53';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
-   underneath. It plays for ~2 s on every open (shorter in Minimal / reduced motion); tap to skip. */
+   underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
 const Splash = (() => {
   const el = document.getElementById('boot'); if (!el) return { done: Promise.resolve() };
   let mode = 'cinematic';
   try { const st = JSON.parse(localStorage.getItem('bbp.settings') || '{}'); mode = st.reducedMotion === 'on' ? 'minimal' : (st.motion || 'cinematic'); } catch (e) { }
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) mode = 'minimal';
+  try { if (localStorage.getItem('bbp.splashSeen')) mode = 'minimal'; else localStorage.setItem('bbp.splashSeen', '1'); } catch (e) { }   // full load-up on the first open only
   const total = mode === 'minimal' ? 350 : mode === 'balanced' ? 1500 : 2150;
   let resolve, finished = false; const done = new Promise(r => resolve = r);
   const pct = document.getElementById('bootPct'), t0 = performance.now();
@@ -5148,7 +5182,7 @@ const Cloud = {
             <div class="seg auth-seg" role="tablist"><button type="button" role="tab" data-auth-mode="login" aria-selected="${m === 'login'}" aria-pressed="${m === 'login'}">Log in</button><button type="button" role="tab" data-auth-mode="signup" aria-selected="${m === 'signup'}" aria-pressed="${m === 'signup'}">Create account</button></div>
             <div class="field"><label for="authUser">Username</label><input class="input" id="authUser" name="username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" inputmode="text" required></div>
             <div class="field"><label for="authPass">Password</label><input class="input" id="authPass" name="password" type="password" autocomplete="${m === 'login' ? 'current-password' : 'new-password'}" required minlength="8"></div>
-            ${m === 'signup' ? '<div class="field"><label for="authPass2">Repeat password</label><input class="input" id="authPass2" type="password" autocomplete="new-password" required></div>' + Cloud.emailFields() + '<p class="gnote">3–24 characters: letters, numbers, dot, dash or underscore. Password: at least 8 characters.</p>' : ''}
+            ${m === 'signup' ? '<div class="field"><label for="authPass2">Repeat password</label><input class="input" id="authPass2" type="password" autocomplete="new-password" required></div>' + Cloud.emailFields() + Cloud.teamField() + '<p class="gnote">3–24 characters: letters, numbers, dot, dash or underscore. Password: at least 8 characters.</p>' : ''}
             <p class="gmsg" id="authMsg" role="status" aria-live="polite"></p>
             <button type="submit" class="btn big red block" id="authGo">${m === 'login' ? 'Enter the facility' : 'Create my account'}</button>
           </form>
@@ -5163,6 +5197,9 @@ const Cloud = {
           if (mode === 'signup' && p !== $('#authPass2').value) return fail("The two passwords don't match.");
           const em = mode === 'signup' ? $('#authEmail').value.trim().toLowerCase() : '', opt = mode === 'signup' && $('#authOpt').checked;
           if (mode === 'signup' && !EMAIL_RE.test(em)) return fail('Please enter a valid email address.');
+          const tc = mode === 'signup' && $('#authTeam') ? $('#authTeam').value.replace(/[^A-Za-z0-9]/g, '').toUpperCase() : '';
+          if (tc && tc.length !== 6) return fail('Team codes have 6 letters and numbers — check it with your coach, or leave it empty.');
+          try { if (tc) localStorage.setItem('bbp.teamCode', tc); else localStorage.removeItem('bbp.teamCode'); } catch (e) { }
           go.disabled = true; msg.innerHTML = Kinetic.wave(mode === 'login' ? 'CHECKING…' : 'BUILDING YOUR LOCKER…'); Kinetic.busy(true);
           try {
             const r = mode === 'login'
@@ -8346,7 +8383,8 @@ const Food = {
     const draw = sh => {
       const rec = this.recent(), list = (q ? FOODS.filter(f => f.name.toLowerCase().includes(q)) : FOODS).slice(0, 60);
       const item = (f, i, src) => `<button type="button" class="food-pick" data-src="${src}" data-i="${i}">${this.medalDot(f.medal)}<span class="grow" style="text-align:left"><b>${esc(f.name)}</b><small class="muted">${esc(f.serv || 'serving')} · ${fmtNum(f.kcal, 0)} kcal${f.protein ? ' · ' + fmtNum(f.protein, 0) + ' g protein' : ''}</small></span>${icon('plus')}</button>`;
-      $('#fpList', sh).innerHTML = (!q && rec.length ? `<div class="label">Recent</div>${rec.map((f, i) => item(f, i, 'r')).join('')}<div class="label" style="margin-top:8px">Common foods</div>` : '') + (list.map(f => item(f, FOODS.indexOf(f), 'f')).join('') || '<p class="muted">Not in the list — add it below.</p>');
+      const recQ = rec.map((f, i) => [f, i]).filter(([f]) => !q || f.name.toLowerCase().includes(q));
+      $('#fpList', sh).innerHTML = (recQ.length ? `<div class="label">Recent</div>${recQ.map(([f, i]) => item(f, i, 'r')).join('')}<div class="label" style="margin-top:8px">Common foods</div>` : '') + (list.map(f => item(f, FOODS.indexOf(f), 'f')).join('') || (recQ.length ? '' : '<p class="muted">Not in the list — add it below.</p>'));
       UI.icons($('#fpList', sh));
       $$('.food-pick', sh).forEach(b => b.onclick = () => { const f = b.dataset.src === 'r' ? rec[+b.dataset.i] : FOODS[+b.dataset.i]; add(f); b.classList.add('added'); setTimeout(() => b.classList.remove('added'), 600); });
     };
@@ -8751,6 +8789,274 @@ Object.assign(Actions, {
   'ov-range': el => { UI.ui.nutriRange = el.dataset.v; const y = scrollY; UI.render(); scrollTo(0, y); },
   'ov-macro': () => { UI.ui.macroView = UI.ui.macroView === 'pct' ? 'g' : 'pct'; const y = scrollY; UI.render(); scrollTo(0, y); }
 });
+
+/* ============ RELEASE 1 · FIVE TABS ============
+   Home · Train · Progress · Fuel · Social.
+   • The Workout tab is gone: a workout in progress shows as a resume bar above the tabs (on every screen
+     except the logger and Home, which has its own banner).
+   • More (profile, history, settings, backup…) opens from the profile button at the top of Home.
+   • Coach screens live inside Social, behind a Coach / My team chip.
+   Old routes keep working: Nav.go('workout') and Nav.go('more') still open the same screens. */
+const NavFive = {
+  MORE: ['more', 'history', 'session', 'settings', 'profile', 'backup', 'summary', 'about', 'admin'],
+  COACH: ['coach', 'team', 'tathlete', 'school', 'schools', 'cplan', 'plans'],
+  setup() {
+    const bar = document.querySelector('#nav .bar'); if (!bar) return;
+    const btn = t => bar.querySelector(`[data-tab="${t}"]`);
+    const label = { training: 'Train', nutrition: 'Fuel' };
+    Object.keys(label).forEach(t => { const s = btn(t) && btn(t).querySelector('span'); if (s) s.textContent = label[t]; });
+    const drop = t => { const b = btn(t); if (b) b.remove(); const i = TABS.indexOf(t); if (i >= 0) TABS.splice(i, 1); };
+    drop('workout'); TAB_OF.workout = 'training';
+    if (btn('social')) { drop('more'); this.MORE.forEach(r => { TAB_OF[r] = 'home'; }); this.COACH.forEach(r => { TAB_OF[r] = 'social'; }); }
+    bar.style.setProperty('--tabs', TABS.length);
+    const rb = document.createElement('div'); rb.id = 'resumeBar'; rb.hidden = true; document.body.appendChild(rb);
+  },
+  /* the floating "workout in progress" bar */
+  resume() {
+    const el = $('#resumeBar'); if (!el) return;
+    const act = Workout.active(), r = UI.route.name, show = !!act && r !== 'workout' && r !== 'home' && !$('#nav').hidden;
+    el.hidden = !show; document.body.classList.toggle('has-resume', show);
+    clearInterval(this.iv); this.iv = null;
+    if (!show) return;
+    const paint = () => { const a = Workout.active(); if (!a) return this.resume(); const t = $('#rbTime', el); if (t) t.textContent = fmtDur(Workout.elapsed(a)); };
+    el.innerHTML = `<button type="button" class="rb-in" data-act="go" data-r="workout" aria-label="Resume workout: ${esc(act.title)}"><span class="rb-dot" aria-hidden="true"></span>
+      <span class="grow"><span class="label">Workout in progress · <span id="rbTime">${fmtDur(Workout.elapsed(act))}</span></span><b>${esc(act.title)}</b></span><span class="rb-go">${icon('circle-play')} Resume</span></button>`;
+    UI.icons(el); this.iv = setInterval(paint, 1000);
+  },
+  profileBtn() {
+    const name = (Cloud.on && Cloud.profile && Cloud.profile.username) || State.settings.name || 'Athlete';
+    return `<button type="button" class="prof-btn" data-act="go" data-r="more" aria-label="Profile and settings">${esc(name.trim().charAt(0).toUpperCase() || 'A')}</button>`;
+  }
+};
+NavFive.setup();
+
+/* Nav.paint without the old Workout-tab dot, plus the resume bar */
+Nav.paint = function () {
+  const tab = TAB_OF[UI.route.name] || 'home', idx = TABS.indexOf(tab);
+  $$('#nav [data-tab]').forEach(b => { b.removeAttribute('aria-current'); if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); });
+  const ind = $('#nav .ind'); if (ind) { ind.style.opacity = idx < 0 ? '0' : '1'; ind.style.transform = `translateX(${Math.max(0, idx) * 100}%)`; }
+  NavFive.resume();
+};
+
+(() => {
+  /* Home: a profile button replaces Log out in the top bar (Log out stays in Profile & settings) */
+  const ah = After.home; After.home = function (view, opts) {
+    if (ah) ah.call(After, view, opts);
+    const row = $('.topbar .row', view); if (!row || $('.prof-btn', row)) return;
+    const lo = $('.logout-btn', row); if (lo) lo.remove();
+    row.insertAdjacentHTML('beforeend', NavFive.profileBtn());
+  };
+  /* More is no longer a tab: it gets a back button and a clear name */
+  const mo = Screens.more; Screens.more = function () {
+    const h = mo.call(Screens), top = `<div class="topbar" data-stg>${brand()}${logoutBtn()}</div>`;
+    return h.replace(top, backBar('Profile & settings', logoutBtn(false)));
+  };
+  /* Social: coaches reach their screens from a chip next to Feed · Arena · Squads · You */
+  const so = Screens.social; Screens.social = function (tab) {
+    const h = so.call(Screens, tab);
+    if (!(Cloud.on && Cloud.profile && Social.on())) return h;
+    const chip = `<button type="button" role="tab" data-act="go" data-r="coach" aria-pressed="false" aria-selected="false">${Brand.isCoach() ? 'Coach' : 'Team'}</button>`;
+    return h.replace(/(<div class="seg" role="tablist" data-stg>[\s\S]*?)(<\/div>)/, `$1${chip}$2`);
+  };
+})();
+
+/* ============ RELEASE 1 · FUEL IN THREE TABS ============
+   Overview · Log · Guide. The book chapters (food medals, carb timing, weight goals, hydration,
+   game plan, Brutally Huge) are sections of Guide, picked with a second row of chips.
+   Targets open from the Overview (route nutrition/targets keeps working). */
+const FUEL_GUIDE = [['foods', 'Food medals'], ['carbs', 'Carb timing'], ['goals', 'Weight goals'], ['water', 'Hydration'], ['plan', 'Game plan'], ['huge', 'Brutally Huge']];
+(() => {
+  const nu = Screens.nutrition; Screens.nutrition = function (tab) {
+    if (tab === 'guide') tab = UI.ui.fuelGuide || 'foods';
+    const inGuide = FUEL_GUIDE.some(g => g[0] === tab);
+    if (inGuide) UI.ui.fuelGuide = tab;
+    const group = inGuide ? 'guide' : tab === 'log' ? 'log' : 'overview';
+    const h = nu.call(Screens, tab);
+    const main = [['overview', 'Overview', 'today'], ['log', 'Log', 'log'], ['guide', 'Guide', 'guide']];
+    let chips = `<div class="chips fuel-tabs" role="tablist" data-stg>${main.map(([k, l, p]) => `<button class="chip" type="button" role="tab" data-act="go" data-r="nutrition" data-p="${p}" aria-pressed="${group === k}" aria-selected="${group === k}">${l}</button>`).join('')}</div>`;
+    if (inGuide) chips += `<div class="chips sub" role="tablist" aria-label="Guide sections" data-stg>${FUEL_GUIDE.map(([k, l]) => `<button class="chip" type="button" role="tab" data-act="go" data-r="nutrition" data-p="${k}" aria-pressed="${tab === k}" aria-selected="${tab === k}">${l}</button>`).join('')}</div>`;
+    if (tab === 'targets') chips = chips.replace('</div>', `</div><div class="row" data-stg><button class="btn sm ghost" type="button" data-act="go" data-r="nutrition" data-p="today">${icon('chevron-left')} Back to overview</button></div>`);
+    return h.replace(/<div class="chips" role="tablist" data-stg>[\s\S]*?<\/div>/, chips);
+  };
+})();
+
+/* ============ RELEASE 1 · FASTER START ============
+   • Team code at signup (or from a ?team=ABC123 link): the athlete lands straight in their team.
+   • The mission-start quote shows before the first workout only; a setting brings it back every time.
+   (The 2-second splash plays in full on the very first open only — see 00_0splash.) */
+const TeamInvite = {
+  fromUrl() {
+    try { const q = new URLSearchParams(location.search), t = (q.get('team') || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase(); if (t.length === 6) localStorage.setItem('bbp.teamInvite', t); if (q.has('team')) { q.delete('team'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash); } } catch (e) { }
+  },
+  invite() { try { return localStorage.getItem('bbp.teamInvite') || ''; } catch (e) { return ''; } },
+  async run() {
+    if (!(Cloud.on && Cloud.profile && Social.on())) return;
+    let typed = '', inv = '';
+    try { typed = localStorage.getItem('bbp.teamCode') || ''; inv = localStorage.getItem('bbp.teamInvite') || ''; localStorage.removeItem('bbp.teamCode'); localStorage.removeItem('bbp.teamInvite'); } catch (e) { }
+    const code = typed || inv; if (!code) return;
+    if (!typed) {   // came from a link: ask first, because the coach will see their training
+      const ok = await Sheet.confirm({ title: `Join team ${code}?`, body: '<p>The team\'s coaches will see your workouts, maxes and test results, and can send you notes and a plan.</p>', ok: 'Join team' });
+      if (!ok) return;
+    }
+    try {
+      const t = await Social.rpc('team_join', { p_code: code });
+      UI.toast(`You joined ${t && t.name ? t.name : 'your team'}.`); Haptics.beep([523, 784], .1);
+      Social.drop('myteams', 'squads', 'me'); try { await Brand.mine(Cloud.sb); } catch (e) { } PlanFx.sync(); UI.render();
+    } catch (e) { UI.toast(`Couldn't join team ${code}: ${(e && e.message) || 'try again'}. You can enter the code in Social → Team.`, 'bad'); }
+  }
+};
+TeamInvite.fromUrl();
+Object.assign(Cloud, {
+  teamField() {
+    const v = TeamInvite.invite();
+    return `<div class="field"><label for="authTeam">Team code <span class="muted">(optional)</span></label><input class="input code-in" id="authTeam" maxlength="8" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="ABC123" value="${esc(v)}">
+      <small class="muted">From your coach. Joining lets the team's coaches see your training.</small></div>`;
+  }
+});
+(() => {
+  const show = App.show.bind(App); App.show = function (first) { show(first); setTimeout(() => TeamInvite.run(), 2500); };
+  /* mission-start quote: first workout only, unless the athlete turns it on for every workout */
+  const fl = Quotes.flash.bind(Quotes); Quotes.flash = function (s) {
+    if (!State.settings.missionQuote && State.sessions.some(x => x.status === 'completed')) return;
+    return fl(s);
+  };
+  const sg = Screens.settings; Screens.settings = function () {
+    const h = sg.call(Screens), on = !!State.settings.missionQuote;
+    const row = `<section class="panel stack" data-stg><h2 class="h3">Starting a workout</h2><div class="toggle"><span><b style="font-weight:600">Quote before every workout</b><br><span class="muted" style="font-size:12.5px">Off: the full-screen quote only shows before your first workout.</span></span><button class="switch" type="button" role="switch" aria-checked="${on}" data-act="set-toggle-setting" data-k="missionQuote" aria-label="Quote before every workout"></button></div></section>`;
+    const i = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Appearance');
+    return i < 0 ? h.replace(/<\/div>$/, row + '</div>') : h.slice(0, i) + row + h.slice(i);
+  };
+})();
+
+/* ============ RELEASE 1 · FASTER FOOD LOGGING ============
+   • Save meal: keep any logged meal (e.g. "Pre-practice shake") and add it again in one tap.
+   • Repeat yesterday: on an empty meal, copy what was eaten at that meal the day before.
+   Saved meals sync with the account like the food log (merged item by item, newest wins). */
+const Meals = {
+  key() { return `bbp.${(typeof Cloud !== 'undefined' && Cloud.ns) || 'local'}.meals`; },
+  raw() { return LSX.get(this.key(), []) || []; },
+  put(list) { LSX.set(this.key(), list); if (typeof Cloud !== 'undefined') Cloud.dirty(); State.version++; },
+  all() { return this.raw().filter(m => !m.del).sort((a, b) => (b.usedAt || b.updatedAt || 0) - (a.usedAt || a.updatedAt || 0)); },
+  save(m) { const L = this.raw(), i = L.findIndex(x => x.id === m.id); m.updatedAt = Date.now(); if (i >= 0) L[i] = m; else L.push(m); this.put(L); },
+  del(id) { const L = this.raw(), i = L.findIndex(x => x.id === id); if (i >= 0) { L[i] = { id, del: true, updatedAt: Date.now() }; this.put(L); } },
+  merge(incoming) {
+    if (!Array.isArray(incoming)) return false;
+    const L = this.raw(), by = new Map(L.map(x => [x.id, x])); let changed = false;
+    incoming.forEach(x => { if (!x || !x.id) return; const m = by.get(x.id); if (!m || (x.updatedAt || 0) > (m.updatedAt || 0)) { by.set(x.id, x); changed = true; } });
+    if (changed) LSX.set(this.key(), [...by.values()]);
+    return changed;
+  },
+  kcal(m) { return m.items.reduce((t, e) => t + (e.kcal || 0) * (+e.qty || 1), 0); },
+  item: e => ({ name: e.name, serv: e.serv || 'serving', qty: +e.qty || 1, kcal: +e.kcal || 0, protein: +e.protein || 0, carbs: +e.carbs || 0, fat: +e.fat || 0, medal: e.medal || null }),
+  addTo(m, meal, d = UI.ui.foodDate || todayISO()) {
+    m.items.forEach(e => Food.save(Object.assign(this.item(e), { id: uid('food'), date: d, meal, createdAt: Date.now(), src: 'meal' })));
+    m.usedAt = Date.now(); this.save(m);
+  }
+};
+(() => {
+  /* buttons under each meal of the log */
+  const lg = Food.log.bind(Food); Food.log = function () {
+    let h = lg(); const d = UI.ui.foodDate || todayISO(), L = this.day(d), prev = this.day(addDays(d, -1));
+    MEALS.forEach(([k]) => {
+      const mine = L.filter(e => e.meal === k), y = prev.filter(e => e.meal === k);
+      const extra = (mine.length ? `<button type="button" class="btn sm ghost" data-act="meal-save" data-m="${k}">${icon('bookmark')} Save meal</button>` : '')
+        + (!mine.length && y.length ? `<button type="button" class="btn sm ghost" data-act="meal-repeat" data-m="${k}">${icon('copy')} Repeat ${d === todayISO() ? 'yesterday' : 'day before'} (${y.length})</button>` : '');
+      if (!extra) return;
+      const btn = `<button type="button" class="btn sm" data-act="food-add" data-m="${k}">`, i = h.indexOf(btn); if (i < 0) return;
+      const end = h.indexOf('</button>', i) + 9;
+      h = h.slice(0, i) + `<div class="row wrap meal-acts">${h.slice(i, end)}${extra}</div>` + h.slice(end);
+    });
+    return h;
+  };
+  /* "My meals" at the top of the add-food sheet */
+  const as = Food.addSheet.bind(Food); Food.addSheet = function (meal) {
+    as(meal);
+    const sh = $('#sheet-root .sheet'), list = sh && $('#fpList', sh), M = Meals.all(); if (!list || !M.length) return;
+    list.insertAdjacentHTML('beforebegin', `<div class="stack my-meals"><div class="label">My meals</div>${M.slice(0, 8).map(m => `<div class="my-meal"><button type="button" class="grow mm-add" data-id="${m.id}" style="text-align:left">${icon('bookmark')} <b>${esc(m.name)}</b><small class="muted">${m.items.length} item${m.items.length === 1 ? '' : 's'} · ${fmtNum(Meals.kcal(m), 0)} kcal</small></button><button type="button" class="btn icon sm ghost mm-del" data-id="${m.id}" aria-label="Delete saved meal ${esc(m.name)}">${icon('trash-2')}</button></div>`).join('')}</div>`);
+    UI.icons(sh);
+    $$('.mm-add', sh).forEach(b => b.onclick = () => { const m = Meals.all().find(x => x.id === b.dataset.id); if (!m) return; Meals.addTo(m, meal); Haptics.tap(); UI.toast(`Added ${m.name}`); b.closest('.my-meal').classList.add('added'); });
+    $$('.mm-del', sh).forEach(b => b.onclick = async () => { Meals.del(b.dataset.id); b.closest('.my-meal').remove(); UI.toast('Saved meal deleted.'); });
+  };
+  const snap = Cloud.snapshot.bind(Cloud); Cloud.snapshot = function () { const o = snap(); o.meals = Meals.raw(); return o; };
+  const mg = Cloud.merge.bind(Cloud); Cloud.merge = async function (r) { const f = r && r.app === APP_ID ? Meals.merge(r.meals) : false; const ch = await mg(r); return ch || f; };
+})();
+Object.assign(Actions, {
+  'meal-repeat': el => {
+    const d = UI.ui.foodDate || todayISO(), k = el.dataset.m;
+    Food.day(addDays(d, -1)).filter(e => e.meal === k).forEach(e => Food.save(Object.assign(Meals.item(e), { id: uid('food'), date: d, meal: k, createdAt: Date.now(), src: e.src })));
+    Haptics.tap(); UI.toast('Copied.'); const y = scrollY; UI.render(); scrollTo(0, y);
+  },
+  'meal-save': el => {
+    const d = UI.ui.foodDate || todayISO(), k = el.dataset.m, items = Food.day(d).filter(e => e.meal === k); if (!items.length) return;
+    const label = MEALS.find(m => m[0] === k)[1];
+    Sheet.open({ title: 'Save this meal', html: `<p class="muted">${items.length} item${items.length === 1 ? '' : 's'}: ${esc(items.map(e => e.name).join(', ')).slice(0, 160)}</p>
+      <div class="field"><label for="mmN">Name</label><input class="input" id="mmN" maxlength="40" value="${esc(label)}"></div><p class="err-msg" id="mmErr"></p>
+      <button class="btn big primary block" type="button" id="mmGo">${icon('bookmark')} Save meal</button>`,
+      onMount: sh => {
+        const n = $('#mmN', sh); setTimeout(() => { n.focus(); n.select(); }, 60);
+        $('#mmGo', sh).onclick = async () => {
+          const name = n.value.trim(); if (name.length < 2) { $('#mmErr', sh).textContent = 'Give it a name.'; return; }
+          Meals.save({ id: uid('meal'), name, items: items.map(Meals.item), createdAt: Date.now() }); await Sheet.close(); UI.toast(`Saved "${name}" — find it under My meals when you add food.`);
+        };
+      } });
+  }
+});
+
+/* ============ RELEASE 1 · NO DEAD ENDS ============
+   • A slim banner when the phone loses its connection (training keeps saving on the phone).
+   • Barcode and meal-photo buttons say they need a connection instead of failing. */
+const Offline = {
+  init() {
+    const el = document.createElement('div'); el.id = 'offlineBar'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); el.hidden = true;
+    document.body.appendChild(el);
+    const set = () => {
+      const off = navigator.onLine === false; el.hidden = !off;
+      el.innerHTML = off ? `${icon('cloud-off')}You're offline. Training and food still save on this phone and sync when you're back.` : '';
+      if (off) UI.icons(el); document.body.classList.toggle('is-offline', off);
+    };
+    addEventListener('online', () => { set(); UI.toast('Back online.'); });
+    addEventListener('offline', set); set();
+  }
+};
+Offline.init();
+(() => {
+  const bt = FoodScan.buttons.bind(FoodScan); FoodScan.buttons = function (meal) {
+    const h = bt(meal); if (navigator.onLine !== false) return h;
+    return h.replace(/data-fs-scan="([^"]*)"/, 'data-fs-scan="$1" disabled').replace(/data-fs-photo="([^"]*)"/, 'data-fs-photo="$1" disabled') + '<p class="muted" style="font-size:12.5px">Scanning and meal photos need a connection. You can still pick foods below.</p>';
+  };
+})();
+
+/* ============ RELEASE 1 · ACCESSIBILITY PASS ============
+   Found by an automated WCAG 2.1 AA check (axe-core) across every main screen:
+   • Chip rows used role="tab" with aria-pressed, which screen readers can't combine. They are toggle
+     buttons, so they become a labelled group of pressed/not-pressed buttons (styles keep working).
+   • Progress bars without a name get one from the row they sit in.
+   • Labelled boxes get a role so the label is read: a group when they hold controls (the sets list,
+     charts with tappable points), an image otherwise (the water glasses, "3 glasses").
+   Runs after every render, on screens, sheets and dialogs. */
+const A11y = {
+  fix(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('[role="tab"][aria-pressed]').forEach(b => { b.removeAttribute('role'); b.removeAttribute('aria-selected'); });
+    root.querySelectorAll('[role="tablist"]').forEach(l => { if (!l.querySelector('[role="tab"]')) l.setAttribute('role', 'group'); });
+    root.querySelectorAll('[role="progressbar"]:not([aria-label]):not([aria-labelledby])').forEach(p => {
+      const host = p.closest('button, li, .ov-row, .food-big > div, div') || p.parentElement;
+      let t = host ? (host.querySelector('.label, b, h3, strong') || host).textContent : '';
+      t = (t || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+      p.setAttribute('aria-label', t || 'Progress');
+    });
+    const focusable = el => !!el.querySelector('button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])');
+    root.querySelectorAll('div[aria-label]:not([role]), span[aria-label]:not([role]), p[aria-label]:not([role]), small[aria-label]:not([role]), b[aria-label]:not([role])').forEach(d => d.setAttribute('role', focusable(d) ? 'group' : 'img'));
+    root.querySelectorAll('[role="img"]').forEach(d => { if (focusable(d)) d.setAttribute('role', 'group'); });   // a chart with tappable points
+  },
+  init() {
+    let queued = false;
+    const run = () => { queued = false; ['#view', '#sheet-root', '#celebrate', '#resumeBar'].forEach(s => this.fix(document.querySelector(s))); };
+    const mo = new MutationObserver(() => { if (!queued) { queued = true; requestAnimationFrame(run); } });
+    ['#view', '#sheet-root', '#celebrate'].forEach(s => { const el = document.querySelector(s); if (el) mo.observe(el, { childList: true, subtree: true }); });
+  }
+};
+A11y.init();
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
