@@ -1725,6 +1725,36 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 .flag-row{display:flex;flex-direction:column;gap:2px}
 .flag-note{align-items:flex-start}
 
+/* ================= RELEASE 3 · seasons, blocks, load suggestions ================= */
+.season-card{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 12px;text-align:left;border:1px solid rgba(var(--b2rgb),.45);background:rgba(var(--b2rgb),.08);cursor:pointer;font:inherit;color:inherit}
+.season-card svg{width:22px;height:22px;color:var(--b2);flex:none}
+.season-card b{display:block;font-size:16px}.season-card small{display:block}
+.sn-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.sn-stats b{display:block;font-size:28px;font-family:var(--f-display);font-weight:900}
+.sn-stats small{color:var(--muted);font-size:12px}
+.sn-lift{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.sn-lift b{display:block}.sn-lift small{display:block;font-size:12.5px}
+.sn-lift .up,.sn-tbl .up{color:#1F9D6B}
+.sn-in{width:120px;flex:none}
+.sn-warn{display:flex;gap:10px;flex-direction:row;border-color:rgba(var(--b2rgb),.45)}
+.sn-warn svg{width:20px;height:20px;color:var(--b2);flex:none;margin-top:2px}
+.sn-opt{display:flex;gap:12px;align-items:flex-start;width:100%;min-height:56px;padding:12px;border:1px solid var(--line);border-radius:14px;background:none;color:inherit;font:inherit;cursor:pointer;text-align:left}
+.sn-opt small{display:block;margin-top:2px;font-size:12.5px}
+.sn-opt[aria-pressed="true"]{border-color:var(--b1);background:rgba(var(--b1rgb),.06)}
+.sn-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);flex:none;margin-top:2px}
+.sn-opt[aria-pressed="true"] .sn-radio{border-color:var(--b1);box-shadow:inset 0 0 0 4px var(--bg,#fff);background:var(--b1)}
+.sn-tbl td,.sn-tbl th{white-space:nowrap}
+.be-ex{border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.be-type button{font-size:12.5px}
+.be-fields{gap:8px;align-items:flex-end}
+.be-f{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}
+.be-f .input{min-height:44px}
+.sug-card{display:flex;gap:10px;align-items:flex-start;margin:10px 0 4px;padding:12px;border-radius:14px;background:rgba(31,157,107,.1);border:1px solid rgba(31,157,107,.35);color:inherit}
+.sug-card>svg{width:20px;height:20px;color:#1F9D6B;flex:none;margin-top:2px}
+.sug-card b{display:block}.sug-card small{display:block;font-size:12.5px;opacity:.9}
+.sug-card .btn.ghost{color:inherit!important;background:transparent!important;border:1px solid currentColor!important;opacity:.9}
+.hero .h1.pre-h1{font-size:clamp(34px,11vw,52px);line-height:.95}
+
 </style>
 </head>
 <body>
@@ -1816,7 +1846,7 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 21 · 16:17';
+const BUILD_ID = 'Oct 21 · 23:12';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
@@ -9502,6 +9532,414 @@ Object.assign(Actions, {
     Social.drop('flags'); UI.toast(v === 'approved' ? 'Counted — it now scores in challenges.' : v === 'rejected' ? 'Left out of challenges.' : 'Back to waiting.');
     const y = scrollY; UI.render(); scrollTo(0, y);
   }
+});
+
+/* ============ RELEASE 3 · NEXT SEASON ============
+   A season = one run of a program from a start date. When it ends (after the last week, or once the
+   testing week is done) the athlete sees a wrap-up: the season report, new maxes (from the re-test),
+   the next block and its start date. Nothing changes until they press Start.
+   • Sessions carry the season they belong to (s.season; untagged = season 1). Program progress,
+     streaks and completion only look at the current season; history, "last time" and totals keep all.
+   • Past seasons are kept as snapshots in profile.seasons, so Progress can compare them.
+   • Blocks: the summer program again (new maxes), in-season maintenance (draft until approved), or a
+     block the coach built (Release 3 plan builder). A coach block is only used once the athlete starts it. */
+const BLOCKS = {
+  summer: { name: 'Summer program again', short: 'Summer program', desc: 'The same 11 weeks, with every load worked out from your new maxes.', approved: true },
+  inseason: { name: 'In-season maintenance', short: 'In-season', desc: '9 weeks, 2 lifting days (Mon and Thu). Built from each VT week\'s first two lifting days: same exercises and percentages, the heaviest half of the sets, no conditioning.', approved: false }
+};
+const Seasons = {
+  inScope: false,
+  cur() { return (State.profile && State.profile.season) || 1; },
+  past() { return (State.profile && State.profile.seasons) || []; },
+  block() { return (State.profile && State.profile.block) || 'summer'; },
+  visible(k) { const b = BLOCKS[k]; return !!b && (b.approved || !Cloud.on || Cloud.isAdmin()); },
+  /* run fn with State.sessions narrowed to this season (program progress only) */
+  scoped(fn) {
+    if (this.inScope) return fn();
+    const all = State.sessions, n = this.cur(); this.inScope = true;
+    State.sessions = all.filter(s => (s.season || 1) === n || s.status === 'in_progress');
+    try { return fn(); } finally { State.sessions = all; this.inScope = false; }
+  },
+  coachBlock() { const c = PlanFx.cur || PlanFx.load(); return c && c.changes && c.changes.block ? c : null; },
+  /* best tested result for a lift since this season started (null if none) */
+  tested(lift) {
+    const p = State.profile || {}, m = LIFTS[lift].metric, start = p.startDate || '0000';
+    const rs = State.results.filter(r => r.metric === m && r.o && (r.date || '') >= start && r.cls !== 'estimated');
+    return rs.length ? rs.reduce((a, b) => Units.showW(b.o) > Units.showW(a.o) ? b : a) : null;
+  },
+  startMax(lift) {
+    const p = State.profile || {}, s = p.seasonStartMaxes && p.seasonStartMaxes[lift];
+    if (s && s.w) return s.w;
+    const h = (p.baselineHistory || []).filter(x => x.lift === lift).sort((a, b) => (a.date || '').localeCompare(b.date || ''))[0];
+    return h && h.w ? h.w : (p.baselines && p.baselines[lift] && p.baselines[lift].w) || null;
+  },
+  summary() {
+    const st = Stats.get(), p = State.profile || {}, start = p.startDate || '0000';
+    const prs = State.results.filter(r => r._pr && (r.date || '') >= start).length;
+    const maxes = {}; Object.keys(LIFTS).forEach(k => { const a = this.startMax(k), t = this.tested(k), b = p.baselines && p.baselines[k]; maxes[k] = { start: a, end: t ? t.o : (b && b.w) || null }; });
+    return { n: this.cur(), block: this.block(), name: State.program.name, startDate: p.startDate, endDate: todayISO(), done: st.programPct ? Math.round(st.programPct * st.total) : 0, total: st.total, pct: st.programPct, prs, workouts: st.completed.length, maxes };
+  },
+  nextMonday() { const d = new Date(todayISO() + 'T12:00:00'); const add = ((8 - d.getDay()) % 7) || 7; return addDays(todayISO(), add); },
+  async start(o) {
+    const p = State.profile; if (!p) return;
+    const n = this.cur(), snap = Object.assign(this.summary(), { ach: State.achievements.map(a => a.id) });
+    for (const s of State.sessions) if (!s.season) { s.season = n; await Store.save('sessions', s); }
+    const u = unitW(); p.baselineHistory = p.baselineHistory || [];
+    Object.keys(o.maxes || {}).forEach(k => {
+      const v = o.maxes[k]; if (!v) return; const old = p.baselines[k];
+      if (old && Units.showW(old.w) === v.v) return;
+      if (old) p.baselineHistory.push(Object.assign({ lift: k, replaced: todayISO() }, old));
+      p.baselines[k] = { w: Units.wt(v.v, u), cls: v.cls, date: todayISO(), notes: `Season ${n + 1} start` };
+    });
+    p.seasons = (p.seasons || []).concat([snap]);
+    p.season = n + 1; p.block = o.block; p.startDate = o.startDate;
+    p.seasonStartMaxes = JSON.parse(JSON.stringify(p.baselines));
+    if (o.block && o.block.startsWith('coach:')) p.blockPlan = o.block.slice(6);
+    Store.saveProfile();
+    State.meta.finaleSeen = false; Store.saveMeta();
+    State.program = buildVTProgram(p.track, p.position); State.version++;
+    if (typeof AR !== 'undefined') { AR.sig = ''; try { AR.sync(); } catch (e) { } }
+    if (typeof Cloud !== 'undefined' && Cloud.on) Cloud.dirty();
+  },
+  /* ---------- blocks ---------- */
+  inseason(P) {
+    const keepCat = ['strength', 'core'], workouts = [];
+    for (let n = 1; n <= 9; n++) {
+      P.workouts.filter(w => w.week === n && w.exercises.some(e => e.type === 'pct')).slice(0, 2).forEach((w, i) => {
+        const day = i === 0 ? 1 : 4, ex = [];
+        w.exercises.forEach(e => {
+          const cat = (Program.exDef(e.ex) || EXERCISES[e.ex] || {}).cat;
+          if (!keepCat.includes(cat) || !['pct', 'reps', 'timed'].includes(e.type)) return;
+          const c = JSON.parse(JSON.stringify(e)); c.uid = `is-w${n}d${day}${e.uid.slice(e.uid.indexOf('e'))}`; delete c.alts;
+          if (c.type === 'pct') { const k = Math.ceil(c.scheme.length / 2); c.scheme = c.scheme.slice(c.scheme.length - k); c.extras = (c.extras || []).filter(x => x.pos === 'before' && x.warm); }
+          else c.sets = Math.max(1, Math.ceil((c.sets || 1) / 2)), c.repsList = c.repsList ? c.repsList.slice(0, c.sets) : null;
+          ex.push(c);
+        });
+        if (ex.length) workouts.push(Object.assign({}, w, { id: `is-w${n}d${day}`, week: n, day, cycle: 1, exercises: ex, category: 'strength',
+          instructions: `In-season maintenance: keep the heavy sets, skip the extra volume. ${w.warmup && w.warmup.length ? 'Warm up as usual. ' : ''}Stretch at the end.` }));
+      });
+    }
+    return Object.assign({}, P, { id: `inseason-${P.track}`, name: `In-season maintenance · ${TRACKS[P.track]}`, source: 'block', block: 'inseason', weeks: 9, workouts, restDays: [], prep: [], testWeeks: [],
+      cycles: { 1: { name: 'In-season', phase: 'Maintenance', weeks: [1, 9] } }, weekInfo: {} });
+  },
+  /* ---------- screens ---------- */
+  homeCard(st) {
+    const cb = this.coachBlock(), p = State.profile || {};
+    if (cb && p.blockPlan !== cb.id) return `<button type="button" class="panel season-card" data-act="go" data-r="season" data-stg>${icon('clipboard-list')}<span class="grow" style="text-align:left"><span class="label">From ${esc(cb.coach ? cb.coach.name : 'your coach')}</span><b>New block: ${esc(cb.name)}</b><small class="muted">Start it when you're ready. Nothing changes until you do.</small></span>${icon('chevron-right')}</button>`;
+    if (!(st.postProgram || st.testingDone)) return '';
+    return `<button type="button" class="panel season-card done" data-act="go" data-r="season" data-stg>${icon('trophy')}<span class="grow" style="text-align:left"><span class="label">Season ${this.cur()} ${st.testingDone ? 'complete' : 'is over'}</span><b>Start your next season</b><small class="muted">See your report, set new maxes and pick the next block.</small></span>${icon('chevron-right')}</button>`;
+  },
+  options() {
+    const cb = this.coachBlock(), o = [];
+    if (cb) o.push({ k: 'coach:' + cb.id, name: cb.name, desc: `Built by ${cb.coach ? cb.coach.name : 'your coach'} · ${cb.changes.block.weeks} weeks, ${cb.changes.block.days.length} days a week.`, badge: 'From your coach' });
+    Object.keys(BLOCKS).forEach(k => { if (this.visible(k)) o.push({ k, name: BLOCKS[k].name, desc: BLOCKS[k].desc, badge: BLOCKS[k].approved ? '' : 'Draft · not shown to athletes yet' }); });
+    return o;
+  },
+  screen() {
+    const p = State.profile; if (!p) return `<div class="screen">${backBar('New season')}</div>`;
+    const st = Stats.get(), sum = this.summary(), u = unitW(), f = UI.ui;
+    const opts = this.options(); if (!f.seasonBlock || !opts.some(o => o.k === f.seasonBlock)) f.seasonBlock = opts[0].k;
+    const testW = (State.program.testWeeks || []).length && !st.testingDone;
+    const pct = Math.round((sum.pct || 0) * 100);
+    const liftRow = k => {
+      const m = sum.maxes[k], t = this.tested(k), b = p.baselines[k], val = t ? Units.showW(t.o) : b ? Units.showW(b.w) : '';
+      const ch = m.start && m.end ? Units.showW(m.end) - Units.showW(m.start) : null;
+      return `<div class="sn-lift"><div class="grow"><b>${LIFTS[k].name}</b><small class="muted">${m.start ? `Season start ${fmtNum(Units.showW(m.start), 1)} ${u}` : 'No starting max'}${t ? ` · tested ${fmtDate(t.date)}` : ''}${ch ? ` · <b class="${ch > 0 ? 'up' : ''}">${ch > 0 ? '+' : ''}${fmtNum(ch, 1)} ${u}</b>` : ''}</small></div>
+        <div class="input-unit sn-in"><input class="input num" id="sn-${k}" inputmode="decimal" value="${val !== '' ? fmtNum(val, 1).replace(/,/g, '') : ''}" aria-label="New ${LIFTS[k].name} max"><span>${u}</span></div></div>`;
+    };
+    return `<div class="screen season-screen">${backBar('New season')}
+      <section class="panel stack" data-stg><span class="label">Season ${sum.n} report · ${esc(sum.name)}</span>
+        <div class="sn-stats"><div><b class="num">${pct}%</b><small>program done</small></div><div><b class="num">${sum.workouts}</b><small>workouts</small></div><div><b class="num">${sum.prs}</b><small>PRs</small></div></div>
+        <small class="muted">${sum.startDate ? `${fmtDate(sum.startDate)} to today` : ''}. Your workouts, results and badges stay in your history.</small></section>
+      ${testW ? `<section class="panel stack sn-warn" data-stg>${icon('flag')}<div><b>The testing week isn't finished</b><p class="muted" style="font-size:13.5px">Re-testing gives you real maxes for next season. You can still start now with the maxes below.</p><button class="btn sm" type="button" data-act="go" data-r="training" data-p="plan">Go to the testing week</button></div></section>` : ''}
+      <section class="panel stack" data-stg><h2 class="h3">New maxes</h2><p class="muted" style="font-size:13.5px">Filled in from your re-test where you have one, otherwise your current max. Change anything that's wrong. Every load next season is worked out from these.</p>
+        ${Object.keys(LIFTS).map(liftRow).join('')}<p class="err-msg" id="snErr"></p></section>
+      <section class="panel stack" data-stg><h2 class="h3">Next block</h2>
+        ${opts.map(o => `<button type="button" class="sn-opt" data-act="sn-block" data-v="${esc(o.k)}" aria-pressed="${f.seasonBlock === o.k}"><span class="sn-radio" aria-hidden="true"></span><span class="grow" style="text-align:left"><b>${esc(o.name)}</b>${o.badge ? ` <span class="badge ${o.badge.startsWith('Draft') ? 'warn' : 'ok'}">${esc(o.badge)}</span>` : ''}<small class="muted">${esc(o.desc)}</small></span></button>`).join('')}</section>
+      <section class="panel stack" data-stg><div class="field"><label for="snDate">Week 1 starts (a Monday)</label><input class="input" type="date" id="snDate" value="${esc(f.seasonDate || this.nextMonday())}"></div></section>
+      <button class="btn big primary block" type="button" data-act="sn-start" data-stg>${icon('circle-play')} Start season ${sum.n + 1}</button></div>`;
+  },
+  compareView() {
+    const P = this.past(), u = unitW(); if (!P.length) return '';
+    const now = Object.assign(this.summary(), { live: true }), rows = P.concat([now]);
+    const mx = (s, k) => { const m = s.maxes && s.maxes[k]; return m && m.end ? fmtNum(Units.showW(m.end), 0) : '—'; };
+    const gain = (s, k) => { const m = s.maxes && s.maxes[k]; if (!m || !m.start || !m.end) return ''; const d = Units.showW(m.end) - Units.showW(m.start); return d ? ` <small class="${d > 0 ? 'up' : 'muted'}">${d > 0 ? '+' : ''}${fmtNum(d, 0)}</small>` : ''; };
+    return `<section class="panel stack" data-stg><div class="panel-head" style="margin:0"><h2 class="h3">Season by season</h2><span class="label">maxes in ${u}</span></div>
+      <div class="tbl-wrap"><table class="tbl sn-tbl"><thead><tr><th>Season</th><th>Done</th><th>PRs</th>${Object.keys(LIFTS).map(k => `<th>${esc(LIFTS[k].name.replace('Standing ', ''))}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(s => `<tr${s.live ? ' class="hl"' : ''}><td><b>${s.n}</b>${s.live ? ' <small class="muted">now</small>' : ''}<br><small class="muted">${esc(BLOCKS[s.block] ? BLOCKS[s.block].short : (s.block || '').startsWith('coach:') ? 'Coach block' : '')}</small></td><td>${Math.round((s.pct || 0) * 100)}%</td><td>${s.prs || 0}</td>${Object.keys(LIFTS).map(k => `<td>${mx(s, k)}${gain(s, k)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+      <small class="muted">Maxes are each season's best tested result (or the max it ended with). The + shows the change within that season.</small></section>`;
+  }
+};
+
+/* ---------- wiring ---------- */
+(() => {
+  /* which program to build: the coach's block once started, in-season, or the summer program */
+  const prev = buildVTProgram;
+  buildVTProgram = function (track, pos) {
+    if (PlanFx.off) return prev(track, pos);
+    const k = Seasons.block();
+    if (k.startsWith('coach:')) { const c = Seasons.coachBlock(); if (c && c.id === k.slice(6) && typeof BlockFx !== 'undefined') { try { return BlockFx.build(c.changes.block, { id: c.id, name: c.name, version: c.version, coach: c.coach }, track, pos); } catch (e) { console.warn('block', e); } } }
+    const P = prev(track, pos);
+    if (k === 'inseason') return Seasons.inseason(P);
+    return P;
+  };
+  /* program progress counts this season only */
+  const cp = Stats.compute.bind(Stats); Stats.compute = function () { return Seasons.scoped(() => cp()); };
+  const so = Stats.statusOf.bind(Stats); Stats.statusOf = function (tid) { return Seasons.scoped(() => so(tid)); };
+  /* new and edited sessions belong to the current season */
+  const ps = Workout.persist.bind(Workout); Workout.persist = function (s, ...a) { if (s && !s.season) s.season = Seasons.cur(); return ps(s, ...a); };
+  /* badges earned in a past season stay, even though their evidence is now history */
+  const ev = Achievements.evaluate.bind(Achievements); Achievements.evaluate = function () {
+    const keep = new Set(Seasons.past().flatMap(s => s.ach || [])); if (!keep.size) return ev();
+    const rm = Store.remove; Store.remove = function (store, id) { if (store === 'achievements' && keep.has(id)) return Promise.resolve(); return rm.apply(Store, arguments); };
+    try { return ev(); } finally { Store.remove = rm; }
+  };
+  /* Home: season card; "Season 2" on the athlete card */
+  const hm = Screens.home; Screens.home = function () {
+    let h = hm.call(Screens); const st = Stats.get(), card = Seasons.homeCard(st);
+    if (Seasons.cur() > 1) h = h.replace('— ATHLETE PROFILE</div>', `— SEASON ${Seasons.cur()}</div>`);
+    h = h.replace('<h1 class="h1">Pre-season</h1>', '<h1 class="h1 pre-h1">Pre-season</h1>');   // the long word ran into the progress ring
+    if (card) { const i = h.indexOf('<div class="dash">'); if (i > 0) h = h.slice(0, i) + card + h.slice(i); }
+    return h;
+  };
+  /* Progress: a Seasons tab once there is a past season */
+  const pr = Screens.progress; Screens.progress = function (tab) {
+    if (tab === 'seasons') {
+      const h = pr.call(Screens, 'overview'), a = h.indexOf('<div class="chips" role="tablist" data-stg>'), b = h.indexOf('</div>', a) + 6;
+      const body = Seasons.past().length ? Seasons.compareView() : `<div class="empty" data-stg>${icon('trophy')}<span class="display">One season so far</span><span>When you start your next season, this compares them side by side.</span></div>`;
+      return h.slice(0, b).replace('aria-pressed="true"', 'aria-pressed="false"') + body + '</div>';   // the chip row, then the comparison instead of the overview
+    }
+    return pr.call(Screens, tab);
+  };
+  const pr2 = Screens.progress; Screens.progress = function (tab) {
+    const h = pr2.call(Screens, tab); if (!Seasons.past().length) return h;
+    return h.replace(/(<div class="chips" role="tablist" data-stg>[\s\S]*?)(<\/div>)/, `$1<button class="chip" type="button" role="tab" data-act="go" data-r="progress" data-p="seasons" aria-pressed="${tab === 'seasons'}">Seasons</button>$2`);
+  };
+  /* Profile & settings: start a new season any time */
+  const mo = Screens.more; Screens.more = function () {
+    const h = mo.call(Screens);
+    const it = `<button class="list-item" type="button" data-act="go" data-r="season">${icon('repeat')}<div class="grow"><b>Seasons</b><div class="muted" style="font-size:12.5px">Season ${Seasons.cur()} · ${esc(State.program.name || '')} · start the next one</div></div>${icon('chevron-right')}</button>`;
+    return h.replace(/(<button class="list-item" type="button" data-act="go" data-r="summary">)/, it + '$1');
+  };
+  Screens.season = () => Seasons.screen();
+  TAB_OF.season = 'home'; if (typeof Kinetic !== 'undefined') Kinetic.NAMES.season = 'SEASON';
+  After.season = view => { const d = $('#snDate', view); if (d) d.onchange = () => { UI.ui.seasonDate = d.value; }; };
+})();
+Object.assign(Actions, {
+  'sn-block': el => { UI.ui.seasonBlock = el.dataset.v; const d = $('#snDate'); if (d) UI.ui.seasonDate = d.value; const vals = {}; Object.keys(LIFTS).forEach(k => { const i = $('#sn-' + k); if (i) vals[k] = i.value; }); const y = scrollY; UI.render(); Object.keys(vals).forEach(k => { const i = $('#sn-' + k); if (i) i.value = vals[k]; }); scrollTo(0, y); },
+  'sn-start': async el => {
+    const u = unitW(), lim = u === 'kg' ? [10, 500] : [20, 1100], maxes = {}, errs = [];
+    Object.keys(LIFTS).forEach(k => {
+      const raw = ($('#sn-' + k) || {}).value; if (raw == null || String(raw).trim() === '') return;
+      const v = Number(String(raw).replace(',', '.')); if (!(v >= lim[0] && v <= lim[1])) { errs.push(`${LIFTS[k].name}: between ${lim[0]} and ${lim[1]} ${u}.`); return; }
+      const t = Seasons.tested(k); maxes[k] = { v, cls: t && Math.abs(Units.showW(t.o) - v) < .01 ? 'tested' : 'recorded' };
+    });
+    if (errs.length) { $('#snErr').innerHTML = errs.map(esc).join('<br>'); return; }
+    const date = ($('#snDate') || {}).value || '';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { $('#snErr').textContent = 'Choose the date Week 1 starts.'; return; }
+    if (new Date(date + 'T12:00:00').getDay() !== 1) { $('#snErr').textContent = 'Week 1 has to start on a Monday.'; return; }
+    if (Workout.active()) { $('#snErr').textContent = 'Finish or discard the workout in progress first.'; return; }
+    const blk = UI.ui.seasonBlock || 'summer', opt = Seasons.options().find(o => o.k === blk), n = Seasons.cur() + 1;
+    const ok = await Sheet.confirm({ title: `Start season ${n}?`, body: `<p><b>${esc(opt ? opt.name : 'Next block')}</b> from ${fmtDate(date)}. Season ${n - 1} is saved to your history and Progress → Seasons.</p>`, ok: `Start season ${n}` });
+    if (!ok) return;
+    await Seasons.start({ maxes, block: blk, startDate: date });
+    UI.ui.seasonBlock = null; UI.ui.seasonDate = null;
+    Nav.go('home'); UI.toast(`Season ${n} is set. Week 1 starts ${fmtDate(date)}.`); Haptics.beep([523, 659, 784], .1);
+  }
+});
+
+/* ============ RELEASE 3 · COACH BLOCKS ============
+   Besides changing the VT program, a coach can build a whole block of their own:
+     block { weeks: 2–16, step: % added each week, deload: last week lighter,
+             days: [ { dow: 1–5 (Mon–Fri), title, ex: [ { ex, type: 'pct'|'reps'|'timed', sets, reps, pct, sec } ] } ] }
+   It is saved in the plan's changes (changes.block) and given to a team like any plan. Athletes get a
+   "New block" card and start it as their next season (Release 3 · Seasons), so nothing switches mid-week. */
+if (!ICONS['chevron-up']) ICONS['chevron-up'] = 'M18 15l-6-6-6 6';
+const BlockFx = {
+  DAYS: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+  blank() { return { weeks: 6, step: 2.5, deload: true, days: [{ dow: 1, title: 'Day 1', ex: [] }, { dow: 4, title: 'Day 2', ex: [] }] }; },
+  pctAt(b, e, w) { if (b.deload && w === b.weeks && b.weeks > 2) return e.pct; return Math.min(100, Math.round((e.pct + (b.step || 0) * (w - 1)) * 10) / 10); },
+  setsAt(b, e, w) { return b.deload && w === b.weeks && b.weeks > 2 ? Math.max(1, Math.ceil(e.sets / 2)) : e.sets; },
+  slot(b, e, w, uid) {
+    const d = Program.exDef(e.ex) || {}, sets = this.setsAt(b, e, w);
+    if (e.type === 'pct' && d.lift) return { uid, ex: e.ex, type: 'pct', scheme: Array.from({ length: sets }, () => [e.reps, this.pctAt(b, e, w), null]), extras: [], rest: 150, note: '', key: true, title: null };
+    if (e.type === 'timed') return { uid, ex: e.ex, type: 'timed', sets, sec: e.sec || 30, rest: 30, note: '', title: null };
+    return { uid, ex: e.ex, type: 'reps', sets, reps: e.reps || 10, rest: 60, note: '', title: null };
+  },
+  build(b, meta, track, pos) {
+    if (PlanFx.cur && PlanFx.cur.changes) PlanFx.registerCustom(PlanFx.cur.changes);
+    const workouts = [];
+    for (let w = 1; w <= b.weeks; w++) b.days.forEach(d => {
+      const id = `cb-w${w}d${d.dow}`, ex = d.ex.filter(e => EXERCISES[e.ex]).map((e, j) => this.slot(b, e, w, `${id}e${j + 1}`));
+      if (!ex.length) return;
+      const strength = ex.some(e => (Program.exDef(e.ex) || {}).cat === 'strength');
+      workouts.push({ id, week: w, day: d.dow, cycle: 1, title: (d.title || '').trim() || ex.slice(0, 2).map(e => Program.exDef(e.ex).name).join(' & '), focus: d.title || '', category: strength ? 'strength' : 'conditioning',
+        warmup: [], exercises: ex, instructions: `${meta && meta.coach ? meta.coach.name + '\'s' : 'Your coach\'s'} block${b.deload && w === b.weeks && b.weeks > 2 ? ' · deload week: fewer sets, lighter' : ''}. Warm up first and stretch at the end.`,
+        completion: 'Finish the session in the logger (every prescribed set attempted or marked skipped).' });
+    });
+    return { id: `block-${meta ? meta.id : 'draft'}`, version: 1, source: 'block', block: 'coach', track: track || 'los', position: pos || 'OL', name: meta ? meta.name : 'Coach block', weeks: b.weeks,
+      cycles: { 1: { name: 'Coach block', phase: meta ? meta.name : 'Block', weeks: [1, b.weeks] } }, dayOffsets: [0, 1, 2, 3, 4], dayNames: this.DAYS.slice(), weekInfo: {}, restDays: [], workouts, prep: [], testWeeks: [], coachPlan: meta || null };
+  },
+  check(b) {
+    if (!b || !(b.weeks >= 2 && b.weeks <= 16)) return 'Blocks run 2 to 16 weeks.';
+    if (!b.days.length || !b.days.some(d => d.ex.length)) return 'Add at least one exercise.';
+    if (new Set(b.days.map(d => d.dow)).size !== b.days.length) return 'Two days are on the same weekday.';
+    for (const d of b.days) for (const e of d.ex) {
+      const n = (Program.exDef(e.ex) || {}).name || e.ex;
+      if (!(e.sets >= 1 && e.sets <= 10)) return `${n}: 1 to 10 sets.`;
+      if (e.type !== 'timed' && !(e.reps >= 1 && e.reps <= 30)) return `${n}: 1 to 30 reps.`;
+      if (e.type === 'pct' && !(e.pct >= 30 && e.pct <= 100)) return `${n}: start between 30% and 100%.`;
+      if (e.type === 'pct' && this.pctAt(b, e, b.weeks - (b.deload && b.weeks > 2 ? 1 : 0)) > 100) return `${n}: the weekly step takes it over 100% — lower the start or the step.`;
+      if (e.type === 'timed' && !(e.sec >= 5 && e.sec <= 600)) return `${n}: 5 to 600 seconds.`;
+    }
+    return '';
+  }
+};
+
+/* ---------- the editor: a third "Built on" choice in the plan editor ---------- */
+const BlockEdit = {
+  st() { return PlanEdit.st; },
+  b() { const st = this.st(); return st.changes.block || (st.changes.block = BlockFx.blank()); },
+  view() {
+    const st = this.st(), b = this.b(), can = st.can;
+    const exRow = (d, e, i, j) => {
+      const def = Program.exDef(e.ex) || {}, lift = !!def.lift;
+      const types = [['pct', '% of max'], ['reps', 'Reps'], ['timed', 'Seconds']].filter(([k]) => k !== 'pct' || lift);
+      const inp = (k, lab, v, w) => `<label class="be-f" style="width:${w}px"><span>${lab}</span><input class="input num be-in" inputmode="decimal" data-d="${i}" data-j="${j}" data-k="${k}" value="${v ?? ''}" ${can ? '' : 'disabled'}></label>`;
+      const last = e.type === 'pct' ? ` <small class="muted be-pv" data-d="${i}" data-j="${j}">${BlockEdit.pv(b, e)}</small>` : '';
+      return `<div class="be-ex"><div class="spread"><b>${esc(def.name || e.ex)}</b>${can ? `<span class="row" style="gap:2px">${j ? `<button class="btn icon sm ghost" type="button" data-act="be-up" data-d="${i}" data-j="${j}" aria-label="Move ${esc(def.name)} up">${icon('chevron-up')}</button>` : ''}<button class="btn icon sm ghost" type="button" data-act="be-del" data-d="${i}" data-j="${j}" aria-label="Remove ${esc(def.name)}">${icon('x')}</button></span>` : ''}</div>
+        <div class="seg be-type" role="group" aria-label="How ${esc(def.name)} is prescribed">${types.map(([k, l]) => `<button type="button" data-act="be-type" data-d="${i}" data-j="${j}" data-v="${k}" aria-pressed="${e.type === k}" ${can ? '' : 'disabled'}>${l}</button>`).join('')}</div>
+        <div class="row wrap be-fields">${inp('sets', 'Sets', e.sets, 70)}${e.type !== 'timed' ? inp('reps', 'Reps', e.reps, 70) : ''}${e.type === 'pct' ? inp('pct', 'Start %', e.pct, 84) : ''}${e.type === 'timed' ? inp('sec', 'Seconds', e.sec, 90) : ''}${last}</div></div>`;
+    };
+    const day = (d, i) => `<section class="panel stack be-day" data-stg><div class="row"><input class="input grow be-title" data-d="${i}" maxlength="40" value="${esc(d.title || '')}" aria-label="Day name" ${can ? '' : 'disabled'}>${can && b.days.length > 1 ? `<button class="btn icon sm ghost" type="button" data-act="be-dayx" data-d="${i}" aria-label="Remove ${esc(d.title || 'day')}">${icon('trash-2')}</button>` : ''}</div>
+      <div class="seg" role="group" aria-label="Weekday">${BlockFx.DAYS.map((n, k) => `<button type="button" data-act="be-dow" data-d="${i}" data-v="${k + 1}" aria-pressed="${d.dow === k + 1}" ${can ? '' : 'disabled'}>${n}</button>`).join('')}</div>
+      ${d.ex.map((e, j) => exRow(d, e, i, j)).join('') || '<p class="muted" style="font-size:13.5px">No exercises yet.</p>'}
+      ${can ? `<button class="btn sm" type="button" data-act="be-add" data-d="${i}">${icon('plus')} Add exercise</button>` : ''}</section>`;
+    return `<section class="panel stack" data-stg><h2 class="h3">Your own block</h2><p class="muted" style="font-size:13.5px">Pick the training days and exercises once; the app repeats them every week and raises the percentages by the weekly step. Athletes start it as their next season, with loads from their own maxes.</p>
+        <div class="row wrap" style="gap:12px;align-items:flex-end"><label class="be-f" style="width:90px"><span>Weeks</span><input class="input num be-in" data-k="weeks" inputmode="numeric" value="${b.weeks}" ${can ? '' : 'disabled'}></label>
+          <div class="field" style="margin:0"><span class="label">Add each week</span><div class="seg" role="group">${[0, 2.5, 5].map(v => `<button type="button" data-act="be-step" data-v="${v}" aria-pressed="${b.step === v}" ${can ? '' : 'disabled'}>${v ? '+' + v + '%' : 'Same'}</button>`).join('')}</div></div></div>
+        <div class="toggle"><span><b style="font-weight:600">Last week is a deload</b><br><span class="muted" style="font-size:12.5px">Half the sets at the week-1 percentage.</span></span><button class="switch" type="button" role="switch" aria-checked="${!!b.deload}" data-act="be-deload" aria-label="Last week is a deload" ${can ? '' : 'disabled'}></button></div></section>
+      ${b.days.map(day).join('')}
+      ${can && b.days.length < 5 ? `<button class="btn block" type="button" data-act="be-day" data-stg>${icon('plus')} Add a training day</button>` : ''}
+      <p class="err-msg" id="beErr" data-stg>${esc(BlockFx.check(b) && b.days.some(d => d.ex.length) ? BlockFx.check(b) : '')}</p>`;
+  },
+  redraw() { const y = scrollY; UI.render(); scrollTo(0, y); },
+  /* "→ week 5: 80%": the top week before any deload */
+  pv(b, e) { const w = b.weeks - (b.deload && b.weeks > 2 ? 1 : 0); return b.weeks > 1 && e.pct ? `→ week ${w}: ${BlockFx.pctAt(b, e, w)}%` : ''; },
+  live() { const b = this.b(); $$('.be-pv').forEach(x => { const e = b.days[+x.dataset.d] && b.days[+x.dataset.d].ex[+x.dataset.j]; if (e) x.textContent = this.pv(b, e); }); const er = $('#beErr'); if (er) er.textContent = BlockFx.check(b); },
+  defaults(id) { const d = Program.exDef(id) || {}; return d.lift ? { ex: id, type: 'pct', sets: 3, reps: 5, pct: 70 } : (d.cat === 'core' || d.cat === 'conditioning') ? { ex: id, type: 'timed', sets: 3, sec: 30 } : { ex: id, type: 'reps', sets: 3, reps: 10 }; }
+};
+(() => {
+  /* a block is not a list of changes to the VT program: never lay it over VT (it is used only once started) */
+  const ap = PlanFx.apply.bind(PlanFx); PlanFx.apply = function (P, ch, meta) { return ch && ch.block ? P : ap(P, ch, meta); };
+  const st0 = PlanEdit.start.bind(PlanEdit); PlanEdit.start = function (p) {
+    st0(p); if (p && p.changes && p.changes.block) { this.st.track = 'block'; if (this.st.tab !== 'use') this.st.tab = 'block'; }
+  };
+  const sw = PlanEdit.swaps.bind(PlanEdit); PlanEdit.swaps = function () { return this.st.track === 'block' ? BlockEdit.view() : sw(); };
+  const wk = PlanEdit.weeks.bind(PlanEdit); PlanEdit.weeks = function () { return this.st.track === 'block' ? BlockEdit.view() : wk(); };
+  const sc = PlanEdit.screen.bind(PlanEdit); PlanEdit.screen = function (param) {
+    let h = sc(param); const st = this.st; if (!st) return h;
+    h = h.replace(/(<div class="field"><span class="label">Built on<\/span><div class="seg" role="group">[\s\S]*?)(<\/div>)/, `$1<button type="button" data-act="pe-track" data-v="block" aria-pressed="${st.track === 'block'}">My own block</button>$2`);
+    if (st.track !== 'block') return h;
+    const b = BlockEdit.b(), n = b.days.reduce((a, d) => a + d.ex.length, 0);
+    h = h.replace(/<small class="muted">The VT 2005 program for that track\.[\s\S]*?<\/small>/, '<small class="muted">Not based on the VT program: your days, exercises and percentages.</small>');
+    h = h.replace(/<span class="badge blue">\d+ changes?<\/span>/, `<span class="badge blue">${b.weeks} weeks · ${b.days.length} day${b.days.length === 1 ? '' : 's'} · ${n} exercise${n === 1 ? '' : 's'}</span>`);
+    return h.replace(/<div class="seg" role="tablist" data-stg>[\s\S]*?<\/div>/, `<div class="seg" role="tablist" data-stg>${[['block', 'Build the block'], ['use', 'Use it']].map(([k, l]) => `<button type="button" role="tab" data-act="pe-tab" data-v="${k}" aria-pressed="${(st.tab === 'use' ? 'use' : 'block') === k}">${l}</button>`).join('')}</div>`);
+  };
+  const sv = PlanEdit.save.bind(PlanEdit); PlanEdit.save = async function (btn) {
+    const st = this.st;
+    if (st.track !== 'block') { delete st.changes.block; return sv(btn); }
+    const why = BlockFx.check(st.changes.block); if (why) { UI.toast(why, 'bad'); const e = $('#beErr'); if (e) e.textContent = why; return; }
+    st.track = null; try { return await sv(btn); } finally { if (this.st && this.st.track == null) this.st.track = 'block'; }
+  };
+  const pt = Actions['pe-track']; Actions['pe-track'] = el => {
+    const st = PlanEdit.st;
+    if (el.dataset.v === 'block') { st.track = 'block'; BlockEdit.b(); st.tab = 'block'; PlanEdit.touch(); return BlockEdit.redraw(); }
+    if (st.track === 'block') { delete st.changes.block; st.tab = 'swaps'; }
+    return pt(el);
+  };
+  /* inputs on the block editor */
+  const ac = After.cplan; After.cplan = view => {
+    ac(view); if (!PlanEdit.st || PlanEdit.st.track !== 'block') return;
+    $$('.be-in', view).forEach(i => i.oninput = () => {
+      const b = BlockEdit.b(), v = Number(String(i.value).replace(',', '.')), k = i.dataset.k;
+      if (k === 'weeks') b.weeks = Math.round(v) || 0; else { const e = b.days[+i.dataset.d].ex[+i.dataset.j]; e[k] = k === 'pct' ? v : Math.round(v); }
+      PlanEdit.touch(); BlockEdit.live();   // no redraw while typing: a redraw on blur would swallow the next tap
+    });
+    $$('.be-title', view).forEach(i => i.oninput = () => { BlockEdit.b().days[+i.dataset.d].title = i.value; PlanEdit.touch(); });
+  };
+  /* plans list: say which plans are blocks */
+  const pl = Screens.plans; Screens.plans = function () {
+    let h = pl.call(Screens); const e = Social.c && Social.c.plans; const L = e && e.v;
+    if (Array.isArray(L)) L.filter(p => p.block).forEach(p => { const i = h.indexOf(`data-p="${p.id}"`); if (i < 0) return; const j = h.indexOf('Standard ·', i); if (j > 0 && j - i < 900) h = h.slice(0, j) + 'Own block ·' + h.slice(j + 10); });
+    return h.replace('Give it to a whole team or to one athlete.', 'Or build your own block from scratch. Give it to a whole team or to one athlete.');
+  };
+})();
+Object.assign(Actions, {
+  'be-step': el => { BlockEdit.b().step = +el.dataset.v; PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-deload': () => { const b = BlockEdit.b(); b.deload = !b.deload; PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-dow': el => { BlockEdit.b().days[+el.dataset.d].dow = +el.dataset.v; PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-type': el => { const e = BlockEdit.b().days[+el.dataset.d].ex[+el.dataset.j], v = el.dataset.v; e.type = v; if (v === 'pct' && !e.pct) e.pct = 70; if (v === 'timed' && !e.sec) e.sec = 30; if (v !== 'timed' && !e.reps) e.reps = v === 'pct' ? 5 : 10; PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-del': el => { BlockEdit.b().days[+el.dataset.d].ex.splice(+el.dataset.j, 1); PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-up': el => { const L = BlockEdit.b().days[+el.dataset.d].ex, j = +el.dataset.j; [L[j - 1], L[j]] = [L[j], L[j - 1]]; PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-day': () => { const b = BlockEdit.b(), free = [1, 2, 3, 4, 5].find(n => !b.days.some(d => d.dow === n)); if (!free) return; b.days.push({ dow: free, title: `Day ${b.days.length + 1}`, ex: [] }); b.days.sort((x, y) => x.dow - y.dow); PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-dayx': async el => { const b = BlockEdit.b(), d = b.days[+el.dataset.d]; if (d.ex.length && !(await Sheet.confirm({ title: `Remove ${d.title || 'this day'}?`, body: `<p>Its ${d.ex.length} exercise${d.ex.length === 1 ? '' : 's'} go too.</p>`, ok: 'Remove day', danger: true }))) return; b.days.splice(+el.dataset.d, 1); PlanEdit.touch(); BlockEdit.redraw(); },
+  'be-add': async el => { const id = await PlanEdit.pick('Add to ' + (BlockEdit.b().days[+el.dataset.d].title || 'this day'), 'strength'); if (!id) return; BlockEdit.b().days[+el.dataset.d].ex.push(BlockEdit.defaults(id)); PlanEdit.touch(); BlockEdit.redraw(); }
+});
+
+/* ============ RELEASE 3 · LOAD SUGGESTIONS ============
+   When the last time an athlete did this exercise every working rep was completed and no set was
+   logged above RPE 8 (sets without an RPE count as fine), the logger suggests going up one plate
+   increment (settings: 5 lb / 2.5 kg) on today's working sets. The athlete taps Use it or No thanks;
+   nothing changes on its own.
+   • % lifts: only when today's top percentage isn't already higher than last time's (the program is
+     already progressing that week, so no extra weight is suggested).
+   • Weighted reps exercises: last time's heaviest working weight + one increment.
+   Not offered once a working set is logged today, or after the athlete has answered. */
+const LoadSug = {
+  check(s, x) {
+    if (!x || x.sug || x.skipped || !(x.type === 'pct' || x.weighted)) return null;
+    const work = x.sets.filter(t => !t.warm); if (!work.length || work.some(t => t.done)) return null;
+    const L = Workout.lastSets(x.exId, s.id); if (!L || !L.work.length) return null;
+    const hit = L.work.every(t => t.done && (t.reps || 0) >= (t.pReps || t.reps || 0) && !(t.rpe > 8));
+    if (!hit || !L.work.some(t => t.w)) return null;
+    const u = unitW(), inc = Units.inc();
+    if (x.type === 'pct') {
+      if (!x.ref) return null;
+      const lastTop = Math.max(...L.work.map(t => t.pPct || 0)), todayTop = Math.max(...work.map(t => t.pPct || 0));
+      if (!lastTop || todayTop > lastTop) return null;
+      return { inc, u, last: L, why: `Last time (${fmtDate(L.date)}) you finished every rep${L.work.some(t => t.rpe) ? ' at RPE 8 or lower' : ''}.` };
+    }
+    const lw = Math.max(...L.work.filter(t => t.w).map(t => Units.showW(t.w)));
+    return { inc, u, last: L, base: lw, why: `Last time (${fmtDate(L.date)}) you did every rep with ${fmtNum(lw, 1)} ${u}${L.work.some(t => t.rpe) ? ' at RPE 8 or lower' : ''}.` };
+  },
+  card(s, x, ei) {
+    const g = this.check(s, x); if (!g) return '';
+    return `<div class="sug-card" data-rev>${icon('trending-up')}<div class="grow"><b>Ready for +${fmtNum(g.inc, 1)} ${g.u}?</b><small>${esc(g.why)}${g.base != null ? ` Today: ${fmtNum(g.base + g.inc, 1)} ${g.u}.` : ' Adds it to today\'s working sets.'}</small>
+      <div class="row" style="gap:8px;margin-top:8px"><button class="btn sm primary" type="button" data-act="sug-yes" data-e="${ei}">Use +${fmtNum(g.inc, 1)} ${g.u}</button><button class="btn sm ghost" type="button" data-act="sug-no" data-e="${ei}">No thanks</button></div></div></div>`;
+  },
+  apply(s, ei) {
+    const x = s.ex[ei], g = this.check(s, x); if (!g) return;
+    x.sets.forEach(t => {
+      if (t.warm || t.done) return;
+      const cur = t.w ? Units.showW(t.w) : g.base; if (cur == null) return;
+      t.w = Units.wt((t.w ? cur : g.base) + g.inc, g.u);
+    });
+    x.sug = 'yes'; Workout.persist(s, true);
+  }
+};
+if (!ICONS['trending-up']) ICONS['trending-up'] = 'M22 7l-8.5 8.5-5-5L2 17M16 7h6v6';
+(() => {
+  const lg = Screens.logger; Screens.logger = function (s) {
+    const h = lg.call(Screens, s); if (!s.ex.length) return h;
+    const x = s.ex[s.cur] || s.ex[0], ei = s.ex.indexOf(x), card = LoadSug.card(s, x, ei); if (!card) return h;
+    const m = h.match(/<h2 class="ex-name" data-rev>[\s\S]*?<\/h2>(\s*<div class="label swap-note"[\s\S]*?<\/div>)*/);
+    return m ? h.replace(m[0], m[0] + card) : h;
+  };
+})();
+Object.assign(Actions, {
+  'sug-yes': el => { const s = Workout.active(); if (!s) return; LoadSug.apply(s, +el.dataset.e); UI.renderLogger(); UI.toast('Today\'s working sets are up one increment.'); },
+  'sug-no': el => { const s = Workout.active(); if (!s) return; const x = s.ex[+el.dataset.e]; if (x) { x.sug = 'no'; Workout.persist(s, true); } UI.renderLogger(); }
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
