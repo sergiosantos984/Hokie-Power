@@ -1612,6 +1612,66 @@ body.m-minimal .scan-frame i{animation:none}
 .fph-item .input-unit .input{width:118px;padding-right:44px}
 .fsrc svg{width:13px;height:13px;vertical-align:-2px;color:var(--b2)}
 
+/* ===== nutrition overview ===== */
+.ov{display:flex;flex-direction:column;gap:12px}
+.ov-range{max-width:360px}
+.ov-card .h3{margin:0}
+.ov-big{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:10px 0 12px}
+.ov-big>b{font-family:var(--f-display);font-weight:900;font-size:clamp(44px,13vw,60px);line-height:.9;letter-spacing:-.01em}
+.ov-unit{font-weight:700;font-size:18px}
+.ov-of{color:var(--muted);font-size:15px;font-variant-numeric:tabular-nums}
+.ov-st{display:inline-flex;align-items:center;gap:5px;font-size:15px;white-space:nowrap}
+.ov-st b{font-family:var(--f-display);font-size:24px;font-weight:900}
+.ov-st svg{width:16px;height:16px}
+.ov-st.over{color:var(--fg)}.ov-st.over b{color:var(--b2)}
+.ov-st.done{color:var(--fg);font-weight:700}.ov-st.done svg{color:#1F9D6B}
+.ov-bar{--c:var(--b1);position:relative;height:12px;border-radius:999px;background:rgba(127,127,127,.18);overflow:visible;display:flex}
+.ov-bar>i{display:block;height:100%;background:var(--c);border-radius:999px;transition:width var(--d-std) var(--ease-out)}
+.ov-bar.is-over>i{border-radius:999px 0 0 999px}
+.ov-bar .ov-over{display:block;height:100%;border-radius:0 999px 999px 0;margin-left:3px;background:repeating-linear-gradient(135deg,var(--c) 0 6px,rgba(0,0,0,.45) 6px 9px);transition:width var(--d-std) var(--ease-out)}
+.ov-bar .ov-tick{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:0;background:var(--fg);border-radius:2px;text-decoration:none}
+.ov-bar.none{opacity:.5}
+body.m-minimal .ov-bar>i,body.m-minimal .ov-bar .ov-over{transition:none}
+.ov-bar.cal,.ov-bar.mc-cal{--c:var(--b1)}
+.ov-bar.mc-carb,.ov-dot.mc-carb{--c:#169C8F}
+.ov-bar.mc-fat,.ov-dot.mc-fat{--c:#9A5BD6}
+.ov-bar.mc-pro,.ov-dot.mc-pro{--c:#E09A2D}
+.ov-sub{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:13px;color:var(--muted)}
+.ov-empty-t{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:13.5px;color:var(--muted)}
+.ov-mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:10px}
+.ov-m{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ov-ml{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px}
+.ov-dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.ov-m>b{font-family:var(--f-display);font-weight:900;font-size:clamp(26px,8vw,34px);line-height:1;white-space:nowrap}
+.ov-m>b small{font-size:15px;font-weight:700}
+.ov-m .ov-of{font-size:13px}
+.ov-m .ov-bar{height:9px;margin-top:4px}
+.ov-ms{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+.ov-ms svg{width:12px;height:12px}.ov-ms .over{color:var(--fg);font-weight:700;display:inline-flex;align-items:center;gap:2px}
+.ov-note{font-size:12px;margin-top:10px}
+.ov-swap{flex:none}
+.ov-week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:130px;margin-top:10px}
+.ov-day{display:flex;flex-direction:column;align-items:center;gap:6px;height:100%}
+.ov-col{position:relative;flex:1;width:100%;max-width:34px;display:flex;align-items:flex-end}
+.ov-col i{display:block;width:100%;background:var(--b1);border-radius:6px 6px 3px 3px}
+.ov-col i.is-over{background:repeating-linear-gradient(135deg,var(--b1) 0 6px,rgba(0,0,0,.4) 6px 9px)}
+.ov-col i.nolog{background:rgba(127,127,127,.25)}
+.ov-col s{position:absolute;left:-3px;right:-3px;height:2px;background:var(--fg);text-decoration:none}
+.ov-day small{font-size:11px;color:var(--muted)}
+.ov-ins{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.ov-ins:last-child{border-bottom:0}
+.ov-ins small{display:block;font-size:12.5px;margin-top:2px}
+.ov-ins b{font-family:var(--f-display);font-size:18px}
+.ov-ins.col{flex-direction:column;gap:6px;align-items:stretch}
+.ov-ii{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(var(--b2rgb),.14);color:var(--b2);flex:none}
+.ov-ii svg{width:18px;height:18px}
+.ov-meal{display:grid;grid-template-columns:118px 1fr 48px;gap:8px;align-items:center;font-size:13px}
+.ov-meal .ov-bar{height:8px}.ov-meal b{text-align:right;font-family:var(--f-body);font-size:13px}
+.ov-guide{margin-top:8px}
+@media (max-width:380px){.ov-mgrid{gap:10px}.ov-m>b{font-size:24px}.ov-meal{grid-template-columns:96px 1fr 42px}}
+@media (min-width:900px){.ov{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ov>.ov-range{grid-column:1/-1}.ov>.grid2{grid-column:1/-1;max-width:520px}}
+.ov-warn{display:flex;align-items:flex-start;gap:6px;font-size:13px;margin-top:10px;padding:8px 10px;border-radius:10px;background:rgba(var(--b2rgb),.12)}.ov-warn svg{width:15px;height:15px;flex:none;margin-top:2px;color:var(--b2)}
+
 </style>
 </head>
 <body>
@@ -1703,7 +1763,7 @@ body.m-minimal .scan-frame i{animation:none}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 20 · 19:28';
+const BUILD_ID = 'Oct 21 · 11:14';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on every open (shorter in Minimal / reduced motion); tap to skip. */
@@ -8197,15 +8257,26 @@ const Food = {
   recent() { const seen = new Set(), out = []; this.all().sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)).forEach(e => { const k = e.name.toLowerCase(); if (!seen.has(k)) { seen.add(k); out.push(e); } }); return out.slice(0, 8); },
   highDay(d) { if (d === todayISO()) return Nutrition.today().high; return State.program.workouts.some(w => Program.schedDate(w) === d); },
   coach() { const c = PlanFx.info && (PlanFx.info.coaching || []).find(x => x.targets && Object.keys(x.targets).length); return c || null; },
-  /* daily targets: the coach's, else from body weight and goal */
-  targets(d = todayISO()) {
-    const high = this.highDay(d), c = this.coach();
-    if (c) { const t = c.targets; return { kcal: t.kcal || null, protein: t.protein || null, carbs: t.carbs || null, fat: t.fat || null, water: t.water || 8, by: c.coach ? c.coach.name : 'Your coach', high }; }
-    const bw = Stats.currentBw(); if (!bw) return { none: true, high, water: high ? 10 : 8 };
+  /* a suggestion from body weight and goal — only used once the athlete chooses it (never applied silently) */
+  suggest(d = todayISO()) {
+    const high = this.highDay(d), bw = Stats.currentBw(); if (!bw) return null;
     const lb = Units.fromKg(bw.kg, 'lb'), goal = Nutrition.goal() || 'hold', per = { gain: 18, hold: 16, lose: 13 }[goal];
     const kcal = Math.round(lb * per * (high ? 1 : .9) / 50) * 50, protein = Math.round(lb * (goal === 'hold' ? .9 : 1)), fat = Math.round(kcal * .25 / 9);
-    return { kcal, protein, fat, carbs: Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4)), water: high ? 10 : 8, goal, lb, high };
+    return { kcal, protein, fat, carbs: Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4)), water: high ? 10 : 8, goal, lb, high, src: 'suggested' };
   },
+  pref() { return State.settings.nutri || {}; },
+  /* daily targets: coach first, then the athlete's own choice (their numbers, or the suggestion they accepted).
+     Nothing is invented: with no choice made, there is no target (src 'none') and the screens ask to set one. */
+  targets(d = todayISO()) {
+    const high = this.highDay(d), c = this.coach(), n = this.pref(), num = v => v != null && v !== '' && isFinite(+v) && +v > 0 ? +v : null;
+    let base = null;
+    if (n.mode === 'custom') base = { kcal: num(n.kcal), protein: num(n.protein), carbs: num(n.carbs), fat: num(n.fat), water: high ? 10 : 8, high, src: 'mine' };
+    else if (n.mode === 'suggested') base = this.suggest(d);
+    if (c) { const t = c.targets, b = base || {}; return { kcal: num(t.kcal) || b.kcal || null, protein: num(t.protein) || b.protein || null, carbs: num(t.carbs) || b.carbs || null, fat: num(t.fat) || b.fat || null, water: t.water || 8, by: c.coach ? c.coach.name : 'Your coach', high, src: 'coach', goal: b.goal, lb: b.lb }; }
+    if (base && (base.kcal || base.protein || base.carbs || base.fat)) return base;
+    return { none: true, high, water: high ? 10 : 8, src: 'none', suggestion: this.suggest(d) };
+  },
+  srcLabel(t) { return t.src === 'coach' ? `Set by ${esc(t.by)}` : t.src === 'mine' ? 'Your own targets' : t.src === 'suggested' ? 'Suggested from your body weight and goal' : 'No targets set'; },
   bar(v, t, cls = '') { return Social.bar(t ? v / t * 100 : 0, 'f' + Math.random().toString(36).slice(2, 6), cls); },
   medalDot(m) { return m ? `<span class="fmedal ${m}" title="${MEDAL[m].label}">${MEDAL[m].label[0]}</span>` : ''; },
   log() {
@@ -8217,7 +8288,7 @@ const Food = {
         <div><span class="label">Protein</span><b class="num">${fmtNum(T.protein, 0)}</b><small class="muted"> / ${tg.protein ? fmtNum(tg.protein, 0) : '—'} g</small>${this.bar(T.protein, tg.protein, 'orange')}</div></div>
       <div class="row wrap" style="gap:6px"><span class="badge">Carbs ${fmtNum(T.carbs, 0)}${tg.carbs ? ' / ' + fmtNum(tg.carbs, 0) : ''} g</span><span class="badge">Fat ${fmtNum(T.fat, 0)}${tg.fat ? ' / ' + fmtNum(tg.fat, 0) : ''} g</span>
         ${['gold', 'silver', 'bronze'].map(m => `<span class="badge fm-${m}">${this.medalDot(m)} ${T[m]} ${MEDAL[m].label}</span>`).join('')}</div>
-      ${tg.none ? `<p class="muted" style="font-size:13px">Log your body weight (Performance → Body weight) to get calorie and protein targets.</p>` : tg.by ? `<p class="muted" style="font-size:12.5px">${icon('clipboard-list')} Targets set by ${esc(tg.by)}.</p>` : ''}
+      ${tg.none ? `<p class="muted" style="font-size:13px">No daily targets yet. <button type="button" class="linkish" data-act="go" data-r="nutrition" data-p="targets">Set your targets</button></p>` : `<p class="muted" style="font-size:12.5px">${icon('clipboard-list')} ${this.srcLabel(tg)}.</p>`}
       ${isToday ? `<div class="water-row"><span class="label">Water</span><div class="glasses" aria-label="${Water.get()} glasses">${Array.from({ length: 8 }, (_, i) => `<span class="glass ${i < Water.get() ? 'on' : ''}"></span>`).join('')}</div><button class="btn sm icon" type="button" data-act="water" data-v="1" aria-label="Add a glass of water">${icon('plus')}</button></div>` : ''}</section>`;
     const meal = ([k, l]) => { const items = L.filter(e => e.meal === k), t = this.total(items), want = tg.kcal ? Math.round(tg.kcal * MEAL_SPLIT[k] / 10) * 10 : null;
       return `<section class="panel food-meal" data-stg><div class="spread"><h3 class="h3">${l}</h3><span class="label">${fmtNum(t.kcal, 0)}${want ? ' / ~' + want : ''} kcal</span></div>
@@ -8233,18 +8304,35 @@ const Food = {
   plan() {
     const t = this.targets(todayISO()), tr = Object.assign({}, this.targets(addDays(todayISO(), 1)));
     const c = this.coach(), note = c && c.note;
-    if (t.none) return `<section class="panel stack" data-stg><h2 class="h3">Your daily targets</h2><p>Log your body weight first (Performance → Body weight) and set a target weight in your profile. Your targets follow from them.</p><button class="btn primary" type="button" data-act="go" data-r="progress" data-p="body">Log body weight</button></section>`;
+    const setup = this.setup(t);
+    if (t.none) return setup;
     const high = t.high, gold = NUTRITION.protein.gold.foods, silverC = NUTRITION.carbs.silver.foods, goldC = NUTRITION.carbs.gold.foods;
     const sugg = { breakfast: `Egg whites or ${gold[6].toLowerCase()}, ${silverC[0].toLowerCase()} or oatmeal, fruit, milk`, am: 'Fruit and a yogurt', lunch: `${gold[0]} or ${gold[2].toLowerCase()} sandwich on whole grain bread, vegetables, fruit, milk`, pm: `${gold[6]} or white chicken, fruit, milk`, dinner: `${gold[1]} or ${gold[3].toLowerCase()}, baked potato or ${silverC[3].toLowerCase()}, a big salad and ${goldC[4].toLowerCase()}`, eve: 'Sandwich or a shake, fruit, milk' };
-    const row = (k, l) => `<div class="kv"><span><b>${l}</b><br><span class="muted" style="font-size:12.5px">${esc(sugg[k])}</span></span><span class="num">~${Math.round(t.kcal * MEAL_SPLIT[k] / 10) * 10} kcal<br><small class="muted">${Math.round(t.protein * MEAL_SPLIT[k])} g protein</small></span></div>`;
+    const row = (k, l) => !t.kcal ? '' : `<div class="kv"><span><b>${l}</b><br><span class="muted" style="font-size:12.5px">${esc(sugg[k])}</span></span><span class="num">~${Math.round(t.kcal * MEAL_SPLIT[k] / 10) * 10} kcal<br><small class="muted">${Math.round(t.protein * MEAL_SPLIT[k])} g protein</small></span></div>`;
     return `<section class="panel stack" data-stg><div class="spread"><h2 class="h3">Your daily targets</h2><span class="badge ${high ? 'red' : 'blue'}">${high ? 'Training day' : 'Lower activity day'}</span></div>
         <div class="metrics">${[['Calories', t.kcal, 'kcal'], ['Protein', t.protein, 'g'], ['Carbs', t.carbs, 'g'], ['Fat', t.fat, 'g']].map(([l, v, u]) => `<div class="metric"><span class="label">${l}</span><div class="v">${v != null ? fmtNum(v, 0) : '—'}<small> ${u}</small></div></div>`).join('')}</div>
-        ${t.by ? `<p class="muted" style="font-size:13px">${icon('clipboard-list')} Set by <b>${esc(t.by)}</b>.${note ? ` “${esc(note)}”` : ''}</p>` : `<p class="muted" style="font-size:13px">From your body weight (${fmtNum(t.lb, 0)} lb) and goal: <b>${{ gain: 'gain weight', hold: 'hold weight', lose: 'lose body fat' }[t.goal]}</b>. ${high ? 'Training days get more food (mostly Silver carbs); lower activity days about 10% less, cutting back on Silver and Bronze.' : 'A lower activity day: about 10% less food than a training day, with fewer Silver and Bronze choices.'} ${!tr.none && tr.kcal !== t.kcal ? `Tomorrow: ${fmtNum(tr.kcal, 0)} kcal.` : ''}</p>`}
+        ${t.src === 'coach' ? `<p class="muted" style="font-size:13px">${icon('clipboard-list')} Set by <b>${esc(t.by)}</b>.${note ? ` “${esc(note)}”` : ''}</p>` : t.src === 'mine' ? `<p class="muted" style="font-size:13px">${icon('clipboard-list')} Your own targets.</p>` : `<p class="muted" style="font-size:13px">Suggested from your body weight (${fmtNum(t.lb, 0)} lb) and goal: <b>${{ gain: 'gain weight', hold: 'hold weight', lose: 'lose body fat' }[t.goal]}</b>. ${high ? 'Training days get more food (mostly Silver carbs); lower activity days about 10% less, cutting back on Silver and Bronze.' : 'A lower activity day: about 10% less food than a training day, with fewer Silver and Bronze choices.'} ${!tr.none && tr.kcal !== t.kcal ? `Tomorrow: ${fmtNum(tr.kcal, 0)} kcal.` : ''}</p>`}
         <button class="btn" type="button" data-act="go" data-r="nutrition" data-p="log">${icon('utensils')} Open the food log</button></section>
+      ${setup}
       <section class="panel stack" data-stg><h2 class="h3">Six meals a day</h2><p class="muted" style="font-size:13.5px">The book: eat 4–6 meals a day and never skip breakfast. Build each one from Gold proteins and Gold or Silver carbs; Silver carbs within an hour after training.</p>
         ${MEALS.map(([k, l]) => row(k, l)).join('')}
         ${t.goal === 'gain' ? `<button class="btn" type="button" data-act="go" data-r="nutrition" data-p="huge">The Brutally Huge Diet</button>` : ''}</section>
       <p class="muted" style="font-size:12px" data-stg>General guidance from body weight, not a medical or personal diet plan. Athletes under 18, or anyone with a health condition, should check targets with a parent, doctor or sports dietitian.</p>`;
+  },
+  /* choose targets: the suggestion (accepted, not silent) or your own numbers. A coach's targets override both. */
+  setup(t) {
+    const n = this.pref(), sg = t.suggestion || this.suggest(), mode = UI.ui.nutriMode || n.mode || (sg ? 'suggested' : 'custom'), coach = t.src === 'coach';
+    const cur = n.mode === 'custom' ? n : {};
+    return `<section class="panel stack nt-setup" data-stg id="ntSetup"><h2 class="h3">${t.none ? 'Set your daily targets' : 'Change your targets'}</h2>
+      ${coach ? `<p class="muted" style="font-size:13px">${icon('clipboard-list')} Your coach's numbers are used first. Anything they left empty comes from what you choose here.</p>` : t.none ? '<p class="muted" style="font-size:13.5px">The overview and food log compare what you eat with these. Pick one way:</p>' : ''}
+      <div class="seg" role="group" aria-label="How to set targets"><button type="button" data-act="nt-mode" data-v="suggested" aria-pressed="${mode === 'suggested'}">Suggest from my weight</button><button type="button" data-act="nt-mode" data-v="custom" aria-pressed="${mode === 'custom'}">My own numbers</button></div>
+      ${mode === 'suggested' ? (sg ? `<div class="metrics">${[['Calories', sg.kcal, 'kcal'], ['Protein', sg.protein, 'g'], ['Carbs', sg.carbs, 'g'], ['Fat', sg.fat, 'g']].map(([l, v, u]) => `<div class="metric"><span class="label">${l}</span><div class="v">${fmtNum(v, 0)}<small> ${u}</small></div></div>`).join('')}</div>
+          <p class="muted" style="font-size:12.5px">From your latest body weight (${fmtNum(sg.lb, 0)} lb) and goal (${{ gain: 'gain weight', hold: 'hold weight', lose: 'lose body fat' }[sg.goal]}, from your target weight): about ${{ gain: 18, hold: 16, lose: 13 }[sg.goal]} kcal per lb on training days, 10% less on lower activity days; protein ${sg.goal === 'hold' ? '0.9' : '1'} g per lb; fat 25% of calories; carbs the rest. They update when your weight changes.</p>
+          <button type="button" class="btn primary" data-act="nt-save" data-v="suggested" ${n.mode === 'suggested' && !coach ? 'disabled' : ''}>${n.mode === 'suggested' ? icon('check') + ' Using these' : 'Use these targets'}</button>`
+        : `<p>Log your body weight first (and a target weight in your profile for the goal), then the app can suggest targets.</p><button class="btn" type="button" data-act="go" data-r="progress" data-p="body">Log body weight</button>`)
+      : `<div class="grid2">${[['kcal', 'Calories', 'kcal'], ['protein', 'Protein', 'g'], ['carbs', 'Carbs', 'g'], ['fat', 'Fat', 'g']].map(([k, l, u]) => `<div class="field"><label for="nt-${k}">${l}</label><div class="input-unit"><input class="input num" id="nt-${k}" inputmode="numeric" value="${cur[k] || ''}" placeholder="${sg ? sg[k] : ''}"><span>${u}</span></div></div>`).join('')}</div>
+        <small class="muted">Leave a box empty if you don't want a target for it.</small><p class="err-msg" id="ntErr" role="alert"></p><button type="button" class="btn primary" data-act="nt-save" data-v="custom">${icon('save')} Save my targets</button>`}
+      ${n.mode ? `<button type="button" class="btn sm ghost" data-act="nt-save" data-v="clear">Remove my targets</button>` : ''}</section>`;
   },
   mini() {
     if (!Features.can('food_log')) return '';
@@ -8301,6 +8389,20 @@ const Food = {
   const mg = Cloud.merge.bind(Cloud); Cloud.merge = async function (r) { const f = r && r.app === APP_ID ? Food.merge(r.food) : false; const ch = await mg(r); if (f) State.version++; return ch || f; };
 })();
 Object.assign(Actions, {
+  'nt-mode': el => { UI.ui.nutriMode = el.dataset.v; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'nt-save': el => {
+    const v = el.dataset.v;
+    if (v === 'clear') { delete State.settings.nutri; UI.ui.nutriMode = null; Store.saveSettings(); UI.toast('Targets removed.'); }
+    else if (v === 'suggested') { State.settings.nutri = { mode: 'suggested' }; Store.saveSettings(); UI.toast('Using the suggested targets.'); }
+    else {
+      const o = { mode: 'custom' }, lim = { kcal: [800, 9000], protein: [20, 600], carbs: [0, 1500], fat: [10, 400] }; let bad = '';
+      Object.keys(lim).forEach(k => { const raw = ($('#nt-' + k) || {}).value; if (raw == null || String(raw).trim() === '') return; const x = Number(String(raw).replace(',', '.')); if (!(x >= lim[k][0] && x <= lim[k][1])) bad = `${k === 'kcal' ? 'Calories' : k[0].toUpperCase() + k.slice(1)} must be between ${lim[k][0]} and ${lim[k][1]}.`; else o[k] = Math.round(x); });
+      if (bad) { $('#ntErr').textContent = bad; return; }
+      if (!o.kcal && !o.protein && !o.carbs && !o.fat) { $('#ntErr').textContent = 'Enter at least one target.'; return; }
+      State.settings.nutri = o; Store.saveSettings(); UI.toast('Targets saved.');
+    }
+    const y = scrollY; UI.render(); scrollTo(0, y);
+  },
   'food-add': el => Food.addSheet(el.dataset.m),
   'food-del': el => { Food.del(el.dataset.id); const y = scrollY; UI.render(); scrollTo(0, y); },
   'food-q': el => { const e = Food.raw().find(x => x.id === el.dataset.id); if (!e) return; const q = Math.round(((+e.qty || 1) + +el.dataset.v) * 2) / 2; if (q <= 0) return Actions['food-del'](el); e.qty = Math.min(20, q); Food.save(e); const y = scrollY; UI.render(); scrollTo(0, y); },
@@ -8453,12 +8555,18 @@ const FoodScan = {
     if (!(Cloud.sb && Cloud.user)) throw new Error('Meal photos need you to be logged in and online.');
     const { data, error } = await Cloud.sb.functions.invoke('food-photo', { body: { image: dataUrl.split(',')[1], note } });
     if (error) {
-      let m = ''; try { const j = await error.context.json(); m = j && j.error; } catch (e) { }
-      const st = error.context && error.context.status;
-      if (!m && (st === 404 || /fetch|relay|not found/i.test(String(error.message)))) m = 'Meal photos are not switched on yet. The admin needs to add the food-photo function in Supabase.';
-      throw new Error(m || 'The photo could not be analysed. Try again.');
+      const ctx = error.context, st = ctx && ctx.status; let body = null, raw = '';
+      try { raw = await ctx.clone().text(); body = JSON.parse(raw); } catch (e) { }
+      const m = body && (body.error || body.msg || body.message);
+      let msg;
+      if (error.name === 'FunctionsFetchError' || (!st && !m)) msg = 'The app could not reach the food-photo function. Check in Supabase that it is deployed with the exact name food-photo, and that "Verify JWT" (Enforce JWT verification) is turned OFF in its settings.';
+      else if (st === 404) msg = 'There is no food-photo function in Supabase yet (or it has a different name).';
+      else if (st === 401 && /jwt/i.test(String(m))) msg = 'Supabase blocked the request before it reached the function. Open the food-photo function → Details/Settings and turn OFF "Verify JWT", then save.';
+      else msg = m || `The photo could not be analysed (error ${st || '?'}).`;
+      const e2 = new Error(msg); e2.detail = `${error.name || 'Error'}${st ? ' · HTTP ' + st : ''}${raw && !m ? ' · ' + raw.slice(0, 160) : m && msg !== m ? ' · ' + String(m).slice(0, 160) : ''}`; throw e2;
     }
     if (data && data.error) throw new Error(data.error);
+    if (typeof data === 'string') { try { return JSON.parse(data); } catch (e) { throw new Error('Unexpected answer from the function: ' + data.slice(0, 120)); } }
     return data;
   },
   photo(meal) {
@@ -8491,7 +8599,7 @@ const FoodScan = {
       const go = $('#phGo', box); if (go) go.onclick = async () => {
         st.note = $('#phNote', box).value.trim(); go.disabled = true; go.innerHTML = Kinetic.wave('LOOKING AT YOUR PLATE…');
         try { const r = await this.ask(st.img, st.note); st.res = r; st.items = (r.items || []).map(i => Object.assign({}, i)); draw(sh); }
-        catch (e) { go.disabled = false; go.innerHTML = `${icon('sparkles')} Try again`; UI.icons(go); $('#phErr', box).textContent = e.message; }
+        catch (e) { go.disabled = false; go.innerHTML = `${icon('sparkles')} Try again`; UI.icons(go); $('#phErr', box).innerHTML = esc(e.message) + (e.detail ? `<small class="muted" style="display:block;margin-top:4px;word-break:break-word">Details: ${esc(e.detail)}</small>` : ''); }
       };
       $$('[data-f]', box).forEach(i => i.oninput = () => { const it = st.items[+i.dataset.k]; it[i.dataset.f] = i.dataset.f === 'name' ? i.value : Math.max(0, Math.round(+i.value || 0)); if (i.dataset.f === 'name') it.medal = it.medal || Food.guess(i.value); const T = st.items.reduce((t, x) => ({ kcal: t.kcal + (+x.kcal || 0), protein: t.protein + (+x.protein || 0) }), { kcal: 0, protein: 0 }); const tt = $('#phTot', box); if (tt) tt.textContent = `${fmtNum(T.kcal, 0)} kcal · ${fmtNum(T.protein, 0)} g protein`; });
       $$('[data-rm]', box).forEach(b => b.onclick = () => { st.items.splice(+b.dataset.rm, 1); draw(sh); });
@@ -8504,6 +8612,145 @@ const FoodScan = {
     Sheet.open({ title: 'Photo of your plate', html: '<div id="phBox" class="stack"></div>', onMount: sh => draw(sh), onClose: () => { const y = scrollY; UI.render(); scrollTo(0, y); } });
   }
 };
+
+/* ============ NUTRITION OVERVIEW ============
+   The first thing in Nutrition: today's (or this week's) calories and macros against the athlete's targets,
+   worked out from their own food log entries — never from sample numbers.
+   • Calories: consumed, target, remaining / reached / over, % of target. When over, the bar is drawn
+     to the real amount with the target marked and the extra striped — it never hides intake at 100%.
+   • Macros: carbs, fat, protein in grams (or as % of calories). Carbs are TOTAL carbs: the food data
+     (our food list, Open Food Facts, AI estimates) doesn't carry fiber for every entry, so a "net carbs"
+     number would mix definitions.
+   • A few insights only: macro split, protein streak, training vs rest days, meals through the day.
+   Targets come from Food.targets(): coach → the athlete's own numbers → a suggestion they accepted. */
+const NutriCalc = {
+  /* one metric against its target: state none | empty | below | reached | over */
+  vs(v, t, band) {
+    v = Math.max(0, +v || 0); t = +t > 0 ? +t : null;
+    if (!t) return { v, t: null, state: v ? 'none' : 'empty-none', pct: null, rem: null, over: null };
+    const b = Math.max(band || 0, t * .02), pct = v / t * 100;
+    const state = v === 0 ? 'empty' : v > t + b ? 'over' : v >= t - b ? 'reached' : 'below';
+    return { v, t, state, pct, rem: Math.max(0, t - v), over: Math.max(0, v - t) };
+  },
+  days(end, n) { return Array.from({ length: n }, (_, i) => addDays(end, i - n + 1)); },
+  /* totals for one day, or the average per LOGGED day over a range */
+  range(range) {
+    const today = todayISO();
+    if (range !== 'week') { const L = Food.day(today); return { tot: Food.total(L), tg: Food.targets(today), logged: L.length ? 1 : 0, n: 1, list: L, days: [today] }; }
+    const days = this.days(today, 7), per = days.map(d => ({ d, L: Food.day(d) })), got = per.filter(x => x.L.length);
+    const sum = Food.total(got.flatMap(x => x.L)), k = got.length || 1;
+    const avg = { kcal: sum.kcal / k, protein: sum.protein / k, carbs: sum.carbs / k, fat: sum.fat / k, gold: sum.gold, silver: sum.silver, bronze: sum.bronze };
+    const tgs = (got.length ? got : per).map(x => Food.targets(x.d)), mean = key => { const xs = tgs.map(t => t[key]).filter(x => x > 0); return xs.length === tgs.length && xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null; };
+    const t0 = tgs[tgs.length - 1] || {};
+    return { tot: avg, tg: Object.assign({}, t0, { kcal: mean('kcal'), protein: mean('protein'), carbs: mean('carbs'), fat: mean('fat') }), logged: got.length, n: 7, per, days };
+  },
+  /* consecutive logged days (ending today or yesterday) with protein at least 90% of the day's target */
+  proteinStreak() {
+    let n = 0, d = todayISO();
+    const ok = day => { const L = Food.day(day), t = Food.targets(day); return L.length && t.protein && Food.total(L).protein >= t.protein * .9; };
+    if (!ok(d)) d = addDays(d, -1);
+    for (let i = 0; i < 365 && ok(d); i++) { n++; d = addDays(d, -1); }
+    return n;
+  },
+  /* average intake on days with a finished workout vs other logged days (last 14 days) */
+  trainVsRest() {
+    const done = new Set(State.sessions.filter(s => s.status === 'completed').map(s => s.date)), g = { t: [], r: [] };
+    this.days(todayISO(), 14).forEach(d => { const L = Food.day(d); if (!L.length) return; (done.has(d) ? g.t : g.r).push(Food.total(L)); });
+    const avg = a => a.length ? { n: a.length, kcal: a.reduce((s, x) => s + x.kcal, 0) / a.length, protein: a.reduce((s, x) => s + x.protein, 0) / a.length } : null;
+    return { t: avg(g.t), r: avg(g.r) };
+  }
+};
+const MACROS = [['carbs', 'Carbs', 'mc-carb', 4], ['fat', 'Fat', 'mc-fat', 9], ['protein', 'Protein', 'mc-pro', 4]];
+const Overview = {
+  /* the bar: below → filled to %; over → drawn to the real amount, target marked, extra striped */
+  bar(r, cls, label) {
+    if (!r.t) return `<div class="ov-bar ${cls} none" role="img" aria-label="${esc(label)}: no target"><i style="width:0"></i></div>`;
+    const over = r.state === 'over', scale = over ? r.v : r.t, base = (over ? r.t : r.v) / scale * 100, extra = over ? r.over / scale * 100 : 0;
+    return `<div class="ov-bar ${cls} ${over ? 'is-over' : ''}" role="progressbar" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(Math.min(100, r.pct))}" aria-valuetext="${Math.round(r.pct)}% of target${over ? ', over target' : ''}">
+      <i style="width:${base.toFixed(2)}%"></i>${over ? `<b class="ov-over" style="width:${extra.toFixed(2)}%"></b><s class="ov-tick" style="left:${base.toFixed(2)}%"></s>` : ''}</div>`;
+  },
+  status(r, unit) {
+    const f = x => fmtNum(x, 0);
+    if (!r.t) return '';
+    if (r.state === 'over') return `<span class="ov-st over">${icon('trending-up')} <b>${f(r.over)}</b> ${unit} over</span>`;
+    if (r.state === 'reached') return `<span class="ov-st done">${icon('check')} Goal reached</span>`;
+    return `<span class="ov-st"><b>${f(r.rem)}</b> ${unit} left</span>`;
+  },
+  calories(R, week) {
+    const r = NutriCalc.vs(R.tot.kcal, R.tg.kcal, 25), f = x => fmtNum(x, 0);
+    const head = week ? `Average per logged day · ${R.logged}/7 days logged` : 'Today';
+    if (week && !R.logged) return `<section class="panel ov-card" data-stg><div class="spread"><h2 class="h3">Calories</h2><span class="label">Last 7 days</span></div><p class="muted">Nothing logged in the last 7 days.</p><button class="btn sm primary" type="button" data-act="go" data-r="nutrition" data-p="log">${icon('utensils')} Log food</button></section>`;
+    return `<section class="panel ov-card ov-cal" data-stg aria-label="Calories"><div class="spread"><h2 class="h3">Calories</h2><span class="label">${head}</span></div>
+      <div class="ov-big"><b class="num">${f(r.v)}</b><span class="ov-unit">kcal</span>${r.t ? `<span class="ov-of">/ ${f(r.t)}</span>` : ''}<span class="grow"></span>${this.status(r, 'kcal')}</div>
+      ${this.bar(r, 'cal', week ? 'Average calories' : 'Calories today')}
+      ${r.t ? `<div class="ov-sub"><span>${Math.round(r.pct)}% of target</span><span>${R.tg.src === 'coach' ? 'Target from ' + esc(R.tg.by) : R.tg.src === 'mine' ? 'Your target' : R.tg.src === 'suggested' ? 'Suggested target' : ''}${!week && R.tg.high != null ? ` · ${R.tg.high ? 'training day' : 'lower activity day'}` : ''}</span></div>`
+        : `<div class="ov-empty-t"><span>${r.v ? '' : 'Nothing logged yet today. '}No calorie target set, so there's nothing to compare with.</span><button type="button" class="btn sm" data-act="go" data-r="nutrition" data-p="targets">${icon('target')} Set targets</button></div>`}
+      ${!week && !r.v && r.t ? `<p class="muted" style="font-size:13px;margin-top:8px">Nothing logged yet today.</p>` : ''}
+      ${(() => { const z = (week ? R.per.flatMap(x => x.L) : R.list).filter(e => !(+e.kcal > 0)).length; return z ? `<p class="ov-warn">${icon('triangle-alert')} ${z} item${z > 1 ? 's have' : ' has'} no calories entered, so ${week ? 'these numbers are' : 'today is'} probably higher. <button type="button" class="linkish" data-act="go" data-r="nutrition" data-p="log">Fix in the food log</button></p>` : ''; })()}</section>`;
+  },
+  macros(R, week) {
+    if (week && !R.logged) return '';
+    const view = UI.ui.macroView === 'pct' ? 'pct' : 'g', T = R.tot, kc = { carbs: T.carbs * 4, fat: T.fat * 9, protein: T.protein * 4 }, kTot = kc.carbs + kc.fat + kc.protein;
+    const cell = ([k, l, cls]) => {
+      const r = NutriCalc.vs(T[k], R.tg[k], 3);
+      if (view === 'pct') { const p = kTot ? kc[k] / kTot * 100 : 0, tp = R.tg[k] && R.tg.kcal ? R.tg[k] * (k === 'fat' ? 9 : 4) / R.tg.kcal * 100 : null;
+        return `<div class="ov-m"><span class="ov-ml"><i class="ov-dot ${cls}"></i>${l}</span><b class="num">${kTot ? Math.round(p) : 0}<small>%</small></b><span class="ov-of">${tp ? `target ~${Math.round(tp)}%` : 'of calories'}</span>
+          <div class="ov-bar ${cls}" role="img" aria-label="${l}: ${Math.round(p)}% of calories"><i style="width:${p.toFixed(1)}%"></i></div></div>`; }
+      return `<div class="ov-m"><span class="ov-ml"><i class="ov-dot ${cls}"></i>${l}</span><b class="num">${fmtNum(r.v, 0)}<small> g</small></b><span class="ov-of">${r.t ? `/ ${fmtNum(r.t, 0)} g` : 'no target'}</span>
+        ${this.bar(r, cls, l)}<span class="ov-ms">${r.t ? (r.state === 'over' ? `<span class="over">${icon('trending-up')} ${fmtNum(r.over, 0)} g over</span>` : r.state === 'reached' ? `${icon('check')} reached` : `${fmtNum(r.rem, 0)} g left`) + ` · ${Math.round(r.pct)}%` : '&nbsp;'}</span></div>`;
+    };
+    const macroK = kTot, gap = T.kcal && macroK ? Math.abs(macroK - T.kcal) / T.kcal : 0;
+    return `<section class="panel ov-card ov-mac" data-stg aria-label="Macronutrients"><div class="spread"><h2 class="h3">Macros</h2>
+        <button type="button" class="btn icon sm ov-swap" data-act="ov-macro" aria-label="Show macros ${view === 'g' ? 'as % of calories' : 'in grams'}" title="${view === 'g' ? 'Show as % of calories' : 'Show in grams'}">${icon('repeat')}</button></div>
+      <div class="ov-mgrid">${MACROS.map(cell).join('')}</div>
+      <p class="muted ov-note">${view === 'pct' ? 'Share of calories from each macro (4 kcal per g of carbs or protein, 9 per g of fat).' : 'Carbs are total carbohydrates.'}${gap > .12 ? ' Calories from labels can differ from macros × 4/9 (fiber, rounding, alcohol), so the two may not add up exactly.' : ''}</p></section>`;
+  },
+  week(R) {
+    if (!R.logged) return '';
+    const max = Math.max(...R.per.map(x => Food.total(x.L).kcal), R.tg.kcal || 0, 1);
+    return `<section class="panel ov-card" data-stg aria-label="Calories by day"><div class="spread"><h2 class="h3">Last 7 days</h2><span class="label">kcal per day</span></div>
+      <div class="ov-week" role="list">${R.per.map(x => { const k = Food.total(x.L).kcal, t = Food.targets(x.d).kcal, o = t && k > t * 1.02;
+        return `<div class="ov-day" role="listitem" aria-label="${fmtDate(x.d)}: ${x.L.length ? fmtNum(k, 0) + ' kcal' : 'not logged'}"><div class="ov-col"><i class="${o ? 'is-over' : ''} ${x.L.length ? '' : 'nolog'}" style="height:${x.L.length ? Math.max(3, k / max * 100).toFixed(1) : 3}%"></i>${t ? `<s style="bottom:${(t / max * 100).toFixed(1)}%"></s>` : ''}</div><small>${parseISO(x.d).toLocaleDateString(undefined, { weekday: 'narrow' })}</small></div>`; }).join('')}</div>
+      <p class="muted ov-note">Line = that day's target. Days you didn't log are left out of the averages.</p></section>`;
+  },
+  insights(R, week) {
+    const out = [], T = R.tot;
+    const ps = NutriCalc.proteinStreak(), tp = R.tg.protein;
+    if (tp) out.push(`<div class="ov-ins"><span class="ov-ii">${icon('flame')}</span><div><b>${ps} day${ps === 1 ? '' : 's'}</b> in a row hitting protein<small class="muted">At least 90% of your protein target on logged days.</small></div></div>`);
+    const tv = NutriCalc.trainVsRest();
+    if (tv.t && tv.r) out.push(`<div class="ov-ins"><span class="ov-ii">${icon('dumbbell')}</span><div>Training days <b>${fmtNum(tv.t.kcal, 0)}</b> kcal · other days <b>${fmtNum(tv.r.kcal, 0)}</b><small class="muted">Average over the last 14 days (${tv.t.n} training, ${tv.r.n} other logged days). The VT book: eat more on training days, less on easy days.</small></div></div>`);
+    const md = T.gold + T.silver + T.bronze;
+    if (md) out.push(`<div class="ov-ins"><span class="ov-ii">${icon('award')}</span><div><b>${Math.round(T.gold / md * 100)}%</b> Gold choices${week ? ' this week' : ' today'}<small class="muted">${T.gold} Gold · ${T.silver} Silver · ${T.bronze} Bronze items (VT medal system).</small></div></div>`);
+    if (!week && R.list.length) {
+      const per = MEALS.map(([k, l]) => [l, Food.total(R.list.filter(e => e.meal === k)).kcal]).filter(x => x[1] > 0), mx = Math.max(...per.map(x => x[1]), 1);
+      out.push(`<div class="ov-ins col"><div class="spread"><b>Through the day</b><small class="muted">kcal per meal</small></div>${per.map(([l, k]) => `<div class="ov-meal"><span>${l}</span><div class="ov-bar mc-cal"><i style="width:${(k / mx * 100).toFixed(1)}%"></i></div><b class="num">${fmtNum(k, 0)}</b></div>`).join('')}</div>`);
+    }
+    return out.length ? `<section class="panel ov-card stack" data-stg aria-label="Insights"><h2 class="h3">Insights</h2>${out.join('')}</section>` : '';
+  },
+  view() {
+    if (!Features.can('food_log')) return Features.locked('food_log', 'The nutrition overview');
+    const week = UI.ui.nutriRange === 'week', R = NutriCalc.range(week ? 'week' : 'day');
+    return `<div class="ov" data-stg><div class="seg ov-range" role="tablist" aria-label="Period"><button type="button" role="tab" data-act="ov-range" data-v="day" aria-selected="${!week}" aria-pressed="${!week}">Today</button><button type="button" role="tab" data-act="ov-range" data-v="week" aria-selected="${week}" aria-pressed="${week}">Last 7 days</button></div>
+      ${this.calories(R, week)}${this.macros(R, week)}${week ? this.week(R) : ''}${this.insights(R, week)}
+      <div class="grid2" data-stg><button class="btn primary" type="button" data-act="go" data-r="nutrition" data-p="log">${icon('utensils')} Food log</button><button class="btn" type="button" data-act="go" data-r="nutrition" data-p="targets">${icon('target')} Targets</button></div></div>`;
+  }
+};
+(() => {
+  /* Overview takes the place of "Today": same route, the VT guidance for the day stays underneath */
+  const nu = Screens.nutrition; Screens.nutrition = function (tab) {
+    if (tab && tab !== 'today' && tab !== 'overview') return nu.call(Screens, tab);
+    Overview.inPage = true; let h; try { h = nu.call(Screens, 'today'); } finally { Overview.inPage = false; }
+    h = h.replace(/(data-p="today" aria-pressed="true">)Today(<\/button>)/, '$1Overview$2');
+    return h.replace(/(<div class="chips" role="tablist" data-stg>[\s\S]*?<\/div>)/, m => m + Overview.view() + '<h2 class="label ov-guide" data-stg>Today\'s guidance</h2>');
+  };
+  /* on the Overview the small "Logged today" box would repeat the cards */
+  const mini = Food.mini.bind(Food); Food.mini = function () { return Overview.inPage ? '' : mini(); };
+  const nn = Screens.nutrition; Screens.nutrition = function (tab) { return nn.call(Screens, tab).replace(/(data-p="today" aria-pressed="false">)Today(<\/button>)/, '$1Overview$2'); };
+})();
+Object.assign(Actions, {
+  'ov-range': el => { UI.ui.nutriRange = el.dataset.v; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'ov-macro': () => { UI.ui.macroView = UI.ui.macroView === 'pct' ? 'g' : 'pct'; const y = scrollY; UI.render(); scrollTo(0, y); }
+});
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
