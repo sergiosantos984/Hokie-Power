@@ -245,7 +245,7 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
 #intro[hidden]{display:none}
 #intro canvas{position:absolute;inset:0;width:100%;height:100%}
 #intro .cam{position:absolute;inset:0;perspective:900px;transform-style:preserve-3d}
-#intro .lyr{position:absolute;left:-8%;right:-8%;will-change:transform,opacity;transition:opacity .7s var(--ease-io),transform 1.6s var(--ease-out)}
+#intro .lyr{position:absolute;left:-8%;right:-8%;will-change:transform,opacity;transition:opacity 1.3s var(--ease-io),transform 2.6s var(--ease-out)}
 #intro .sky{inset:0;left:0;right:0;opacity:0;background:
   radial-gradient(90% 30% at 50% 50%,rgba(var(--b1lrgb),.6),transparent 70%),
   linear-gradient(180deg,#060304 0%,#190D11 36%,#481526 52%,#16171A 60%,#0A0607 100%)}
@@ -282,10 +282,10 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
 #intro .t-sub{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,7vw,38px);line-height:.95;letter-spacing:.04em}
 #intro .t-sub span{color:#B7BEC3}
 #intro .t-tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;color:var(--silver)}
-#intro .reveal{opacity:0;transform:translateY(18px);clip-path:inset(0 0 100% 0);transition:opacity .45s var(--ease-out),transform .55s var(--ease-out),clip-path .55s var(--ease-out)}
+#intro .reveal{opacity:0;transform:translateY(18px);clip-path:inset(0 0 100% 0);transition:opacity .9s var(--ease-out),transform 1.1s var(--ease-out),clip-path 1.1s var(--ease-out)}
 #intro.s-e .reveal{opacity:1;transform:none;clip-path:inset(0 0 -10% 0)}
-#intro.s-e .reveal:nth-child(2){transition-delay:.06s}#intro.s-e .reveal:nth-child(3){transition-delay:.13s}
-#intro.s-e .reveal:nth-child(4){transition-delay:.2s}#intro.s-e .reveal:nth-child(5){transition-delay:.28s}
+#intro.s-e .reveal:nth-child(2){transition-delay:.25s}#intro.s-e .reveal:nth-child(3){transition-delay:.5s}
+#intro.s-e .reveal:nth-child(4){transition-delay:.75s}#intro.s-e .reveal:nth-child(5){transition-delay:1s}
 #intro .skip{position:absolute;top:calc(var(--safe-t) + 14px);right:14px;z-index:3}
 #intro .disclaimer{position:absolute;top:calc(var(--safe-t) + 22px);left:18px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.14em;color:rgba(183,190,195,.55);max-width:58%}
 #intro.s-a .sky{opacity:.4}
@@ -295,12 +295,12 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
 #intro.s-c .stadium{opacity:1;transform:none}
 #intro.s-lit .stadium .lights,#intro.s-lit .stadium .louv{opacity:1}
 #intro.s-lit .cone{opacity:1}
-#intro.s-lit .stadium .scan{animation:louvreScan .9s var(--ease-io) 1 forwards}
+#intro.s-lit .stadium .scan{animation:louvreScan 1.5s var(--ease-io) 1 forwards}
 @keyframes louvreScan{0%{opacity:1;transform:translateX(0)}100%{opacity:1;transform:translateX(780px)}}
 body.m-minimal #intro .stadium .scan{animation:none}
 /* press: push through Gate 2005 into the tunnel */
-#intro.s-d .stadium{opacity:0;transform:translateY(30px) scale(3.2);transition:opacity .55s var(--ease-io) .15s,transform .7s var(--ease-io)}
-#intro.s-d .sky-near,#intro.s-d .sky-far,#intro.s-d .water{opacity:0;transform:scale(1.4);transition:opacity .4s var(--ease-io),transform .7s var(--ease-io)}
+#intro.s-d .stadium{opacity:0;transform:translateY(30px) scale(3.2);transition:opacity .8s var(--ease-io) .2s,transform 1.05s var(--ease-io)}
+#intro.s-d .sky-near,#intro.s-d .sky-far,#intro.s-d .water{opacity:0;transform:scale(1.4);transition:opacity .6s var(--ease-io),transform 1.05s var(--ease-io)}
 #intro.s-d .tunnel{opacity:1;transition-delay:.2s}
 #intro.s-d .cone{opacity:0}
 
@@ -1792,6 +1792,33 @@ button.wtile{cursor:pointer}
 .wt-d{display:flex;align-items:baseline;gap:4px}.wt-d b{font:900 34px/1 var(--f-display,Impact,sans-serif)}.wt-d small,.wt-s{color:var(--muted);font-size:12.5px}
 .wt-in{position:absolute;top:8px;right:8px;display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:999px;background:var(--b2,var(--b2));color:#1a0a10;font-weight:900;font-size:12px}
 .wall-ch{align-self:start}.wall-hint{margin-top:12px}
+/* ===== Release 6 · coach & progress tools ===== */
+.rdy-card{gap:10px;border-left:4px solid var(--b2,var(--b2));margin:10px 0}
+.rdy-q{display:flex;flex-direction:column;gap:6px}
+.rdy-s{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.rdy-s button{min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--panel-2,rgba(255,255,255,.04));color:inherit;font:800 17px/1 var(--f-display,Impact,sans-serif)}
+.rdy-s button[aria-checked="true"]{background:var(--b1,var(--b1));border-color:var(--b1,var(--b1));color:#fff}
+.rdy-lowh{display:inline-flex;align-items:center;gap:6px}
+.rdy-low .drop-row,.rdy-team .drop-row{width:100%;color:inherit}
+.ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.ms-c{display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:14px;background:var(--panel-2,rgba(255,255,255,.04))}
+.ms-c b{font-size:22px}.ms-c b small{font-size:13px;font-weight:600}
+.ph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}
+.ph-t{position:relative;display:flex;flex-direction:column;gap:4px}
+.ph-t small{font-size:12px;color:var(--muted)}
+.ph-open{display:block;width:100%;aspect-ratio:3/4;border-radius:12px;overflow:hidden;border:2px solid var(--line);background:#111;padding:0}
+.ph-t.on .ph-open{border-color:var(--b2,var(--b2))}
+.ph-open img,.ph-two img,.ph-big img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.ph-open img.on,.ph-two img.on,.ph-big img.on{opacity:1}
+.ph-sel{position:absolute;top:6px;right:6px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center}
+.ph-sel[aria-pressed="true"]{background:var(--b2,var(--b2));color:#1a0a10}
+.ph-two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ph-two figure,.ph-big{margin:0;display:flex;flex-direction:column;gap:4px}
+.ph-two img{aspect-ratio:3/4;border-radius:12px;background:#111}
+.ph-two figcaption{font-size:12.5px;color:var(--muted);text-align:center}
+.ph-big img{max-height:70vh;object-fit:contain;border-radius:12px;background:#111}
+.ph-intro label.btn{cursor:pointer}
+.rdy-card [data-act=rdy-save]:disabled{opacity:.45;box-shadow:none}
 
 </style>
 </head>
@@ -1884,7 +1911,7 @@ button.wtile{cursor:pointer}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 22 · 15:06';
+const BUILD_ID = 'Oct 22 · 21:58';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
@@ -3158,7 +3185,7 @@ const Intro = {
     };
     if (!this.raf) this.raf = requestAnimationFrame(tick);
   },
-  /* about two seconds from black to title: ridgelines → stadium rises → lights come on → title */
+  /* about five seconds from black to title (cinematic): ridgelines → stadium rises → lights come on → title */
   play(onDone) {
     this.onDone = onDone; this.build();
     const el = $('#intro'); el.hidden = false; el.className = ''; $('#flash').style.opacity = 0;
@@ -3167,7 +3194,7 @@ const Intro = {
     $('#enterStadium').disabled = false;
     const name = Motion.modeName();
     if (name === 'minimal') { this.finish(); return; }
-    const T = name === 'cinematic' ? [40, 250, 650, 1100, 1550] : [0, 120, 320, 560, 850];
+    const T = name === 'cinematic' ? [300, 1100, 2300, 3500, 4700] : [150, 600, 1300, 2100, 2900];   // slower build-up: ridgelines → stadium → lights → title
     ['s-a', 's-b', 's-c', 's-lit', 's-e'].forEach((c, i) => this.timers.push(setTimeout(() => el.classList.add(c), T[i])));
     setTimeout(() => $('#skipIntro').focus({ preventScroll: true }), 50);
   },
@@ -3180,7 +3207,7 @@ const Intro = {
     const done = () => { cancelAnimationFrame(this.raf); this.raf = null; el.hidden = true; this.onDone && this.onDone(); };
     if (Motion.off) return done();
     el.classList.add('s-d');
-    const dur = Motion.modeName() === 'cinematic' ? 950 : 550, t0 = performance.now();
+    const dur = Motion.modeName() === 'cinematic' ? 1400 : 900, t0 = performance.now();
     Motion.anim($('#intro .ui'), [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(30px) scale(.97)' }], { duration: dur * .4, fill: 'forwards', easing: EASE.io });
     const acc = t => { const k = clamp((t - t0) / dur, 0, 1); this.speed = .4 + k * k * 7; $('#flash').style.opacity = Math.max(0, (k - .65) / .35); if (k < 1) requestAnimationFrame(acc); else setTimeout(done, 60); };
     requestAnimationFrame(acc);
@@ -6058,7 +6085,7 @@ const Social = {
   },
 
   /* ---------- photos: resized on the phone, private bucket, signed links ---------- */
-  async upload(file, max = 1600) {
+  async upload(file, max = 1600, bucket = 'social', limit = 5) {
     if (!file || !/^image\/(jpeg|png|webp|heic|heif)$/i.test(file.type || '') && !/\.(jpe?g|png|webp|heic|heif)$/i.test(file.name || '')) throw new Error('Pick a photo (JPEG, PNG or WebP).');
     if (file.size > 25 * 1024 * 1024) throw new Error('That photo is too big (25 MB max).');
     let img; try { img = await createImageBitmap(file); } catch (e) {
@@ -6068,9 +6095,9 @@ const Social = {
     cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k); cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
     const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .85));   // re-encoding also strips location data from the photo
     if (!blob) throw new Error('This photo could not be read. Try a JPEG.');
-    if (blob.size > 5 * 1024 * 1024) throw new Error('That photo is still over 5 MB after shrinking.');
+    if (blob.size > limit * 1024 * 1024) throw new Error(`That photo is still over ${limit} MB after shrinking.`);
     const path = `${Cloud.user.id}/${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}.jpg`;
-    const { error } = await Cloud.sb.storage.from('social').upload(path, blob, { contentType: 'image/jpeg', upsert: false });
+    const { error } = await Cloud.sb.storage.from(bucket).upload(path, blob, { contentType: 'image/jpeg', upsert: false });
     if (error) throw new Error(/bucket not found/i.test(error.message) ? 'Photo storage is not set up yet (run social.sql).' : this.msg(error));
     this.urls[path] = { url: URL.createObjectURL(blob), exp: Date.now() + 36e5 };
     return path;
@@ -9583,7 +9610,7 @@ Object.assign(Actions, {
      block the coach built (Release 3 plan builder). A coach block is only used once the athlete starts it. */
 const BLOCKS = {
   summer: { name: 'Summer program again', short: 'Summer program', desc: 'The same 11 weeks, with every load worked out from your new maxes.', approved: true },
-  inseason: { name: 'In-season maintenance', short: 'In-season', desc: '9 weeks, 2 lifting days (Mon and Thu). Built from each VT week\'s first two lifting days: same exercises and percentages, the heaviest half of the sets, no conditioning.', approved: false }
+  inseason: { name: 'In-season maintenance', short: 'In-season', desc: '9 weeks, 2 lifting days (Mon and Thu). Built from each VT week\'s first two lifting days: same exercises and percentages, the heaviest half of the sets, no conditioning.', approved: true }
 };
 const Seasons = {
   inScope: false,
@@ -10487,6 +10514,284 @@ Object.assign(Actions, {
   },
   'wall-full': () => { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen({ navigationUI: 'hide' }).catch(() => UI.toast('Full screen isn\'t available in this browser.', 'bad')); } catch (e) { UI.toast('Full screen isn\'t available in this browser.', 'bad'); } },
   'wall-exit': () => { try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) { } Wall.stop(); Actions.back ? Actions.back() : Nav.go('more'); }
+});
+
+/* ============ RELEASE 6 · COACH & PROGRESS TOOLS ============
+   • Readiness check-in: an optional 5-tap card at the top of the logger (sleep, soreness, energy, mood,
+     stress, 1 = worst to 5 = best). Saved with the athlete's own data; their team coaches see today's
+     answers, who is low (average 2.5 or under) and the 14-day team trend. Nothing in the plan changes.
+   • Coach CSV export: roster, attendance, test results, challenge results. Opens in Excel (UTF-8,
+     separator and decimal mark to match the coach's Excel).
+   • Body measurements: waist, chest, arm, thigh and body fat (optional). Only the athlete sees them.
+   • Private progress photos: their own private folder in the 'progress' bucket. Only the athlete can
+     upload, open or delete them (not coaches, not admins), and there is no way to post them. */
+const RDY_Q = [['sleep', 'Sleep', 'Poor', 'Great'], ['soreness', 'Soreness', 'Very sore', 'Fresh'], ['energy', 'Energy', 'Drained', 'Full'], ['mood', 'Mood', 'Low', 'Great'], ['stress', 'Stress', 'Very stressed', 'Relaxed']];
+const syncList = name => ({
+  key() { return `bbp.${(typeof Cloud !== 'undefined' && Cloud.ns) || 'local'}.${name}`; },
+  raw() { return LSX.get(this.key(), []) || []; },
+  put(list) { LSX.set(this.key(), list); if (typeof Cloud !== 'undefined' && Cloud.dirty) Cloud.dirty(); State.version++; },
+  all() { return this.raw().filter(x => !x.del).sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.updatedAt || 0) - (b.updatedAt || 0)); },
+  save(e) { const L = this.raw(), i = L.findIndex(x => x.id === e.id); e.updatedAt = Date.now(); if (i >= 0) L[i] = e; else L.push(e); this.put(L); },
+  del(id) { const L = this.raw(), i = L.findIndex(x => x.id === id); if (i >= 0) { L[i] = { id, del: true, date: L[i].date, updatedAt: Date.now() }; this.put(L); } },
+  merge(incoming) {
+    if (!Array.isArray(incoming)) return false;
+    const L = this.raw(), by = new Map(L.map(x => [x.id, x])); let changed = false;
+    incoming.forEach(x => { if (!x || !x.id) return; const m = by.get(x.id); if (!m || (x.updatedAt || 0) > (m.updatedAt || 0)) { by.set(x.id, x); changed = true; } });
+    if (changed) LSX.set(this.key(), [...by.values()]);
+    return changed;
+  }
+});
+const Ready = Object.assign(syncList('readiness'), {
+  on() { return State.settings.readinessAsk !== false; },
+  today() { const t = todayISO(); return this.all().filter(e => e.date === t).pop() || null; },
+  score(e) { const v = RDY_Q.map(([k]) => +e[k]).filter(x => x >= 1 && x <= 5); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10 : null; },
+  coached() { try { const e = Social.c.myteams; return !!(Cloud.on && ((e && e.v && e.v.length) || (Cloud.profile && Cloud.profile.team))); } catch (e) { return Cloud.on; } },
+  card(s) {
+    const d = UI.ui.rdy || (UI.ui.rdy = {}), all = RDY_Q.every(([k]) => d[k]);
+    return `<section class="panel stack rdy-card" data-stg aria-labelledby="rdyH"><div class="spread"><h2 class="h3" id="rdyH">How are you today?</h2><button class="btn sm ghost" type="button" data-act="rdy-skip">Skip</button></div>
+      <p class="muted" style="font-size:13px">5 taps, optional. 1 is the worst, 5 the best.${Cloud.on ? ' Your team coaches see your answers.' : ' Only you see this.'}</p>
+      ${RDY_Q.map(([k, l, lo, hi]) => `<div class="rdy-q"><div class="spread"><b id="rq-${k}">${l}</b><small class="muted">${lo} → ${hi}</small></div><div class="rdy-s" role="radiogroup" aria-labelledby="rq-${k}">${[1, 2, 3, 4, 5].map(v => `<button type="button" role="radio" data-act="rdy-pick" data-k="${k}" data-v="${v}" aria-checked="${+d[k] === v}" aria-label="${l} ${v} of 5${v === 1 ? ', ' + lo : v === 5 ? ', ' + hi : ''}">${v}</button>`).join('')}</div></div>`).join('')}
+      <button class="btn primary block" type="button" data-act="rdy-save" ${all ? '' : 'disabled'}>${icon('check')} Save</button></section>`;
+  },
+  showFor(s) { return this.on() && s && !s.rdySkip && !this.today() && !s.ex.some(x => x.sets.some(t => t.done)); },
+  history() {
+    const days = [...Array(14)].map((_, i) => addDays(todayISO(), i - 13)), by = {}; this.all().forEach(e => { by[e.date] = e; });
+    return days.map(d => ({ d, e: by[d] || null }));
+  },
+  progressCard() {
+    const H = this.history(); if (!H.some(x => x.e)) return '';
+    return `<section class="panel" data-stg><div class="panel-head"><h2 class="h3">Readiness</h2><span class="label">last 14 days · 1 to 5</span></div>
+      ${Chart.bars({ items: H.map(x => { const sc = x.e ? this.score(x.e) : 0; return { v: sc || 0, label: String(+x.d.slice(8)), tip: x.e ? `${fmtDate(x.d)} · ${fmtNum(sc, 1)} of 5 (${RDY_Q.map(([k, l]) => `${l} ${x.e[k] || '—'}`).join(', ')})` : `${fmtDate(x.d)} · no check-in`, hl: x.d === todayISO() }; }), max: 5, fmt: v => fmtNum(v, 1), title: 'Readiness, last 14 days' })}</section>`;
+  }
+});
+const Meas = Object.assign(syncList('measurements'), {
+  F: [['waist', 'Waist'], ['chest', 'Chest'], ['arm', 'Arm'], ['thigh', 'Thigh']],
+  show(cm) { return cm == null ? null : Units.hUnit() === 'cm' ? cm : cm / CM_PER_IN; },
+  section() {
+    const L = this.all(), u = Units.hUnit(), first = L[0], last = L[L.length - 1];
+    const val = (e, k) => e && e[k] != null ? e[k] : null;
+    const cell = (k, l, pct) => { const a = val(first, k), b = val([...L].reverse().find(e => e[k] != null), k); const ch = a != null && b != null && L.length > 1 ? (pct ? b - a : this.show(b) - this.show(a)) : null;
+      return `<div class="ms-c"><small class="label">${l}</small><b class="num">${b == null ? '—' : fmtNum(pct ? b : this.show(b), 1)}<small>${b == null ? '' : pct ? '%' : ' ' + u}</small></b>${ch != null ? `<small class="muted">${ch > 0 ? '+' : ''}${fmtNum(ch, 1)}${pct ? ' pts' : ' ' + u} since ${fmtDate(first.date)}</small>` : ''}</div>`; };
+    return `<section class="panel stack" data-stg id="measSec"><div class="panel-head"><h2 class="h3">Measurements</h2><span class="label">${icon('lock')} only you see these</span></div>
+      ${L.length ? `<div class="ms-grid">${this.F.map(([k, l]) => cell(k, l)).join('')}${cell('bf', 'Body fat', true)}</div>` : '<p class="muted">Track waist, chest, arm and thigh (and body fat, if you want). Measure the same spot each time, ideally in the morning.</p>'}
+      <div class="grid2"><div class="field"><label for="msDate">Date</label><input class="input" type="date" id="msDate" value="${todayISO()}" max="${todayISO()}"></div>
+        ${this.F.map(([k, l]) => `<div class="field"><label for="ms-${k}">${l}</label><div class="input-unit"><input class="input num" id="ms-${k}" inputmode="decimal"><span>${u}</span></div></div>`).join('')}
+        <div class="field"><label for="ms-bf">Body fat (optional)</label><div class="input-unit"><input class="input num" id="ms-bf" inputmode="decimal"><span>%</span></div></div></div>
+      <p class="err-msg" id="msErr" role="alert"></p>
+      <button class="btn primary" type="button" data-act="ms-add">${icon('plus')} Save measurements</button>
+      ${L.length ? `<div>${L.slice().reverse().map(e => `<div class="list-item"><div class="grow"><b>${fmtDate(e.date)}</b><div class="muted" style="font-size:12.5px">${[...this.F.filter(([k]) => e[k] != null).map(([k, l]) => `${l} ${fmtNum(this.show(e[k]), 1)} ${u}`), e.bf != null ? `Body fat ${fmtNum(e.bf, 1)}%` : ''].filter(Boolean).join(' · ')}</div></div><button class="btn sm ghost" type="button" data-act="ms-del" data-id="${e.id}" aria-label="Delete measurements from ${fmtDate(e.date)}">${icon('trash-2')}</button></div>`).join('')}</div>` : ''}</section>`;
+  }
+});
+
+/* ---------- private progress photos ---------- */
+const Photos = {
+  urls: {},
+  list() { return Social.get('photos', () => Social.rpc('photo_list'), 60000); },
+  async sign(paths) {
+    const need = paths.filter(p => !(this.urls[p] && this.urls[p].exp > Date.now())); if (!need.length) return;
+    const { data, error } = await Cloud.sb.storage.from('progress').createSignedUrls(need, 600);   // links stop working after 10 minutes
+    if (error) throw error;
+    (data || []).forEach(d => { if (d && d.signedUrl) this.urls[d.path] = { url: d.signedUrl, exp: Date.now() + 540000 }; });
+  },
+  hydrate(root) {
+    const els = $$('img[data-ph]', root); if (!els.length) return;
+    const paths = [...new Set(els.map(i => i.dataset.ph))];
+    this.sign(paths).then(() => els.forEach(i => { const u = this.urls[i.dataset.ph]; if (u) { i.onload = () => i.classList.add('on'); i.src = u.url; } else i.classList.add('ph-missing'); }), () => els.forEach(i => i.classList.add('ph-missing')));
+  },
+  label: p => `${{ front: 'Front', side: 'Side', back: 'Back' }[p.pose] || 'Photo'} · ${fmtDate(p.taken_on)}`,
+  view() {
+    if (!Cloud.on) return `<div class="empty" data-stg>${icon('lock')}<span class="display">Progress photos need an account</span><span>They're stored in your own private folder online, so they need team accounts (the hosted version of the app).</span></div>`;
+    const e = this.list(), sel = UI.ui.phSel || [];
+    const intro = `<section class="panel stack ph-intro" data-stg><div class="spread"><h2 class="h3">${icon('lock')} Progress photos</h2><label class="btn sm primary" for="phFile">${icon('camera')} Add photo</label></div>
+      <input type="file" id="phFile" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" class="sr-only">
+      <p class="muted" style="font-size:13px">Private to you. Your coach, other athletes and admins can't open them, and they can't be posted. Location data is removed when you upload.</p></section>`;
+    if (!e.v) return intro + (e.err ? Social.errBox(e.err, 'photos') : Social.skel(1));
+    const L = e.v;
+    if (!L.length) return intro + `<div class="empty" data-stg>${icon('camera')}<span class="display">No photos yet</span><span>Take one now and another in a few weeks, in the same spot and light. Compare them side by side here.</span></div>`;
+    const cmp = sel.length === 2 ? L.filter(p => sel.includes(p.id)).sort((a, b) => a.taken_on.localeCompare(b.taken_on)) : null;
+    const compare = cmp && cmp.length === 2 ? `<section class="panel stack ph-cmp" data-stg aria-label="Side by side"><div class="spread"><b>${daysBetween(cmp[0].taken_on, cmp[1].taken_on)} days apart</b><button class="btn sm ghost" type="button" data-act="ph-clear">Clear</button></div>
+      <div class="ph-two">${cmp.map(p => `<figure><img data-ph="${esc(p.path)}" alt="${esc(this.label(p))}"><figcaption>${esc(this.label(p))}</figcaption></figure>`).join('')}</div></section>` : '';
+    return intro + compare + `<section class="panel stack" data-stg><div class="spread"><b>${L.length} photo${L.length === 1 ? '' : 's'}</b><small class="muted">${sel.length === 2 ? 'Comparing 2' : `Select 2 to compare (${sel.length}/2)`}</small></div>
+      <div class="ph-grid">${L.map(p => `<div class="ph-t ${sel.includes(p.id) ? 'on' : ''}"><button type="button" class="ph-open" data-act="ph-open" data-id="${p.id}" aria-label="Open ${esc(this.label(p))}"><img data-ph="${esc(p.path)}" alt=""></button>
+        <button type="button" class="ph-sel" data-act="ph-sel" data-id="${p.id}" aria-pressed="${sel.includes(p.id)}" aria-label="Select ${esc(this.label(p))} to compare">${icon(sel.includes(p.id) ? 'check' : 'plus')}</button><small>${esc(this.label(p))}</small></div>`).join('')}</div></section>`;
+  },
+  async add(file) {
+    const today = todayISO();
+    Sheet.open({ title: 'Save progress photo', html: `<div class="stack"><div class="field"><label for="phDate">Date taken</label><input class="input" type="date" id="phDate" value="${today}" max="${today}"></div>
+      <div class="field"><span class="label" id="phPoseL">Pose (optional)</span><div class="seg" role="radiogroup" aria-labelledby="phPoseL">${[['', 'None'], ['front', 'Front'], ['side', 'Side'], ['back', 'Back']].map(([v, l]) => `<button type="button" role="radio" data-pose="${v}" aria-checked="${v === ''}">${l}</button>`).join('')}</div></div>
+      <div class="field"><label for="phNote">Note (optional)</label><input class="input" id="phNote" maxlength="120" placeholder="e.g. Start of summer"></div>
+      <p class="muted" style="font-size:13px">${icon('lock')} Only you can open this photo.</p><p class="err-msg" id="phErr" role="alert"></p>
+      <div class="grid2"><button class="btn" type="button" data-sheet-close>Cancel</button><button class="btn primary" type="button" id="phGo">${icon('upload')} Save</button></div></div>`,
+      onMount: sh => {
+        let pose = ''; $$('[data-pose]', sh).forEach(b => b.onclick = () => { pose = b.dataset.pose; $$('[data-pose]', sh).forEach(x => x.setAttribute('aria-checked', String(x === b))); });
+        $('#phGo', sh).onclick = async () => {
+          const btn = $('#phGo', sh); btn.disabled = true; btn.textContent = 'Uploading…'; let path = null;
+          try {
+            path = await Social.upload(file, 1600, 'progress', 8);
+            await Social.rpc('photo_add', { p_path: path, p_taken_on: $('#phDate', sh).value || today, p_pose: pose || null, p_note: $('#phNote', sh).value.trim() });
+            this.urls[path] = Social.urls[path]; await Sheet.close(true); Social.drop('photos'); UI.toast('Saved. Only you can see it.'); UI.render();
+          } catch (e) {
+            if (path) try { await Cloud.sb.storage.from('progress').remove([path]); } catch (x) { }
+            btn.disabled = false; btn.textContent = 'Save'; $('#phErr', sh).textContent = /bucket not found/i.test(String(e && e.message)) ? 'Photo storage is not set up yet (run social.sql).' : Social.msg(e);
+          }
+        };
+      } });
+  },
+  open(id) {
+    const p = ((this.list().v) || []).find(x => x.id === id); if (!p) return;
+    Sheet.open({ title: this.label(p), wide: true, html: `<figure class="ph-big"><img data-ph="${esc(p.path)}" alt="${esc(this.label(p))}"></figure>${p.note ? `<p>${esc(p.note)}</p>` : ''}
+      <div class="grid2"><button class="btn" type="button" data-sheet-close>Close</button><button class="btn danger" type="button" id="phDel">${icon('trash-2')} Delete</button></div>`,
+      onMount: sh => { this.hydrate(sh); $('#phDel', sh).onclick = async () => { await Sheet.close(); this.remove(p); }; } });
+  },
+  async remove(p) {
+    const ok = await Sheet.confirm({ title: 'Delete this photo?', body: '<p>It is removed for good. This can\'t be undone.</p>', ok: 'Delete', danger: true }); if (!ok) return;
+    try {
+      const { error } = await Cloud.sb.storage.from('progress').remove([p.path]); if (error) throw error;
+      await Social.rpc('photo_delete', { p_id: p.id });
+      delete this.urls[p.path]; UI.ui.phSel = (UI.ui.phSel || []).filter(x => x !== p.id); Social.drop('photos'); UI.toast('Photo deleted.'); UI.render();
+    } catch (e) { UI.toast(Social.msg(e), 'bad'); }
+  }
+};
+
+/* ---------- coach: readiness on the team page, low readiness on the Coach screen, CSV export ---------- */
+const CoachR6 = {
+  readiness(id) {
+    const e = Social.get('rdy:' + id, () => Social.rpc('coach_readiness', { p_team: id }), 60000); if (!e.v) return e.err ? `<section class="panel" data-stg><p class="err-msg">${esc(e.err)}</p></section>` : '';
+    const R = e.v, low = R.today.filter(x => x.score <= 2.5), worst = x => RDY_Q.filter(([k]) => x[k] != null && x[k] <= 2).map(([, l]) => l.toLowerCase()).join(', ');
+    return `<section class="panel stack rdy-team" data-stg><div class="spread"><h2 class="h3">Readiness</h2><span class="label">${R.today.length} of ${R.members} checked in today</span></div>
+      ${low.length ? `<div class="stack" style="gap:6px"><b class="rdy-lowh">${icon('alert-triangle')} Low today</b>${low.map(x => `<div class="drop-row">${Social.avatar(x.user, 32)}<div class="grow"><b>${esc(x.user.name)}</b><small class="muted">${fmtNum(x.score, 1)} of 5${worst(x) ? ' · low ' + esc(worst(x)) : ''}</small></div></div>`).join('')}</div>` : R.today.length ? '<p class="muted" style="font-size:13px">Nobody is low today.</p>' : '<p class="muted" style="font-size:13px">No check-ins yet today. Athletes answer 5 taps when they open a workout.</p>'}
+      ${R.trend.some(t => t.n) ? Chart.bars({ items: R.trend.map(t => ({ v: t.avg || 0, label: String(+String(t.date).slice(8)), tip: t.n ? `${fmtDate(t.date)} · team average ${fmtNum(t.avg, 1)} of 5 · ${t.n} check-in${t.n === 1 ? '' : 's'}` : `${fmtDate(t.date)} · no check-ins`, hl: t.date === todayISO() })), max: 5, fmt: v => fmtNum(v, 1), title: 'Team readiness, last 14 days' }) : ''}
+      <small class="muted">Average of sleep, soreness, energy, mood and stress (1 worst, 5 best). Low = 2.5 or under. A conversation starter, not a diagnosis.</small></section>`;
+  },
+  lowCard() {
+    const e = Social.get('rdylow', () => Social.rpc('coach_readiness_low'), 60000); if (!e.v || !e.v.length) return '';
+    return `<section class="panel stack rdy-low" data-stg><div class="spread"><h2 class="h3">Low readiness today</h2><span class="badge warn">${e.v.length}</span></div>
+      ${e.v.slice(0, 12).map(x => `<button type="button" class="drop-row linkish" data-act="go" data-r="team" data-p="${x.team_id}">${Social.avatar(x.user, 36)}<span class="grow" style="text-align:left"><b>${esc(x.user.name)}</b><small class="muted">${fmtNum(x.score, 1)} of 5 · ${esc(x.team)}</small></span>${icon('chevron-right')}</button>`).join('')}</section>`;
+  },
+  /* CSV that opens correctly in Excel: UTF-8 with BOM, CRLF, quoted where needed, and the separator and decimal
+     mark Excel expects where the coach lives (semicolon + comma decimals in Portugal, Spain, Brazil…) */
+  sepDefault() { try { return (1.5).toLocaleString().includes(',') ? ';' : ','; } catch (e) { return ','; } },
+  csv(head, rows, sep) {
+    const dec = sep === ';' ? ',' : '.';
+    const cell = v => {
+      if (v == null || v === '') return '';
+      if (typeof v === 'boolean') return v ? 'Yes' : 'No';
+      if (typeof v === 'number') return String(Math.round(v * 100) / 100).replace('.', dec);
+      let s = String(v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;          // never let a cell run as a formula
+      return /["\r\n]/.test(s) || s.includes(sep) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    return '﻿' + [head, ...rows].map(r => r.map(cell).join(sep)).join('\r\n') + '\r\n';
+  },
+  table(kind, data) {
+    const u = unitW(), w = kg => kg == null ? null : Math.round(Units.fromKg(+kg, u) * 10) / 10, D = d => d ? String(d).slice(0, 10) : '';
+    const R = data.rows || [];
+    if (kind === 'roster') return [['Name', 'Username', 'Position', 'Joined', 'Last workout', 'Workouts (7 days)', 'Workouts (28 days)', ...Object.keys(LIFTS).map(k => `${LIFTS[k].name} tested 1RM (${u})`), 'Readiness today (1-5)'],
+      R.map(r => [r.name, r.username, r.position, D(r.joined), D(r.last), r.w7, r.w28, ...Object.keys(LIFTS).map(k => w(r[k])), r.readiness])];
+    if (kind === 'attendance') return [['Date', 'Name', 'Username', 'Workouts', 'Working sets', 'Checked in', 'Readiness (1-5)'], R.map(r => [D(r.date), r.name, r.username, r.workouts, r.sets, r.checked_in, r.readiness])];
+    if (kind === 'tests') return [['Name', 'Username', 'Date', 'Test', 'Type', 'Result', 'Unit'], R.filter(r => METRICS[r.metric]).map(r => { let v = null; try { v = Units.metricIn(r.metric, r.o); } catch (e) { } return [r.name, r.username, D(r.date), METRICS[r.metric].name, r.cls === 'tested' ? 'Tested' : 'Recorded max', v == null ? null : +v, Units.metricUnit(r.metric)]; })];
+    return [['Challenge', 'Type', 'Metric', 'Start', 'End', 'Name', 'Username', 'Score', 'Rank', 'Finished', 'Won'],
+      R.map(r => [r.title, SOC_KIND[r.kind] || r.kind, (SOC_METRIC[r.metric] || {}).name || r.metric, D(r.starts), D(r.ends), r.name, r.username, r.score == null ? null : +r.score, r.rank, r.done, r.won])];
+  },
+  export(id, name) {
+    let kind = 'roster', days = 28, sep = this.sepDefault();
+    const K = [['roster', 'Roster', 'Athletes, last workout, workouts, tested maxes, readiness today'], ['attendance', 'Attendance', 'One row per athlete per day: workouts, sets, checked in, readiness'], ['tests', 'Test results', 'Every tested or recorded result'], ['challenges', 'Challenge results', 'Finished challenges your athletes took part in']];
+    Sheet.open({ title: 'Export to Excel (CSV)', html: `<div class="stack"><div class="spick" role="radiogroup" aria-label="What to export">${K.map(([k, l, d]) => `<button type="button" class="spick-i" role="radio" data-xk="${k}" aria-checked="${k === kind}"><span class="grow"><b>${l}</b><small>${d}</small></span></button>`).join('')}</div>
+      <div class="field" id="xDays" hidden><span class="label" id="xDaysL">Period</span><div class="chips" role="radiogroup" aria-labelledby="xDaysL">${[7, 28, 90, 365].map(n => `<button type="button" class="chip" role="radio" data-xd="${n}" aria-checked="${n === days}">${n === 365 ? '1 year' : n + ' days'}</button>`).join('')}</div></div>
+      <div class="field"><span class="label" id="xSepL">Excel format</span><div class="seg" role="radiogroup" aria-labelledby="xSepL"><button type="button" role="radio" data-xs=";" aria-checked="${sep === ';'}">Portugal, Spain, Europe (;)</button><button type="button" role="radio" data-xs="," aria-checked="${sep === ','}">US, UK (,)</button></div><small class="muted">Pick the one that matches your Excel, so columns split correctly.</small></div>
+      <p class="err-msg" id="xErr" role="alert"></p>
+      <div class="grid2"><button class="btn" type="button" data-sheet-close>Cancel</button><button class="btn primary" type="button" id="xGo">${icon('download')} Download</button></div></div>`,
+      onMount: sh => {
+        const pick = (sel, attr, set) => $$(sel, sh).forEach(b => b.onclick = () => { set(b.getAttribute(attr)); $$(sel, sh).forEach(x => x.setAttribute('aria-checked', String(x === b))); $('#xDays', sh).hidden = kind !== 'attendance'; });
+        pick('[data-xk]', 'data-xk', v => kind = v); pick('[data-xd]', 'data-xd', v => days = +v); pick('[data-xs]', 'data-xs', v => sep = v);
+        $('#xGo', sh).onclick = async () => {
+          const btn = $('#xGo', sh); btn.disabled = true;
+          try {
+            const data = await Social.rpc('coach_export', { p_team: id, p_kind: kind, p_days: days }), [head, rows] = this.table(kind, data);
+            const text = this.csv(head, rows, sep), file = `${String(name || 'team').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${kind}-${todayISO()}.csv`;
+            this.last = { text, file, rows: rows.length };
+            const blob = new Blob([text], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = file; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+            await Sheet.close(true); UI.toast(`Downloaded ${file} (${rows.length} row${rows.length === 1 ? '' : 's'}).`);
+          } catch (e) { btn.disabled = false; $('#xErr', sh).textContent = Social.msg(e); }
+        };
+      } });
+  }
+};
+
+(() => {
+  /* logger: the check-in card under the header, until answered or skipped */
+  const wo = Screens.workout; Screens.workout = function () {
+    const h = wo.call(Screens), s = Workout.active(); if (!Ready.showFor(s)) return h;
+    const i = h.indexOf('</header>'); return i < 0 ? h : h.slice(0, i + 9) + Ready.card(s) + h.slice(i + 9);
+  };
+  /* settings */
+  const sg = Screens.settings; Screens.settings = function () {
+    const h = sg.call(Screens), on = Ready.on();
+    const row = `<div class="toggle"><span><b style="font-weight:600">Readiness check-in</b><br><span class="muted" style="font-size:12.5px">5 taps at the start of a workout (sleep, soreness, energy, mood, stress). Optional; your team coaches see your answers.</span></span><button class="switch" type="button" role="switch" aria-checked="${on}" data-act="rdy-setting" aria-label="Readiness check-in"></button></div>`;
+    const k = h.indexOf('<h2 class="h3">Starting a workout</h2>'); if (k < 0) return h;
+    const j = h.indexOf('</section>', k); return h.slice(0, j) + row + h.slice(j);
+  };
+  /* progress: Body tab = weight + measurements; a private Photos tab; readiness on the overview */
+  const pr = Screens.progress; Screens.progress = function (tab) {
+    if (tab === 'photos') {
+      const h = pr.call(Screens, 'overview'), a = h.indexOf('<div class="chips" role="tablist" data-stg>'), b = h.indexOf('</div>', a) + 6;
+      return h.slice(0, b).replace(/aria-pressed="true"/g, 'aria-pressed="false"').replace('data-p="photos" aria-pressed="false"', 'data-p="photos" aria-pressed="true"') + Photos.view() + '</div>';
+    }
+    let h = pr.call(Screens, tab);
+    h = h.replace('>Body weight</button>', '>Body</button>').replace(/(<div class="chips" role="tablist" data-stg>[\s\S]*?)(<\/div>)/, `$1<button class="chip" type="button" role="tab" data-act="go" data-r="progress" data-p="photos" aria-pressed="${tab === 'photos'}">${icon('lock')} Photos</button>$2`);
+    if (tab === 'body') h = h.replace(/<\/div>$/, Meas.section() + '</div>');
+    if (!tab || tab === 'overview') { const c = Ready.progressCard(); if (c) h = h.replace(/<\/div>$/, c + '</div>'); }
+    return h;
+  };
+  const ap = After.progress; After.progress = function (view, opts) {
+    ap && ap(view, opts);
+    if (UI.route.param === 'photos') { Photos.hydrate(view); const f = $('#phFile', view); if (f) f.onchange = () => { const x = f.files[0]; f.value = ''; if (x) Photos.add(x); }; }
+  };
+  Social.live.add('progress');
+  /* coach */
+  const team = Coach.team; Coach.team = function (id) {
+    let h = team.call(Coach, id);
+    const k = h.indexOf('<button class="btn sm" type="button" data-act="go" data-r="wall"'), e = Social.c['roster:' + id];
+    if (k > 0) h = h.slice(0, k) + `<button class="btn sm" type="button" data-act="co-export" data-id="${id}" data-n="${esc(e && e.v ? e.v.team.name : '')}">${icon('download')} Export CSV</button>` + h.slice(k);
+    const r = h.indexOf('<section class="panel" data-stg><div class="spread" style="margin-bottom:8px"><h2 class="h3">Roster</h2>');
+    return r > 0 ? h.slice(0, r) + CoachR6.readiness(id) + h.slice(r) : h;
+  };
+  const co = Screens.coach; Screens.coach = function () {
+    const h = co.call(Screens); if (!(Cloud.on && Social.on() && Brand.isCoach()) || Social.missing) return h;
+    const c = CoachR6.lowCard(); if (!c) return h;
+    const d = h.indexOf('<section class="panel stack drop-card"'); if (d > 0) return h.slice(0, d) + c + h.slice(d);
+    const i = h.indexOf('</h1>'), j = i < 0 ? -1 : h.indexOf('</div>', i); return j < 0 ? h : h.slice(0, j + 6) + c + h.slice(j + 6);
+  };
+  /* sync readiness and measurements with the account, like the food log */
+  const snap = Cloud.snapshot.bind(Cloud); Cloud.snapshot = function () { const o = snap(); o.readiness = Ready.raw(); o.measurements = Meas.raw(); return o; };
+  const mg = Cloud.merge.bind(Cloud); Cloud.merge = async function (r) { const a = r && r.app === APP_ID ? Ready.merge(r.readiness) : false, b = r && r.app === APP_ID ? Meas.merge(r.measurements) : false; const ch = await mg(r); if (a || b) State.version++; return ch || a || b; };
+})();
+Object.entries({ camera: 'M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3zM12 10a3 3 0 1 0 0 6a3 3 0 1 0 0-6', download: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3', upload: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12', 'alert-triangle': 'M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01' }).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+
+Object.assign(Actions, {
+  'rdy-pick': el => { const d = UI.ui.rdy || (UI.ui.rdy = {}); d[el.dataset.k] = +el.dataset.v; Haptics.tap && Haptics.tap(); const y = scrollY; UI.render(); scrollTo(0, y); },
+  'rdy-save': () => {
+    const d = UI.ui.rdy || {}; if (!RDY_Q.every(([k]) => d[k])) return;
+    Ready.save(Object.assign({ id: uid('rdy'), date: todayISO() }, ...RDY_Q.map(([k]) => ({ [k]: d[k] }))));
+    UI.ui.rdy = {}; try { Cloud.on && Social.flush(); } catch (e) { }
+    UI.toast(Cloud.on ? 'Saved. Your coach can see how you feel today.' : 'Saved.'); const y = scrollY; UI.render(); scrollTo(0, y);
+  },
+  'rdy-skip': () => { const s = Workout.active(); if (s) { s.rdySkip = true; Store.save('sessions', s); } UI.ui.rdy = {}; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'rdy-setting': el => { State.settings.readinessAsk = !Ready.on(); Store.saveSettings(); el.setAttribute('aria-checked', String(Ready.on())); },
+  'ms-add': () => {
+    const u = Units.hUnit(), e = { id: uid('ms'), date: ($('#msDate') || {}).value || todayISO() }, err = $('#msErr'); let any = false, bad = '';
+    Meas.F.forEach(([k, l]) => { const v = parseFloat(String(($('#ms-' + k) || {}).value || '').replace(',', '.')); if (isNaN(v)) return; const cm = u === 'cm' ? v : v * CM_PER_IN; if (cm < 10 || cm > 250) bad = `${l} looks off. Check the number and unit (${u}).`; else { e[k] = Math.round(cm * 10) / 10; any = true; } });
+    const bf = parseFloat(String(($('#ms-bf') || {}).value || '').replace(',', '.')); if (!isNaN(bf)) { if (bf < 2 || bf > 60) bad = 'Body fat should be between 2 and 60%.'; else { e.bf = Math.round(bf * 10) / 10; any = true; } }
+    if (bad) { err.textContent = bad; Haptics.buzz(); return; }
+    if (!any) { err.textContent = 'Enter at least one measurement.'; Haptics.buzz(); return; }
+    if (e.date > todayISO()) { err.textContent = 'The date can\'t be in the future.'; return; }
+    Meas.save(e); UI.toast('Measurements saved.'); const y = scrollY; UI.render(); scrollTo(0, y);
+  },
+  'ms-del': async el => { if (!await Sheet.confirm({ title: 'Delete these measurements?', body: '<p>This entry is removed.</p>', ok: 'Delete', danger: true })) return; Meas.del(el.dataset.id); const y = scrollY; UI.render(); scrollTo(0, y); },
+  'ph-open': el => Photos.open(el.dataset.id),
+  'ph-sel': el => { let s = UI.ui.phSel || []; const id = el.dataset.id; s = s.includes(id) ? s.filter(x => x !== id) : [...s, id].slice(-2); UI.ui.phSel = s; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'ph-clear': () => { UI.ui.phSel = []; UI.render(); },
+  'co-export': el => CoachR6.export(el.dataset.id, el.dataset.n)
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
