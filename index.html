@@ -245,7 +245,7 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
 #intro[hidden]{display:none}
 #intro canvas{position:absolute;inset:0;width:100%;height:100%}
 #intro .cam{position:absolute;inset:0;perspective:900px;transform-style:preserve-3d}
-#intro .lyr{position:absolute;left:-8%;right:-8%;will-change:transform,opacity;transition:opacity calc(.7s * var(--ip,1)) var(--ease-io),transform calc(1.6s * var(--ip,1)) var(--ease-out)}
+#intro .lyr{position:absolute;left:-8%;right:-8%;will-change:transform,opacity;transition:opacity .7s var(--ease-io),transform 1.6s var(--ease-out)}
 #intro .sky{inset:0;left:0;right:0;opacity:0;background:
   radial-gradient(90% 30% at 50% 50%,rgba(var(--b1lrgb),.6),transparent 70%),
   linear-gradient(180deg,#060304 0%,#190D11 36%,#481526 52%,#16171A 60%,#0A0607 100%)}
@@ -262,11 +262,11 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
 #intro .cone{position:absolute;width:30%;height:110%;opacity:0;transform-origin:50% 100%;
   background:linear-gradient(0deg,rgba(255,255,255,.5),rgba(183,190,195,.12) 45%,transparent 80%);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 40%,#000 60%,transparent);mask-image:linear-gradient(90deg,transparent,#000 40%,#000 60%,transparent);
-  transition:opacity calc(.5s * var(--ip,1)) var(--ease-io)}
-#intro .stadium .lights{opacity:.12;transition:opacity calc(.35s * var(--ip,1)) steps(3)}
-#intro .stadium .louv{opacity:.18;transition:opacity calc(.6s * var(--ip,1)) var(--ease-out)}
+  transition:opacity .5s var(--ease-io)}
+#intro .stadium .lights{opacity:.12;transition:opacity .35s steps(3)}
+#intro .stadium .louv{opacity:.18;transition:opacity .6s var(--ease-out)}
 #intro .stadium .scan{opacity:0}
-#intro .tunnel{inset:0;left:0;right:0;opacity:0;perspective:520px;transform-style:preserve-3d;transition:opacity calc(.35s * var(--ep,1)) var(--ease-io)}
+#intro .tunnel{inset:0;left:0;right:0;opacity:0;perspective:520px;transform-style:preserve-3d;transition:opacity .35s var(--ease-io)}
 #intro .tunnel .exit{position:absolute;left:50%;top:50%;width:46vmin;height:30vmin;transform:translate(-50%,-50%);border-radius:10px;
   background:radial-gradient(closest-side,#FFFFFF,#B7BEC3 45%,rgba(var(--b1lrgb),.0) 100%);filter:blur(2px)}
 #intro .tf{position:absolute;left:50%;top:50%;width:150vmin;height:96vmin;margin:-48vmin 0 0 -75vmin;border-radius:46% 46% 6% 6%/30% 30% 6% 6%;
@@ -282,10 +282,10 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
 #intro .t-sub{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,7vw,38px);line-height:.95;letter-spacing:.04em}
 #intro .t-sub span{color:#B7BEC3}
 #intro .t-tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;color:var(--silver)}
-#intro .reveal{opacity:0;transform:translateY(18px);clip-path:inset(0 0 100% 0);transition:opacity calc(.45s * var(--ip,1)) var(--ease-out),transform calc(.55s * var(--ip,1)) var(--ease-out),clip-path calc(.55s * var(--ip,1)) var(--ease-out)}
+#intro .reveal{opacity:0;transform:translateY(18px);clip-path:inset(0 0 100% 0);transition:opacity .45s var(--ease-out),transform .55s var(--ease-out),clip-path .55s var(--ease-out)}
 #intro.s-e .reveal{opacity:1;transform:none;clip-path:inset(0 0 -10% 0)}
-#intro.s-e .reveal:nth-child(2){transition-delay:calc(.06s * var(--ip,1))}#intro.s-e .reveal:nth-child(3){transition-delay:calc(.13s * var(--ip,1))}
-#intro.s-e .reveal:nth-child(4){transition-delay:calc(.2s * var(--ip,1))}#intro.s-e .reveal:nth-child(5){transition-delay:calc(.28s * var(--ip,1))}
+#intro.s-e .reveal:nth-child(2){transition-delay:.06s}#intro.s-e .reveal:nth-child(3){transition-delay:.13s}
+#intro.s-e .reveal:nth-child(4){transition-delay:.2s}#intro.s-e .reveal:nth-child(5){transition-delay:.28s}
 #intro .skip{position:absolute;top:calc(var(--safe-t) + 14px);right:14px;z-index:3}
 #intro .disclaimer{position:absolute;top:calc(var(--safe-t) + 22px);left:18px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.14em;color:rgba(183,190,195,.55);max-width:58%}
 #intro.s-a .sky{opacity:.4}
@@ -295,13 +295,13 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
 #intro.s-c .stadium{opacity:1;transform:none}
 #intro.s-lit .stadium .lights,#intro.s-lit .stadium .louv{opacity:1}
 #intro.s-lit .cone{opacity:1}
-#intro.s-lit .stadium .scan{animation:louvreScan calc(.9s * var(--ip,1)) var(--ease-io) 1 forwards}
+#intro.s-lit .stadium .scan{animation:louvreScan .9s var(--ease-io) 1 forwards}
 @keyframes louvreScan{0%{opacity:1;transform:translateX(0)}100%{opacity:1;transform:translateX(780px)}}
 body.m-minimal #intro .stadium .scan{animation:none}
 /* press: push through Gate 2005 into the tunnel */
-#intro.s-d .stadium{opacity:0;transform:translateY(30px) scale(3.2);transition:opacity calc(.55s * var(--ep,1)) var(--ease-io) calc(.15s * var(--ep,1)),transform calc(.7s * var(--ep,1)) var(--ease-io)}
-#intro.s-d .sky-near,#intro.s-d .sky-far,#intro.s-d .water{opacity:0;transform:scale(1.4);transition:opacity calc(.4s * var(--ep,1)) var(--ease-io),transform calc(.7s * var(--ep,1)) var(--ease-io)}
-#intro.s-d .tunnel{opacity:1;transition-delay:calc(.2s * var(--ep,1))}
+#intro.s-d .stadium{opacity:0;transform:translateY(30px) scale(3.2);transition:opacity .55s var(--ease-io) .15s,transform .7s var(--ease-io)}
+#intro.s-d .sky-near,#intro.s-d .sky-far,#intro.s-d .water{opacity:0;transform:scale(1.4);transition:opacity .4s var(--ease-io),transform .7s var(--ease-io)}
+#intro.s-d .tunnel{opacity:1;transition-delay:.2s}
 #intro.s-d .cone{opacity:0}
 
 /* ============ LOCKER ROOM ============ */
@@ -1919,7 +1919,7 @@ button.wtile{cursor:pointer}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 22 · 23:25';
+const BUILD_ID = 'Oct 23 · 00:19';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
@@ -2955,7 +2955,6 @@ const Nav = {
   }
 };
 
-const INTRO_PACE = 1.9, ENTER_PACE = 1.15;   // intro speed: 1 = the original (about 1.5 s to the title)
 /* ============ 15. RENDERING (core) ============ */
 const UI = {
   route: { name: 'home', param: null },
@@ -3194,16 +3193,16 @@ const Intro = {
     };
     if (!this.raf) this.raf = requestAnimationFrame(tick);
   },
-  /* ridgelines → stadium rises → lights come on → title. INTRO_PACE slows every timing (JS and CSS) by one factor, so the steps still overlap the way they were designed */
+  /* about two seconds from black to title: ridgelines → stadium rises → lights come on → title */
   play(onDone) {
     this.onDone = onDone; this.build();
-    const el = $('#intro'); el.hidden = false; el.className = ''; $('#flash').style.opacity = 0; el.style.setProperty('--ip', INTRO_PACE); el.style.setProperty('--ep', ENTER_PACE);
+    const el = $('#intro'); el.hidden = false; el.className = ''; $('#flash').style.opacity = 0;
     $$('#tunnel .tf').forEach(f => { f.style.opacity = 0; });
     this.stars(); this.speed = .4; this.camZ = 0; this.loop();
     $('#enterStadium').disabled = false;
     const name = Motion.modeName();
     if (name === 'minimal') { this.finish(); return; }
-    const k = name === 'cinematic' ? INTRO_PACE : INTRO_PACE * .7, T = (name === 'cinematic' ? [40, 250, 470, 1000, 1450] : [0, 120, 260, 540, 820]).map(t => Math.round(t * k));   // the original choreography, every step slowed by the same factor
+    const T = name === 'cinematic' ? [40, 250, 650, 1100, 1550] : [0, 120, 320, 560, 850];
     ['s-a', 's-b', 's-c', 's-lit', 's-e'].forEach((c, i) => this.timers.push(setTimeout(() => el.classList.add(c), T[i])));
     setTimeout(() => $('#skipIntro').focus({ preventScroll: true }), 50);
   },
@@ -3216,7 +3215,7 @@ const Intro = {
     const done = () => { cancelAnimationFrame(this.raf); this.raf = null; el.hidden = true; this.onDone && this.onDone(); };
     if (Motion.off) return done();
     el.classList.add('s-d');
-    const dur = Math.round((Motion.modeName() === 'cinematic' ? 950 : 550) * ENTER_PACE), t0 = performance.now();
+    const dur = Motion.modeName() === 'cinematic' ? 950 : 550, t0 = performance.now();
     Motion.anim($('#intro .ui'), [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(30px) scale(.97)' }], { duration: dur * .4, fill: 'forwards', easing: EASE.io });
     const acc = t => { const k = clamp((t - t0) / dur, 0, 1); this.speed = .4 + k * k * 7; $('#flash').style.opacity = Math.max(0, (k - .65) / .35); if (k < 1) requestAnimationFrame(acc); else setTimeout(done, 60); };
     requestAnimationFrame(acc);
