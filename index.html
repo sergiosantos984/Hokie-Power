@@ -1819,6 +1819,14 @@ button.wtile{cursor:pointer}
 .ph-big img{max-height:70vh;object-fit:contain;border-radius:12px;background:#111}
 .ph-intro label.btn{cursor:pointer}
 .rdy-card [data-act=rdy-save]:disabled{opacity:.45;box-shadow:none}
+/* ===== Release 7 · AI ===== */
+.ask-sug{flex-wrap:wrap;margin:0;padding-inline:0;overflow:visible}
+.ask-a{gap:8px}.ask-q{display:flex;gap:6px;align-items:flex-start}
+.ask-ans{font-size:15.5px;line-height:1.45}
+.ask-warn{display:flex;gap:6px;align-items:flex-start;font-size:13px;padding:8px 10px;border-radius:12px;background:rgba(232,180,34,.16)}
+.ask-f{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.ai-banner{border-left:4px solid var(--b2,var(--b2))}
+.ad-sheet .chips{flex-wrap:wrap;margin:0;padding-inline:0;overflow:visible}
 
 </style>
 </head>
@@ -1911,7 +1919,7 @@ button.wtile{cursor:pointer}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 22 · 22:52';
+const BUILD_ID = 'Oct 22 · 23:25';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
@@ -1948,7 +1956,7 @@ const Splash = (() => {
    Features: every feature is open today. When paid levels arrive, the database turns its "paywall" on and
    each feature checks the athlete's level here (FEATURE_TIERS) and in social.sql (sx_need) — nothing else changes. */
 const BRAND_DEF = { slug: 'hokie-power', name: 'Hokie Power', app_name: 'Hokie Power', tagline: '', color1: '#861F41', color2: '#E87722', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
-const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold', food_ai: 'gold' };
+const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold', food_ai: 'gold', ask_ai: 'gold' };
 const TIER_NAME = { free: 'Basic', silver: 'Silver', gold: 'Gold' };
 const Brand = {
   org: null, me: null,
@@ -10793,6 +10801,187 @@ Object.assign(Actions, {
   'ph-sel': el => { let s = UI.ui.phSel || []; const id = el.dataset.id; s = s.includes(id) ? s.filter(x => x !== id) : [...s, id].slice(-2); UI.ui.phSel = s; const y = scrollY; UI.render(); scrollTo(0, y); },
   'ph-clear': () => { UI.ui.phSel = []; UI.render(); },
   'co-export': el => CoachR6.export(el.dataset.id, el.dataset.n)
+});
+
+/* ============ RELEASE 7 · AI (no payments) ============
+   • Ask your training: the athlete asks about their own log ("How has my squat moved since August?").
+     The phone turns the log into numbered facts (the same numbers the app shows); the ask-training function
+     lets the AI answer only from those facts and cite them. The answer is shown with the facts it used,
+     and flagged when a number in it isn't in the log. Daily limit; health, injury, supplement and
+     weight-loss questions get a "talk to your athletic trainer" answer instead.
+   • AI workout drafts (coaches): goal, days, weeks, session length and equipment → a draft block built only
+     from the app's exercise library. It opens in the plan editor, and can't be given to a team until the
+     coach has checked and approved it (the database refuses unapproved drafts too). */
+const AI = {
+  async call(body) {
+    if (!(Cloud.sb && Cloud.user)) throw new Error('This needs you to be logged in and online.');
+    const { data, error } = await Cloud.sb.functions.invoke('ask-training', { body });
+    if (error) {
+      const ctx = error.context, st = ctx && ctx.status; let b = null; try { b = JSON.parse(await ctx.clone().text()); } catch (e) { }
+      const m = b && (b.error || b.msg || b.message);
+      if (error.name === 'FunctionsFetchError' || (!st && !m)) throw new Error('The app could not reach the AI. Check in Supabase that the ask-training function is deployed with that exact name.');
+      if (st === 404 && !m) throw new Error('There is no ask-training function in Supabase yet.');
+      throw new Error(m || `The AI could not answer (error ${st || '?'}).`);
+    }
+    if (data && data.error) throw new Error(data.error);
+    return data;
+  },
+  left(kind) { return Social.get('aileft:' + kind, () => Social.rpc('ai_left', { p_kind: kind }), 30000); }
+};
+
+const Ask = {
+  key() { return `bbp.${Cloud.ns || 'local'}.ask`; },
+  hist() { return LSX.get(this.key(), []) || []; },
+  SUGGEST: ['How has my squat moved since August?', 'What are my best tested lifts?', 'Am I training more or less than last month?', 'How has my body weight changed?', 'How consistent have I been this season?'],
+  /* the athlete's own log as short numbered facts, in their units */
+  facts() {
+    const F = [], add = t => { if (F.length < 300) F.push({ id: 'F' + (F.length + 1), text: t }); }, p = State.profile || {}, u = unitW();
+    const W = o => o ? `${fmtNum(Units.showW(o), 1)} ${u}` : '—', wkOf = d => Recap.monday(d), monthName = d => parseISO(d).toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    add(`Today is ${todayISO()}. Program: ${State.program.name || 'VT 2005'}${p.startDate ? `, started ${p.startDate}` : ''}${p.position ? `, position ${p.position}` : ''}. Units: ${u}.`);
+    Object.keys(LIFTS).forEach(k => {
+      const L = LIFTS[k], b = p.baselines && p.baselines[k];
+      if (b && b.w) add(`${L.name} starting max (${Calc.clsLabel(b.cls || 'tested').toLowerCase()})${b.date ? ' set ' + b.date : ''}: ${W(b.w)}`);
+      State.results.filter(r => r.metric === L.metric && r.o && r.cls !== 'estimated').sort((a, c) => (a.date || '').localeCompare(c.date || '')).slice(-15)
+        .forEach(r => add(`${L.name} ${r.cls === 'tested' ? 'tested 1RM' : Calc.clsLabel(r.cls).toLowerCase()} on ${r.date}: ${W(r.o)}`));
+      let est = []; try { est = Stats.estimates(k) || []; } catch (e) { }
+      const byWk = {}; est.forEach(e => { const w = wkOf(e.date); if (!byWk[w] || e.kg > byWk[w]) byWk[w] = e.kg; });
+      Object.keys(byWk).sort().slice(-16).forEach(w => add(`${L.name} best estimated max from logged sets, week of ${w}: ${fmtNum(Units.fromKg(byWk[w], u), 0)} ${u}`));
+    });
+    Object.keys(METRICS).filter(m => !Object.values(LIFTS).some(L => L.metric === m)).forEach(m => {
+      State.results.filter(r => r.metric === m && r.o && r.cls !== 'estimated').sort((a, c) => (a.date || '').localeCompare(c.date || '')).slice(-8)
+        .forEach(r => add(`${METRICS[m].name} on ${r.date}: ${Units.showMetric(m, r.o)}`));
+    });
+    const done = State.sessions.filter(s => s.status === 'completed' && s.date);
+    add(`Workouts completed in total: ${done.length}`);
+    const byM = {}, setsM = {}; done.forEach(s => { const k = s.date.slice(0, 7); byM[k] = (byM[k] || 0) + 1; setsM[k] = (setsM[k] || 0) + Stats.sessionStats(s).sets; });
+    Object.keys(byM).sort().slice(-8).forEach(k => add(`Workouts in ${monthName(k + '-15')}: ${byM[k]} (${setsM[k]} working sets)`));
+    const byW = {}; done.forEach(s => { const w = wkOf(s.date); byW[w] = (byW[w] || 0) + 1; });
+    Object.keys(byW).sort().slice(-12).forEach(w => add(`Workouts in the week of ${w}: ${byW[w]}`));
+    try { const st = Stats.get(); if (st.dueCount) add(`Scheduled workouts done this season: ${st.doneOfDue} of ${st.dueCount} (${Math.round(st.adherence * 100)}%). Current streak: ${st.streak}; longest: ${st.longest}`); } catch (e) { }
+    (State.bodyweight || []).slice().sort((a, c) => a.date.localeCompare(c.date)).slice(-15).forEach(e => add(`Body weight on ${e.date}: ${W(e.w)}`));
+    try { Meas.all().slice(-6).forEach(e => add(`Measurements on ${e.date}: ${Meas.F.filter(([k]) => e[k] != null).map(([k, l]) => `${l.toLowerCase()} ${fmtNum(Meas.show(e[k]), 1)} ${Units.hUnit()}`).concat(e.bf != null ? [`body fat ${fmtNum(e.bf, 1)}%`] : []).join(', ')}`)); } catch (e) { }
+    try { Ready.history().filter(x => x.e).forEach(x => add(`Readiness on ${x.d}: ${fmtNum(Ready.score(x.e), 1)} of 5`)); } catch (e) { }
+    return F;
+  },
+  screen() {
+    if (!Cloud.on) return `<div class="screen">${backBar('Ask your training')}${Social.empty('lock', 'Needs an account', 'Ask your training uses an AI on the server, so it works in the hosted app with team accounts.')}</div>`;
+    if (!Features.can('ask_ai')) return `<div class="screen">${backBar('Ask your training')}${Features.locked('ask_ai', 'Ask your training')}</div>`;
+    const H = this.hist(), lf = AI.left('ask_training'), busy = UI.ui.askBusy;
+    const item = (h, i) => `<article class="panel stack ask-a" data-stg><p class="ask-q">${icon('message-circle')} <b>${esc(h.q)}</b></p>
+      <p class="ask-ans">${esc(h.a)}</p>
+      ${h.check === 'unverified' ? `<p class="ask-warn" role="note">${icon('alert-triangle')} Some numbers in this answer aren't in your log. Trust the numbers below, not the answer.</p>` : ''}
+      ${h.facts && h.facts.length ? `<details class="sfold" ${i === 0 ? 'open' : ''}><summary>From your log (${h.facts.length})</summary><ul class="ask-f">${h.facts.map(f => `<li>${esc(f)}</li>`).join('')}</ul></details>` : ''}
+      <small class="muted">${fmtDate(h.d)}${h.blocked ? ' · not sent to the AI' : ''}</small></article>`;
+    return `<div class="screen">${backBar('Ask your training', H.length ? `<button class="btn icon" type="button" data-act="ask-clear" aria-label="Clear questions">${icon('trash-2')}</button>` : '')}
+      <section class="panel stack" data-stg><p style="font-size:14px">Ask about your lifts, tests, workouts, consistency or body weight. Answers use <b>only your own log</b> and show the numbers.</p>
+        <p class="muted" style="font-size:12.5px">${icon('info')} Not medical advice. For pain, injuries, food or supplements, talk to your athletic trainer or coach.</p>
+        <div class="field"><label for="askQ">Your question</label><textarea class="input" id="askQ" rows="2" maxlength="300" placeholder="How has my squat moved since August?"></textarea></div>
+        <div class="chips ask-sug" role="group" aria-label="Example questions">${this.SUGGEST.map(s => `<button type="button" class="chip" data-act="ask-sug" data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+        <p class="err-msg" id="askErr" role="alert"></p>
+        <div class="spread"><small class="muted" id="askLeft">${lf.v != null ? `${lf.v} question${lf.v === 1 ? '' : 's'} left today` : ''}</small><button class="btn primary" type="button" data-act="ask-go" ${busy ? 'disabled' : ''}>${busy ? Kinetic.wave('THINKING…') : `${icon('send')} Ask`}</button></div></section>
+      ${H.map(item).join('')}</div>`;
+  },
+  async go() {
+    const q = ($('#askQ') || {}).value ? $('#askQ').value.trim() : '', er = $('#askErr');
+    if (q.length < 3) { er.textContent = 'Type a question about your training.'; return; }
+    UI.ui.askBusy = true; UI.render(); const keep = $('#askQ'); if (keep) keep.value = q;
+    try {
+      const facts = this.facts(), r = await AI.call({ action: 'ask', question: q, facts, today: todayISO() });
+      const by = new Map(facts.map(f => [f.id, f.text]));
+      const H = this.hist(); H.unshift({ q, a: r.answer, facts: (r.facts || []).map(id => by.get(id)).filter(Boolean), check: r.check, blocked: r.blocked || null, d: todayISO() });
+      LSX.set(this.key(), H.slice(0, 20)); Social.drop('aileft:');
+      UI.ui.askBusy = false; UI.render();
+    } catch (e) { UI.ui.askBusy = false; UI.render(); const i = $('#askQ'); if (i) i.value = q; const x = $('#askErr'); if (x) x.textContent = e.message; Social.drop('aileft:'); }
+  }
+};
+Screens.ask = () => Ask.screen();
+TAB_OF.ask = 'progress'; Social.live.add('ask'); if (typeof Kinetic !== 'undefined') Kinetic.NAMES.ask = 'ASK';
+
+/* ---------- coach: AI draft → plan editor ---------- */
+const AIDraft = {
+  GOALS: [['strength', 'Strength'], ['power and speed', 'Power & speed'], ['in-season maintenance', 'In-season'], ['off-season size and strength', 'Off-season size'], ['general fitness', 'General']],
+  catalogue(have) {
+    return Object.keys(EXERCISES).filter(id => { const e = EXERCISES[id]; if (!e || !['strength', 'conditioning', 'agility', 'core'].includes(e.cat)) return false; try { return ExLib.needs(id).every(k => have.includes(k)); } catch (x) { return true; } })
+      .map(id => ({ id, name: EXERCISES[id].name, cat: EXERCISES[id].cat, lift: EXERCISES[id].lift || undefined }));
+  },
+  open() {
+    const d = { goal: 'strength', days: 3, weeks: 6, minutes: 60, have: MY_EQUIP.map(m => m[0]).filter(k => !(State.settings.noEquip || []).includes(k)) };
+    const chips = (k, list, lab) => `<div class="field"><span class="label" id="ad-${k}L">${lab}</span><div class="chips" role="radiogroup" aria-labelledby="ad-${k}L">${list.map(([v, l]) => `<button type="button" class="chip" role="radio" data-ad="${k}" data-v="${v}" aria-checked="${String(d[k]) === String(v)}">${l}</button>`).join('')}</div></div>`;
+    Sheet.open({ title: 'Draft a block with AI', wide: true, html: `<div class="stack ad-sheet"><p class="muted" style="font-size:13px">The AI drafts a block from the exercises in the app. It opens in the plan editor for you to check and change. Athletes never get it until you approve it.</p>
+      ${chips('goal', this.GOALS, 'Goal')}${chips('days', [[2, '2 days'], [3, '3 days'], [4, '4 days'], [5, '5 days']], 'Days a week')}${chips('weeks', [[4, '4 weeks'], [6, '6 weeks'], [8, '8 weeks'], [10, '10 weeks']], 'Length')}${chips('minutes', [[45, '45 min'], [60, '60 min'], [75, '75 min'], [90, '90 min']], 'Session')}
+      <div class="field"><span class="label" id="adEqL">Equipment you have</span><div class="chips" role="group" aria-labelledby="adEqL">${MY_EQUIP.map(([k, l]) => `<button type="button" class="chip" data-adeq="${k}" aria-pressed="${d.have.includes(k)}">${l}</button>`).join('')}</div></div>
+      <div class="field"><label for="adNotes">Anything else (optional)</label><input class="input" id="adNotes" maxlength="200" placeholder="e.g. no Olympic lifts, lots of single-leg work"></div>
+      <p class="err-msg" id="adErr" role="alert"></p><small class="muted" id="adLeft"></small>
+      <div class="grid2"><button class="btn" type="button" data-sheet-close>Cancel</button><button class="btn primary" type="button" id="adGo">${icon('sparkles')} Draft it</button></div></div>`,
+      onMount: sh => {
+        Social.rpc('ai_left', { p_kind: 'workout_draft' }).then(n => { const x = $('#adLeft', sh); if (x) x.textContent = `${n} draft${n === 1 ? '' : 's'} left today`; }, () => { });
+        $$('[data-ad]', sh).forEach(b => b.onclick = () => { const k = b.dataset.ad; d[k] = k === 'goal' ? b.dataset.v : +b.dataset.v; $$(`[data-ad="${k}"]`, sh).forEach(x => x.setAttribute('aria-checked', String(x === b))); });
+        $$('[data-adeq]', sh).forEach(b => b.onclick = () => { const k = b.dataset.adeq, i = d.have.indexOf(k); if (i >= 0) d.have.splice(i, 1); else d.have.push(k); b.setAttribute('aria-pressed', String(i < 0)); });
+        $('#adGo', sh).onclick = async () => {
+          const btn = $('#adGo', sh), er = $('#adErr', sh), cat = this.catalogue(d.have); er.textContent = '';
+          if (cat.length < 4) { er.textContent = 'Not enough exercises for that equipment. Tick more equipment.'; return; }
+          btn.disabled = true; btn.innerHTML = Kinetic.wave('DRAFTING…');
+          try {
+            const r = await AI.call({ action: 'draft', goal: d.goal, days: d.days, weeks: d.weeks, minutes: d.minutes, notes: $('#adNotes', sh).value.trim(), catalogue: cat });
+            await Sheet.close(true); this.load(r, d);
+          } catch (e) { btn.disabled = false; btn.innerHTML = `${icon('sparkles')} Draft it`; er.textContent = e.message; UI.icons(btn); }
+        };
+      } });
+  },
+  load(r, d) {
+    PlanEdit.st = null; PlanEdit.start(null);
+    const st = PlanEdit.st; st.track = 'block'; st.tab = 'block'; st.name = r.name; st.dirty = true;
+    st.changes.block = { weeks: r.block.weeks, step: r.block.step, deload: r.block.deload, days: r.block.days.map(x => ({ dow: x.dow, title: x.title, ex: x.ex.filter(e => EXERCISES[e.ex]) })) };
+    st.changes.ai = { draft: true, approved: false, goal: d.goal, summary: r.summary || '', at: todayISO() };
+    Nav.go('cplan', 'new'); UI.toast('Draft ready. Check it, then approve it.');
+  },
+  pending() { const st = PlanEdit.st; return !!(st && st.changes && st.changes.ai && st.changes.ai.approved === false); },
+  banner() {
+    const a = PlanEdit.st.changes.ai;
+    return `<section class="panel stack ai-banner" data-stg><div class="spread"><b>${icon('sparkles')} AI draft · not approved</b><span class="badge warn">Draft</span></div>
+      ${a.summary ? `<p style="font-size:14px">${esc(a.summary)}</p>` : ''}
+      <p class="muted" style="font-size:13px">Check every exercise, the sets, reps and percentages, and change anything that doesn't fit your athletes. It can't be given to a team until you approve it.</p>
+      ${PlanEdit.st.can ? `<button class="btn primary" type="button" data-act="ai-approve">${icon('check')} I've checked it — approve</button>` : ''}</section>`;
+  }
+};
+
+(() => {
+  /* Progress: an Ask button in the top bar, and a card on the overview */
+  const pr = Screens.progress; Screens.progress = function (tab) {
+    let h = pr.call(Screens, tab);
+    h = h.replace('<button class="btn sm" type="button" data-act="log-result">', `<span class="row" style="gap:6px"><button class="btn sm" type="button" data-act="go" data-r="ask">${icon('message-circle')} Ask</button><button class="btn sm" type="button" data-act="log-result">`);
+    const k = h.indexOf('data-act="log-result">'); if (k > 0) { const e = h.indexOf('</button>', k); h = h.slice(0, e + 9) + '</span>' + h.slice(e + 9); }
+    return h;
+  };
+  /* plan editor: the draft banner, approval before "Use it" */
+  const sc = PlanEdit.screen.bind(PlanEdit); PlanEdit.screen = function (param) {
+    const h = sc(param); if (!AIDraft.pending()) return h;
+    const i = h.indexOf('<div class="seg" role="tablist" data-stg>'); return i < 0 ? h : h.slice(0, i) + AIDraft.banner() + h.slice(i);
+  };
+  const us = PlanEdit.use.bind(PlanEdit); PlanEdit.use = function () {
+    if (!AIDraft.pending()) return us();
+    return `<section class="panel stack" data-stg><h2 class="h3">Approve the draft first</h2><p class="muted" style="font-size:13.5px">This block was drafted by AI. Check it on "Build the block", then approve it. After that you can give it to a team.</p></section>`;
+  };
+  /* plans list: Draft with AI next to New */
+  const pl = Screens.plans; Screens.plans = function () {
+    const h = pl.call(Screens); if (!(Cloud.on && Features.can('plan_editor'))) return h;
+    return h.replace(/(<button class="btn primary" type="button" data-act="pe-new">)/, `<button class="btn" type="button" data-act="ai-draft">${icon('sparkles')} Draft with AI</button>$1`);
+  };
+})();
+Object.entries({ sparkles: 'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM5 3v4M3 5h4M19 17v4M17 19h4', send: 'M22 2 11 13M22 2l-7 20-4-9-9-4z' }).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+
+Object.assign(Actions, {
+  'ask-go': () => Ask.go(),
+  'ask-sug': el => { const i = $('#askQ'); if (i) { i.value = el.dataset.q; i.focus(); } },
+  'ask-clear': async () => { if (!await Sheet.confirm({ title: 'Clear your questions?', body: '<p>Your questions and answers on this phone are removed.</p>', ok: 'Clear', danger: true })) return; LSX.set(Ask.key(), []); UI.render(); },
+  'ai-draft': () => AIDraft.open(),
+  'ai-approve': async el => {
+    const st = PlanEdit.st; if (!st) return; PlanEdit.keep && PlanEdit.keep();
+    const why = BlockFx.check(st.changes.block); if (why) { UI.toast(why, 'bad'); return; }
+    st.changes.ai.approved = true; st.changes.ai.approvedAt = todayISO(); PlanEdit.touch();
+    await PlanEdit.save($('#peSave') || el);
+    if (PlanEdit.st && PlanEdit.st.changes.ai && PlanEdit.st.changes.ai.approved) UI.toast('Approved. You can give it to a team on "Use it".');
+  }
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
