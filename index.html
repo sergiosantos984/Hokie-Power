@@ -1755,6 +1755,17 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 .sug-card .btn.ghost{color:inherit!important;background:transparent!important;border:1px solid currentColor!important;opacity:.9}
 .hero .h1.pre-h1{font-size:clamp(34px,11vw,52px);line-height:.95}
 
+/* ================= RELEASE 4 · install, recap, drop-off ================= */
+.install-card,.recap-card{display:flex;gap:12px;align-items:flex-start;margin:0 0 12px}
+.install-card>svg{width:24px;height:24px;color:var(--b1);flex:none;margin-top:2px}
+.install-card b{display:block}.install-card small{display:block;margin-top:2px}
+.recap-card{flex-direction:column;align-items:stretch;gap:10px;border:1px solid rgba(var(--b1rgb),.25)}
+.rc-stats b{font-size:26px}
+.rc-tip{font-size:14px;margin:0}
+.rc-next p{margin:0}
+.drop-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.drop-row b{display:block}.drop-row small{display:block;font-size:12.5px}
+
 </style>
 </head>
 <body>
@@ -1846,7 +1857,7 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 21 · 23:12';
+const BUILD_ID = 'Oct 22 · 00:53';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
@@ -9940,6 +9951,291 @@ if (!ICONS['trending-up']) ICONS['trending-up'] = 'M22 7l-8.5 8.5-5-5L2 17M16 7h
 Object.assign(Actions, {
   'sug-yes': el => { const s = Workout.active(); if (!s) return; LoadSug.apply(s, +el.dataset.e); UI.renderLogger(); UI.toast('Today\'s working sets are up one increment.'); },
   'sug-no': el => { const s = Workout.active(); if (!s) return; const x = s.ex[+el.dataset.e]; if (x) { x.sug = 'no'; Workout.persist(s, true); } UI.renderLogger(); }
+});
+
+/* ============ RELEASE 4 · INSTALL, OFFLINE, REMINDERS ============
+   • Offline: sw.js keeps a copy of the app so it opens without signal (registered on the GitHub version only).
+   • Install: a small Home card explains Add to Home Screen (iPhone steps, or the browser's Install button).
+   • Reminders (opt-in, accounts only): workout day at a chosen hour, streak at risk in the evening, challenge
+     ending tomorrow, coach nudges and the Monday recap, with quiet hours. The phone subscribes with Web Push;
+     the app keeps the server up to date with the athlete's time zone and next two weeks of workouts. The
+     push-send function (Supabase) sends what is due. On iPhone this needs the app on the Home Screen (iOS 16.4+). */
+const Push = {
+  st: null, busy: false, sub: null, deferred: null,
+  supported() { return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; },
+  ios() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); },
+  standalone() { try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch (e) { return false; } },
+  hosted() { return (location.protocol === 'https:' || location.hostname === 'localhost') && window.top === window; },
+  tz() { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'; } catch (e) { return 'UTC'; } },
+  async register() {
+    if (!('serviceWorker' in navigator) || !this.hosted()) return null;
+    try { const r = await navigator.serviceWorker.register('sw.js'); navigator.serviceWorker.addEventListener('message', e => { if (e.data && e.data.go) Push.go(e.data.go); }); return r; } catch (e) { return null; }
+  },
+  go(g) {
+    if (!g) return; const [r, p] = String(g).split(':');
+    if (r === 'recap') Nav.go('recap'); else if (r === 'home') Nav.go('home'); else if (/^(post|challenge|squad|athlete|notifs|social|coach)$/.test(r) && Cloud.on) Nav.go(r, p || null);
+  },
+  async load() {
+    if (!(Cloud.on && Social.on())) return;
+    try { this.st = await Social.rpc('push_prefs_get'); } catch (e) { this.st = { err: String(e.message || e) }; }
+    try { const reg = 'serviceWorker' in navigator ? await navigator.serviceWorker.getRegistration() : null; this.sub = reg && reg.pushManager ? await reg.pushManager.getSubscription() : null; } catch (e) { this.sub = null; }
+  },
+  on() { return !!(this.sub && this.st && this.st.phones > 0); },
+  b64(s) { const p = '='.repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from(b, c => c.charCodeAt(0)); },
+  async key() {
+    const { data, error } = await Cloud.sb.functions.invoke('push-send', { body: { action: 'key' } });
+    if (error || !data || !data.publicKey) throw new Error((data && data.error) || 'Reminders aren\'t set up on the server yet (the push-send function). Ask the admin.');
+    return data.publicKey;
+  },
+  async turnOn() {
+    if (!this.supported()) { UI.toast('This browser can\'t show reminders.', 'bad'); return false; }
+    if (this.ios() && !this.standalone()) { this.iosSheet(); return false; }
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') { UI.toast(perm === 'denied' ? 'Notifications are blocked for this site. Allow them in your browser or phone settings.' : 'Reminders stay off.', 'bad'); return false; }
+    const reg = (await navigator.serviceWorker.getRegistration()) || (await this.register()); if (!reg) { UI.toast('Reminders need the installed app (the GitHub version).', 'bad'); return false; }
+    await navigator.serviceWorker.ready;
+    const key = await this.key();
+    const sub = (await reg.pushManager.getSubscription()) || (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: this.b64(key) }));
+    const j = sub.toJSON();
+    this.st = await Social.rpc('push_subscribe', { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth, p_ua: navigator.userAgent.slice(0, 200), p_tz: this.tz() });
+    this.sub = sub; await this.schedule(true);
+    return true;
+  },
+  async turnOff() {
+    let ep = null; try { const reg = await navigator.serviceWorker.getRegistration(); const s = reg && await reg.pushManager.getSubscription(); if (s) { ep = s.endpoint; await s.unsubscribe(); } } catch (e) { }
+    this.st = await Social.rpc('push_unsubscribe', { p_endpoint: ep }); this.sub = null;
+  },
+  /* the next two weeks of workouts, so the server knows which days to remind */
+  plan() {
+    const today = todayISO(), end = addDays(today, 14);
+    return State.program.workouts.map(w => ({ w, d: Program.schedDate(w) })).filter(x => x.d && x.d >= today && x.d <= end && !['completed', 'skipped'].includes(Stats.statusOf(x.w.id)))
+      .sort((a, b) => a.d.localeCompare(b.d)).map(x => ({ d: x.d, t: x.w.title }));
+  },
+  async schedule(force) {
+    if (!(Cloud.on && Social.on() && this.st && this.st.phones > 0)) return;
+    const s = this.plan(), sig = JSON.stringify(s) + this.tz() + todayISO();
+    let last = ''; try { last = localStorage.getItem('bbp.pushSched') || ''; } catch (e) { }
+    if (!force && last === sig) return;
+    try { this.st = await Social.rpc('push_prefs_save', { p: { schedule: s, tz: this.tz() } }); localStorage.setItem('bbp.pushSched', sig); } catch (e) { }
+  },
+  async save(p) { try { this.st = await Social.rpc('push_prefs_save', { p }); } catch (e) { UI.toast(String(e.message || e), 'bad'); } },
+  async test(btn) {
+    btn && (btn.disabled = true);
+    try { const { data, error } = await Cloud.sb.functions.invoke('push-send', { body: { action: 'test' } }); if (error || (data && data.error)) throw new Error((data && data.error) || 'The test could not be sent.'); UI.toast('Sent — it should appear in a few seconds.'); }
+    catch (e) { UI.toast(String(e.message || e), 'bad'); } finally { btn && (btn.disabled = false); }
+  },
+  iosSheet() {
+    Sheet.open({ title: 'Add to your Home Screen first', html: `<p>On iPhone, reminders only work in the installed app (iOS 16.4 or later).</p>
+      <ol class="nlist"><li>Tap the <b>Share</b> button in Safari (the square with an arrow).</li><li>Choose <b>Add to Home Screen</b>, then <b>Add</b>.</li><li>Open Hokie Power from the new icon and turn reminders on in Settings.</li></ol>
+      <button class="btn big primary block" type="button" data-sheet-close>Got it</button>` });
+  },
+  /* ---------- Settings ---------- */
+  section() {
+    const box = b => `<section class="panel stack" data-stg id="pushSec"><h2 class="h3">Reminders</h2>${b}</section>`;
+    if (!Cloud.on) return box('<p class="muted" style="font-size:13.5px">Reminders need team accounts (the GitHub version with your Supabase settings).</p>');
+    if (!this.supported()) return box('<p class="muted" style="font-size:13.5px">This browser can\'t show reminders. On iPhone, open the app from your Home Screen; on Android, use Chrome.</p>');
+    if (!this.st) return box(`<p class="muted">Checking…</p>`);
+    if (this.st.err) return box(`<p class="muted" style="font-size:13.5px">${esc(this.st.err)}</p>`);
+    const on = this.on(), p = (this.st && this.st.prefs) || {}, hr = h => `${String(h).padStart(2, '0')}:00`;
+    const sw = (k, l, d) => `<div class="toggle"><span><b style="font-weight:600">${l}</b>${d ? `<br><span class="muted" style="font-size:12.5px">${d}</span>` : ''}</span><button class="switch" type="button" role="switch" aria-checked="${p[k] !== false}" data-act="push-pref" data-k="${k}" aria-label="${l}"></button></div>`;
+    const sel = (k, lab, from, to) => `<div class="field"><label for="pp-${k}">${lab}</label><select class="input" id="pp-${k}" data-act="push-hour" data-k="${k}">${Array.from({ length: to - from + 1 }, (_, i) => from + i).map(h => `<option value="${h}" ${p[k] === h ? 'selected' : ''}>${hr(h)}</option>`).join('')}</select></div>`;
+    const ios = this.ios() && !this.standalone() ? `<p class="muted" style="font-size:12.5px">${icon('smartphone')} On iPhone, add the app to your Home Screen first. <button type="button" class="linkish" data-act="push-ios">How</button></p>` : '';
+    return box(`<div class="toggle"><span><b style="font-weight:600">Reminders on this phone</b><br><span class="muted" style="font-size:12.5px">Training days, streaks, challenges, your coach and the Monday recap. Off until you turn it on.</span></span><button class="switch" type="button" role="switch" aria-checked="${on}" data-act="push-toggle" aria-label="Reminders on this phone" ${this.busy ? 'disabled' : ''}></button></div>${ios}
+      ${on ? `${sw('on_workout', 'Workout day', 'At the time below, on days with a workout you haven\'t logged.')}${sel('remind_at', 'Workout reminder at', 5, 21)}
+        ${sw('on_streak', 'Streak at risk', 'In the evening if today\'s workout is still open.')}${sw('on_challenge', 'Challenge ending', 'The day before a challenge you\'re in ends.')}
+        ${sw('on_coach', 'Messages from your coach', 'Nudges from your team\'s coaches.')}${sw('on_recap', 'Monday recap', 'Your week in one card, Monday at 08:00.')}
+        <div class="grid2">${sel('quiet_from', 'Quiet from', 0, 23)}${sel('quiet_to', 'Quiet until', 0, 23)}</div>
+        <small class="muted">Nothing arrives during quiet hours; coach messages wait until they end. Time zone: ${esc(p.tz || this.tz())}.</small>
+        <button class="btn sm" type="button" data-act="push-test">${icon('bell')} Send me a test</button>` : ''}`);
+  },
+  /* ---------- Home: install card ---------- */
+  installCard() {
+    if (!this.hosted() || this.standalone()) return '';
+    try { if (localStorage.getItem('bbp.installSeen')) return ''; } catch (e) { }
+    if (!this.ios() && !this.deferred) return '';
+    return `<section class="panel install-card" data-stg>${icon('smartphone')}<div class="grow"><b>Put Hokie Power on your Home Screen</b><small class="muted">${this.ios() ? 'Opens like an app, works without signal and can send reminders. Tap Share, then Add to Home Screen.' : 'Opens like an app and works without signal.'}</small>
+      <div class="row" style="gap:8px;margin-top:8px">${this.ios() ? '' : `<button class="btn sm primary" type="button" data-act="push-install">Install</button>`}<button class="btn sm ghost" type="button" data-act="push-install-x">Not now</button></div></div></section>`;
+  }
+};
+if (!ICONS.smartphone) ICONS.smartphone = 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM12 18h.01';
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); Push.deferred = e; });
+(() => {
+  Push.register();
+  const show = App.show.bind(App); App.show = function (first) {
+    show(first);
+    setTimeout(async () => { await Push.load(); Push.schedule(); }, 3000);
+    try { const g = new URLSearchParams(location.search).get('go'); if (g === 'recap' || g === 'home') { history.replaceState(null, '', location.pathname); setTimeout(() => Push.go(g), Motion.off ? 0 : 700); } } catch (e) { }
+  };
+  const sg = Screens.settings; Screens.settings = function () {
+    const h = sg.call(Screens), i = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Appearance');
+    return i < 0 ? h.replace(/<\/div>$/, Push.section() + '</div>') : h.slice(0, i) + Push.section() + h.slice(i);
+  };
+  const as = After.settings; After.settings = function (view, o) {
+    if (as) as(view, o);
+    if (Cloud.on && !Push.st) Push.load().then(() => { const s = $('#pushSec'); if (s && UI.route.name === 'settings') { s.outerHTML = Push.section(); UI.icons($('#pushSec')); After.pushSel(); } });
+    After.pushSel();
+  };
+  After.pushSel = () => $$('#pushSec select[data-act="push-hour"]').forEach(s => s.onchange = async () => { await Push.save({ [s.dataset.k]: +s.value }); UI.toast('Saved.'); });
+  /* after the first finished workout, offer reminders once (accounts only) */
+  const fin = Workout.finish; Workout.finish = async function (s) {
+    const r = await fin.call(Workout, s);
+    try { if (Cloud.on && Push.supported() && !localStorage.getItem('bbp.pushAsked') && State.sessions.filter(x => x.status === 'completed').length >= 1) localStorage.setItem('bbp.pushAsk', '1'); } catch (e) { }
+    Push.schedule(true); return r;
+  };
+  const ah = After.home; After.home = function (view, o) {
+    if (ah) ah.call(After, view, o);
+    let ask = false; try { ask = localStorage.getItem('bbp.pushAsk') === '1' && !localStorage.getItem('bbp.pushAsked'); } catch (e) { }
+    if (!ask || !Social.on()) return;
+    try { localStorage.setItem('bbp.pushAsked', '1'); localStorage.removeItem('bbp.pushAsk'); } catch (e) { }
+    setTimeout(async () => {
+      const cel = $('#celebrate'), fin = $('#finale');
+      if (UI.route.name !== 'home' || !$('#sheet-root').hidden || (cel && !cel.hidden) || (fin && !fin.hidden)) { try { localStorage.setItem('bbp.pushAsk', '1'); localStorage.removeItem('bbp.pushAsked'); } catch (e) { } return; }   // busy: ask next time
+      const ok = await Sheet.confirm({ title: 'Want a reminder on training days?', body: `<p>A short notification on days with a workout, and in the evening if it's still open. Change the time or turn it off in Settings.</p>${Push.ios() && !Push.standalone() ? '<p class="muted" style="font-size:13px">On iPhone, add the app to your Home Screen first.</p>' : ''}`, ok: 'Turn on reminders', cancel: 'Not now' });
+      if (ok) { try { if (await Push.turnOn()) UI.toast('Reminders are on. Change them in Settings.'); } catch (e) { UI.toast(String(e.message || e), 'bad'); } }
+    }, 1200);
+  };
+  /* install card on Home */
+  const hm = Screens.home; Screens.home = function () {
+    const h = hm.call(Screens), c = Push.installCard(); if (!c) return h;
+    const i = h.indexOf('<div class="dash">'); return i > 0 ? h.slice(0, i) + c + h.slice(i) : h;
+  };
+})();
+Object.assign(Actions, {
+  'push-toggle': async el => {
+    if (Push.busy) return; Push.busy = true; el.disabled = true;
+    try { if (Push.on()) { await Push.turnOff(); UI.toast('Reminders are off on this phone.'); } else if (await Push.turnOn()) UI.toast('Reminders are on.'); }
+    catch (e) { UI.toast(String(e.message || e), 'bad'); }
+    finally { Push.busy = false; const s = $('#pushSec'); if (s) { s.outerHTML = Push.section(); UI.icons($('#pushSec')); After.pushSel(); } }
+  },
+  'push-pref': async el => { const k = el.dataset.k, v = el.getAttribute('aria-checked') !== 'true'; el.setAttribute('aria-checked', v); await Push.save({ [k]: v }); },
+  'push-test': el => Push.test(el),
+  'push-ios': () => Push.iosSheet(),
+  'push-install': async () => { const d = Push.deferred; if (!d) return; d.prompt(); try { await d.userChoice; } catch (e) { } Push.deferred = null; try { localStorage.setItem('bbp.installSeen', '1'); } catch (e) { } const y = scrollY; UI.render(); scrollTo(0, y); },
+  'push-install-x': () => { try { localStorage.setItem('bbp.installSeen', '1'); } catch (e) { } const y = scrollY; UI.render(); scrollTo(0, y); }
+});
+
+/* ============ RELEASE 4 · MONDAY RECAP & STALL ALERT ============
+   Last week (Monday–Sunday) in one card, built only from the athlete's own log: workouts done (and how many
+   the program had), working sets, PRs, protein on training days (when targets are set) and one suggestion.
+   Shown on Home from Monday to Wednesday until dismissed; the full recap is its own screen (Monday push
+   opens it). Stall alert: a lift whose estimated max (Epley, from logged sets) hasn't gone up in 3 weeks
+   — with options, never an automatic change. */
+const Recap = {
+  monday(d = todayISO()) { const x = new Date(d + 'T12:00:00'); return addDays(d, -((x.getDay() + 6) % 7)); },
+  week() {
+    const from = addDays(this.monday(), -7), to = addDays(from, 6), inW = d => d && d >= from && d <= to;
+    const done = State.sessions.filter(s => s.status === 'completed' && inW(s.date));
+    const sched = State.program.workouts.filter(w => inW(Program.schedDate(w)));
+    const schedDone = Seasons.scoped(() => sched.filter(w => Stats.statusOf(w.id) === 'completed').length);
+    const sets = done.reduce((a, s) => a + Stats.sessionStats(s).sets, 0);
+    const prs = State.results.filter(r => r._pr && inW(r.date)).length;
+    let prot = null;
+    try {
+      const days = [...Array(7)].map((_, i) => addDays(from, i)).filter(d => Food.highDay(d) && Food.day(d).length);
+      const hit = days.filter(d => { const t = Food.targets(d); return t && t.protein && Food.total(Food.day(d)).protein >= t.protein * .9; }).length;
+      if (days.length && days.some(d => (Food.targets(d) || {}).protein)) prot = { hit, of: days.length };
+    } catch (e) { }
+    return { from, to, done: done.length, sched: sched.length, schedDone, missed: Math.max(0, sched.length - schedDone), sets, prs, prot, stalls: this.stalls() };
+  },
+  /* lifts whose best estimated max of the last 21 days is no higher than before (at least 4 weeks of data) */
+  stalls() {
+    const today = todayISO(), cut = addDays(today, -21), out = [];
+    Object.keys(LIFTS).forEach(k => {
+      let est = []; try { est = Stats.estimates(k) || []; } catch (e) { }
+      if (est.length < 3) return;
+      const first = est.reduce((a, e) => e.date < a ? e.date : a, today), last = est.reduce((a, e) => e.date > a ? e.date : a, '0');
+      if (daysBetween(first, today) < 28 || daysBetween(last, today) > 10) return;
+      const recent = est.filter(e => e.date >= cut), before = est.filter(e => e.date < cut);
+      if (!recent.length || !before.length) return;
+      const r = Math.max(...recent.map(e => e.kg)), b = Math.max(...before.map(e => e.kg));
+      if (r <= b) out.push({ lift: k, kg: b });
+    });
+    return out;
+  },
+  tip(w) {
+    if (w.stalls.length) return { k: 'stall', t: `Your ${w.stalls.map(s => LIFTS[s.lift].name).join(' and ')} hasn't gone up in 3 weeks.`, d: 'Options: a lighter week, a re-test, or a different variation for a while. See below.' };
+    if (w.missed) return { k: 'missed', t: `You missed ${w.missed} workout${w.missed === 1 ? '' : 's'} last week.`, d: 'Pick your training days for this week now, and turn on reminders if they help.' };
+    if (w.prot && w.prot.hit < w.prot.of) return { k: 'protein', t: `Protein hit on ${w.prot.hit} of ${w.prot.of} training days.`, d: 'A protein snack after training is the easiest fix.' };
+    if (!w.done) return { k: 'start', t: 'No workouts logged last week.', d: 'A new week starts today. One workout gets you going again.' };
+    return { k: 'good', t: w.missed === 0 && w.sched ? 'Every scheduled workout done. Strong week.' : 'Good week. Keep it going.', d: '' };
+  },
+  stats(w) {
+    return `<div class="sn-stats rc-stats"><div><b class="num">${w.done}</b><small>workout${w.done === 1 ? '' : 's'}${w.sched ? ` · ${w.schedDone}/${w.sched} planned` : ''}</small></div><div><b class="num">${fmtNum(w.sets, 0)}</b><small>working sets</small></div><div><b class="num">${w.prs}</b><small>PR${w.prs === 1 ? '' : 's'}</small></div></div>${w.prot ? `<small class="muted">Protein on training days: ${w.prot.hit} of ${w.prot.of}</small>` : ''}`;
+  },
+  showCard() {
+    const t = todayISO(), dow = (new Date(t + 'T12:00:00').getDay() + 6) % 7; if (dow > 2 || !State.profile) return false;
+    try { return localStorage.getItem('bbp.recapSeen') !== this.monday(); } catch (e) { return true; }
+  },
+  card() {
+    if (!this.showCard()) return '';
+    const w = this.week(), tp = this.tip(w);
+    if (!w.done && !w.sched) return '';
+    return `<section class="panel recap-card" data-stg><div class="spread"><span class="label">Your week · ${fmtDate(w.from)} to ${fmtDate(w.to)}</span><button class="btn icon sm ghost" type="button" data-act="recap-x" aria-label="Dismiss the recap">${icon('x')}</button></div>
+      ${this.stats(w)}<p class="rc-tip"><b>${esc(tp.t)}</b>${tp.d ? ` ${esc(tp.d)}` : ''}</p><button class="btn sm" type="button" data-act="go" data-r="recap">See the recap ${icon('chevron-right')}</button></section>`;
+  },
+  screen() {
+    const w = this.week(), tp = this.tip(w), u = unitW();
+    const stall = w.stalls.length ? `<section class="panel stack" data-stg><h2 class="h3">${icon('trending-up')} Stalled lifts</h2>
+      ${w.stalls.map(s => `<p><b>${LIFTS[s.lift].name}</b>: estimated max about ${fmtNum(Units.showW(Units.wt(s.kg, 'kg')), 0)} ${u} for 3 weeks.</p>`).join('')}
+      <ul class="nlist"><li><b>Lighter week:</b> keep the workouts but use less weight for a week, then build back up.</li><li><b>Re-test:</b> a real max gives every percentage a fresh start.</li><li><b>Different variation:</b> swap the lift in the logger for a while (Swap button).</li></ul>
+      <button class="btn sm" type="button" data-act="log-result">${icon('plus')} Log a test result</button><small class="muted">Your coach knows your training best: ask them which option fits.</small></section>` : '';
+    return `<div class="screen">${backBar('Monday recap')}
+      <section class="panel stack" data-stg><span class="label">${fmtDate(w.from)} to ${fmtDate(w.to)}</span>${this.stats(w)}</section>
+      <section class="panel stack rc-next" data-stg><span class="label">One thing for this week</span><p style="font-size:16px"><b>${esc(tp.t)}</b></p>${tp.d ? `<p class="muted">${esc(tp.d)}</p>` : ''}
+        ${tp.k === 'missed' ? `<button class="btn sm" type="button" data-act="go" data-r="training" data-p="plan">See this week's plan</button>` : tp.k === 'protein' ? `<button class="btn sm" type="button" data-act="go" data-r="nutrition">Open Fuel</button>` : ''}</section>
+      ${stall}<p class="muted" data-stg style="font-size:12.5px">Built from your own log. Nothing in your plan changes unless you change it.</p></div>`;
+  }
+};
+Screens.recap = () => Recap.screen();
+TAB_OF.recap = 'home'; if (typeof Kinetic !== 'undefined') Kinetic.NAMES.recap = 'RECAP';
+(() => {
+  const hm = Screens.home; Screens.home = function () {
+    const h = hm.call(Screens), c = Recap.card(); if (!c) return h;
+    const i = h.indexOf('<div class="dash">'); return i > 0 ? h.slice(0, i) + c + h.slice(i) : h;
+  };
+})();
+Object.assign(Actions, {
+  'recap-x': () => { try { localStorage.setItem('bbp.recapSeen', Recap.monday()); } catch (e) { } const y = scrollY; UI.render(); scrollTo(0, y); }
+});
+
+/* ============ RELEASE 4 · COACH DROP-OFF LIST & NUDGE ============
+   On the Coach screen: athletes on your teams with no workout in 3+ days (never-trained first), with a
+   Nudge button — at most one nudge a day per athlete. A nudge shows in the athlete's notifications and, if
+   they turned on coach reminders, on their phone (sent straight away, or when their quiet hours end). */
+const DropOff = {
+  list() { return Social.get('dropoff', () => Social.rpc('coach_dropoff', { p_days: 3 }), 60000); },
+  card() {
+    const e = this.list(); if (!e.v || !e.v.length) return '';
+    const row = a => `<div class="drop-row">${Social.avatar(a.user, 36)}<div class="grow"><b>${esc(a.user.name)}</b><small class="muted">${a.last ? `Last workout ${a.days} day${a.days === 1 ? '' : 's'} ago` : 'No workouts yet'} · ${esc(a.team)}</small></div>
+      ${a.nudged ? '<span class="badge">Nudged today</span>' : `<button class="btn sm" type="button" data-act="nudge" data-u="${a.user.id}" data-n="${esc(a.user.name)}">${icon('bell')} Nudge</button>`}</div>`;
+    return `<section class="panel stack drop-card" data-stg><div class="spread"><h2 class="h3">Not training lately</h2><span class="badge warn">${e.v.length}</span></div>
+      <p class="muted" style="font-size:13px">No workout logged in 3 days or more.</p>${e.v.slice(0, 12).map(row).join('')}${e.v.length > 12 ? `<small class="muted">and ${e.v.length - 12} more</small>` : ''}</section>`;
+  }
+};
+(() => {
+  const co = Screens.coach; Screens.coach = function () {
+    const h = co.call(Screens); if (!(Cloud.on && Social.on() && Brand.isCoach()) || Social.missing) return h;
+    const c = DropOff.card(); if (!c) return h;
+    const i = h.indexOf('</h1>'), j = i < 0 ? -1 : h.indexOf('</div>', i);
+    if (j < 0) return h;
+    const k = h.indexOf('</button>', h.indexOf('flag-card', j)); const at = h.indexOf('flag-card', j) > 0 && k > 0 ? k + 9 : j + 6;   // under Flagged results when it's there
+    return h.slice(0, at) + c + h.slice(at);
+  };
+})();
+Object.assign(Actions, {
+  nudge: async el => {
+    const name = el.dataset.n;
+    let msg = null;
+    const ok = await new Promise(res => Sheet.open({ title: `Nudge ${name}`, html: `<div class="field"><label for="ndM">Message (optional)</label><input class="input" id="ndM" maxlength="160" placeholder="Time to get a workout in. Your team is counting on you."></div>
+      <p class="muted" style="font-size:13px">${esc(name)} sees it in their notifications, and on their phone if they turned on coach reminders. One nudge a day.</p>
+      <div class="grid2"><button class="btn" type="button" data-sheet-close>Cancel</button><button class="btn primary" type="button" id="ndGo">${icon('bell')} Send</button></div>`,
+      onMount: sh => { $('#ndGo', sh).onclick = async () => { msg = $('#ndM', sh).value.trim() || null; await Sheet.close(true); res(true); }; }, onClose: r => { if (r !== true) res(false); } }));
+    if (!ok) return;
+    const r = await Social.act(null, () => Social.rpc('coach_nudge', { p_user: el.dataset.u, p_msg: msg }), `Nudge sent to ${name}.`);
+    if (r === undefined) return;
+    try { Cloud.sb.functions.invoke('push-send', { body: {} }).catch(() => { }); } catch (e) { }   // deliver now instead of at the next hourly run
+    Social.drop('dropoff'); const y = scrollY; UI.render(); scrollTo(0, y);
+  }
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
