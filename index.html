@@ -1765,6 +1765,33 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 .rc-next p{margin:0}
 .drop-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
 .drop-row b{display:block}.drop-row small{display:block;font-size:12.5px}
+/* ===== Release 5 · compete together ===== */
+.tpl-row{gap:8px}.tpl-row .chips,.sboard .chips{gap:8px;flex-wrap:wrap;margin:0;padding-inline:0;overflow:visible}
+.month-card{border-left:4px solid var(--b2,var(--b2));gap:8px}
+.month-t{text-align:left;font:900 20px/1.15 var(--f-display,Impact,sans-serif);text-transform:uppercase;color:inherit;min-height:44px}
+.org-dot{width:30px;height:30px;border-radius:50%;flex:none;border:2px solid rgba(255,255,255,.5)}
+.ccard.k-schools,.chero.k-schools{border-left-color:var(--b2,var(--b2))}
+.cmp-h{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;text-align:center}
+.cmp-h>span{display:flex;flex-direction:column;align-items:center;gap:4px}
+.cmp-r{display:grid;grid-template-columns:1fr 1.3fr 1fr;align-items:center;text-align:center;padding:8px 0;border-top:1px solid var(--line)}
+.cmp-r span{font:800 18px/1 var(--f-display,Impact,sans-serif)}.cmp-r small{color:var(--muted);font-size:12.5px}
+.cmp-r span{justify-self:center;padding:4px 8px;border-radius:8px}.cmp-r span.hi{background:rgba(var(--b2rgb,232,119,34),.3);box-shadow:inset 0 0 0 1.5px var(--b2,var(--b2))}
+body.wall-mode #nav,body.wall-mode #resumeBar,body.wall-mode .offline-bar{display:none!important}
+body.wall-mode #view{max-width:1400px;padding:16px 20px calc(var(--safe-b) + 24px)}
+.wall-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.wall-t{font:900 clamp(30px,5vw,64px)/1 var(--f-display,Impact,sans-serif);text-transform:uppercase;margin:2px 0 0}
+.wall-clock{text-align:right;display:flex;flex-direction:column}.wall-clock b{font:900 clamp(26px,4vw,48px)/1 var(--f-display,Impact,sans-serif)}
+.wall-sum{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline;margin-bottom:14px;font-size:16px}.wall-sum b{font-size:24px}
+.wall-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:900px){.wall-grid{grid-template-columns:1fr 340px}}
+.wall-ath{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;align-content:start}
+.wtile{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;border-radius:18px;background:var(--panel);border:2px solid var(--line);color:inherit;text-align:center;min-height:44px;font:inherit}
+button.wtile{cursor:pointer}
+.wtile.on{border-color:var(--b2,var(--b2));background:linear-gradient(160deg,rgba(var(--b2rgb,232,119,34),.22),var(--panel) 70%)}
+.wt-n{font-weight:800;font-size:15px;overflow-wrap:anywhere}
+.wt-d{display:flex;align-items:baseline;gap:4px}.wt-d b{font:900 34px/1 var(--f-display,Impact,sans-serif)}.wt-d small,.wt-s{color:var(--muted);font-size:12.5px}
+.wt-in{position:absolute;top:8px;right:8px;display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:999px;background:var(--b2,var(--b2));color:#1a0a10;font-weight:900;font-size:12px}
+.wall-ch{align-self:start}.wall-hint{margin-top:12px}
 
 </style>
 </head>
@@ -1857,7 +1884,7 @@ body:not(.theme-light) .tbl tr.over td,body:not(.theme-light) .tbl tr.over td *{
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 22 · 00:53';
+const BUILD_ID = 'Oct 22 · 15:06';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
@@ -7079,7 +7106,7 @@ const Presence = {
   start() { this.ping(); setInterval(() => this.ping(), 60000); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') this.ping(); }); }
 };
 const Online = {
-  dot(st) { return st === 'online' ? '<i class="onl on" aria-label="Online now"></i>' : st === 'recent' ? '<i class="onl rec" aria-label="Active recently"></i>' : ''; },
+  dot(st) { return st === 'online' ? '<i class="onl on" role="img" aria-label="Online now"></i>' : st === 'recent' ? '<i class="onl rec" role="img" aria-label="Active recently"></i>' : ''; },
   label(st, at) { return st === 'online' ? 'Online now' : st === 'recent' ? `Active ${at ? Social.ago(at) + ' ago' : 'recently'}` : ''; },
   get() { return Social.get('online', () => Social.rpc('who_online'), 25000); },
   strip(opts = {}) {
@@ -10236,6 +10263,230 @@ Object.assign(Actions, {
     try { Cloud.sb.functions.invoke('push-send', { body: {} }).catch(() => { }); } catch (e) { }   // deliver now instead of at the next hourly run
     Social.drop('dropoff'); const y = scrollY; UI.render(); scrollTo(0, y);
   }
+});
+
+/* ============ RELEASE 5 · COMPETE TOGETHER ============
+   One-tap challenge templates · the monthly school challenge (made by the database on the 1st, with a
+   Monthly Finisher badge) · season points (10 per training day up to 4 a week + 25 per PR, max 3 a day) ·
+   school vs school (head coaches only, both must agree; scored as the average per athlete) · the
+   weight-room screen with check-in · Compare on profiles · per-lift leaderboards (tested results only).
+   Every score comes from the database; nothing here is worked out on the phone. */
+Object.assign(SOC_METRIC, { points: { name: 'Season points', unit: 'points', rule: '10 per training day (up to 4 a week) + 25 per personal record (up to 3 a day). Showing up and getting better both count.' } });
+SOC_KIND.schools = 'School vs school';
+if (typeof SOC_BADGE_ICON !== 'undefined') SOC_BADGE_ICON.monthly_finisher = 'calendar-check';
+const SCHOOL_METRICS = ['points', 'workouts', 'active_days'];
+Object.entries({ school: 'M14 22v-4a2 2 0 1 0-4 0v4M18 10l4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2M18 5v17M4 6l8-4 8 4M6 5v17M12 7a2 2 0 1 0 0 4a2 2 0 1 0 0-4',
+  'git-compare': 'M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M13 6h3a2 2 0 0 1 2 2v7M11 18H8a2 2 0 0 1-2-2V9',
+  monitor: 'M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8 21h8M12 17v4',
+  maximize: 'M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3' }).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+
+const Compete = {
+  head() { return Brand.isHead() || Cloud.isAdmin(); },
+  /* one tap: everything filled in, straight to "Who's in?" */
+  TPL: [
+    { id: 'abs', label: '1,000 ab reps · 7 days', icon: 'flame', pre: { kind: 'group', metric: 'reps', filter: 'core', goal: 'target', target: 1000, days: 7, title: '1,000 ab reps in 7 days' } },
+    { id: 'four', label: '4 workouts this week', icon: 'dumbbell', pre: { kind: 'group', metric: 'workouts', goal: 'target', target: 4, days: 7, title: '4 workouts this week' } },
+    { id: 'duel', label: 'Most training days · 14 days', icon: 'swords', pre: { kind: 'duel', metric: 'active_days', goal: 'race', days: 14, title: 'Most training days in 14 days' } },
+    { id: 'points', label: 'Season points · 28 days', icon: 'trending-up', pre: { kind: 'group', metric: 'points', goal: 'race', days: 28, title: 'Season points · 28 days' } },
+    { id: 'school', label: 'School vs school · 28 days', icon: 'school', head: true, pre: { kind: 'schools', metric: 'points', goal: 'race', days: 28, title: 'School vs school · season points' } }
+  ],
+  /* one tap: everything filled in, straight to "Who's in?" */
+  templates() {
+    return `<section class="panel stack tpl-row" data-stg><span class="label">Quick start · one tap</span><div class="chips">${this.TPL.filter(t => !t.head || this.head()).map(t => `<button type="button" class="chip" data-act="soc-tpl" data-t="${t.id}">${icon(t.icon)} ${esc(t.label)}</button>`).join('')}</div></section>`;
+  },
+  monthly(L) {
+    const c = L.find(x => x.auto === 'monthly' && x.status !== 'final'); if (!c) return '';
+    const joined = c.my_status === 'accepted', pct = joined && c.mine != null ? c.mine / (c.target || 12) * 100 : 0;
+    return `<section class="panel stack month-card" data-stg><div class="spread"><span class="label">${icon('calendar-check')} This month</span><span class="cst ${c.status}">${Arena.left(c)}</span></div>
+      <button type="button" class="linkish month-t" data-act="go" data-r="challenge" data-p="${c.id}"><b>${esc(c.title)}</b></button>
+      ${joined ? `${Social.bar(pct, 'mon' + c.id, 'orange big')}<small class="muted">You: <b>${fmtNum(c.mine || 0, 0)}</b> of ${fmtNum(c.target, 0)} workouts${c.mine >= c.target ? ' · done, the Monthly Finisher badge is yours' : ''}</small>`
+        : `<p class="muted" style="font-size:13px">Train ${fmtNum(c.target, 0)} times this month. Everyone who makes it gets the Monthly Finisher badge.</p><button class="btn red" type="button" data-act="soc-ch-join" data-id="${c.id}">${icon('plus')} Join</button>`}
+      ${c.people ? `<small class="muted">${c.people} athlete${c.people === 1 ? '' : 's'} in</small>` : ''}</section>`;
+  },
+  /* ---------- school vs school ---------- */
+  schoolScreen(c) {
+    const b = c.board || {}, rows = b.schools || [], M = SOC_METRIC[c.metric] || {}, mine = c.my_org, R = Arena.rule(c);
+    const pend = (c.schools || []).filter(s => s.status === 'invited'), dec = (c.schools || []).filter(s => s.status === 'declined');
+        const win = c.status === 'final' ? rows.filter(s => s.rank === 1 && s.score > 0).map(s => s.org.name) : [];
+    const top = Math.max(1, ...rows.map(s => s.score || 0));
+    const sw = s => /^#[0-9a-fA-F]{6}$/.test(s.color1 || '') ? s.color1 : 'var(--vt-maroon)';
+    const ask = c.org_invite && c.status !== 'final' ? `<section class="panel stack" data-stg><p>${esc(c.creator.name)} challenged your school. As head coach you answer for everyone: if you accept, every athlete at your school is in.</p>
+      <div class="grid2"><button class="btn big red" type="button" data-act="soc-ch-org" data-id="${c.id}" data-v="1">${icon('check')} Accept</button><button class="btn big" type="button" data-act="soc-ch-org" data-id="${c.id}" data-v="0">Decline</button></div></section>` : '';
+    return `<div class="screen soc">${backBar('Challenge')}
+      <section class="panel chero k-schools" data-stg><div class="spread"><span class="label">${icon('school')} ${SOC_KIND.schools}</span><span class="cst ${c.status}">${Arena.left(c)}</span></div>
+        <h2 class="chero-t">${esc(c.title)}</h2>${c.description ? `<p>${esc(c.description)}</p>` : ''}
+        <div class="chero-d">${icon('calendar')} ${fmtDate(c.starts_on)} – ${fmtDate(c.ends_on)} · by ${esc(c.creator.name)}</div>
+        ${c.status === 'final' ? `<div class="cwin">${icon(win.length ? 'crown' : 'flag')} ${win.length ? esc(win.join(' & ')) + (win.length > 1 ? ' tie for first' : ' won') : 'No winner'}</div>` : ''}</section>
+      ${ask}
+      <section class="panel stack" data-stg><div class="spread"><h2 class="h3">School scoreboard</h2><span class="label">${c.status === 'final' ? 'Final' : 'Live'}</span></div>
+        ${rows.length ? `<ol class="lb">${rows.map((s, i) => `<li class="${s.org.id === mine ? 'me' : ''}" data-lbr style="--i:${i}"><span class="lb-r">${s.rank}</span><span class="swho"><span class="org-dot" style="background:${sw(s.org)}" aria-hidden="true"></span><span class="grow"><b>${esc(s.org.name)}</b><small>${s.active} of ${s.members} athlete${s.members === 1 ? '' : 's'} scoring</small></span></span><b class="lb-v"><span data-count="${s.score || 0}" data-dec="1" data-key="chs${c.id}${s.org.id}">${fmtNum(s.score, 1)}</span><small>avg</small></b></li>`).join('')}</ol>
+          <div class="lb-bars" aria-hidden="true">${rows.map(s => `<div class="lbb ${s.org.id === mine ? 'me' : ''}"><span>${esc(s.org.name)}</span>${Social.bar((s.score || 0) / top * 100, 'lbs' + c.id + s.org.id)}</div>`).join('')}</div>` : '<p class="muted">Waiting for the other school to accept.</p>'}
+        ${c.my_score != null ? `<small class="muted">Your score: <b>${fmtNum(c.my_score, 1)}</b> ${M.unit}</small>` : ''}
+        ${c.status === 'active' && (c.org_status === 'accepted' || rows.some(s => s.org.id === mine)) ? `<button class="btn block primary" type="button" data-act="go" data-r="workout">${icon('dumbbell')} Train now — it counts for your school</button>` : ''}</section>
+      <section class="panel stack srules" data-stg><h2 class="h3">${icon('scale')} Rules</h2>
+        <div class="kv"><span>Metric</span><span>${esc(R.metric)}</span></div><div class="kv"><span>How it's won</span><span>Each school's score is the average per athlete. Every active athlete counts, so a bigger school doesn't win just by size.</span></div>
+        <div class="kv"><span>What counts</span><span>${esc(R.count)}</span></div><div class="kv"><span>Who's in</span><span>Every athlete at each school whose head coach accepted</span></div>
+        <p class="muted" style="font-size:13px">${icon('lock')} Other schools see your school's name and score only, never your athletes' names. Scores come from workouts logged in the app (self-reported). Results lock one day after the end.</p></section>
+      ${pend.length || dec.length ? `<section class="panel" data-stg><span class="label">Invited</span><div class="row wrap" style="margin-top:6px">${pend.map(p => `<span class="badge">${esc(p.name)} · waiting</span>`).join('')}${dec.map(p => `<span class="badge">${esc(p.name)} · declined</span>`).join('')}</div></section>` : ''}</div>`;
+  },
+  /* ---------- per-lift leaderboard (tested results only) ---------- */
+  liftBoard() {
+    const lift = UI.ui.lbLift || 'squat', scope = UI.ui.lbScope || 'school';
+    const sq = (Social.get('squads', () => Social.rpc('my_squads'), 60000).v || {}).mine || [], teams = sq.filter(s => s.kind === 'team');
+    const team = scope === 'school' ? null : (teams.find(t => t.id === scope) || teams[0] || {}).id;
+    const key = `lift:${lift}:${team || 'school'}`, e = Social.get(key, () => Social.rpc('lift_board', { p_lift: lift, p_scope: team ? 'team' : 'school', p_team: team }), 60000);
+    const u = unitW(), rows = e.v ? (e.v.length ? `<ol class="lb">${e.v.map((r, i) => {
+      const same = i && e.v[i - 1].best.kg === r.best.kg;
+      return `<li class="${r.me ? 'me' : ''}" data-lbr style="--i:${i}"><span class="lb-r">${same ? '=' : i + 1}</span>${Social.who(r.user, r.best.date ? fmtDate(String(r.best.date).slice(0, 10)) : '')}<b class="lb-v">${fmtNum(Units.fromKg(r.best.kg, u), 0)}<small>${u}</small></b></li>`; }).join('')}</ol>`
+      : `<p class="muted">No tested ${esc(LIFTS[lift].name)} results yet. Log a test from Progress and it shows here.</p>`) : e.err ? `<p class="err-msg">${esc(e.err)}</p>` : '<div class="sk sk-l"></div><div class="sk sk-l"></div>';
+    return `<div class="chips" role="group" aria-label="Lift">${Object.keys(LIFTS).map(k => `<button type="button" class="chip" data-act="ui" data-k="lbLift" data-v="${k}" aria-pressed="${lift === k}">${esc(LIFTS[k].name)}</button>`).join('')}</div>
+      ${teams.length ? `<div class="chips" role="group" aria-label="Who">${[['school', 'Whole school'], ...teams.map(t => [t.id, t.name])].map(([v, l]) => `<button type="button" class="chip" data-act="ui" data-k="lbScope" data-v="${v}" aria-pressed="${(team || 'school') === v}">${esc(l)}</button>`).join('')}</div>` : ''}
+      <div><b>Best tested ${esc(LIFTS[lift].name)}</b><p class="muted" style="font-size:13px">Tested 1RMs only (no estimates or training maxes) · athletes who share their stats · ${team ? 'your team' : 'your school'}</p></div>${rows}`;
+  },
+  /* ---------- Compare ---------- */
+  async compare(id, name) {
+    const p = State.profile || {}, season = p.startDate ? Math.min(120, Math.max(7, daysBetween(p.startDate, todayISO()) + 1)) : 120;
+    let days = 30;
+    const body = r => { const [a, b] = r.people, L = Object.keys(LIFTS), u = unitW();
+      const row = (lab, x, y, f = v => fmtNum(v, 0)) => { const hi = x > y ? 'a' : y > x ? 'b' : ''; return `<div class="cmp-r"><span class="${hi === 'a' ? 'hi' : ''}">${x == null ? '—' : f(x)}</span><small>${lab}</small><span class="${hi === 'b' ? 'hi' : ''}">${y == null ? '—' : f(y)}</span></div>`; };
+      const kg = o => o && o.kg != null ? +o.kg : null, w = v => fmtNum(Units.fromKg(v, u), 0) + ' ' + u;
+      return `<div class="cmp-h"><span>${Social.avatar(a.user, 44)}<b>You</b></span><small class="muted">last ${r.days} days</small><span>${Social.avatar(b.user, 44)}<b>${esc(b.user.name)}</b></span></div>
+        ${row('Training days', a.training_days, b.training_days)}${row('Workouts', a.workouts, b.workouts)}${row('Working sets', a.sets, b.sets)}${row('Personal records', a.prs, b.prs)}
+        <span class="label" style="margin-top:8px">Best tested 1RM (all time)</span>${L.map(k => row(LIFTS[k].name, kg(a.lifts[k]), kg(b.lifts[k]), w)).join('')}
+        <p class="muted" style="font-size:12.5px">Tested results only. Built from what each of you logged in ${esc(Brand.name())}.</p>`; };
+    const load = async sh => { const box = $('#cmpB', sh); box.innerHTML = '<div class="sk sk-l"></div><div class="sk sk-l"></div>';
+      try { const r = await Social.rpc('athlete_compare', { p_user: id, p_days: days }); box.innerHTML = body(r); Social.hydrate && Social.hydrate(box); }
+      catch (e) { box.innerHTML = `<p class="err-msg">${esc(Social.msg(e))}</p>`; } };
+    Sheet.open({ title: `You vs ${name}`, html: `<div class="seg" role="group" aria-label="Period"><button type="button" data-cmp="30" aria-pressed="true">30 days</button><button type="button" data-cmp="${season}" aria-pressed="false">This season</button></div><div id="cmpB" class="stack cmp"></div>`,
+      onMount: sh => { $$('[data-cmp]', sh).forEach(bt => bt.onclick = () => { days = +bt.dataset.cmp; $$('[data-cmp]', sh).forEach(x => x.setAttribute('aria-pressed', String(x === bt))); load(sh); }); load(sh); } });
+  }
+};
+
+/* ---------- weight-room screen: full screen, refreshes every minute, coaches check athletes in ---------- */
+const Wall = {
+  timer: null, lock: null,
+  key: id => 'wall:' + id,
+  screen(id) {
+    const e = Social.get(this.key(id), () => Social.rpc('team_wall', { p_team: id }), 50000);
+    const exit = `<button class="btn icon" type="button" data-act="wall-exit" aria-label="Leave the weight-room screen">${icon('x')}</button>`;
+    if (!e.v) return `<div class="screen wall">${backBar('Weight room', exit)}${e.err ? Social.errBox(e.err, this.key(id)) : Social.skel(3)}</div>`;
+    const w = e.v, M = w.members || [], inN = M.filter(m => m.in).length, now = new Date();
+    const tile = m => { const t = `${Social.avatar(m.user, 52)}<span class="wt-n">${esc(m.user.name)}</span><span class="wt-d"><b>${m.days}</b><small>day${m.days === 1 ? '' : 's'}</small></span><small class="wt-s">${fmtNum(m.sets, 0)} sets · ${m.last ? (m.last === w.today ? 'trained today' : 'last ' + fmtDate(m.last)) : 'no workouts yet'}</small>${m.in ? `<span class="wt-in">${icon('check')} In</span>` : ''}`;
+      return w.can_check_in ? `<button type="button" class="wtile ${m.in ? 'on' : ''}" data-act="wall-in" data-t="${id}" data-u="${m.user.id}" aria-pressed="${!!m.in}" aria-label="${esc(m.user.name)}: ${m.in ? 'checked in, tap to undo' : 'tap to check in'}">${t}</button>` : `<div class="wtile ${m.in ? 'on' : ''}">${t}</div>`; };
+    const ch = w.challenge, cb = ch && ch.board ? (ch.board.squads ? ch.board.squads.map(s => ({ name: s.squad.name, score: s.score })) : (ch.board.people || []).map(p => ({ name: p.user.name, score: p.score }))).slice(0, 10) : [];
+    return `<div class="screen wall"><div class="wall-top"><div class="grow"><span class="label">${esc(Brand.name())} · weight room</span><h1 class="wall-t">${esc(w.team.name)}</h1></div>
+        <div class="wall-clock"><b>${pad2(now.getHours())}:${pad2(now.getMinutes())}</b><small>${fmtDate(w.today)}</small></div>
+        <button class="btn icon" type="button" data-act="wall-full" aria-label="Full screen">${icon('maximize')}</button>${exit}</div>
+      <div class="wall-sum"><span><b>${inN}</b> of ${M.length} checked in today</span><span><b>${M.filter(m => m.days > 0).length}</b> trained this week</span><small class="muted">Updates every minute · week from ${fmtDate(w.week_start)}</small></div>
+      <div class="wall-grid"><section class="wall-ath">${M.length ? M.map(tile).join('') : '<p class="muted">No athletes on this team yet.</p>'}</section>
+        ${ch ? `<section class="panel stack wall-ch"><span class="label">${icon('swords')} Live challenge · ${esc(Arena.left(Object.assign({ status: 'active' }, ch)))}</span><b class="h3">${esc(ch.title)}</b>
+          <ol class="lb sm">${cb.map((r, i) => `<li><span class="lb-r">${i + 1}</span><b class="grow">${esc(r.name)}</b><b class="lb-v">${r.score == null ? '—' : fmtNum(r.score, 1)}<small>${esc((SOC_METRIC[ch.metric] || {}).unit || '')}</small></b></li>`).join('') || '<li class="muted">No scores yet.</li>'}</ol></section>` : ''}</div>
+      ${w.can_check_in ? '<p class="muted wall-hint">Tap an athlete to check them in. Tap again to undo.</p>' : ''}</div>`;
+  },
+  start(id) {
+    clearInterval(this.timer);
+    this.timer = setInterval(() => {
+      if (UI.route.name !== 'wall' || UI.route.param !== id) { clearInterval(this.timer); this.timer = null; return; }
+      if (document.querySelector('.sheet.open, #sheet:not([hidden])')) return;
+      const e = Social.c[this.key(id)]; if (e) e.at = 0;      // stale: reload (old board stays on screen until the new one arrives)
+      Social.repaint();
+    }, 60000);
+    try { if (navigator.wakeLock && !this.lock) navigator.wakeLock.request('screen').then(l => { this.lock = l; l.addEventListener('release', () => { this.lock = null; }); }, () => { }); } catch (e) { }
+  },
+  stop() { clearInterval(this.timer); this.timer = null; try { this.lock && this.lock.release(); } catch (e) { } this.lock = null; }
+};
+Screens.wall = id => Wall.screen(id);
+After.wall = view => { Social.hydrate(view); Wall.start(UI.route.param); };
+Social.live.add('wall'); TAB_OF.wall = 'more'; if (typeof Kinetic !== 'undefined') Kinetic.NAMES.wall = 'WEIGHT ROOM';
+(() => {
+  const r = UI.render; UI.render = function (o) {
+    const res = r.call(UI, o), on = UI.route.name === 'wall';
+    document.body.classList.toggle('wall-mode', on); if (!on && Wall.timer) Wall.stop();
+    return res;
+  };
+})();
+
+/* ---------- hooks into the Arena, the challenge screen, the wizard, profiles and the coach's team ---------- */
+(() => {
+  const hub = Arena.hub; Arena.hub = function () {
+    const e = Social.c.chal;
+    if (e && e.v) e.v.forEach(c => { if (c.kind !== 'schools') return; if (c.org_invite) c.squad_invite = ['org']; else if (c.squad_invite && c.squad_invite[0] === 'org') c.squad_invite = null; if (c.org_status === 'accepted' && !c.my_status) c.my_status = 'accepted'; });
+    let h = hub.call(Arena); const i = h.indexOf('</button>'); if (i < 0) return h;
+    const L = (Social.c.chal && Social.c.chal.v) || [];
+    return h.slice(0, i + 9) + Compete.monthly(L) + Compete.templates() + h.slice(i + 9);
+  };
+  const card = Arena.card; Arena.card = function (c) {
+    let h = card.call(Arena, c);
+    if (c.kind === 'schools') h = h.replace(icon('users') + ' School vs school', icon('school') + ' School vs school');
+    if (c.auto === 'monthly') h = h.replace('<b class="ccard-t">', '<span class="badge">This month</span><b class="ccard-t">');
+    return h;
+  };
+  const boards = Arena.boards; Arena.boards = function () {
+    if (UI.ui.socBoard === 'lifts') { UI.ui.socBoard = 'week'; const h = boards.call(Arena); UI.ui.socBoard = 'lifts';
+      const a = h.indexOf('<div class="seg"'), b = h.indexOf('</div>', a) + 6;
+      const seg = h.slice(a, b).replace(/aria-pressed="true" aria-selected="true"/, 'aria-pressed="false" aria-selected="false"').replace('</div>', '<button type="button" role="tab" data-act="soc-board" data-k="lifts" aria-pressed="true" aria-selected="true">Lifts</button></div>');
+      return h.slice(0, a) + seg + Compete.liftBoard() + '</section>'; }
+    const h = boards.call(Arena), a = h.indexOf('<div class="seg"'), b = h.indexOf('</div>', a);
+    return a < 0 ? h : h.slice(0, b) + '<button type="button" role="tab" data-act="soc-board" data-k="lifts" aria-pressed="false" aria-selected="false">Lifts</button>' + h.slice(b);
+  };
+  const scr = Screens.challenge; Screens.challenge = function (id) {
+    const e = Social.c['ch:' + id]; if (e && e.v && e.v.kind === 'schools') { Social.get('ch:' + id, () => Social.rpc('challenge_get', { p_id: id }), 15000); return Compete.schoolScreen(e.v); }
+    return scr.call(Screens, id);
+  };
+  /* wizard: a "School vs school" type for head coaches, its metrics and the schools to invite */
+  const goals = Wizard.goals; Wizard.goals = function () { return this.d && this.d.kind === 'schools' ? ['race'] : goals.call(this); };
+  const draw = Wizard.draw; Wizard.draw = function () {
+    draw.call(this); const d = this.d, box = $('#wiz', this.sh); if (!box) return; const i = this.i;
+    const pick = (k, v) => { this.keep(); d[k] = v; if (k === 'kind') { d.squad_id = null; if (v === 'schools' && !SCHOOL_METRICS.includes(d.metric)) d.metric = 'points'; if (!this.goals().includes(d.goal)) d.goal = this.goals()[0]; } this.draw(); };
+    if (i === 0 && Compete.head()) {
+      const g = $('.spick', box); if (g) { g.insertAdjacentHTML('beforeend', `<button type="button" class="spick-i" role="radio" data-w5="schools" aria-checked="${d.kind === 'schools'}">${icon('school')}<span class="grow"><b>School vs school</b><small>Your whole school against others · the other head coach must accept</small></span></button>`); UI.icons(g); $('[data-w5]', g).onclick = () => pick('kind', 'schools'); }
+    }
+    if (d.kind !== 'schools') return;
+    if (i === 1) $$('.spick-i[data-w="metric"]', box).forEach(b => { if (!SCHOOL_METRICS.includes(b.dataset.v)) b.remove(); });
+    if (i === 2) $$('[data-w="tie_rule"]', box).forEach(b => { const f = b.closest('.field'); f && f.remove(); });
+    if (i === 4) {
+      const h3 = $('h3', box), err = $('#wzErr', box); while (h3 && h3.nextSibling && h3.nextSibling !== err) h3.nextSibling.remove();
+      h3.textContent = 'Which schools?';
+      h3.insertAdjacentHTML('afterend', '<div id="wzSch" class="spick" role="group" aria-label="Schools"><div class="sk sk-l"></div></div><small class="muted">Their head coach gets the invitation and answers for their school. Up to 5.</small>');
+      Social.rpc('school_directory').then(L => { const out = $('#wzSch', box); if (!out) return;
+        out.innerHTML = L.length ? L.map(s => `<button type="button" class="spick-i" role="checkbox" data-sch="${esc(s.slug)}" aria-checked="${d.opponents.includes(s.slug)}"><span class="org-dot" style="background:${/^#[0-9a-fA-F]{6}$/.test(s.color1 || '') ? s.color1 : 'var(--vt-maroon)'}" aria-hidden="true"></span><span class="grow"><b>${esc(s.name)}</b><small>${s.athletes} athlete${s.athletes === 1 ? '' : 's'}</small></span>${icon(d.opponents.includes(s.slug) ? 'check' : 'plus')}</button>`).join('') : '<p class="muted">No other schools use the app yet.</p>';
+        UI.icons(out); this._sch = L;
+        $$('[data-sch]', out).forEach(b => b.onclick = () => { const k = b.dataset.sch, j = d.opponents.indexOf(k); if (j >= 0) d.opponents.splice(j, 1); else if (d.opponents.length < 5) d.opponents.push(k); this.draw(); });
+      }, e => { const out = $('#wzSch', box); if (out) out.innerHTML = `<p class="err-msg">${esc(Social.msg(e))}</p>`; });
+    }
+    if (i === 6) { const kv = $$('.kv', box).find(k => k.firstElementChild && k.firstElementChild.textContent === 'Who'); if (kv) kv.lastElementChild.textContent = d.opponents.map(s => ((this._sch || []).find(x => x.slug === s) || {}).name || s).join(', ');
+      const how = $$('.kv', box).find(k => k.firstElementChild && k.firstElementChild.textContent === 'How it\'s won'); if (how) how.lastElementChild.textContent = 'Average per athlete: every active athlete at each school counts.'; }
+  };
+  const next = Wizard.next; Wizard.next = function (btn) {
+    this.keep(); if (this.d.kind === 'schools' && this.i === 4 && !this.d.opponents.length) { const er = $('#wzErr', this.sh); er.textContent = 'Pick at least one school.'; Haptics.buzz(); return; }
+    return next.call(this, btn);
+  };
+  /* profiles: Compare */
+  const view = AthleteUI.view; AthleteUI.view = function (id, mine) {
+    const h = view.call(AthleteUI, id, mine), e = Social.c['ath:' + id], a = e && e.v;
+    if (!a || a.me || !a.full || !a.stats) return h;
+    const k = h.indexOf('<button class="btn sm ghost icon" type="button" data-act="soc-ath-menu"'); if (k < 0) return h;
+    return h.slice(0, k) + `<button class="btn sm" type="button" data-act="cmp" data-id="${a.id}" data-n="${esc(a.name)}">${icon('git-compare')} Compare</button>` + h.slice(k);
+  };
+  /* coach's team page: open the weight-room screen */
+  const team = Coach.team; Coach.team = function (id) {
+    const h = team.call(Coach, id), k = h.indexOf('<button class="btn sm ghost" type="button" data-act="go" data-r="squad"'); if (k < 0) return h;
+    return h.slice(0, k) + `<button class="btn sm" type="button" data-act="go" data-r="wall" data-p="${id}">${icon('monitor')} Weight-room screen</button>` + h.slice(k);
+  };
+})();
+
+Object.assign(Actions, {
+  'soc-tpl': el => { const t = Compete.TPL.find(x => x.id === el.dataset.t); if (!t) return; Wizard.open(Object.assign({}, t.pre, { invitees: [], opponents: [] })); Wizard.i = 4; Wizard.draw(); },
+  'soc-ch-org': async el => { const c = await Social.act(el, () => Social.rpc('challenge_org_respond', { p_id: el.dataset.id, p_accept: el.dataset.v === '1' }), el.dataset.v === '1' ? 'Accepted. Every athlete at your school is in.' : 'Declined.'); if (c) { Social.c['ch:' + c.id] = { v: c, at: Date.now() }; Social.drop('chal'); UI.render(); } },
+  cmp: el => Compete.compare(el.dataset.id, el.dataset.n),
+  'wall-in': async el => {
+    const on = el.getAttribute('aria-pressed') !== 'true', key = Wall.key(el.dataset.t), e = Social.c[key];
+    const m = e && e.v && e.v.members.find(x => x.user.id === el.dataset.u); if (m) m.in = on; Social.repaint(); Haptics.tap && Haptics.tap();
+    const r = await Social.act(null, () => Social.rpc('team_checkin', { p_team: el.dataset.t, p_user: el.dataset.u, p_on: on }));
+    if (r === undefined && m) { m.in = !on; Social.repaint(); }
+  },
+  'wall-full': () => { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen({ navigationUI: 'hide' }).catch(() => UI.toast('Full screen isn\'t available in this browser.', 'bad')); } catch (e) { UI.toast('Full screen isn\'t available in this browser.', 'bad'); } },
+  'wall-exit': () => { try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) { } Wall.stop(); Actions.back ? Actions.back() : Nav.go('more'); }
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
