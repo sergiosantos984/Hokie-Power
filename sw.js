@@ -1,9 +1,9 @@
 /* Hokie Power — offline cache and phone notifications (Release 4).
-   • The page itself: network first (so a new upload arrives straight away), the saved copy when offline.
-   • Scripts and icons (this site, unpkg, jsdelivr): served from the cache and refreshed in the background.
+   • The page, scripts, fonts and icons open instantly from the saved copy and are refreshed in the background,
+     so a new upload shows the next time the app is opened (and everything works offline).
    • Account data (supabase.co) is never cached.
    • Push: shows the reminder; tapping it opens or focuses the app on the right screen. */
-const V = 'hp-20261022-0053';
+const V = 'hp-20261023-0057';
 const CORE = ['./', './index.html', './config.js', './manifest.webmanifest', './icon-192.png', './icon-180.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => Promise.all(CORE.map(u => c.add(new Request(u, { cache: 'reload' })).catch(() => null)))));
@@ -17,15 +17,15 @@ self.addEventListener('fetch', e => {
   const req = e.request; if (req.method !== 'GET') return;
   const u = new URL(req.url);
   if (/supabase\.(co|in)$/.test(u.hostname) || u.pathname.includes('/functions/v1/')) return;
-  if (isPage(req, u)) {
-    e.respondWith(fetch(req).then(r => { if (r.ok) { const c = r.clone(); caches.open(V).then(x => x.put(req, c)); } return r; })
-      .catch(() => caches.match(req, { ignoreSearch: true }).then(m => m || caches.match('./index.html') || caches.match('./'))));
-    return;
-  }
-  if (u.origin === location.origin || /(^|\.)unpkg\.com$|(^|\.)jsdelivr\.net$/.test(u.hostname)) {
-    e.respondWith(caches.open(V).then(c => c.match(req).then(hit => {
-      const net = fetch(req).then(r => { if (r.ok || r.type === 'opaque') c.put(req, r.clone()); return r; }).catch(() => hit);
-      return hit || net;
+  // the page opens instantly from the saved copy, and the latest version is fetched in the background for next time
+  // (offline it keeps working); fonts, scripts and icons the same way
+  if (isPage(req, u) || u.origin === location.origin || /(^|\.)unpkg\.com$|(^|\.)jsdelivr\.net$|^fonts\.(googleapis|gstatic)\.com$/.test(u.hostname)) {
+    const page = isPage(req, u);
+    e.respondWith(caches.open(V).then(c => c.match(req, { ignoreSearch: page }).then(hit => {
+      const net = fetch(req).then(r => { if (r.ok || r.type === 'opaque') c.put(req, r.clone()); return r; })
+        .catch(() => hit || (page ? c.match('./index.html').then(m => m || c.match('./')) : undefined));
+      if (hit) { e.waitUntil(net.catch(() => null)); return hit; }
+      return net;
     })));
   }
 });
