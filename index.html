@@ -2203,6 +2203,134 @@ html:root body #nav .ind{background:transparent!important}
 html:root body.theme-light #nav .ind::before{background:#2F4156;box-shadow:0 8px 18px -8px rgba(47,65,86,.55)}
 html:root body:not(.theme-light) #nav .ind::before{background:#F5EFEB;box-shadow:0 8px 18px -8px rgba(0,0,0,.45)}
 
+/* =====================================================================
+   v7.1 — BEIGE LEADS. Beige (and its deeper tones) covers the big surfaces; navy is for text,
+   buttons and small accents; teal and sky blue are details. Tones: #F5EFEB · #EFE6DF · #E6D9CF · #D9C8BB
+   ===================================================================== */
+:root{--beige:#F5EFEB;--beige-2:#EFE6DF;--beige-3:#E6D9CF;--beige-4:#D9C8BB;--ink-2:#4F6272}
+
+/* backdrop: warm beige light, with one faint sky pool for air */
+html:root body.theme-light #env{background:linear-gradient(180deg,#F8F4F1 0%,#F5EFEB 45%,#F0E7E0 100%)}
+body.theme-light #amb .o1 b{background:radial-gradient(closest-side,rgba(255,255,255,.85),rgba(255,255,255,0))}
+body.theme-light #amb .o2 b{background:radial-gradient(closest-side,rgba(230,217,207,.85),rgba(230,217,207,0))}
+body.theme-light #amb .o3 b{background:radial-gradient(closest-side,rgba(200,217,230,.38),rgba(200,217,230,0))}
+body.theme-light #amb .o4 b{background:radial-gradient(closest-side,rgba(226,210,198,.80),rgba(226,210,198,0))}
+body.theme-light #amb .o5 b{background:radial-gradient(closest-side,rgba(255,255,255,.70),rgba(255,255,255,0))}
+body.theme-light #amb .waves g{stroke:rgba(150,118,96,.13)}
+
+/* panels: warm white glass on beige */
+html:root body.theme-light :where(#app) :is(.panel,.metric,.wtile){background:rgba(255,253,251,.6);border-color:rgba(255,255,255,.8);box-shadow:0 1px 2px rgba(120,96,78,.05),0 10px 30px -8px rgba(120,96,78,.12)}
+html:root body.theme-light :where(#app) .chip:not([aria-pressed="true"]):not(.on):not([aria-checked="true"]){background:rgba(255,253,251,.7);border-color:#E6D9CF}
+html:root body.theme-light :where(#app) .seg{background:rgba(230,217,207,.55)}
+html:root body.theme-light{--line:#E6D9CF}
+
+/* home hero + daily mission: deep beige with navy type */
+html:root body.theme-light #app :is(.hero,.mission .mhead){background:radial-gradient(80% 70% at 0% 0%,rgba(255,255,255,.65),transparent 60%),linear-gradient(155deg,#EFE6DF 0%,#E6D9CF 100%);color:#2F4156;border:1px solid rgba(255,255,255,.75);box-shadow:0 1px 2px rgba(120,96,78,.06),0 14px 34px -10px rgba(120,96,78,.22)!important}
+html:root body.theme-light #app .mission .mhead{border:0;box-shadow:none!important}
+html:root body.theme-light #app :is(.hero,.mission .mhead) :is(.label,.muted){color:#4F6272}
+html:root body.theme-light #view .hero .h1{color:#2F4156}
+html:root body.theme-light #app .hero [style*="#B7BEC3"]{color:#3F5262!important}
+html:root body.theme-light #app .hero .scoreboard{background:rgba(255,255,255,.45);border-color:rgba(255,255,255,.8)}
+html:root body.theme-light #app .hero .scoreboard>div{background:rgba(255,255,255,.4);color:#2F4156}
+html:root body.theme-light #app .hero :is(.scoreboard .label,.sb-val small){color:#4F6272}
+html:root body.theme-light #app .hero .ring circle:not(.ring-arc){stroke:rgba(47,65,86,.12)}
+html:root body.theme-light #app .hero .ring-arc{stroke:#567C8D}
+html:root body.theme-light #app .hero .ring .pct{color:#2F4156}
+html:root body.theme-light #app .mission .mhead .st{background:rgba(255,255,255,.6);color:#2F4156;border-color:transparent}
+
+/* logger card: beige, navy numbers */
+html:root body.theme-light .excard{background:radial-gradient(80% 60% at 0% 0%,rgba(255,255,255,.6),transparent 60%),linear-gradient(165deg,#EFE6DF 0%,#E6D9CF 100%);border:1px solid rgba(255,255,255,.75);color:#2F4156;box-shadow:0 14px 34px -10px rgba(120,96,78,.22)}
+html:root body.theme-light #view .excard :is(.target,.ex-name,.h1,.h2,.h3,b){color:#2F4156}
+html:root body.theme-light #view .excard :is(.presc){color:#3F5262}
+html:root body.theme-light #view .excard :is(.label,.muted,small,.target small){color:#4F6272}
+
+/* entrance: beige with soft light beams */
+html:root body.theme-light #gate{--fg:#2F4156;--muted:#4F6272;color:#2F4156;color-scheme:light;background:radial-gradient(120% 55% at 50% -5%,#FFFFFF 0%,#F5EFEB 45%,#EADFD6 100%)}
+html:root body.theme-light #gate .gfield{background:repeating-linear-gradient(0deg,rgba(47,65,86,.10) 0 2px,transparent 2px 64px),linear-gradient(180deg,#E6D9CF,#F0E7E0 80%)}
+html:root body.theme-light #gate .gendzone{color:rgba(47,65,86,.05)}
+html:root body.theme-light #gate .gbeam{background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.35) 55%,transparent 85%)}
+html:root body.theme-light #gate :is(.ghead small,.gsub,.gmsg,.gnote){color:#4F6272}
+html:root body.theme-light #gate .gtitle span{color:#2F4156;box-shadow:inset 0 -.12em 0 rgba(86,124,141,.4)}
+html:root body.theme-light #gate .gcode{background:rgba(255,253,251,.62);border:1px solid rgba(255,255,255,.85);box-shadow:0 10px 30px -10px rgba(120,96,78,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+html:root body.theme-light #gate .slot{background:#FFFFFF;border:2px solid #E6D9CF;color:#2F4156}
+html:root body.theme-light #gate .slot small{color:#4F6272}
+html:root body.theme-light #gate .slot.active{border-color:#2F4156;box-shadow:0 0 0 3px rgba(86,124,141,.25)}
+html:root body.theme-light #gate .slot.active span::after{background:#2F4156}
+html:root body.theme-light #gate.err .slot{border-color:#C2413A;background:#FBEDEB}
+html:root body.theme-light #gate.err .gmsg{color:#B4322C}
+html:root body.theme-light #gate.ok .slot{background:#2F4156;color:#FFFFFF;border-color:#2F4156;box-shadow:none}
+html:root body.theme-light #gate.ok .slot small{color:rgba(255,255,255,.8)}
+html:root body.theme-light #gate .key{background:rgba(255,253,251,.75);border:1px solid #E6D9CF;color:#2F4156}
+html:root body.theme-light #gate .key:active{background:#FFFFFF}
+html:root body.theme-light #gate .key.k-fn{background:#EFE6DF}
+html:root body.theme-light #gate .gfoot{color:#5E6672}
+html:root body.theme-light #gate .gauth label,html:root body.theme-light #gate .gopt,html:root body.theme-light #gate .gauth label.gopt{color:#3F5262!important}
+html:root body.theme-light #gate .gauth .input{background:#FFFFFF;color:#2F4156;border:1px solid #E6D9CF}
+html:root body.theme-light #gate .gauth .input:focus{border-color:#567C8D;box-shadow:0 0 0 3px rgba(86,124,141,.22)}
+html:root body.theme-light #gate .auth-seg{background:rgba(230,217,207,.55)}
+html:root body.theme-light #gate .auth-seg button{color:#4F6272}
+html:root body.theme-light #gate .auth-seg button[aria-pressed="true"]{background:#FFFFFF;color:#2F4156}
+html:root body.theme-light #gate.auth .gmsg{color:#B4322C}
+html:root body.theme-light #gate.auth .gmsg .graw{color:#4F6272}
+html:root body.theme-light #gate.auth .stack .btn.ghost{color:#2F4156;border-color:#D9C8BB}
+html:root body.theme-light #gate :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible{outline-color:#2F4156!important}
+html:root body.theme-light #gate .ghead :is(svg,img){filter:none}
+
+/* load-up: beige */
+html:root body.theme-light #boot,html:root body.theme-light #boot .b-half{background:#F5EFEB;color:#2F4156}
+html:root body.theme-light #boot .b-grid{background:repeating-linear-gradient(0deg,rgba(86,124,141,.22) 0 2px,transparent 2px 60px),repeating-linear-gradient(90deg,rgba(47,65,86,.06) 0 1px,transparent 1px 60px)}
+html:root body.theme-light #boot .b-stripes i:nth-child(odd){background:#E6D9CF}
+html:root body.theme-light #boot .b-stripes i:nth-child(even){background:#C8D9E6}
+html:root body.theme-light #boot .b-ring{border-color:#567C8D}
+html:root body.theme-light #boot .b-ring.r2{border-color:#D9C8BB}
+html:root body.theme-light #boot .b-ball{filter:drop-shadow(0 10px 24px rgba(120,96,78,.3))}
+html:root body.theme-light #boot .w1{color:#2F4156;text-shadow:none}
+html:root body.theme-light #boot .w2{color:#567C8D;-webkit-text-stroke:0;text-shadow:none}
+html:root body.theme-light #boot .b-sub{color:#4F6272}
+html:root body.theme-light #boot .b-bar{background:rgba(47,65,86,.1)}
+html:root body.theme-light #boot .b-bar i{background:linear-gradient(90deg,#2F4156,#567C8D,#C8D9E6)}
+html:root body.theme-light #boot .b-load b{color:#2F4156}
+html:root body.theme-light #boot .b-flash{background:radial-gradient(circle,#FFFFFF,rgba(255,255,255,.6) 35%,rgba(255,255,255,0) 70%)}
+html:root body.theme-light #boot .b-half.top{border-bottom-color:#D9C8BB}
+html:root body.theme-light #boot .b-half.bot{border-top-color:#C8D9E6}
+
+/* locker room: warm beige lockers, navy type */
+html:root body.theme-light #locker{background:#F5EFEB;color:#2F4156;--fg:#2F4156;--muted:#4F6272;color-scheme:light}
+html:root body.theme-light #locker .lockers{background:radial-gradient(40% 50% at 50% 0%,rgba(255,255,255,.8),transparent 70%),repeating-linear-gradient(90deg,rgba(120,96,78,.16) 0 2px,transparent 2px 92px),repeating-linear-gradient(0deg,transparent 0 9px,rgba(120,96,78,.10) 9px 11px) 0 22%/100% 70px no-repeat,linear-gradient(90deg,#E6D9CF,#EFE6DF 30%,#E6D9CF 50%,#EFE6DF 70%,#E6D9CF)}
+html:root body.theme-light #locker .lockers::after{background:repeating-linear-gradient(90deg,transparent 0 40px,rgba(255,255,255,.35) 40px 41px,transparent 41px 92px)}
+html:root body.theme-light #locker .bench{background:linear-gradient(180deg,#D9C8BB,#C9B5A6);box-shadow:0 18px 30px -10px rgba(120,96,78,.35)}
+html:root body.theme-light #locker .lfloor{background:repeating-linear-gradient(90deg,rgba(120,96,78,.10) 0 1px,transparent 1px 60px),radial-gradient(60% 70% at 50% 0,#EFE6DF,#F5EFEB)}
+html:root body.theme-light #locker .spot{background:linear-gradient(180deg,rgba(255,255,255,.8),transparent 70%)}
+html:root body.theme-light #locker .nameplate{background:#2F4156;color:#FFFFFF;box-shadow:0 10px 24px -8px rgba(47,65,86,.4)}
+html:root body.theme-light #locker .content > :not(.panel) :is(.label,.muted){color:#4F6272}
+html:root body.theme-light #locker [style*="#B7BEC3"]{color:#3F5262!important}
+html:root body.theme-light #locker .content > :not(.panel) :is(.h1,.h2,h1,h2,p){color:#2F4156}
+html:root body.theme-light #locker .panel{background:rgba(255,253,251,.75);border:1px solid rgba(255,255,255,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+html:root body.theme-light #app .mission .mhead .label{color:#4F6272!important}
+html:root body.theme-light #view .excard .tool{color:#2F4156;background:rgba(255,255,255,.55);border-color:rgba(255,255,255,.8)}
+html:root body.theme-light #view .excard .tool :is(span,svg){color:#2F4156}
+
+/* celebration + mission-start quote: beige too */
+html:root body.theme-light :is(#celebrate,#qflash){--fg:#2F4156;--muted:#4F6272;--line:#E6D9CF;color:#2F4156;color-scheme:light}
+html:root body.theme-light #celebrate .cbg{background:radial-gradient(80% 60% at 50% 28%,rgba(255,255,255,.85),transparent 70%),rgba(242,234,228,.992)}
+html:root body.theme-light #celebrate .beam{background:linear-gradient(180deg,rgba(255,255,255,.95),transparent 80%)}
+html:root body.theme-light #celebrate :is(.c-head,.c-kicker,.label,.muted,small,b,span,div,p){color:inherit}
+html:root body.theme-light #celebrate :is(.c-kicker,.label,.muted){color:#4F6272}
+html:root body.theme-light #celebrate .c-stats>div{background:rgba(255,253,251,.7);border:1px solid rgba(255,255,255,.85);box-shadow:0 8px 22px -12px rgba(120,96,78,.25)}
+html:root body.theme-light #celebrate .c-stats .label{color:#4F6272}
+html:root body.theme-light #celebrate :is(.btn.primary,.btn.red){background:#2F4156;border-color:#2F4156;color:#FFFFFF}
+html:root body.theme-light #celebrate .btn:not(.primary):not(.red){background:rgba(255,253,251,.75);border:1px solid #E6D9CF;color:#2F4156}
+html:root body.theme-light #celebrate .badge{color:#2F4156;border-color:#D9C8BB;background:rgba(255,255,255,.6)}
+html:root body.theme-light #qflash{background:radial-gradient(90% 60% at 50% 35%,#FFFFFF,#F5EFEB 50%,#EADFD6 100%)}
+html:root body.theme-light #qflash :is(.qk,.qtap){color:#4F6272}
+html:root body.theme-light #qflash .qtext{color:#2F4156}
+html:root body.theme-light #qflash .qline{background:rgba(47,65,86,.1)}
+html:root body.theme-light #qflash .qline i{background:#567C8D}
+html:root body.theme-light .qtext em{background:linear-gradient(transparent 64%,rgba(86,124,141,.25) 64%,rgba(86,124,141,.25) 92%,transparent 92%)}
+html:root body.theme-light #celebrate [style*="#B7BEC3"]{color:#4F6272!important}
+html:root body.theme-light #qflash .qtext :is(.w,em){color:#2F4156}
+html:root body.theme-light #qflash .qtext em,html:root body.theme-light .qtext em{color:#2F4156;background:linear-gradient(transparent 60%,rgba(200,217,230,.95) 60%,rgba(200,217,230,.95) 94%,transparent 94%)}
+
 </style>
 </head>
 <body>
@@ -2298,7 +2426,7 @@ html:root body:not(.theme-light) #nav .ind::before{background:#F5EFEB;box-shadow
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 23 · 21:39';
+const BUILD_ID = 'Oct 23 · 22:42';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s every time the app opens (shorter in Minimal / reduced motion); tap to skip. */
