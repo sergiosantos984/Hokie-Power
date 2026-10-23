@@ -1828,9 +1828,13 @@ button.wtile{cursor:pointer}
 .ai-banner{border-left:4px solid var(--b2,var(--b2))}
 .ad-sheet .chips{flex-wrap:wrap;margin:0;padding-inline:0;overflow:visible}
 
+/* page canvas: dark under the load-up; the light theme sets its own (no white or dark flash at launch) */
+html{background:#141518}
+
 </style>
 </head>
 <body>
+<script>/* the theme is known before the first paint, so the app never flashes dark then light */try{var _l=(JSON.parse(localStorage.getItem('bbp.settings')||'{}').theme)!=='dark'}catch(e){_l=true}if(_l){document.body.classList.add('theme-light');document.documentElement.style.background='#EDE6DC'}</script>
 <!-- LOAD-UP: plays every time the app opens; tap to skip -->
 <div id="boot" aria-hidden="true">
   <div class="b-grid"></div>
@@ -1919,16 +1923,15 @@ button.wtile{cursor:pointer}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 23 · 00:19';
+const BUILD_ID = 'Oct 23 · 00:57';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
-   underneath. It plays for ~2 s on the first open, then briefly (shorter in Minimal / reduced motion); tap to skip. */
+   underneath. It plays for ~2 s every time the app opens (shorter in Minimal / reduced motion); tap to skip. */
 const Splash = (() => {
   const el = document.getElementById('boot'); if (!el) return { done: Promise.resolve() };
   let mode = 'cinematic';
   try { const st = JSON.parse(localStorage.getItem('bbp.settings') || '{}'); mode = st.reducedMotion === 'on' ? 'minimal' : (st.motion || 'cinematic'); } catch (e) { }
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) mode = 'minimal';
-  try { if (localStorage.getItem('bbp.splashSeen')) mode = 'minimal'; else localStorage.setItem('bbp.splashSeen', '1'); } catch (e) { }   // full load-up on the first open only
   const total = mode === 'minimal' ? 350 : mode === 'balanced' ? 1500 : 2150;
   let resolve, finished = false; const done = new Promise(r => resolve = r);
   const pct = document.getElementById('bootPct'), t0 = performance.now();
@@ -4549,6 +4552,7 @@ const Theme = {
   get light() { return State.settings.theme !== 'dark'; },
   apply() {
     document.body.classList.toggle('theme-light', this.light);
+    document.documentElement.style.background = this.light ? '#EDE6DC' : '';
     let m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', this.light ? '#F8F5EF' : '#16171A');
     FX.setDensity(Motion.m.particles);
   },
