@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=Big+Shoulders+Display:wght@600;700;800;900&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-:root{--b1:#101B2D;--b2:#8CA6C4;--b1l:#243650;--b1d:#0B1422;--b1dd:#070D17;--b2l:#C5D3E3;--b2d:#6F8BAA;--b1rgb:16,27,45;--b2rgb:140,166,196;--b1lrgb:36,54,80;--b1drgb:11,20,34;--b1ddrgb:7,13,23;--b2lrgb:197,211,227;--b2drgb:111,139,170}
+:root{--b1:#2F4156;--b2:#567C8D;--b1l:#3D5269;--b1d:#26364A;--b1dd:#1F2C3B;--b2l:#C8D9E6;--b2d:#46687A;--b1rgb:47,65,86;--b2rgb:86,124,141;--b1lrgb:61,82,105;--b1drgb:38,54,74;--b1ddrgb:31,44,59;--b2lrgb:200,217,230;--b2drgb:70,104,122}
 
 /* Layout concept: a phone-first portal into a night stadium. Fixed environmental layers
    (skyline → stadium → tunnel → locker room → weight room) sit behind one scrolling column;
@@ -1834,55 +1834,55 @@ html{background:#141518}
 /* =====================================================================
    v6 DESIGN SYSTEM — PREMIUM NEUTRAL · MIDNIGHT NAVY · FROSTED GLASS
    One layer on top of everything else: tokens first, then shared components, then screens.
-   Colours: Midnight Navy #101B2D · Steel Navy #243650 · Porcelain #F5F7FA · White · Cool Mist #DCE5EF
-            Slate #64748B · Glacier Blue #8CA6C4 (accent only). A school with its own colours keeps them
+   Colours: Midnight Navy #2F4156 · Steel Navy #2F4156 · Porcelain #F5EFEB · White · Cool Mist #DDE5EC
+            Slate #64748B · Glacier Blue #C8D9E6 (accent only). A school with its own colours keeps them
             (--b1 / --b2 come from Brand.apply); the standard look maps --b1 → navy, --b2 → glacier.
    Glass is used for floating things only (nav, sheets, toasts, sticky bars); content cards stay solid white.
    `html:root body` in front of the selectors makes this layer win over the older themed rules.
    ===================================================================== */
 :root{
-  --navy:#101B2D; --steel-navy:#243650; --porcelain:#F5F7FA; --pure:#FFFFFF; --mist:#DCE5EF; --slate:#64748B; --glacier:#8CA6C4;
-  --mist-2:#EEF2F7; --navy-ink:#0B1422;
+  --navy:#2F4156; --steel-navy:#2F4156; --porcelain:#F5EFEB; --pure:#FFFFFF; --mist:#DDE5EC; --slate:#64748B; --glacier:#C8D9E6;
+  --mist-2:#F5EFEB; --navy-ink:#1F2B3A;
   --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-pill:999px;
-  --sh-1:0 1px 2px rgba(16,27,45,.04),0 4px 16px rgba(16,27,45,.05);
-  --sh-2:0 8px 24px rgba(16,27,45,.08);
-  --sh-3:0 18px 40px rgba(16,27,45,.14);
+  --sh-1:0 1px 2px rgba(47,65,86,.04),0 4px 16px rgba(47,65,86,.05);
+  --sh-2:0 8px 24px rgba(47,65,86,.08);
+  --sh-3:0 18px 40px rgba(47,65,86,.14);
   --glass-l:rgba(255,255,255,.72); --glass-l-b:rgba(255,255,255,.85);
-  --glass-d:rgba(16,27,45,.84); --glass-d-b:rgba(255,255,255,.12);
+  --glass-d:rgba(47,65,86,.84); --glass-d-b:rgba(255,255,255,.12);
   --t-fast:160ms; --t-std:220ms;
   /* older tokens, re-pointed */
-  --vt-white:#FFFFFF; --vt-stone:#64748B; --vt-charcoal:#101B2D; --vt-cool:#DCE5EF; --vt-sand:#DCE5EF; --vt-off:#F5F7FA;
+  --vt-white:#FFFFFF; --vt-stone:#64748B; --vt-charcoal:#2F4156; --vt-cool:#DDE5EC; --vt-sand:#DDE5EC; --vt-off:#F5EFEB;
   --vt-deep:var(--b1d); --vt-maroon-press:var(--b1d); --vt-orange-press:var(--b2d);
   --g-brand:linear-gradient(135deg,var(--b1) 0%,var(--b1l) 100%);
   --g-maroon:linear-gradient(180deg,var(--b1) 0%,var(--b1) 100%);
   --g-orange:linear-gradient(180deg,var(--b2) 0%,var(--b2) 100%);
-  --g-dark:linear-gradient(160deg,#16233A 0%,#101B2D 100%);
-  --g-neutral:linear-gradient(180deg,#FFFFFF 0%,#F5F7FA 100%);
+  --g-dark:linear-gradient(160deg,#3C5269 0%,#2F4156 100%);
+  --g-neutral:linear-gradient(180deg,#FFFFFF 0%,#F5EFEB 100%);
   --ok:#2F7D5B; --warn:#B7791F; --bad:#C2413A; --info:#3B6EA8;
-  --chart-1:var(--b1); --chart-2:var(--b2); --chart-3:#C7D2DE;
-  --focus:#243650;
+  --chart-1:var(--b1); --chart-2:var(--b2); --chart-3:#C8D9E6;
+  --focus:#2F4156;
   --f-display:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --f-body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   /* navy dark mode surfaces (light theme overrides below) */
-  --midnight:#0B1422; --stadium:#101B2D; --carbon:#070D17;
-  --bg:#0B1422; --fg:#EEF2F7; --muted:#9AA9BC; --line:rgba(220,229,239,.12);
-  --panel:#13203A; --panel-2:#182844; --panel-solid:#13203A;
-  --steel:#9AA9BC; --silver:#9AA9BC; --ice:#FFFFFF; --blue-lit:#8CA6C4; --blue-glow:#8CA6C4; --red-lit:var(--b2);
+  --midnight:#1F2B3A; --stadium:#2F4156; --carbon:#18222E;
+  --bg:#1F2B3A; --fg:#F5EFEB; --muted:#B9C9D6; --line:rgba(220,229,239,.12);
+  --panel:#2F4156; --panel-2:#36495F; --panel-solid:#2F4156;
+  --steel:#B9C9D6; --silver:#B9C9D6; --ice:#FFFFFF; --blue-lit:#C8D9E6; --blue-glow:#C8D9E6; --red-lit:var(--b2);
 }
 body.theme-light{
-  --bg:#F5F7FA; --fg:#101B2D; --muted:#5F6E84; --line:#DCE5EF;
-  --panel:#FFFFFF; --panel-2:#FFFFFF; --panel-solid:#FFFFFF; --steel:#5F6E84; --silver:#5F6E84; --blue-glow:#243650;
+  --bg:#F5EFEB; --fg:#2F4156; --muted:#4F6272; --line:#DDE5EC;
+  --panel:#FFFFFF; --panel-2:#FFFFFF; --panel-solid:#FFFFFF; --steel:#4F6272; --silver:#4F6272; --blue-glow:#2F4156;
   color-scheme:light;
 }
-html{background:#0B1422}
+html{background:#1F2B3A}
 html:root body{font-family:var(--f-body);font-feature-settings:"cv11","ss01";letter-spacing:-.005em}
-html:root body.theme-light{background:#F5F7FA}
-html:root body:not(.theme-light){background:#0B1422}
+html:root body.theme-light{background:#F5EFEB}
+html:root body:not(.theme-light){background:#1F2B3A}
 
 /* ---------- calm backdrop: no scenery behind content ---------- */
-html:root body #env{background:#0B1422}
-html:root body.theme-light #env{background:radial-gradient(90% 40% at 50% -8%,rgba(140,166,196,.18),transparent 70%),#F5F7FA}
-html:root body:not(.theme-light) #env{background:radial-gradient(90% 40% at 50% -8%,rgba(140,166,196,.14),transparent 70%),#0B1422}
+html:root body #env{background:#1F2B3A}
+html:root body.theme-light #env{background:radial-gradient(90% 40% at 50% -8%,rgba(200,217,230,.18),transparent 70%),#F5EFEB}
+html:root body:not(.theme-light) #env{background:radial-gradient(90% 40% at 50% -8%,rgba(200,217,230,.14),transparent 70%),#1F2B3A}
 html:root body #env > *{display:none}
 html:root body #fx{display:none}
 
@@ -1895,100 +1895,100 @@ html:root body .display{font-weight:700;line-height:1.05}
 html:root body .label{font-family:var(--f-body);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
 html:root body .badge{font-family:var(--f-body);font-size:11.5px;font-weight:600;letter-spacing:0;text-transform:none;border-radius:var(--r-pill);padding:3px 9px}
 html:root body.theme-light :where(#app,#sheet-root) :is(.h1,.h2,.h3,.calc-out,.season-pct,.display.motto){color:var(--b1)}
-html:root body.theme-light .muted{color:#5F6E84}
+html:root body.theme-light .muted{color:#4F6272}
 html:root body a{color:inherit}
 html:root body :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-html:root body:not(.theme-light){--focus:#8CA6C4}
+html:root body:not(.theme-light){--focus:#C8D9E6}
 html:root body .num,html:root body .lb-v,html:root body .target{font-variant-numeric:tabular-nums}
 
 /* ---------- buttons ---------- */
 html:root body .btn{border-radius:var(--r-sm);font-weight:600;letter-spacing:-.005em;box-shadow:none;transition:background var(--t-fast),transform var(--t-fast),box-shadow var(--t-fast),border-color var(--t-fast)}
 html:root body .btn:active:not([disabled]){transform:scale(.98)}
 html:root body .btn.big{font-family:var(--f-body);font-size:16px;font-weight:600;text-transform:none;letter-spacing:-.01em;min-height:52px;border-radius:var(--r-md)}
-html:root body :is(.btn.primary,.btn.red){background:var(--b1);border:1px solid var(--b1);color:#FFFFFF;box-shadow:0 1px 2px rgba(16,27,45,.12),0 6px 16px -8px rgba(16,27,45,.5)}
+html:root body :is(.btn.primary,.btn.red){background:var(--b1);border:1px solid var(--b1);color:#FFFFFF;box-shadow:0 1px 2px rgba(47,65,86,.12),0 6px 16px -8px rgba(47,65,86,.5)}
 html:root body :is(.btn.primary,.btn.red):hover:not([disabled]){background:var(--b1l);border-color:var(--b1l)}
 html:root body :is(.btn.primary,.btn.red):active:not([disabled]){background:var(--b1d)}
-html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn:not(.primary):not(.red):not(.danger):not([disabled]){background:#FFFFFF;color:#243650;border:1px solid #DCE5EF}
+html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn:not(.primary):not(.red):not(.danger):not([disabled]){background:#FFFFFF;color:#2F4156;border:1px solid #DDE5EC}
 html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn.ghost:not(.primary):not(.red):not([disabled]){background:transparent;border-color:transparent}
-html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn.ghost.icon:not([disabled]){border-color:#DCE5EF;background:#FFFFFF}
-html:root body.theme-light :where(#app,#sheet-root) .btn:not(.primary):not(.red):not([disabled]):hover{border-color:#C7D2DE;background:#FBFCFE}
+html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn.ghost.icon:not([disabled]){border-color:#DDE5EC;background:#FFFFFF}
+html:root body.theme-light :where(#app,#sheet-root) .btn:not(.primary):not(.red):not([disabled]):hover{border-color:#C8D9E6;background:#FCFAF9}
 html:root body .btn.danger{background:#FFFFFF;color:#B4322C;border:1px solid rgba(194,65,58,.35)}
-html:root body:not(.theme-light) .btn:not(.primary):not(.red):not(.danger):not([disabled]){background:rgba(255,255,255,.06);border:1px solid rgba(220,229,239,.14);color:#EEF2F7}
-html:root body:not(.theme-light) :is(.btn.primary,.btn.red){background:#EEF2F7;border-color:#EEF2F7;color:#101B2D}
+html:root body:not(.theme-light) .btn:not(.primary):not(.red):not(.danger):not([disabled]){background:rgba(255,255,255,.06);border:1px solid rgba(220,229,239,.14);color:#F5EFEB}
+html:root body:not(.theme-light) :is(.btn.primary,.btn.red){background:#F5EFEB;border-color:#F5EFEB;color:#2F4156}
 html:root body:not(.theme-light) :is(.btn.primary,.btn.red):hover:not([disabled]){background:#FFFFFF}
 html:root body:not(.theme-light) .btn.danger{background:transparent;color:#F2A7A1;border-color:rgba(242,167,161,.4)}
-html:root body .btn[disabled]{background:#EEF2F7;border-color:#DCE5EF;color:#8A97A8;box-shadow:none;opacity:1}
-html:root body:not(.theme-light) .btn[disabled]{background:rgba(255,255,255,.05);border-color:rgba(220,229,239,.1);color:#7F8DA0}
+html:root body .btn[disabled]{background:#F5EFEB;border-color:#DDE5EC;color:#8A97A3;box-shadow:none;opacity:1}
+html:root body:not(.theme-light) .btn[disabled]{background:rgba(255,255,255,.05);border-color:rgba(220,229,239,.1);color:#8F9AA5}
 
 /* ---------- surfaces ---------- */
 html:root body .panel{border-radius:var(--r-lg);box-shadow:var(--sh-1);backdrop-filter:none;-webkit-backdrop-filter:none}
-html:root body.theme-light .panel{background:#FFFFFF;border:1px solid #E6ECF3}
-html:root body.theme-light .panel.flat{background:#F8FAFC;border:1px solid #E6ECF3;box-shadow:none}
-html:root body:not(.theme-light) .panel{background:#13203A;border:1px solid rgba(220,229,239,.08);box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
+html:root body.theme-light .panel{background:#FFFFFF;border:1px solid #ECE6E1}
+html:root body.theme-light .panel.flat{background:#FAF7F5;border:1px solid #ECE6E1;box-shadow:none}
+html:root body:not(.theme-light) .panel{background:#2F4156;border:1px solid rgba(220,229,239,.08);box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
 html:root body:not(.theme-light) .panel.flat{background:rgba(255,255,255,.03)}
 html:root body .metric{border-radius:var(--r-md)}
-html:root body.theme-light .metric{background:#FFFFFF;border:1px solid #E6ECF3;box-shadow:var(--sh-1)}
-html:root body:not(.theme-light) .metric{background:#13203A;border:1px solid rgba(220,229,239,.08)}
-html:root body .empty{border-radius:var(--r-lg);border:1px dashed #C7D2DE}
+html:root body.theme-light .metric{background:#FFFFFF;border:1px solid #ECE6E1;box-shadow:var(--sh-1)}
+html:root body:not(.theme-light) .metric{background:#2F4156;border:1px solid rgba(220,229,239,.08)}
+html:root body .empty{border-radius:var(--r-lg);border:1px dashed #C8D9E6}
 html:root body .list-item{border-bottom-color:var(--line)}
 html:root body .kv{border-bottom-color:var(--line)}
 
 /* ---------- inputs ---------- */
 html:root body .input{border-radius:var(--r-sm);transition:border-color var(--t-fast),box-shadow var(--t-fast)}
-html:root body.theme-light .input{background:#FFFFFF;border:1px solid #DCE5EF;color:#101B2D}
-html:root body.theme-light .input::placeholder{color:#8A97A8}
-html:root body .input:focus{outline:none;border-color:#8CA6C4;box-shadow:0 0 0 3px rgba(140,166,196,.28)}
-html:root body:not(.theme-light) .input{background:rgba(255,255,255,.05);border:1px solid rgba(220,229,239,.16);color:#EEF2F7}
+html:root body.theme-light .input{background:#FFFFFF;border:1px solid #DDE5EC;color:#2F4156}
+html:root body.theme-light .input::placeholder{color:#8A97A3}
+html:root body .input:focus{outline:none;border-color:#C8D9E6;box-shadow:0 0 0 3px rgba(200,217,230,.28)}
+html:root body:not(.theme-light) .input{background:rgba(255,255,255,.05);border:1px solid rgba(220,229,239,.16);color:#F5EFEB}
 html:root body .err-msg{color:#B4322C}
 html:root body:not(.theme-light) .err-msg{color:#F2A7A1}
 
 /* ---------- chips, segmented controls, switches ---------- */
 html:root body .chip{border-radius:var(--r-pill);font-weight:500;transition:background var(--t-fast),border-color var(--t-fast),color var(--t-fast)}
-html:root body.theme-light .chip{background:#FFFFFF;border:1px solid #DCE5EF;color:#243650}
+html:root body.theme-light .chip{background:#FFFFFF;border:1px solid #DDE5EC;color:#2F4156}
 html:root body .chip[aria-pressed="true"],html:root body .chip.on,html:root body .chip[aria-checked="true"]{background:var(--b1);border-color:var(--b1);color:#FFFFFF}
-html:root body:not(.theme-light) .chip{background:rgba(255,255,255,.05);border:1px solid rgba(220,229,239,.14);color:#DCE5EF}
-html:root body:not(.theme-light) .chip[aria-pressed="true"],html:root body:not(.theme-light) .chip.on,html:root body:not(.theme-light) .chip[aria-checked="true"]{background:#EEF2F7;border-color:#EEF2F7;color:#101B2D}
+html:root body:not(.theme-light) .chip{background:rgba(255,255,255,.05);border:1px solid rgba(220,229,239,.14);color:#DDE5EC}
+html:root body:not(.theme-light) .chip[aria-pressed="true"],html:root body:not(.theme-light) .chip.on,html:root body:not(.theme-light) .chip[aria-checked="true"]{background:#F5EFEB;border-color:#F5EFEB;color:#2F4156}
 html:root body .seg{border-radius:var(--r-sm);padding:3px}
-html:root body.theme-light .seg{background:#EEF2F7;border:1px solid transparent}
+html:root body.theme-light .seg{background:#F5EFEB;border:1px solid transparent}
 html:root body .seg button{border-radius:9px;font-weight:500;transition:background var(--t-fast),color var(--t-fast)}
-html:root body.theme-light .seg button{color:#475569}
-html:root body.theme-light .seg button:is([aria-pressed="true"],[aria-selected="true"],[aria-checked="true"]){background:#FFFFFF;color:#101B2D;box-shadow:0 1px 2px rgba(16,27,45,.08),0 2px 8px rgba(16,27,45,.06)}
+html:root body.theme-light .seg button{color:#4A5D6C}
+html:root body.theme-light .seg button:is([aria-pressed="true"],[aria-selected="true"],[aria-checked="true"]){background:#FFFFFF;color:#2F4156;box-shadow:0 1px 2px rgba(47,65,86,.08),0 2px 8px rgba(47,65,86,.06)}
 html:root body:not(.theme-light) .seg{background:rgba(255,255,255,.05)}
-html:root body:not(.theme-light) .seg button:is([aria-pressed="true"],[aria-selected="true"],[aria-checked="true"]){background:#EEF2F7;color:#101B2D}
+html:root body:not(.theme-light) .seg button:is([aria-pressed="true"],[aria-selected="true"],[aria-checked="true"]){background:#F5EFEB;color:#2F4156}
 html:root body .switch[aria-checked="true"]{background:var(--b1);border-color:var(--b1)}
-html:root body:not(.theme-light) .switch[aria-checked="true"]{background:#8CA6C4;border-color:#8CA6C4}
+html:root body:not(.theme-light) .switch[aria-checked="true"]{background:#C8D9E6;border-color:#C8D9E6}
 
 /* ---------- glass: floating navigation, sheets, toasts, sticky bars ---------- */
 html:root body #nav .bar{border-radius:22px}
-html:root body.theme-light #nav .bar{background:var(--glass-l);border:1px solid var(--glass-l-b);box-shadow:0 8px 24px rgba(16,27,45,.10);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6)}
+html:root body.theme-light #nav .bar{background:var(--glass-l);border:1px solid var(--glass-l-b);box-shadow:0 8px 24px rgba(47,65,86,.10);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6)}
 html:root body:not(.theme-light) #nav .bar{background:var(--glass-d);border:1px solid var(--glass-d-b);box-shadow:0 8px 28px rgba(0,0,0,.3);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4)}
 html:root body #nav .ind{border-radius:16px}
 html:root body.theme-light #nav .ind{background:var(--b1)}
-html:root body.theme-light #nav button{color:#5F6E84}
+html:root body.theme-light #nav button{color:#4F6272}
 html:root body.theme-light #nav button[aria-current="page"]{color:#FFFFFF}
-html:root body:not(.theme-light) #nav .ind{background:#EEF2F7}
-html:root body:not(.theme-light) #nav button[aria-current="page"]{color:#101B2D}
-html:root body #sheet-root .backdrop{background:rgba(16,27,45,.32);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+html:root body:not(.theme-light) #nav .ind{background:#F5EFEB}
+html:root body:not(.theme-light) #nav button[aria-current="page"]{color:#2F4156}
+html:root body #sheet-root .backdrop{background:rgba(47,65,86,.32);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
 html:root body #sheet-root .sheet{border-radius:24px 24px 0 0}
-html:root body.theme-light #sheet-root .sheet{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);box-shadow:var(--sh-3);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);color:#101B2D}
+html:root body.theme-light #sheet-root .sheet{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);box-shadow:var(--sh-3);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);color:#2F4156}
 html:root body.theme-light #sheet-root .sheet-head{background:transparent}
-html:root body.theme-light #sheet-root .sheet-head h2{color:#101B2D}
-html:root body:not(.theme-light) #sheet-root .sheet{background:rgba(19,32,58,.94);border:1px solid rgba(220,229,239,.1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+html:root body.theme-light #sheet-root .sheet-head h2{color:#2F4156}
+html:root body:not(.theme-light) #sheet-root .sheet{background:rgba(47,65,86,.94);border:1px solid rgba(220,229,239,.1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 html:root body:not(.theme-light) #sheet-root .sheet-head{background:transparent}
-html:root body #sheet-root .grab{background:#C7D2DE}
+html:root body #sheet-root .grab{background:#C8D9E6}
 html:root body #toast{border-radius:16px;font-weight:500}
-html:root body.theme-light #toast{background:rgba(16,27,45,.9);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);box-shadow:var(--sh-3);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+html:root body.theme-light #toast{background:rgba(47,65,86,.9);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);box-shadow:var(--sh-3);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   html:root body.theme-light #nav .bar{background:#FFFFFF}
   html:root body.theme-light #sheet-root .sheet{background:#FFFFFF}
-  html:root body:not(.theme-light) #nav .bar{background:#101B2D}
+  html:root body:not(.theme-light) #nav .bar{background:#2F4156}
 }
 
 /* ---------- workout logger: dark navy glass where the eyes need focus ---------- */
-html:root body .excard{background:linear-gradient(165deg,#16233A 0%,#101B2D 100%);border:1px solid rgba(255,255,255,.08);box-shadow:var(--sh-2);border-radius:var(--r-lg)}
+html:root body .excard{background:linear-gradient(165deg,#3C5269 0%,#2F4156 100%);border:1px solid rgba(255,255,255,.08);box-shadow:var(--sh-2);border-radius:var(--r-lg)}
 html:root body .hud{backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4)}
 html:root body.theme-light .hud{background:rgba(245,247,250,.82);border-bottom:1px solid rgba(220,229,239,.8)}
-html:root body:not(.theme-light) .hud{background:rgba(11,20,34,.82)}
+html:root body:not(.theme-light) .hud{background:rgba(31,43,58,.82)}
 html:root body .hero{border-radius:var(--r-lg);box-shadow:var(--sh-2)}
 
 /* ---------- motion: short and purposeful ---------- */
@@ -2003,22 +2003,22 @@ html:root body .input-unit span{font-family:var(--f-body);letter-spacing:0;text-
 html:root body .st{font-family:var(--f-body);font-size:11.5px;font-weight:600;letter-spacing:0;text-transform:none;border-radius:var(--r-pill)}
 html:root body .set.next .chk{background:var(--b1);border-color:var(--b1)}
 html:root body .set.next .chk path{stroke:#FFFFFF}
-html:root body:not(.theme-light) .set.next .chk{background:#EEF2F7;border-color:#EEF2F7}
-html:root body:not(.theme-light) .set.next .chk path{stroke:#101B2D}
+html:root body:not(.theme-light) .set.next .chk{background:#F5EFEB;border-color:#F5EFEB}
+html:root body:not(.theme-light) .set.next .chk path{stroke:#2F4156}
 html:root body.theme-light :where(#app) .ex-tab.cur{background:var(--b1);border-color:var(--b1);color:#FFFFFF}
 html:root body .resume-banner{background:var(--glass-d);border:1px solid var(--glass-d-b);color:#FFFFFF;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 html:root body .resume-banner .label{color:rgba(255,255,255,.72)}
-html:root body .resume-banner .btn{background:#FFFFFF;color:#101B2D;border-color:#FFFFFF}
+html:root body .resume-banner .btn{background:#FFFFFF;color:#2F4156;border-color:#FFFFFF}
 html:root body .yardbar i,html:root body .qbar i{background:var(--b1)}
-html:root body:not(.theme-light) .yardbar i,html:root body:not(.theme-light) .qbar i{background:#8CA6C4}
+html:root body:not(.theme-light) .yardbar i,html:root body:not(.theme-light) .qbar i{background:#C8D9E6}
 html:root body .badge.red{background:transparent;color:inherit;border-color:currentColor}
 html:root body #toast.bad{background:#7A2420}
 html:root body .chart text{font-family:var(--f-body);font-size:10.5px}
-html:root body.theme-light .chart .grid line{stroke:#E6ECF3}
-html:root body.theme-light .chart .axis{stroke:#DCE5EF}
+html:root body.theme-light .chart .grid line{stroke:#ECE6E1}
+html:root body.theme-light .chart .axis{stroke:#DDE5EC}
 
 /* ---------- Home: the week hero and the daily mission are the two navy moments ---------- */
-html:root body #app .hero{background:radial-gradient(120% 90% at 100% 0%,rgba(140,166,196,.28),transparent 55%),linear-gradient(165deg,#1B2B47 0%,#101B2D 70%);color:#FFFFFF;border:1px solid rgba(255,255,255,.06);box-shadow:var(--sh-2)!important}
+html:root body #app .hero{background:radial-gradient(120% 90% at 100% 0%,rgba(200,217,230,.28),transparent 55%),linear-gradient(165deg,#567C8D 0%,#2F4156 70%);color:#FFFFFF;border:1px solid rgba(255,255,255,.06);box-shadow:var(--sh-2)!important}
 html:root body #app .hero::before,html:root body #app .hero::after{display:none}
 html:root body #app .hero .jersey{display:none}
 html:root body #app .hero .label{color:rgba(255,255,255,.72)}
@@ -2030,7 +2030,7 @@ html:root body #app .hero .sb-val{font-family:var(--f-body);font-weight:600;font
 html:root body #app .hero .sb-val small{color:rgba(255,255,255,.6);font-size:12px}
 html:root body #app .hero .ring .pct{font-family:var(--f-body);font-weight:600;font-size:15px;color:#FFFFFF}
 html:root body :is(.ring .pct,.sb-val,.metric .v){font-family:var(--f-body);letter-spacing:-.02em}
-html:root body #app .mission .mhead{background:linear-gradient(165deg,#1B2B47 0%,#101B2D 100%);color:#FFFFFF}
+html:root body #app .mission .mhead{background:linear-gradient(165deg,#567C8D 0%,#2F4156 100%);color:#FFFFFF}
 html:root body #app .mission .mhead::after{display:none}
 html:root body #app .mission .mhead .muted,html:root body #app .mission .mhead .label{color:rgba(255,255,255,.72)}
 html:root body #app .mission .mhead .st{background:rgba(255,255,255,.14);color:#FFFFFF}
@@ -2044,73 +2044,169 @@ html:root body #view .excard .presc,html:root body #view .excard .label{font-fam
 html:root body #view .excard::before{display:none}
 /* logger details */
 html:root body #view .excard .presc{font-family:var(--f-body);font-size:15px;font-weight:500;letter-spacing:-.005em;text-transform:none;color:rgba(255,255,255,.86);line-height:1.4}
-html:root body.theme-light :where(#app) .chk{background:#FFFFFF;border:2px solid #DCE5EF}
+html:root body.theme-light :where(#app) .chk{background:#FFFFFF;border:2px solid #DDE5EC}
 html:root body .set.next .chk{background:#FFFFFF;border:2px solid var(--b1)}
 html:root body .set.next .chk path{stroke:var(--b1);stroke-dashoffset:0;opacity:.28}
 html:root body .set.done .chk{background:var(--b1);border-color:var(--b1)}
 html:root body .set.done .chk path{stroke:#FFFFFF;opacity:1}
 html:root body:not(.theme-light) .chk{background:rgba(255,255,255,.05);border:2px solid rgba(220,229,239,.2)}
-html:root body:not(.theme-light) .set.next .chk{background:transparent;border-color:#DCE5EF}
-html:root body:not(.theme-light) .set.next .chk path{stroke:#DCE5EF}
-html:root body:not(.theme-light) .set.done .chk{background:#8CA6C4;border-color:#8CA6C4}
-html:root body:not(.theme-light) .set.done .chk path{stroke:#101B2D}
-html:root body:not(.theme-light) #app .mission .mbody,html:root body:not(.theme-light) #app .mission .mbody :is(summary,b,span){color:#DCE5EF}
+html:root body:not(.theme-light) .set.next .chk{background:transparent;border-color:#DDE5EC}
+html:root body:not(.theme-light) .set.next .chk path{stroke:#DDE5EC}
+html:root body:not(.theme-light) .set.done .chk{background:#C8D9E6;border-color:#C8D9E6}
+html:root body:not(.theme-light) .set.done .chk path{stroke:#2F4156}
+html:root body:not(.theme-light) #app .mission .mbody,html:root body:not(.theme-light) #app .mission .mbody :is(summary,b,span){color:#DDE5EC}
 /* empty states and the weight-room screen: lighter weights, sentence case */
 html:root body #app :is(.empty,.sempty) :is(b,.display,span){text-transform:none;letter-spacing:-.01em}
 html:root body #app .sempty b{font-family:var(--f-body);font-weight:600;font-size:17px}
 html:root body .wall-t{font-weight:700;letter-spacing:-.03em}
 html:root body .wall-clock b,html:root body .wt-d b,html:root body .wall-sum b{font-family:var(--f-body);font-weight:700;letter-spacing:-.03em}
-html:root body .wtile{border-radius:var(--r-lg);border:1px solid #E6ECF3;background:#FFFFFF;box-shadow:var(--sh-1)}
-html:root body .wtile.on{border:1.5px solid var(--b1);background:linear-gradient(160deg,rgba(140,166,196,.18),#FFFFFF 70%)}
+html:root body .wtile{border-radius:var(--r-lg);border:1px solid #ECE6E1;background:#FFFFFF;box-shadow:var(--sh-1)}
+html:root body .wtile.on{border:1.5px solid var(--b1);background:linear-gradient(160deg,rgba(200,217,230,.18),#FFFFFF 70%)}
 html:root body .wt-in{background:var(--b1);color:#FFFFFF}
-html:root body:not(.theme-light) .wtile{background:#13203A;border-color:rgba(220,229,239,.1)}
-html:root body:not(.theme-light) .wtile.on{border-color:#8CA6C4;background:linear-gradient(160deg,rgba(140,166,196,.18),#13203A 70%)}
-html:root body:not(.theme-light) .wt-in{background:#8CA6C4;color:#101B2D}
+html:root body:not(.theme-light) .wtile{background:#2F4156;border-color:rgba(220,229,239,.1)}
+html:root body:not(.theme-light) .wtile.on{border-color:#C8D9E6;background:linear-gradient(160deg,rgba(200,217,230,.18),#2F4156 70%)}
+html:root body:not(.theme-light) .wt-in{background:#C8D9E6;color:#2F4156}
 
 /* ---------- cinematic scenes in navy: gate, intro, locker room, quote, celebrations ---------- */
 html:root body #gate .gtitle{font-family:var(--f-display);font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1.02;font-size:clamp(36px,10vw,56px)}
-html:root body #gate .gtitle span{box-shadow:inset 0 -.12em 0 rgba(140,166,196,.85)}
+html:root body #gate .gtitle span{box-shadow:inset 0 -.12em 0 rgba(200,217,230,.85)}
 html:root body #intro .t-cliff{font-weight:800;letter-spacing:-.045em;line-height:.9}
 html:root body #intro .t-sub{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
 html:root body :is(#intro .ui .k,#intro .t-tag,#intro .disclaimer,#qflash .qk,#qflash .qtap){font-family:var(--f-body);letter-spacing:.02em;text-transform:none}
 html:root body .c-head{font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1}
 html:root body .c-head.red{text-shadow:none}
 html:root body #qflash .qtext{font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1.05}
-html:root body #qflash .qline i{background:#8CA6C4}
-html:root body .qtext em{background:linear-gradient(transparent 64%,rgba(140,166,196,.45) 64%,rgba(140,166,196,.45) 92%,transparent 92%)}
-html:root body #locker .panel{background:#FFFFFF;color:#101B2D}
+html:root body #qflash .qline i{background:#C8D9E6}
+html:root body .qtext em{background:linear-gradient(transparent 64%,rgba(200,217,230,.45) 64%,rgba(200,217,230,.45) 92%,transparent 92%)}
+html:root body #locker .panel{background:#FFFFFF;color:#2F4156}
 html:root body #locker .panel :is(b,span,small,div,label,.muted){color:inherit}
-html:root body #locker .panel .muted,html:root body #locker .panel small{color:#5F6E84}
+html:root body #locker .panel .muted,html:root body #locker .panel small{color:#4F6272}
 html:root body #celebrate :is(.c-kicker,.label){font-family:var(--f-body);letter-spacing:.02em;text-transform:none}
 html:root body #boot .b-word{font-family:var(--f-display);font-weight:800;letter-spacing:-.045em}
 html:root body #boot .b-sub,html:root body #boot .b-load b{font-family:var(--f-body);letter-spacing:.06em}
 html:root body #boot .w2{-webkit-text-stroke:0}
 html:root body .qtext{font-family:var(--f-display);font-weight:700;text-transform:none;letter-spacing:-.03em;line-height:1.08}
-html:root body #locker{background:#0B1422}
-html:root body #locker .bench{background:linear-gradient(180deg,#243650,#101B2D)}
-html:root body #locker .lfloor{background:repeating-linear-gradient(90deg,rgba(220,229,239,.06) 0 1px,transparent 1px 60px),radial-gradient(60% 70% at 50% 0,#1B2B47,#0B1422)}
-html:root body #locker .nameplate{font-family:var(--f-display);font-weight:800;letter-spacing:.12em;color:#101B2D;border-radius:6px}
-html:root body #celebrate .cbg{background:radial-gradient(80% 60% at 50% 28%,rgba(140,166,196,.28),transparent 70%),rgba(11,20,34,.97)}
+html:root body #locker{background:#1F2B3A}
+html:root body #locker .bench{background:linear-gradient(180deg,#2F4156,#2F4156)}
+html:root body #locker .lfloor{background:repeating-linear-gradient(90deg,rgba(220,229,239,.06) 0 1px,transparent 1px 60px),radial-gradient(60% 70% at 50% 0,#567C8D,#1F2B3A)}
+html:root body #locker .nameplate{font-family:var(--f-display);font-weight:800;letter-spacing:.12em;color:#2F4156;border-radius:6px}
+html:root body #celebrate .cbg{background:radial-gradient(80% 60% at 50% 28%,rgba(200,217,230,.28),transparent 70%),rgba(31,43,58,.97)}
 html:root body #celebrate .btn:not(.primary):not(.red){background:rgba(255,255,255,.08);border:1px solid rgba(220,229,239,.16);color:#FFFFFF}
-html:root body #celebrate :is(.btn.primary,.btn.red){background:#FFFFFF;border-color:#FFFFFF;color:#101B2D}
+html:root body #celebrate :is(.btn.primary,.btn.red){background:#FFFFFF;border-color:#FFFFFF;color:#2F4156}
 html:root body.theme-light #sheet-root .sheet{background:rgba(255,255,255,.985)}
-html:root body:not(.theme-light) #sheet-root .sheet{background:rgba(19,32,58,.985)}
-/* text in the "slate" role uses #5F6E84: the same slate family, dark enough for AA on porcelain and mist */
-html:root body.theme-light{--vt-stone:#5F6E84}
+html:root body:not(.theme-light) #sheet-root .sheet{background:rgba(47,65,86,.985)}
+/* text in the "slate" role uses #4F6272: the same slate family, dark enough for AA on porcelain and mist */
+html:root body.theme-light{--vt-stone:#4F6272}
 html:root body:not(.theme-light) .badge.warn{color:#F2C46D;border-color:rgba(242,196,109,.5);background:rgba(242,196,109,.1)}
 html:root body:not(.theme-light) .badge.ok{color:#8FD3B0;border-color:rgba(143,211,176,.45);background:rgba(143,211,176,.08)}
-html:root body.theme-light .spick-i small{color:#536074}
-html:root body.theme-light .spick-i[aria-checked="true"]{border-color:var(--b1);background:#F1F4F8;box-shadow:inset 0 0 0 1px var(--b1)}
-html:root body:not(.theme-light) .spick-i[aria-checked="true"]{border-color:#8CA6C4;background:rgba(140,166,196,.12);box-shadow:inset 0 0 0 1px #8CA6C4}
+html:root body.theme-light .spick-i small{color:#475A6A}
+html:root body.theme-light .spick-i[aria-checked="true"]{border-color:var(--b1);background:#EEF3F7;box-shadow:inset 0 0 0 1px var(--b1)}
+html:root body:not(.theme-light) .spick-i[aria-checked="true"]{border-color:#C8D9E6;background:rgba(200,217,230,.12);box-shadow:inset 0 0 0 1px #C8D9E6}
 
 /* v6: remaining all-caps labels to sentence case */
 html:root body .iron-name, html:root body .award-name { text-transform: none; letter-spacing: -.01em; }
 html:root body #app table th { text-transform: none; letter-spacing: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 600; }
 
+/* =====================================================================
+   v7 — NAVY #2F4156 · TEAL #567C8D · SKY BLUE #C8D9E6 · BEIGE #F5EFEB · WHITE (the owner's palette)
+   Navy = primary and headings · Teal = secondary accents and gradients · Sky = glow and highlights
+   Beige = page · White = cards. Muted text #4F6272 (navy-teal grey, AA on beige and white).
+   The backdrop (#amb) is a few soft colour pools and fine wave lines that drift slowly and move at
+   different speeds as you scroll (parallax). Content panels are frosted so the colour shows through.
+   ===================================================================== */
+:root{--linen:#F5EFEB;--sand:#ECE6E1;--nude:#C8D9E6;--clay:#567C8D;--dusk:#2F4156;--harbour:#567C8D;--sky:#C8D9E6;--ink:#2F4156;
+  --glass-p:rgba(255,255,255,.62);--glass-p-b:rgba(255,255,255,.78);--sh-g:0 1px 2px rgba(47,65,86,.04),0 10px 30px -6px rgba(47,65,86,.10)}
+
+/* ---------- the living backdrop ---------- */
+html:root body #env{background:linear-gradient(180deg,#F7F2EF 0%,#F2ECE8 45%,#E6EEF4 100%)}
+html:root body:not(.theme-light) #env{background:linear-gradient(180deg,#1F2B3A 0%,#243344 55%,#263546 100%)}
+html:root body #env > #amb{display:block;position:absolute;inset:0;overflow:hidden}
+#amb .orb{position:absolute;display:block;border-radius:50%;will-change:transform}
+#amb .orb b{position:absolute;inset:0;border-radius:50%;animation:ambDrift 34s ease-in-out infinite alternate}
+#amb .o1{width:min(115vw,720px);aspect-ratio:1;left:-28%;top:-14%}
+#amb .o1 b{background:radial-gradient(closest-side,rgba(200,217,230,.62),rgba(200,217,230,0))}
+#amb .o2{width:min(95vw,600px);aspect-ratio:1;right:-26%;top:8%}
+#amb .o2 b{background:radial-gradient(closest-side,rgba(200,217,230,.75),rgba(200,217,230,0));animation-duration:41s;animation-delay:-12s}
+#amb .o3{width:min(70vw,440px);aspect-ratio:1;left:-12%;top:52%}
+#amb .o3 b{background:radial-gradient(closest-side,rgba(86,124,141,.30),rgba(86,124,141,0));animation-duration:29s;animation-delay:-6s}
+#amb .o4{width:min(120vw,760px);aspect-ratio:1;right:-34%;top:62%}
+#amb .o4 b{background:radial-gradient(closest-side,rgba(245,239,235,.80),rgba(245,239,235,0));animation-duration:46s;animation-delay:-20s}
+#amb .o5{width:min(60vw,380px);aspect-ratio:1;left:38%;top:30%}
+#amb .o5 b{background:radial-gradient(closest-side,rgba(200,217,230,.55),rgba(200,217,230,0));animation-duration:37s;animation-delay:-3s}
+#amb .waves{position:absolute;left:-5%;right:-5%;top:-5%;height:140%;display:block;will-change:transform}
+#amb .waves svg{width:100%;height:100%;display:block}
+#amb .waves g{stroke:rgba(47,65,86,.10)}
+body:not(.theme-light) #amb .waves g{stroke:rgba(200,217,230,.08)}
+body:not(.theme-light) #amb .o1 b{background:radial-gradient(closest-side,rgba(86,124,141,.55),rgba(86,124,141,0))}
+body:not(.theme-light) #amb .o2 b{background:radial-gradient(closest-side,rgba(86,124,141,.30),rgba(86,124,141,0))}
+body:not(.theme-light) #amb .o3 b{background:radial-gradient(closest-side,rgba(200,217,230,.20),rgba(200,217,230,0))}
+body:not(.theme-light) #amb .o4 b{background:radial-gradient(closest-side,rgba(86,124,141,.22),rgba(86,124,141,0))}
+body:not(.theme-light) #amb .o5 b{background:radial-gradient(closest-side,rgba(47,65,86,.45),rgba(47,65,86,0))}
+@keyframes ambDrift{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(6%,4%,0) scale(1.08)}100%{transform:translate3d(-5%,7%,0) scale(.96)}}
+@media (prefers-reduced-motion:reduce){#amb .orb b{animation:none}}
+body.motion-min #amb .orb b{animation:none}
+
+/* ---------- page colours ---------- */
+html:root body.theme-light{background:#F5EFEB}
+html:root body:not(.theme-light){background:#1F2B3A}
+
+/* ---------- frosted content panels ---------- */
+html:root body.theme-light :where(#app) .panel,
+html:root body.theme-light :where(#app) .metric,
+html:root body.theme-light :where(#app) .wtile{background:var(--glass-p);border:1px solid var(--glass-p-b);box-shadow:var(--sh-g);backdrop-filter:blur(18px) saturate(1.35);-webkit-backdrop-filter:blur(18px) saturate(1.35)}
+html:root body.theme-light :where(#app) :is(.panel,.metric) :is(.panel,.metric){background:rgba(255,255,255,.55);border-color:rgba(236,230,225,.9);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+html:root body.theme-light :where(#app) .panel.flat{background:rgba(250,247,245,.6);box-shadow:none}
+html:root body.theme-light :where(#app) .chip:not([aria-pressed="true"]):not(.on):not([aria-checked="true"]){background:rgba(255,255,255,.7);border-color:rgba(221,229,236,.9)}
+html:root body.theme-light :where(#app) .seg{background:rgba(238,243,247,.75)}
+html:root body:not(.theme-light) :where(#app) .panel,
+html:root body:not(.theme-light) :where(#app) .metric,
+html:root body:not(.theme-light) :where(#app) .wtile{background:rgba(47,65,86,.62);border:1px solid rgba(200,217,230,.10);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
+html:root body:not(.theme-light) :where(#app) :is(.panel,.metric) :is(.panel,.metric){background:rgba(255,255,255,.04);backdrop-filter:none;-webkit-backdrop-filter:none}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  html:root body.theme-light :where(#app) :is(.panel,.metric,.wtile){background:#FFFFFF}
+  html:root body:not(.theme-light) :where(#app) :is(.panel,.metric,.wtile){background:#2F4156}
+}
+
+/* ---------- the blue moments, lighter: home hero, daily mission, logger card ---------- */
+html:root body #app .hero{background:radial-gradient(70% 60% at 100% 100%,rgba(200,217,230,.26),transparent 70%),linear-gradient(155deg,#2F4156 0%,#3A5266 55%,#567C8D 100%);border:1px solid rgba(255,255,255,.14)}
+html:root body #app .hero .label{color:rgba(255,255,255,.86)}
+html:root body #app .hero .scoreboard .label{color:rgba(255,255,255,.82)}
+html:root body #app .hero .sb-val small{color:rgba(255,255,255,.78)}
+html:root body #app .hero [style*="#B7BEC3"]{color:rgba(255,255,255,.86)!important}
+html:root body #app .mission .mhead{background:radial-gradient(60% 90% at 100% 0%,rgba(200,217,230,.20),transparent 70%),linear-gradient(155deg,#2F4156 0%,#4A6B7C 100%)}
+html:root body #app .mission .mhead .muted,html:root body #app .mission .mhead .label{color:rgba(255,255,255,.86)}
+html:root body .excard{background:linear-gradient(165deg,#3A5266 0%,#2F4156 100%)}
+html:root body #view .excard .target small{color:rgba(255,255,255,.78)}
+html:root body:not(.theme-light) #app .hero{background:radial-gradient(70% 60% at 100% 100%,rgba(86,124,141,.22),transparent 70%),linear-gradient(155deg,#2F4156 0%,#263546 100%)}
+
+/* ---------- nude accents ---------- */
+html:root body #gate .gtitle span{box-shadow:inset 0 -.12em 0 rgba(200,217,230,.9)}
+html:root body .qtext em{background:linear-gradient(transparent 64%,rgba(200,217,230,.6) 64%,rgba(200,217,230,.6) 92%,transparent 92%)}
+html:root body.theme-light :where(#app) .wtile.on{background:linear-gradient(160deg,rgba(200,217,230,.35),rgba(255,255,255,.7) 70%)}
+html:root body.theme-light #nav .bar{background:rgba(255,255,255,.62);border-color:rgba(255,255,255,.8);box-shadow:0 10px 30px -8px rgba(47,65,86,.18)}
+html:root body:not(.theme-light) :is(.btn.primary,.btn.red){background:#F5EFEB;border-color:#F5EFEB;color:#2F4156}
+html:root body:not(.theme-light) #nav .ind{background:#F5EFEB}
+html:root body:not(.theme-light) .chip:is([aria-pressed="true"],.on,[aria-checked="true"]){background:#F5EFEB;border-color:#F5EFEB}
+html:root body.theme-light :where(#app,#sheet-root) .btn:not(.primary):not(.red):not(.danger):not([disabled]){background:rgba(255,255,255,.78)}
+
+/* ---------- cinematic scenes: dusk blue instead of near-black ---------- */
+html:root body #locker{background:#243344}
+html:root body #locker .lfloor{background:repeating-linear-gradient(90deg,rgba(200,217,230,.07) 0 1px,transparent 1px 60px),radial-gradient(60% 70% at 50% 0,#567C8D,#243344)}
+html:root body #celebrate .cbg{background:radial-gradient(80% 60% at 50% 28%,rgba(200,217,230,.26),transparent 70%),rgba(31,43,58,.97)}
+
+/* charts: sky blue is too pale on white, so data drawn in the accent colour uses teal in the light theme */
+html:root body.theme-light .chart :is([stroke="#C8D9E6" i],[stroke="var(--b2)"]){stroke:#567C8D}
+html:root body.theme-light .chart :is([fill="#C8D9E6" i],[fill="var(--b2)"]){fill:#567C8D}
+html:root body.theme-light .badge.orange,html:root body.theme-light .tag.orange{color:#3F5F6E}
+/* nav pill: the pill is drawn by .ind::before */
+html:root body #nav .ind{background:transparent!important}
+html:root body.theme-light #nav .ind::before{background:#2F4156;box-shadow:0 8px 18px -8px rgba(47,65,86,.55)}
+html:root body:not(.theme-light) #nav .ind::before{background:#F5EFEB;box-shadow:0 8px 18px -8px rgba(0,0,0,.45)}
+
 </style>
 </head>
 <body>
-<script>/* the theme is known before the first paint, so the app never flashes dark then light */try{var _l=(JSON.parse(localStorage.getItem('bbp.settings')||'{}').theme)!=='dark'}catch(e){_l=true}if(_l){document.body.classList.add('theme-light');document.documentElement.style.background='#EDE6DC'}</script>
+<script>/* the theme is known before the first paint, so the app never flashes dark then light */try{var _l=(JSON.parse(localStorage.getItem('bbp.settings')||'{}').theme)!=='dark'}catch(e){_l=true}if(_l){document.body.classList.add('theme-light');document.documentElement.style.background='#F5EFEB'}</script>
 <!-- LOAD-UP: plays every time the app opens; tap to skip -->
 <div id="boot" aria-hidden="true">
   <div class="b-grid"></div>
@@ -2124,6 +2220,9 @@ html:root body #app table th { text-transform: none; letter-spacing: 0; font-fam
   <div class="b-half top"></div><div class="b-half bot"></div>
 </div>
 <div id="env" aria-hidden="true">
+  <div id="amb"><i class="orb o1"><b></b></i><i class="orb o2"><b></b></i><i class="orb o3"><b></b></i><i class="orb o4"><b></b></i><i class="orb o5"><b></b></i>
+    <i class="waves"><svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke-width="1.2"><path d="M-50 180 C 200 120 380 260 620 200 S 1000 120 1250 190"/><path d="M-50 230 C 210 170 390 310 630 250 S 1010 170 1250 240"/><path d="M-50 280 C 220 220 400 360 640 300 S 1020 220 1250 290"/><path d="M-50 600 C 180 660 420 540 650 600 S 980 690 1250 610"/><path d="M-50 650 C 190 710 430 590 660 650 S 990 740 1250 660"/><path d="M-50 700 C 200 760 440 640 670 700 S 1000 790 1250 710"/></g></svg></i>
+  </div>
   <div class="wall"></div>
   <div class="beams"></div>
   <svg class="racks" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -2199,7 +2298,7 @@ html:root body #app table th { text-transform: none; letter-spacing: 0; font-fam
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 23 · 16:58';
+const BUILD_ID = 'Oct 23 · 21:39';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s every time the app opens (shorter in Minimal / reduced motion); tap to skip. */
@@ -2234,7 +2333,7 @@ const Splash = (() => {
    and again after log-in (the athlete's own school).
    Features: every feature is open today. When paid levels arrive, the database turns its "paywall" on and
    each feature checks the athlete's level here (FEATURE_TIERS) and in social.sql (sx_need) — nothing else changes. */
-const BRAND_DEF = { slug: 'hokie-power', name: 'Hokie Power', app_name: 'Hokie Power', tagline: '', color1: '#101B2D', color2: '#8CA6C4', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
+const BRAND_DEF = { slug: 'hokie-power', name: 'Hokie Power', app_name: 'Hokie Power', tagline: '', color1: '#2F4156', color2: '#C8D9E6', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
 const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold', food_ai: 'gold', ask_ai: 'gold' };
 const TIER_NAME = { free: 'Basic', silver: 'Silver', gold: 'Gold' };
 const Brand = {
@@ -2272,7 +2371,7 @@ const Brand = {
     r.setProperty('--b1rgb', this.hex2rgb(b.color1).join(',')); r.setProperty('--b2rgb', this.hex2rgb(b.color2).join(',')); r.setProperty('--b1lrgb', this.hex2rgb(lit).join(','));
     const dk = this.mix(b.color1, '#000000', .32), dd = this.mix(b.color1, '#000000', .63), l2 = this.mix(b.color2, '#FFFFFF', .42), d2 = this.mix(b.color2, '#000000', .15);
     [['--b1d', dk], ['--b1dd', dd], ['--b2l', l2], ['--b2d', d2]].forEach(([k, v]) => { r.setProperty(k, v); r.setProperty(k + 'rgb', this.hex2rgb(v).join(',')); });
-    if (!this.custom()) [['--b1l', '#243650'], ['--b1d', '#0B1422'], ['--b1dd', '#070D17'], ['--b2l', '#C5D3E3'], ['--b2d', '#6F8BAA']].forEach(([k, v]) => { r.setProperty(k, v); r.setProperty(k + 'rgb', this.hex2rgb(v).join(',')); });   // the navy palette's own steel and glacier tints
+    if (!this.custom()) [['--b1l', '#3C5269'], ['--b1d', '#263546'], ['--b1dd', '#1E2A38'], ['--b2l', '#E3ECF3'], ['--b2d', '#567C8D']].forEach(([k, v]) => { r.setProperty(k, v); r.setProperty(k + 'rgb', this.hex2rgb(v).join(',')); });   // the navy palette's own steel and glacier tints
     try { Object.assign(C, { blue: b.color1, red: b.color2, redLit: b.color2, lit }); } catch (e) { }   // C is defined later in the script
     const [w1, w2] = this.words();
     document.querySelectorAll('#boot .w1').forEach(e => e.textContent = w1);
@@ -4829,7 +4928,7 @@ const Theme = {
   get light() { return State.settings.theme !== 'dark'; },
   apply() {
     document.body.classList.toggle('theme-light', this.light);
-    document.documentElement.style.background = this.light ? '#EDE6DC' : '';
+    document.documentElement.style.background = this.light ? '#F5EFEB' : '';
     let m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', this.light ? '#F8F5EF' : '#16171A');
     FX.setDensity(Motion.m.particles);
   },
@@ -11279,6 +11378,35 @@ if (typeof Tilt !== 'undefined') Tilt.bind = () => { };
   const op = Sheet.open.bind(Sheet); Sheet.open = function (o) { const r = op(o); hide(true); return r; };
   const cl = Sheet.close.bind(Sheet); Sheet.close = async function (res) { try { return await cl(res); } finally { if ($('#sheet-root').hidden) hide(false); } };
 })();
+
+/* ============ v7 AMBIENT BACKDROP: soft colour pools + wave lines with scroll and pointer parallax ============
+   Each layer moves at its own speed, so the background feels deep as you scroll. Follows the motion setting:
+   "minimal" (or the system's reduce-motion) keeps it completely still. */
+const Ambient = {
+  depth: { o1: .10, o2: .22, o3: .34, o4: .16, o5: .28, waves: .05 },
+  px: 0, py: 0, tick: false,
+  layers() { return [...document.querySelectorAll('#amb > i')].map(el => [el, this.depth[el.classList[1] || el.classList[0]] || .1]); },
+  k() { try { return Motion.m.parallax; } catch (e) { return 1; } },
+  frame() {
+    this.tick = false;
+    const k = this.k(), y = window.scrollY || 0;
+    document.body.classList.toggle('motion-min', !k);
+    this.L.forEach(([el, d]) => {
+      if (!k) { el.style.transform = ''; return; }
+      const ty = -Math.min(y, 2000) * d * k, tx = this.px * d * 60 * k, tz = this.py * d * 40 * k;
+      el.style.transform = `translate3d(${tx.toFixed(1)}px,${(ty + tz).toFixed(1)}px,0)`;
+    });
+  },
+  req() { if (!this.tick) { this.tick = true; requestAnimationFrame(() => this.frame()); } },
+  init() {
+    this.L = this.layers(); if (!this.L.length) return;
+    addEventListener('scroll', () => this.req(), { passive: true });
+    if (window.matchMedia && matchMedia('(pointer:fine)').matches)
+      addEventListener('pointermove', e => { this.px = e.clientX / innerWidth - .5; this.py = e.clientY / innerHeight - .5; this.req(); }, { passive: true });
+    this.frame();
+  }
+};
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => Ambient.init()); else Ambient.init();
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
