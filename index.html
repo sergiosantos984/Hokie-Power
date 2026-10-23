@@ -16,9 +16,9 @@
 <title>Cliff Hokie Power</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=Big+Shoulders+Display:wght@600;700;800;900&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-:root{--b1:#861F41;--b2:#E87722;--b1l:#A0335A;--b1d:#5C102D;--b1dd:#310E1A;--b2l:#FFB36B;--b2d:#C9621A;--b1rgb:134,31,65;--b2rgb:232,119,34;--b1lrgb:160,51,90;--b1drgb:92,16,45;--b1ddrgb:60,10,30;--b2lrgb:255,179,107}
+:root{--b1:#101B2D;--b2:#8CA6C4;--b1l:#243650;--b1d:#0B1422;--b1dd:#070D17;--b2l:#C5D3E3;--b2d:#6F8BAA;--b1rgb:16,27,45;--b2rgb:140,166,196;--b1lrgb:36,54,80;--b1drgb:11,20,34;--b1ddrgb:7,13,23;--b2lrgb:197,211,227;--b2drgb:111,139,170}
 
 /* Layout concept: a phone-first portal into a night stadium. Fixed environmental layers
    (skyline → stadium → tunnel → locker room → weight room) sit behind one scrolling column;
@@ -1831,6 +1831,282 @@ button.wtile{cursor:pointer}
 /* page canvas: dark under the load-up; the light theme sets its own (no white or dark flash at launch) */
 html{background:#141518}
 
+/* =====================================================================
+   v6 DESIGN SYSTEM — PREMIUM NEUTRAL · MIDNIGHT NAVY · FROSTED GLASS
+   One layer on top of everything else: tokens first, then shared components, then screens.
+   Colours: Midnight Navy #101B2D · Steel Navy #243650 · Porcelain #F5F7FA · White · Cool Mist #DCE5EF
+            Slate #64748B · Glacier Blue #8CA6C4 (accent only). A school with its own colours keeps them
+            (--b1 / --b2 come from Brand.apply); the standard look maps --b1 → navy, --b2 → glacier.
+   Glass is used for floating things only (nav, sheets, toasts, sticky bars); content cards stay solid white.
+   `html:root body` in front of the selectors makes this layer win over the older themed rules.
+   ===================================================================== */
+:root{
+  --navy:#101B2D; --steel-navy:#243650; --porcelain:#F5F7FA; --pure:#FFFFFF; --mist:#DCE5EF; --slate:#64748B; --glacier:#8CA6C4;
+  --mist-2:#EEF2F7; --navy-ink:#0B1422;
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-pill:999px;
+  --sh-1:0 1px 2px rgba(16,27,45,.04),0 4px 16px rgba(16,27,45,.05);
+  --sh-2:0 8px 24px rgba(16,27,45,.08);
+  --sh-3:0 18px 40px rgba(16,27,45,.14);
+  --glass-l:rgba(255,255,255,.72); --glass-l-b:rgba(255,255,255,.85);
+  --glass-d:rgba(16,27,45,.84); --glass-d-b:rgba(255,255,255,.12);
+  --t-fast:160ms; --t-std:220ms;
+  /* older tokens, re-pointed */
+  --vt-white:#FFFFFF; --vt-stone:#64748B; --vt-charcoal:#101B2D; --vt-cool:#DCE5EF; --vt-sand:#DCE5EF; --vt-off:#F5F7FA;
+  --vt-deep:var(--b1d); --vt-maroon-press:var(--b1d); --vt-orange-press:var(--b2d);
+  --g-brand:linear-gradient(135deg,var(--b1) 0%,var(--b1l) 100%);
+  --g-maroon:linear-gradient(180deg,var(--b1) 0%,var(--b1) 100%);
+  --g-orange:linear-gradient(180deg,var(--b2) 0%,var(--b2) 100%);
+  --g-dark:linear-gradient(160deg,#16233A 0%,#101B2D 100%);
+  --g-neutral:linear-gradient(180deg,#FFFFFF 0%,#F5F7FA 100%);
+  --ok:#2F7D5B; --warn:#B7791F; --bad:#C2413A; --info:#3B6EA8;
+  --chart-1:var(--b1); --chart-2:var(--b2); --chart-3:#C7D2DE;
+  --focus:#243650;
+  --f-display:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  /* navy dark mode surfaces (light theme overrides below) */
+  --midnight:#0B1422; --stadium:#101B2D; --carbon:#070D17;
+  --bg:#0B1422; --fg:#EEF2F7; --muted:#9AA9BC; --line:rgba(220,229,239,.12);
+  --panel:#13203A; --panel-2:#182844; --panel-solid:#13203A;
+  --steel:#9AA9BC; --silver:#9AA9BC; --ice:#FFFFFF; --blue-lit:#8CA6C4; --blue-glow:#8CA6C4; --red-lit:var(--b2);
+}
+body.theme-light{
+  --bg:#F5F7FA; --fg:#101B2D; --muted:#5F6E84; --line:#DCE5EF;
+  --panel:#FFFFFF; --panel-2:#FFFFFF; --panel-solid:#FFFFFF; --steel:#5F6E84; --silver:#5F6E84; --blue-glow:#243650;
+  color-scheme:light;
+}
+html{background:#0B1422}
+html:root body{font-family:var(--f-body);font-feature-settings:"cv11","ss01";letter-spacing:-.005em}
+html:root body.theme-light{background:#F5F7FA}
+html:root body:not(.theme-light){background:#0B1422}
+
+/* ---------- calm backdrop: no scenery behind content ---------- */
+html:root body #env{background:#0B1422}
+html:root body.theme-light #env{background:radial-gradient(90% 40% at 50% -8%,rgba(140,166,196,.18),transparent 70%),#F5F7FA}
+html:root body:not(.theme-light) #env{background:radial-gradient(90% 40% at 50% -8%,rgba(140,166,196,.14),transparent 70%),#0B1422}
+html:root body #env > *{display:none}
+html:root body #fx{display:none}
+
+/* ---------- type ---------- */
+html:root body :is(.h1,.h2,.h3,.display,.gtitle,.ccard-t,.chero-t,.month-t,.wall-t){font-family:var(--f-display);text-transform:none;letter-spacing:-.022em}
+html:root body .h1{font-size:clamp(28px,7.4vw,32px);font-weight:700;line-height:1.1}
+html:root body .h2{font-size:clamp(24px,6.4vw,28px);font-weight:700;line-height:1.12}
+html:root body .h3{font-size:17px;font-weight:600;line-height:1.25;letter-spacing:-.012em}
+html:root body .display{font-weight:700;line-height:1.05}
+html:root body .label{font-family:var(--f-body);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
+html:root body .badge{font-family:var(--f-body);font-size:11.5px;font-weight:600;letter-spacing:0;text-transform:none;border-radius:var(--r-pill);padding:3px 9px}
+html:root body.theme-light :where(#app,#sheet-root) :is(.h1,.h2,.h3,.calc-out,.season-pct,.display.motto){color:var(--b1)}
+html:root body.theme-light .muted{color:#5F6E84}
+html:root body a{color:inherit}
+html:root body :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+html:root body:not(.theme-light){--focus:#8CA6C4}
+html:root body .num,html:root body .lb-v,html:root body .target{font-variant-numeric:tabular-nums}
+
+/* ---------- buttons ---------- */
+html:root body .btn{border-radius:var(--r-sm);font-weight:600;letter-spacing:-.005em;box-shadow:none;transition:background var(--t-fast),transform var(--t-fast),box-shadow var(--t-fast),border-color var(--t-fast)}
+html:root body .btn:active:not([disabled]){transform:scale(.98)}
+html:root body .btn.big{font-family:var(--f-body);font-size:16px;font-weight:600;text-transform:none;letter-spacing:-.01em;min-height:52px;border-radius:var(--r-md)}
+html:root body :is(.btn.primary,.btn.red){background:var(--b1);border:1px solid var(--b1);color:#FFFFFF;box-shadow:0 1px 2px rgba(16,27,45,.12),0 6px 16px -8px rgba(16,27,45,.5)}
+html:root body :is(.btn.primary,.btn.red):hover:not([disabled]){background:var(--b1l);border-color:var(--b1l)}
+html:root body :is(.btn.primary,.btn.red):active:not([disabled]){background:var(--b1d)}
+html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn:not(.primary):not(.red):not(.danger):not([disabled]){background:#FFFFFF;color:#243650;border:1px solid #DCE5EF}
+html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn.ghost:not(.primary):not(.red):not([disabled]){background:transparent;border-color:transparent}
+html:root body.theme-light :where(#app,#sheet-root,#nav,#rest) .btn.ghost.icon:not([disabled]){border-color:#DCE5EF;background:#FFFFFF}
+html:root body.theme-light :where(#app,#sheet-root) .btn:not(.primary):not(.red):not([disabled]):hover{border-color:#C7D2DE;background:#FBFCFE}
+html:root body .btn.danger{background:#FFFFFF;color:#B4322C;border:1px solid rgba(194,65,58,.35)}
+html:root body:not(.theme-light) .btn:not(.primary):not(.red):not(.danger):not([disabled]){background:rgba(255,255,255,.06);border:1px solid rgba(220,229,239,.14);color:#EEF2F7}
+html:root body:not(.theme-light) :is(.btn.primary,.btn.red){background:#EEF2F7;border-color:#EEF2F7;color:#101B2D}
+html:root body:not(.theme-light) :is(.btn.primary,.btn.red):hover:not([disabled]){background:#FFFFFF}
+html:root body:not(.theme-light) .btn.danger{background:transparent;color:#F2A7A1;border-color:rgba(242,167,161,.4)}
+html:root body .btn[disabled]{background:#EEF2F7;border-color:#DCE5EF;color:#8A97A8;box-shadow:none;opacity:1}
+html:root body:not(.theme-light) .btn[disabled]{background:rgba(255,255,255,.05);border-color:rgba(220,229,239,.1);color:#7F8DA0}
+
+/* ---------- surfaces ---------- */
+html:root body .panel{border-radius:var(--r-lg);box-shadow:var(--sh-1);backdrop-filter:none;-webkit-backdrop-filter:none}
+html:root body.theme-light .panel{background:#FFFFFF;border:1px solid #E6ECF3}
+html:root body.theme-light .panel.flat{background:#F8FAFC;border:1px solid #E6ECF3;box-shadow:none}
+html:root body:not(.theme-light) .panel{background:#13203A;border:1px solid rgba(220,229,239,.08);box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
+html:root body:not(.theme-light) .panel.flat{background:rgba(255,255,255,.03)}
+html:root body .metric{border-radius:var(--r-md)}
+html:root body.theme-light .metric{background:#FFFFFF;border:1px solid #E6ECF3;box-shadow:var(--sh-1)}
+html:root body:not(.theme-light) .metric{background:#13203A;border:1px solid rgba(220,229,239,.08)}
+html:root body .empty{border-radius:var(--r-lg);border:1px dashed #C7D2DE}
+html:root body .list-item{border-bottom-color:var(--line)}
+html:root body .kv{border-bottom-color:var(--line)}
+
+/* ---------- inputs ---------- */
+html:root body .input{border-radius:var(--r-sm);transition:border-color var(--t-fast),box-shadow var(--t-fast)}
+html:root body.theme-light .input{background:#FFFFFF;border:1px solid #DCE5EF;color:#101B2D}
+html:root body.theme-light .input::placeholder{color:#8A97A8}
+html:root body .input:focus{outline:none;border-color:#8CA6C4;box-shadow:0 0 0 3px rgba(140,166,196,.28)}
+html:root body:not(.theme-light) .input{background:rgba(255,255,255,.05);border:1px solid rgba(220,229,239,.16);color:#EEF2F7}
+html:root body .err-msg{color:#B4322C}
+html:root body:not(.theme-light) .err-msg{color:#F2A7A1}
+
+/* ---------- chips, segmented controls, switches ---------- */
+html:root body .chip{border-radius:var(--r-pill);font-weight:500;transition:background var(--t-fast),border-color var(--t-fast),color var(--t-fast)}
+html:root body.theme-light .chip{background:#FFFFFF;border:1px solid #DCE5EF;color:#243650}
+html:root body .chip[aria-pressed="true"],html:root body .chip.on,html:root body .chip[aria-checked="true"]{background:var(--b1);border-color:var(--b1);color:#FFFFFF}
+html:root body:not(.theme-light) .chip{background:rgba(255,255,255,.05);border:1px solid rgba(220,229,239,.14);color:#DCE5EF}
+html:root body:not(.theme-light) .chip[aria-pressed="true"],html:root body:not(.theme-light) .chip.on,html:root body:not(.theme-light) .chip[aria-checked="true"]{background:#EEF2F7;border-color:#EEF2F7;color:#101B2D}
+html:root body .seg{border-radius:var(--r-sm);padding:3px}
+html:root body.theme-light .seg{background:#EEF2F7;border:1px solid transparent}
+html:root body .seg button{border-radius:9px;font-weight:500;transition:background var(--t-fast),color var(--t-fast)}
+html:root body.theme-light .seg button{color:#475569}
+html:root body.theme-light .seg button:is([aria-pressed="true"],[aria-selected="true"],[aria-checked="true"]){background:#FFFFFF;color:#101B2D;box-shadow:0 1px 2px rgba(16,27,45,.08),0 2px 8px rgba(16,27,45,.06)}
+html:root body:not(.theme-light) .seg{background:rgba(255,255,255,.05)}
+html:root body:not(.theme-light) .seg button:is([aria-pressed="true"],[aria-selected="true"],[aria-checked="true"]){background:#EEF2F7;color:#101B2D}
+html:root body .switch[aria-checked="true"]{background:var(--b1);border-color:var(--b1)}
+html:root body:not(.theme-light) .switch[aria-checked="true"]{background:#8CA6C4;border-color:#8CA6C4}
+
+/* ---------- glass: floating navigation, sheets, toasts, sticky bars ---------- */
+html:root body #nav .bar{border-radius:22px}
+html:root body.theme-light #nav .bar{background:var(--glass-l);border:1px solid var(--glass-l-b);box-shadow:0 8px 24px rgba(16,27,45,.10);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6)}
+html:root body:not(.theme-light) #nav .bar{background:var(--glass-d);border:1px solid var(--glass-d-b);box-shadow:0 8px 28px rgba(0,0,0,.3);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4)}
+html:root body #nav .ind{border-radius:16px}
+html:root body.theme-light #nav .ind{background:var(--b1)}
+html:root body.theme-light #nav button{color:#5F6E84}
+html:root body.theme-light #nav button[aria-current="page"]{color:#FFFFFF}
+html:root body:not(.theme-light) #nav .ind{background:#EEF2F7}
+html:root body:not(.theme-light) #nav button[aria-current="page"]{color:#101B2D}
+html:root body #sheet-root .backdrop{background:rgba(16,27,45,.32);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+html:root body #sheet-root .sheet{border-radius:24px 24px 0 0}
+html:root body.theme-light #sheet-root .sheet{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);box-shadow:var(--sh-3);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);color:#101B2D}
+html:root body.theme-light #sheet-root .sheet-head{background:transparent}
+html:root body.theme-light #sheet-root .sheet-head h2{color:#101B2D}
+html:root body:not(.theme-light) #sheet-root .sheet{background:rgba(19,32,58,.94);border:1px solid rgba(220,229,239,.1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+html:root body:not(.theme-light) #sheet-root .sheet-head{background:transparent}
+html:root body #sheet-root .grab{background:#C7D2DE}
+html:root body #toast{border-radius:16px;font-weight:500}
+html:root body.theme-light #toast{background:rgba(16,27,45,.9);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);box-shadow:var(--sh-3);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  html:root body.theme-light #nav .bar{background:#FFFFFF}
+  html:root body.theme-light #sheet-root .sheet{background:#FFFFFF}
+  html:root body:not(.theme-light) #nav .bar{background:#101B2D}
+}
+
+/* ---------- workout logger: dark navy glass where the eyes need focus ---------- */
+html:root body .excard{background:linear-gradient(165deg,#16233A 0%,#101B2D 100%);border:1px solid rgba(255,255,255,.08);box-shadow:var(--sh-2);border-radius:var(--r-lg)}
+html:root body .hud{backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4)}
+html:root body.theme-light .hud{background:rgba(245,247,250,.82);border-bottom:1px solid rgba(220,229,239,.8)}
+html:root body:not(.theme-light) .hud{background:rgba(11,20,34,.82)}
+html:root body .hero{border-radius:var(--r-lg);box-shadow:var(--sh-2)}
+
+/* ---------- motion: short and purposeful ---------- */
+html:root body .kw,html:root body .kl{animation:none!important;transform:none!important;opacity:1!important;filter:none!important}
+html:root body #kwipe,html:root body .kwipe,html:root body .k-wipe{display:none!important}
+@media (prefers-reduced-motion:reduce){html:root body *{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* ---------- details that used to come from the v5 layer ---------- */
+html:root body #view .topbar>h1.h2{font-size:clamp(28px,8vw,34px);line-height:1.1;font-weight:700;letter-spacing:-.025em}
+html:root body .field label,html:root body .field>.label{font-family:var(--f-body);font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
+html:root body .input-unit span{font-family:var(--f-body);letter-spacing:0;text-transform:none;font-size:13px}
+html:root body .st{font-family:var(--f-body);font-size:11.5px;font-weight:600;letter-spacing:0;text-transform:none;border-radius:var(--r-pill)}
+html:root body .set.next .chk{background:var(--b1);border-color:var(--b1)}
+html:root body .set.next .chk path{stroke:#FFFFFF}
+html:root body:not(.theme-light) .set.next .chk{background:#EEF2F7;border-color:#EEF2F7}
+html:root body:not(.theme-light) .set.next .chk path{stroke:#101B2D}
+html:root body.theme-light :where(#app) .ex-tab.cur{background:var(--b1);border-color:var(--b1);color:#FFFFFF}
+html:root body .resume-banner{background:var(--glass-d);border:1px solid var(--glass-d-b);color:#FFFFFF;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+html:root body .resume-banner .label{color:rgba(255,255,255,.72)}
+html:root body .resume-banner .btn{background:#FFFFFF;color:#101B2D;border-color:#FFFFFF}
+html:root body .yardbar i,html:root body .qbar i{background:var(--b1)}
+html:root body:not(.theme-light) .yardbar i,html:root body:not(.theme-light) .qbar i{background:#8CA6C4}
+html:root body .badge.red{background:transparent;color:inherit;border-color:currentColor}
+html:root body #toast.bad{background:#7A2420}
+html:root body .chart text{font-family:var(--f-body);font-size:10.5px}
+html:root body.theme-light .chart .grid line{stroke:#E6ECF3}
+html:root body.theme-light .chart .axis{stroke:#DCE5EF}
+
+/* ---------- Home: the week hero and the daily mission are the two navy moments ---------- */
+html:root body #app .hero{background:radial-gradient(120% 90% at 100% 0%,rgba(140,166,196,.28),transparent 55%),linear-gradient(165deg,#1B2B47 0%,#101B2D 70%);color:#FFFFFF;border:1px solid rgba(255,255,255,.06);box-shadow:var(--sh-2)!important}
+html:root body #app .hero::before,html:root body #app .hero::after{display:none}
+html:root body #app .hero .jersey{display:none}
+html:root body #app .hero .label{color:rgba(255,255,255,.72)}
+html:root body #view .hero .h1{font-size:clamp(40px,12vw,52px)!important;font-weight:700;letter-spacing:-.03em;line-height:1!important;color:#FFFFFF;text-shadow:none}
+html:root body #app .hero .scoreboard{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;box-shadow:none;margin:0}
+html:root body #app .hero .scoreboard>div{background:rgba(255,255,255,.06);color:#FFFFFF}
+html:root body #app .hero .scoreboard .label{color:rgba(255,255,255,.66)}
+html:root body #app .hero .sb-val{font-family:var(--f-body);font-weight:600;font-size:20px;letter-spacing:-.02em}
+html:root body #app .hero .sb-val small{color:rgba(255,255,255,.6);font-size:12px}
+html:root body #app .hero .ring .pct{font-family:var(--f-body);font-weight:600;font-size:15px;color:#FFFFFF}
+html:root body :is(.ring .pct,.sb-val,.metric .v){font-family:var(--f-body);letter-spacing:-.02em}
+html:root body #app .mission .mhead{background:linear-gradient(165deg,#1B2B47 0%,#101B2D 100%);color:#FFFFFF}
+html:root body #app .mission .mhead::after{display:none}
+html:root body #app .mission .mhead .muted,html:root body #app .mission .mhead .label{color:rgba(255,255,255,.72)}
+html:root body #app .mission .mhead .st{background:rgba(255,255,255,.14);color:#FFFFFF}
+html:root body.theme-light :where(#app,#sheet-root) :is(.hero,.excard,.mhead,.quote-hero,.c-stats,.resume-banner,.chero) :is(.h1,.h2,.h3,.display){color:inherit}
+html:root body #view .panel h2.h1[style]{font-size:22px!important;line-height:1.15!important;font-weight:700}
+html:root body #app :is(.hero,.excard,.mission .mhead){box-shadow:var(--sh-2)!important}
+html:root body #view .excard .target{font-family:var(--f-body);font-weight:700;letter-spacing:-.04em;font-size:clamp(72px,22vw,96px)!important;line-height:1;text-shadow:none}
+html:root body #view .excard .target small{font-size:.32em;font-weight:600;letter-spacing:0;color:rgba(255,255,255,.6)}
+html:root body #view .excard .ex-name{font-family:var(--f-body);font-weight:600;font-size:20px;letter-spacing:-.015em;text-transform:none}
+html:root body #view .excard .presc,html:root body #view .excard .label{font-family:var(--f-body);letter-spacing:0;text-transform:none}
+html:root body #view .excard::before{display:none}
+/* logger details */
+html:root body #view .excard .presc{font-family:var(--f-body);font-size:15px;font-weight:500;letter-spacing:-.005em;text-transform:none;color:rgba(255,255,255,.86);line-height:1.4}
+html:root body.theme-light :where(#app) .chk{background:#FFFFFF;border:2px solid #DCE5EF}
+html:root body .set.next .chk{background:#FFFFFF;border:2px solid var(--b1)}
+html:root body .set.next .chk path{stroke:var(--b1);stroke-dashoffset:0;opacity:.28}
+html:root body .set.done .chk{background:var(--b1);border-color:var(--b1)}
+html:root body .set.done .chk path{stroke:#FFFFFF;opacity:1}
+html:root body:not(.theme-light) .chk{background:rgba(255,255,255,.05);border:2px solid rgba(220,229,239,.2)}
+html:root body:not(.theme-light) .set.next .chk{background:transparent;border-color:#DCE5EF}
+html:root body:not(.theme-light) .set.next .chk path{stroke:#DCE5EF}
+html:root body:not(.theme-light) .set.done .chk{background:#8CA6C4;border-color:#8CA6C4}
+html:root body:not(.theme-light) .set.done .chk path{stroke:#101B2D}
+html:root body:not(.theme-light) #app .mission .mbody,html:root body:not(.theme-light) #app .mission .mbody :is(summary,b,span){color:#DCE5EF}
+/* empty states and the weight-room screen: lighter weights, sentence case */
+html:root body #app :is(.empty,.sempty) :is(b,.display,span){text-transform:none;letter-spacing:-.01em}
+html:root body #app .sempty b{font-family:var(--f-body);font-weight:600;font-size:17px}
+html:root body .wall-t{font-weight:700;letter-spacing:-.03em}
+html:root body .wall-clock b,html:root body .wt-d b,html:root body .wall-sum b{font-family:var(--f-body);font-weight:700;letter-spacing:-.03em}
+html:root body .wtile{border-radius:var(--r-lg);border:1px solid #E6ECF3;background:#FFFFFF;box-shadow:var(--sh-1)}
+html:root body .wtile.on{border:1.5px solid var(--b1);background:linear-gradient(160deg,rgba(140,166,196,.18),#FFFFFF 70%)}
+html:root body .wt-in{background:var(--b1);color:#FFFFFF}
+html:root body:not(.theme-light) .wtile{background:#13203A;border-color:rgba(220,229,239,.1)}
+html:root body:not(.theme-light) .wtile.on{border-color:#8CA6C4;background:linear-gradient(160deg,rgba(140,166,196,.18),#13203A 70%)}
+html:root body:not(.theme-light) .wt-in{background:#8CA6C4;color:#101B2D}
+
+/* ---------- cinematic scenes in navy: gate, intro, locker room, quote, celebrations ---------- */
+html:root body #gate .gtitle{font-family:var(--f-display);font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1.02;font-size:clamp(36px,10vw,56px)}
+html:root body #gate .gtitle span{box-shadow:inset 0 -.12em 0 rgba(140,166,196,.85)}
+html:root body #intro .t-cliff{font-weight:800;letter-spacing:-.045em;line-height:.9}
+html:root body #intro .t-sub{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
+html:root body :is(#intro .ui .k,#intro .t-tag,#intro .disclaimer,#qflash .qk,#qflash .qtap){font-family:var(--f-body);letter-spacing:.02em;text-transform:none}
+html:root body .c-head{font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1}
+html:root body .c-head.red{text-shadow:none}
+html:root body #qflash .qtext{font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1.05}
+html:root body #qflash .qline i{background:#8CA6C4}
+html:root body .qtext em{background:linear-gradient(transparent 64%,rgba(140,166,196,.45) 64%,rgba(140,166,196,.45) 92%,transparent 92%)}
+html:root body #locker .panel{background:#FFFFFF;color:#101B2D}
+html:root body #locker .panel :is(b,span,small,div,label,.muted){color:inherit}
+html:root body #locker .panel .muted,html:root body #locker .panel small{color:#5F6E84}
+html:root body #celebrate :is(.c-kicker,.label){font-family:var(--f-body);letter-spacing:.02em;text-transform:none}
+html:root body #boot .b-word{font-family:var(--f-display);font-weight:800;letter-spacing:-.045em}
+html:root body #boot .b-sub,html:root body #boot .b-load b{font-family:var(--f-body);letter-spacing:.06em}
+html:root body #boot .w2{-webkit-text-stroke:0}
+html:root body .qtext{font-family:var(--f-display);font-weight:700;text-transform:none;letter-spacing:-.03em;line-height:1.08}
+html:root body #locker{background:#0B1422}
+html:root body #locker .bench{background:linear-gradient(180deg,#243650,#101B2D)}
+html:root body #locker .lfloor{background:repeating-linear-gradient(90deg,rgba(220,229,239,.06) 0 1px,transparent 1px 60px),radial-gradient(60% 70% at 50% 0,#1B2B47,#0B1422)}
+html:root body #locker .nameplate{font-family:var(--f-display);font-weight:800;letter-spacing:.12em;color:#101B2D;border-radius:6px}
+html:root body #celebrate .cbg{background:radial-gradient(80% 60% at 50% 28%,rgba(140,166,196,.28),transparent 70%),rgba(11,20,34,.97)}
+html:root body #celebrate .btn:not(.primary):not(.red){background:rgba(255,255,255,.08);border:1px solid rgba(220,229,239,.16);color:#FFFFFF}
+html:root body #celebrate :is(.btn.primary,.btn.red){background:#FFFFFF;border-color:#FFFFFF;color:#101B2D}
+html:root body.theme-light #sheet-root .sheet{background:rgba(255,255,255,.985)}
+html:root body:not(.theme-light) #sheet-root .sheet{background:rgba(19,32,58,.985)}
+/* text in the "slate" role uses #5F6E84: the same slate family, dark enough for AA on porcelain and mist */
+html:root body.theme-light{--vt-stone:#5F6E84}
+html:root body:not(.theme-light) .badge.warn{color:#F2C46D;border-color:rgba(242,196,109,.5);background:rgba(242,196,109,.1)}
+html:root body:not(.theme-light) .badge.ok{color:#8FD3B0;border-color:rgba(143,211,176,.45);background:rgba(143,211,176,.08)}
+html:root body.theme-light .spick-i small{color:#536074}
+html:root body.theme-light .spick-i[aria-checked="true"]{border-color:var(--b1);background:#F1F4F8;box-shadow:inset 0 0 0 1px var(--b1)}
+html:root body:not(.theme-light) .spick-i[aria-checked="true"]{border-color:#8CA6C4;background:rgba(140,166,196,.12);box-shadow:inset 0 0 0 1px #8CA6C4}
+
+/* v6: remaining all-caps labels to sentence case */
+html:root body .iron-name, html:root body .award-name { text-transform: none; letter-spacing: -.01em; }
+html:root body #app table th { text-transform: none; letter-spacing: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 600; }
+
 </style>
 </head>
 <body>
@@ -1923,7 +2199,7 @@ html{background:#141518}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 23 · 00:57';
+const BUILD_ID = 'Oct 23 · 16:58';
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
    underneath. It plays for ~2 s every time the app opens (shorter in Minimal / reduced motion); tap to skip. */
@@ -1958,7 +2234,7 @@ const Splash = (() => {
    and again after log-in (the athlete's own school).
    Features: every feature is open today. When paid levels arrive, the database turns its "paywall" on and
    each feature checks the athlete's level here (FEATURE_TIERS) and in social.sql (sx_need) — nothing else changes. */
-const BRAND_DEF = { slug: 'hokie-power', name: 'Hokie Power', app_name: 'Hokie Power', tagline: '', color1: '#861F41', color2: '#E87722', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
+const BRAND_DEF = { slug: 'hokie-power', name: 'Hokie Power', app_name: 'Hokie Power', tagline: '', color1: '#101B2D', color2: '#8CA6C4', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
 const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold', food_ai: 'gold', ask_ai: 'gold' };
 const TIER_NAME = { free: 'Basic', silver: 'Silver', gold: 'Gold' };
 const Brand = {
@@ -1966,7 +2242,7 @@ const Brand = {
   key: 'bbp.brand',
   load() { try { this.org = JSON.parse(localStorage.getItem(this.key) || 'null'); } catch (e) { this.org = null; } return this.org; },
   save(o) { try { localStorage.setItem(this.key, JSON.stringify(o)); } catch (e) { } },
-  o() { return Object.assign({}, BRAND_DEF, this.org || {}); },
+  o() { const o = Object.assign({}, BRAND_DEF, this.org || {}); if (!this.custom()) { o.color1 = BRAND_DEF.color1; o.color2 = BRAND_DEF.color2; } return o; },   // the standard look is navy; schools with their own colours keep them
   custom() { return !!(this.org && !this.org.default && this.org.slug !== 'hokie-power'); },
   name() { return this.o().app_name; },
   up() { return this.name().toUpperCase(); },
@@ -1996,6 +2272,7 @@ const Brand = {
     r.setProperty('--b1rgb', this.hex2rgb(b.color1).join(',')); r.setProperty('--b2rgb', this.hex2rgb(b.color2).join(',')); r.setProperty('--b1lrgb', this.hex2rgb(lit).join(','));
     const dk = this.mix(b.color1, '#000000', .32), dd = this.mix(b.color1, '#000000', .63), l2 = this.mix(b.color2, '#FFFFFF', .42), d2 = this.mix(b.color2, '#000000', .15);
     [['--b1d', dk], ['--b1dd', dd], ['--b2l', l2], ['--b2d', d2]].forEach(([k, v]) => { r.setProperty(k, v); r.setProperty(k + 'rgb', this.hex2rgb(v).join(',')); });
+    if (!this.custom()) [['--b1l', '#243650'], ['--b1d', '#0B1422'], ['--b1dd', '#070D17'], ['--b2l', '#C5D3E3'], ['--b2d', '#6F8BAA']].forEach(([k, v]) => { r.setProperty(k, v); r.setProperty(k + 'rgb', this.hex2rgb(v).join(',')); });   // the navy palette's own steel and glacier tints
     try { Object.assign(C, { blue: b.color1, red: b.color2, redLit: b.color2, lit }); } catch (e) { }   // C is defined later in the script
     const [w1, w2] = this.words();
     document.querySelectorAll('#boot .w1').forEach(e => e.textContent = w1);
@@ -2105,7 +2382,7 @@ const MOTIVATION = [
   'REST HARD. <em>RETURN STRONGER.</em>', 'OWN THE WARM-UP. <em>OWN THE GAME.</em>', 'THE FIELD REMEMBERS <em>WHO PUT IN THE WORK.</em>'
 ];
 const COMPLETE_LINES = ["THAT'S HOW CHAMPIONS RESPOND TO ADVERSITY.", 'ANOTHER YARD GAINED. THE FIELD IS SHRINKING.', 'THE WORK IS ON THE RECORD.', 'BANKED. RECOVER WELL, COME BACK READY.'];
-const WEEK_LABELS = ['THE FOUNDATION', 'BUILD THE BASE', 'ESTABLISH MOMENTUM', 'WIN THE BATTLE', 'EARN YOUR STRIPES', 'MIDSEASON CHECKPOINT', 'TURN UP THE PRESSURE', 'BUILD EXPLOSIVENESS', 'EXECUTE', 'PREPARE FOR THE TEST', 'GAME DAY'];
+const WEEK_LABELS = ['The foundation', 'Build the base', 'Establish momentum', 'Win the battle', 'Earn your stripes', 'Midseason checkpoint', 'Turn up the pressure', 'Build explosiveness', 'Execute', 'Prepare for the test', 'Game day'];
 const DEFAULT_SETTINGS = {
   name: 'Cliff', unit: 'lb', incLb: 5, incKg: 2.5, rounding: 'down', restDefault: 120, restAuto: true,
   sound: false, vibrate: true, motion: 'cinematic', reducedMotion: 'system', includeWarmups: false, theme: 'light'
@@ -3081,8 +3358,8 @@ const Celebrate = {
     const st = Stats.sessionStats(s), prs = State.results.filter(r => r.sid === s.id && r._pr), stats = Stats.get();
     const line = COMPLETE_LINES[(s.week + s.day) % COMPLETE_LINES.length];
     const finale = stats.testingDone && !State.meta.finaleSeen;
-    this.show(`<div class="c-kicker" data-stg>WEEK ${s.week} · DAY ${s.day} · ${esc(s.title.toUpperCase())}</div>
-      <h2 class="c-head" data-stg>MISSION COMPLETE, ${esc(State.settings.name.toUpperCase())}.</h2>
+    this.show(`<div class="c-kicker" data-stg>Week ${s.week} · Day ${s.day} · ${esc(s.title)}</div>
+      <h2 class="c-head" data-stg>Mission complete, ${esc(State.settings.name)}.</h2>
       <p class="display" style="font-size:20px;color:#B7BEC3" data-stg>“${line}”</p>
       <div class="yardbar" style="width:100%" data-stg><i style="width:${Math.round(stats.programPct * 100)}%"></i></div>
       <div class="label" data-stg>PROGRAM ${Math.round(stats.programPct * 100)}% COMPLETE</div>
@@ -3107,8 +3384,8 @@ const Celebrate = {
     const cur = Units.metricIn(info.metric, info.o), pv = prev ? Units.metricIn(info.metric, prev.o) : null;
     const diff = pv != null ? (cur - pv) : null, pct = pv ? diff / pv * 100 : null, u = Units.metricUnit(info.metric);
     FX.calm = .15;
-    this.show(`<div class="c-kicker" data-stg>${esc(Brand.words()[0])} MOMENT</div>
-      <h2 class="c-head red" data-stg>NEW PERSONAL RECORD</h2>
+    this.show(`<div class="c-kicker" data-stg>${esc(Brand.name())} moment</div>
+      <h2 class="c-head red" data-stg>New personal record</h2>
       <div class="label" data-stg>${esc(m.name.toUpperCase())} · TESTED</div>
       <div class="target" data-stg>${fmtNum(cur, m.kind === 'time' ? 2 : 1)}<small>${u.toUpperCase()}</small></div>
       ${pv != null ? `<div class="c-stats" data-stg><div><div class="label">Previous best</div><div class="sb-val">${fmtNum(pv, m.kind === 'time' ? 2 : 1)}<small> ${u}</small></div></div>
@@ -3392,7 +3669,7 @@ const Screens = {
       <div class="dash"><div class="col">
         <section class="hero panel tilt" data-stg data-tilt aria-label="Athlete status">
           <div class="jersey" aria-hidden="true">${pad2(wk)}</div>
-          <div class="label">${esc(State.settings.name.toUpperCase())} — ATHLETE PROFILE</div>
+          <div class="label">${esc(State.settings.name)} · Athlete profile</div>
           <div class="row" style="align-items:flex-end;margin:8px 0 14px">
             <div class="grow"><h1 class="h1">${st.preSeason ? 'Pre-season' : `Week ${wk}`}</h1><div class="display" style="font-size:18px;color:#B7BEC3;margin-top:4px">${weekLine}</div></div>
             <div class="ring" aria-label="Program ${Math.round(pct * 100)}% complete"><svg viewBox="0 0 86 86" width="86" height="86"><circle cx="43" cy="43" r="36" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="7"/><circle class="ring-arc" cx="43" cy="43" r="36" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-dasharray="${ringC.toFixed(2)}" stroke-dashoffset="${(ringC * (1 - pct)).toFixed(2)}" data-off="${(ringC * (1 - pct)).toFixed(2)}" data-len="${ringC.toFixed(2)}"/></svg><div class="pct"><span data-count="${Math.round(pct * 100)}" data-key="pct" data-suffix="%">${Math.round(pct * 100)}%</span></div></div>
@@ -3470,7 +3747,7 @@ const Screens = {
         ${isSel ? `<circle cx="${p.x}" cy="${p.y}" r="${isCur ? 29 : 25}" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="3 3"/>` : ''}
         <circle cx="${p.x}" cy="${p.y}" r="19" fill="${isDone ? '#FFFFFF' : isCur ? 'var(--b2)' : 'var(--b1)'}" stroke="${isDone ? '#fff' : '#B7BEC3'}" stroke-width="2"/>
         ${isDone ? `<path d="M${p.x - 7} ${p.y} l5 5 l9 -10" stroke="var(--b1)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` : `<text x="${p.x}" y="${p.y + 6}" text-anchor="middle" fill="#fff" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="900" font-size="18">${i + 1}</text>`}
-        <text class="ml" x="${lx}" y="${p.y - 3}" text-anchor="${anchor}" fill="${isSel ? '#fff' : '#B7BEC3'}" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="800" font-size="14" letter-spacing=".3" paint-order="stroke" stroke="var(--b1dd)" stroke-width="5">${WEEK_LABELS[i] || 'WEEK ' + (i + 1)}</text>
+        <text class="ml" x="${lx}" y="${p.y - 3}" text-anchor="${anchor}" fill="${isSel ? '#fff' : '#B7BEC3'}" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="800" font-size="14" letter-spacing=".3" paint-order="stroke" stroke="var(--b1dd)" stroke-width="5">${WEEK_LABELS[i] || 'Week ' + (i + 1)}</text>
         <text class="ml" x="${lx}" y="${p.y + 13}" text-anchor="${anchor}" fill="#B7BEC3" font-family="JetBrains Mono,monospace" font-size="9.5" letter-spacing="1" paint-order="stroke" stroke="var(--b1dd)" stroke-width="4">WK ${i + 1} · ${w.done}/${w.scheduled}${i === n - 1 ? ' · TESTING' : ''}</text></g>`;
     }).join('');
     return `<svg viewBox="0 0 ${W} ${H}" role="group" aria-label="Eleven-week journey map"><defs><pattern id="ez" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="rgba(var(--b2rgb),.28)"/><line x1="0" y1="0" x2="0" y2="14" stroke="rgba(255,255,255,.12)" stroke-width="5"/></pattern></defs>
@@ -4114,8 +4391,8 @@ const Finale = {
     const markers = st.weekly.map((w, i) => `<span title="Week ${i + 1}" style="flex:1;height:10px;border-radius:5px;background:${w.done === w.scheduled ? '#FFFFFF' : w.done ? 'var(--b1l)' : 'rgba(255,255,255,.1)'}" data-fm></span>`).join('');
     const prs = State.results.filter(r => r._pr);
     el.innerHTML = `<div class="fbg"></div><div class="fwrap">
-      <div class="c-kicker" data-fs>GAME DAY · WEEK ${State.program.weeks} · ${esc(State.settings.name.toUpperCase())}</div>
-      <h1 class="c-head" style="text-align:left"><span data-fs style="display:block">ELEVEN WEEKS.</span><span data-fs style="display:block;color:#B7BEC3">ONE MISSION.</span><span data-fs style="display:block">YOUR LEGACY.</span></h1>
+      <div class="c-kicker" data-fs>Game day · Week ${State.program.weeks} · ${esc(State.settings.name)}</div>
+      <h1 class="c-head" style="text-align:left"><span data-fs style="display:block">Eleven weeks.</span><span data-fs style="display:block;color:#B7BEC3">One mission.</span><span data-fs style="display:block">Your legacy.</span></h1>
       <div data-fs>${fieldStrip(st.programPct)}</div><div class="row" style="gap:4px" data-fs aria-label="Weeks completed">${markers}</div>
       <section class="panel" data-fs><div class="row"><div class="calc-out"><span data-fcount="${pct}">0</span><small>%</small></div><div class="grow"><div class="label">Program completion</div><p style="font-size:14px">${st.doneUnique} of ${st.total} workouts completed.${notDone ? ` ${notDone} not completed.` : ''}${untested ? ` ${untested} test${untested > 1 ? 's' : ''} not recorded.` : ''}</p></div></div></section>
       <section class="panel" data-fs><div class="label" style="margin-bottom:4px">Baseline → final</div>${rows.map(r => { const mx = Math.max(r.bv || 0, r.fv || 0) || 1; return `<div class="cmp-row"><b>${r.m.name}</b><span class="num">${r.fv != null ? `${r.bv != null ? fmtNum(r.bv, r.dec) + ' → ' : ''}<b>${fmtNum(r.fv, r.dec)} ${r.u}</b>${r.ch != null ? ` <span class="badge ${r.good ? 'ok' : ''}">${r.ch > 0 ? '+' : ''}${fmtNum(r.ch, r.dec)}</span>` : ''}` : '<span class="badge warn">Not tested</span>'}</span>
@@ -4629,7 +4906,7 @@ const Quotes = {
     if (Motion.off) return;
     const q = MOTIVATION[(((s.week * 4 + s.day + this.today()) % MOTIVATION.length) + MOTIVATION.length) % MOTIVATION.length];
     const el = document.createElement('div'); el.id = 'qflash'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Mission start');
-    el.innerHTML = `<div class="qbeam" aria-hidden="true"></div><div class="qk">MISSION START · WEEK ${s.week} · DAY ${s.day}</div><p class="qtext">${this.words(q)}</p><div class="qline"><i></i></div><div class="qtap">TAP TO START LOGGING</div>`;
+    el.innerHTML = `<div class="qbeam" aria-hidden="true"></div><div class="qk">Mission start · Week ${s.week} · Day ${s.day}</div><p class="qtext">${this.words(q)}</p><div class="qline"><i></i></div><div class="qtap">Tap to start logging</div>`;
     document.body.appendChild(el);
     const dur = Motion.modeName() === 'cinematic' ? 2600 : 1600;
     this.reveal($('.qtext', el));
@@ -6172,15 +6449,15 @@ const SocialFX = {
     if (!busy) return setTimeout(fn, 400); if (n < 120) setTimeout(() => this.when(fn, n + 1), 1000);
   },
   levelUp(x, fresh) {
-    Celebrate.show(`<div class="c-kicker" data-stg>LEVEL UP</div><div class="slvl-big" data-stg><span>LVL</span><b>${x.level}</b></div>
-      <h2 class="c-head" data-stg>YOU'RE LEVEL ${x.level}.</h2><p class="display" style="font-size:18px;color:#B7BEC3" data-stg>${fmtNum(x.xp, 0)} XP earned from real training.</p>
+    Celebrate.show(`<div class="c-kicker" data-stg>Level up</div><div class="slvl-big" data-stg><span>LVL</span><b>${x.level}</b></div>
+      <h2 class="c-head" data-stg>You're level ${x.level}.</h2><p class="display" style="font-size:18px;color:#B7BEC3" data-stg>${fmtNum(x.xp, 0)} XP earned from real training.</p>
       ${fresh.length ? `<div class="row wrap" style="justify-content:center" data-stg>${fresh.map(b => `<span class="badge red">${icon('award')} ${esc(b.name)}</span>`).join('')}</div>` : ''}
       <div class="stack" style="width:100%" data-stg><button class="btn big red block" type="button" data-act="cel-close">Keep going</button></div>`, { beams: 2, burst: 50, colors: ['var(--b2)', '#FFFFFF', 'var(--b1)'] });
     Haptics.beep([523, 659, 784, 1046], .1);
   },
   badges(list) {
-    Celebrate.show(`<div class="c-kicker" data-stg>BADGE UNLOCKED</div><div class="sbadges-pop" data-stg>${list.map(b => `<div class="smedal on">${icon(SOC_BADGE_ICON[b.key] || 'award')}</div>`).join('')}</div>
-      <h2 class="c-head" data-stg>${esc(list.map(b => b.name.toUpperCase()).join(' · '))}</h2><p class="display" style="font-size:18px;color:#B7BEC3" data-stg>${esc(list[0].desc)}</p>
+    Celebrate.show(`<div class="c-kicker" data-stg>Badge unlocked</div><div class="sbadges-pop" data-stg>${list.map(b => `<div class="smedal on">${icon(SOC_BADGE_ICON[b.key] || 'award')}</div>`).join('')}</div>
+      <h2 class="c-head" data-stg>${esc(list.map(b => b.name).join(' · '))}</h2><p class="display" style="font-size:18px;color:#B7BEC3" data-stg>${esc(list[0].desc)}</p>
       <div class="stack" style="width:100%" data-stg><button class="btn big red block" type="button" data-act="soc-post-badge" data-k="${esc(list[0].key)}">${icon('share-2')} Share to Social</button><button class="btn block" type="button" data-act="cel-close">Later</button></div>`, { beams: 1, burst: 36, colors: ['var(--b2)', '#FFFFFF'] });
     Haptics.beep([784, 1046], .1);
   },
@@ -6188,7 +6465,7 @@ const SocialFX = {
     const b = c.board || {}, sq = c.kind === 'squad', top = sq ? (b.squads || []).filter(s => s.rank === 1 && s.score > 0) : (b.people || []).filter(p => p.rank === 1 && p.score > 0);
     const names = top.map(t => sq ? t.squad.name : t.user.name), coll = c.goal === 'collective';
     const head = coll ? (b.collective_done ? 'GOAL REACHED' : 'SO CLOSE') : names.length ? (names.length > 1 ? 'IT\'S A TIE' : 'THE WINNER IS') : 'NO WINNER';
-    Celebrate.show(`<div class="c-kicker" data-stg>${esc(c.title.toUpperCase())} · FINAL</div><div class="swin-drum" data-stg>${head}</div>
+    Celebrate.show(`<div class="c-kicker" data-stg>${esc(c.title)} · Final</div><div class="swin-drum" data-stg>${head}</div>
       <h2 class="c-head red swin-name" data-stg>${esc(coll ? `${fmtNum(b.total, 0)} / ${fmtNum(c.target, 0)} ${SOC_METRIC[c.metric].unit}` : names.join(' & ') || '—')}</h2>
       <p class="display" style="font-size:18px;color:#B7BEC3" data-stg>Everyone who showed up made it count. Results are saved in each athlete's history.</p>
       <div class="stack" style="width:100%" data-stg><button class="btn big red block" type="button" data-act="cel-close">See the results</button></div>`, { beams: 2, burst: 70, colors: ['var(--b2)', '#FFFFFF', 'var(--b1)'] });
@@ -9774,7 +10051,7 @@ const Seasons = {
   /* Home: season card; "Season 2" on the athlete card */
   const hm = Screens.home; Screens.home = function () {
     let h = hm.call(Screens); const st = Stats.get(), card = Seasons.homeCard(st);
-    if (Seasons.cur() > 1) h = h.replace('— ATHLETE PROFILE</div>', `— SEASON ${Seasons.cur()}</div>`);
+    if (Seasons.cur() > 1) h = h.replace(' · Athlete profile</div>', ` · Season ${Seasons.cur()}</div>`);
     h = h.replace('<h1 class="h1">Pre-season</h1>', '<h1 class="h1 pre-h1">Pre-season</h1>');   // the long word ran into the progress ring
     if (card) { const i = h.indexOf('<div class="dash">'); if (i > 0) h = h.slice(0, i) + card + h.slice(i); }
     return h;
@@ -10987,149 +11264,24 @@ Object.assign(Actions, {
   }
 });
 
+/* ============ v6 DESIGN · CALM MOTION ============
+   The premium look keeps motion short and purposeful: no page-change wipes with giant words, no letter-by-letter
+   titles, no slot-machine digits, no tilting cards and no tap sparks. Count-ups, progress bars, sheets and the
+   stadium intro / load-up keep their animation. Respects reduced motion as before. */
+Kinetic.wipe = () => { };
+Kinetic.burst = () => { };
+Kinetic.letters = () => 0;
+Kinetic.roll = () => { };
+if (typeof Tilt !== 'undefined') Tilt.bind = () => { };
+/* while a sheet is open, the screen behind it is hidden from assistive tech (it is visually covered too) */
+(() => {
+  const hide = on => ['app', 'nav', 'resumeBar'].forEach(id => { const e = document.getElementById(id); if (e) { if (on) e.setAttribute('aria-hidden', 'true'); else e.removeAttribute('aria-hidden'); } });
+  const op = Sheet.open.bind(Sheet); Sheet.open = function (o) { const r = op(o); hide(true); return r; };
+  const cl = Sheet.close.bind(Sheet); Sheet.close = async function (res) { try { return await cl(res); } finally { if ($('#sheet-root').hidden) hide(false); } };
+})();
+
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
 </script>
-
-<style id="design-v5">
-/* =====================================================================
-   v5 — THREE DESIGN RULES (layered depth · one signal colour · extreme scale)
-   1. Depth: big type in the back, subject in the middle, buttons on top, overlapping.
-   2. Orange means "tap this". Nothing else in the app UI is orange; the rest is ink & paper
-      (charcoal, maroon surfaces, white/off-white, grey).
-   3. One huge thing per screen, everything else small. No middle sizes.
-   Cinematic scenes (boot, intro, gate, locker, celebrations) keep their own look.
-   ===================================================================== */
-:root{--tap:var(--b2);--tap-press:var(--b2d);--tap-ink:#1A1D20;--ink:#1A1D20}
-
-/* ---------- RULE 2 · one signal colour ---------- */
-/* everything tappable that starts an action = orange */
-:where(#app,#sheet-root,#rest,#locker) .btn.primary,
-:where(#app,#sheet-root,#rest,#locker) .btn.red,
-body.theme-light :where(#app,#sheet-root,#rest,#nav) .btn.primary,
-body.theme-light :where(#app,#sheet-root,#rest,#nav) .btn.red{
-  background:var(--tap)!important;border-color:var(--tap)!important;color:var(--tap-ink)!important;
-  box-shadow:0 12px 26px -14px rgba(var(--b2rgb),.95),inset 0 1px 0 rgba(255,255,255,.3)!important}
-:where(#app,#sheet-root,#rest,#locker) :is(.btn.primary,.btn.red):active{background:var(--tap-press)!important}
-:where(#app,#sheet-root,#rest,#locker) .btn[disabled]{background:#B7BEC3!important;border-color:#B7BEC3!important;color:#75787B!important;box-shadow:none!important}
-.set.next .chk{background:var(--tap)!important;border-color:var(--tap)!important}
-.set.next .chk path{stroke:var(--tap-ink)!important}
-body.theme-light :where(#app) .set.next{border-color:rgba(26,29,32,.35)!important;box-shadow:0 12px 26px -18px rgba(26,29,32,.45)!important}
-
-/* selected states are ink, not signal */
-body.theme-light :where(#app,#sheet-root) .chip[aria-pressed="true"],
-body.theme-light :where(#app,#sheet-root) .chip.on,
-body.theme-light :where(#app,#sheet-root,#locker) .seg button[aria-pressed="true"],
-body.theme-light :where(#app) .ex-tab.cur{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
-body.theme-light #nav .ind::before{background:var(--ink)!important;box-shadow:0 8px 20px -8px rgba(26,29,32,.7)!important}
-
-/* status / decoration that used orange → ink, maroon or grey */
-.st.in_progress,body.theme-light :where(#app,#sheet-root) .st.in_progress{background:var(--ink)!important;color:#fff!important}
-body:not(.theme-light) .st.in_progress{background:#fff!important;color:var(--ink)!important}
-.badge.red,body.theme-light :where(#app,#sheet-root,#rest,#nav) .badge.red{background:transparent!important;color:inherit!important;border-color:currentColor!important}
-.resume-banner,body.theme-light :where(#app) .resume-banner{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
-.resume-banner .label,body.theme-light :where(#app) .resume-banner .label{color:rgba(255,255,255,.7)!important}
-.resume-banner .btn:not(.red){background:#fff!important;color:var(--ink)!important;border-color:#fff!important}
-.mission .mhead{background:none}
-body.theme-light :where(#app) .mico{background:rgba(26,29,32,.06)!important;color:var(--ink)!important}
-.milestone{background:rgba(var(--b1rgb),.07)!important;border-color:rgba(var(--b1rgb),.25)!important}
-.milestone svg,.milestone i[data-lucide]{color:var(--b1)!important}
-.ticker .dot{background:#fff!important;box-shadow:none!important}
-.ticker .track em{color:#B7BEC3!important}
-.quote-hero .qmark{color:rgba(255,255,255,.35)!important}
-.qtext em{background:linear-gradient(transparent 62%,rgba(255,255,255,.22) 62%,rgba(255,255,255,.22) 92%,transparent 92%)!important}
-.yardbar i,.qbar.award-bar i,body.theme-light :where(#app,#sheet-root,#rest,#nav) .yardbar i{background:linear-gradient(90deg,var(--b1d),var(--b1))!important}
-.wb.cur .col{box-shadow:0 0 0 2px var(--ink)!important}
-.wb.cur span{color:inherit!important;font-weight:800}
-.timeline>div.mid{background:var(--ink)!important;color:#fff!important}
-.awards .tbl tr.got td,body.theme-light :where(#app) .awards .tbl tr.got td{background:rgba(var(--b1rgb),.08)!important}
-.awards .award-medal.on{background:var(--g-maroon)!important}
-body.theme-light :where(#app) .wp.in_progress .ic{background:var(--ink)!important;color:#fff!important}
-body.theme-light :where(#app) .wp.in_progress .ic,body.theme-light :where(#app) .wp.due{border-color:var(--ink)!important}
-.nbox.on{border-color:var(--ink)!important;box-shadow:0 0 0 1px var(--ink)!important}
-.goal-on{box-shadow:0 0 0 2px var(--b1)!important}
-.vdot{background:var(--ink)!important;color:#fff!important}
-#toast.bad{background:var(--ink)!important}
-.tbl tr.over td,body.theme-light :where(#app,#sheet-root,#rest,#nav) .tbl tr.over td{color:var(--b1)!important;font-weight:700}
-body.theme-light :where(#app,#sheet-root,#rest,#nav) .err-msg{color:#C62828!important}
-/* in-app SVG accents (journey map current week, PR points) → maroon */
-.journey .cur-ring{stroke:var(--ink)}
-.chart .pt [fill="var(--b2)"],.chart [stroke="var(--b2)"]{fill:var(--b1);stroke:var(--b1)}
-
-/* ---------- RULE 3 · extreme size contrast ---------- */
-/* page titles: huge */
-#view .topbar>h1.h2{font-size:clamp(52px,16vw,84px);line-height:.82;letter-spacing:-.01em;font-weight:900;margin-top:6px}
-#view .topbar>h1.h2.grow{font-size:clamp(40px,12.5vw,68px)}
-/* section titles: tiny labels */
-#view .panel h2.h3,#view .panel .panel-head .h3,#view .panel summary.h3,#view .panel > .h3{
-  font-family:var(--f-mono)!important;font-size:11px!important;font-weight:600!important;letter-spacing:.16em!important;line-height:1.3!important}
-#view .panel .spread>.h3,#view .lift-card .h3{font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.16em}
-/* secondary display headings (mission titles, week cards) drop to small */
-#view .panel h2.h1[style]{font-size:22px!important;line-height:1!important;margin-top:4px!important}
-#view .huge-head h2.h1[style]{font-size:clamp(52px,16vw,84px)!important;line-height:.85!important}
-/* home hero: the week is the one huge thing */
-#view .hero .h1{font-size:clamp(76px,25vw,132px);line-height:.78;letter-spacing:-.015em}
-#view .hero .display[style*="font-size:18px"]{font-family:var(--f-mono)!important;font-size:11px!important;letter-spacing:.14em;text-transform:uppercase}
-#view .hero .ring{width:64px;height:64px}
-#view .hero .ring svg{width:64px;height:64px}
-#view .hero .ring .pct{font-size:16px}
-#view .scoreboard .sb-val,#view .scoreboard .sb-val[style]{font-size:15px!important;line-height:1.1!important;font-weight:800}
-#view .scoreboard .sb-val small{font-size:11px}
-/* metric tiles: small and calm */
-#view .metric .v{font-size:22px}
-#view .metric .v small{font-size:11px}
-#view .metric .yard{display:none}
-/* workout card: the target weight is the hero, the name is a label */
-#view .excard .ex-name{font-size:20px;line-height:1;margin:6px 0 4px;letter-spacing:.02em}
-#view .excard .target,#view .excard .target[style]{font-size:clamp(96px,32vw,150px)!important;line-height:.78}
-#view .excard .presc{font-size:13px;font-family:var(--f-mono);letter-spacing:.14em}
-#view .motto{font-size:clamp(20px,6vw,24px)}
-#view .calc-out{font-size:clamp(96px,32vw,150px)}
-
-/* ---------- RULE 1 · three planes with overlap ---------- */
-/* back plane: giant week number behind the headline */
-#view .hero{isolation:isolate;padding-top:22px}
-#view .hero .jersey{z-index:-1;right:auto;left:-10px;top:auto;bottom:38px;font-size:clamp(220px,72vw,340px);line-height:.72;
-  color:rgba(255,255,255,.13);letter-spacing:-.04em}
-body:not(.theme-light) #view .hero .jersey{color:rgba(183,190,195,.10)}
-/* middle plane: headline sits over the number, ring nests into it */
-#view .hero > .row{position:relative;z-index:1}
-#view .hero .h1{text-shadow:0 12px 30px rgba(0,0,0,.25)}
-/* front plane: scoreboard overlaps the hero's bottom edge like a button bar */
-#view .hero .scoreboard{position:relative;z-index:2;margin:0 -6px -6px;box-shadow:0 18px 30px -18px rgba(0,0,0,.6);border-radius:14px}
-body.theme-light #view .hero .scoreboard{background:rgba(255,255,255,.25)}
-body.theme-light #view .hero .scoreboard>div{background:#fff;color:var(--ink)}
-body.theme-light #view .hero .scoreboard .label{color:#75787B}
-/* mission card: back word + action floating over the edge */
-#view .mission{overflow:visible;isolation:isolate}
-#view .mission .mhead{position:relative;overflow:hidden;border-radius:16px 16px 0 0}
-#view .mission .mhead::after{content:"GO";position:absolute;right:-8px;bottom:-34px;z-index:-1;font-family:var(--f-display);font-weight:900;
-  font-size:150px;line-height:1;color:currentColor;opacity:.07;pointer-events:none}
-#view .mission .mbody .btn.big{position:relative;z-index:2;box-shadow:0 18px 30px -12px rgba(var(--b2rgb),.9)!important}
-/* workout card: target weight floats over a giant set number */
-#view .excard{position:relative;isolation:isolate;overflow:hidden}
-#view .excard::before{content:attr(data-plane);position:absolute;right:-10px;top:-30px;z-index:-1;font-family:var(--f-display);font-weight:900;
-  font-size:230px;line-height:1;color:rgba(255,255,255,.08);pointer-events:none}
-#view .excard .target{position:relative;text-shadow:0 14px 34px rgba(0,0,0,.35)}
-/* page titles sit slightly behind the first panel (overlap) */
-#view .screen>.topbar>h1.h2:not(.grow){position:relative;z-index:0}
-#view .screen>.topbar+*{position:relative;z-index:1}
-@media (min-width:1024px){
-  #view .hero .h1{font-size:clamp(96px,8vw,140px)}
-  #view .hero .jersey{font-size:300px}
-  #view .topbar>h1.h2{font-size:84px}
-}
-
-/* v5 fixes: season card calmer, field strip without orange, safe title widths, CTA text fits */
-#view .season-pct{font-size:30px!important;line-height:.9}
-#view .season-pct small{font-size:.5em}
-.sfield{background:linear-gradient(90deg,#1A1D20 0 7%,transparent 7% 93%,#1A1D20 93%),var(--g-maroon)!important}
-.sfield .ball ellipse{fill:#FFFFFF!important}
-.sfield .ball path{stroke:var(--b1)!important}
-#view .topbar>h1.h2{font-size:clamp(40px,12vw,84px)!important;max-width:100%}
-#view .topbar>h1.h2.grow{font-size:clamp(36px,11vw,68px)!important}
-:where(#app) .btn.big{white-space:normal;line-height:1;padding-block:10px;font-size:clamp(17px,5.4vw,22px)}
-</style>
-
 </body>
 </html>
