@@ -2330,7 +2330,14 @@ html:root body.theme-light #qflash .qline i{background:var(--p567C8D)}
 html:root body.theme-light .qtext em{background:linear-gradient(transparent 64%,rgba(var(--p567C8D-rgb),.25) 64%,rgba(var(--p567C8D-rgb),.25) 92%,transparent 92%)}
 html:root body.theme-light #celebrate [style*="#B7BEC3"]{color:var(--p4F6272)!important}
 html:root body.theme-light #qflash .qtext :is(.w,em){color:var(--p2F4156)}
-html:root body.theme-light #qflash .qtext em,html:root body.theme-light .qtext em{color:var(--p2F4156);background:linear-gradient(transparent 60%,rgba(var(--pC8D9E6-rgb),.95) 60%,rgba(var(--pC8D9E6-rgb),.95) 94%,transparent 94%)}
+html:root body.theme-light #qflash .qtext em{color:var(--p2F4156);background:linear-gradient(transparent 60%,rgba(var(--pC8D9E6-rgb),.95) 60%,rgba(var(--pC8D9E6-rgb),.95) 94%,transparent 94%)}
+
+/* ---------- the football field is grass green everywhere (every school, light and dark) ---------- */
+html:root body .journey{background:repeating-linear-gradient(180deg,rgba(255,255,255,.045) 0 56px,transparent 56px 112px),linear-gradient(180deg,#2F6E3D 0%,#2A6337 50%,#2F6E3D 100%);border-color:rgba(22,58,32,.35)}
+html:root body .sfield{background:linear-gradient(90deg,var(--b2) 0 7%,transparent 7% 93%,var(--b1) 93%),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 8.6%,transparent 8.6% 17.2%),linear-gradient(180deg,#2F6E3D,#295F36)}
+html:root body .sfield .bubble{color:#1F4D2A}
+/* the home quote card: highlighted words stay white on an accent band */
+html:root body .quote-hero .qtext em{color:#FFFFFF;background:linear-gradient(transparent 62%,rgba(var(--p567C8D-rgb),.9) 62%,rgba(var(--p567C8D-rgb),.9) 92%,transparent 92%)}
 
 </style>
 </head>
@@ -2428,7 +2435,7 @@ html:root body.theme-light #qflash .qtext em,html:root body.theme-light .qtext e
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 27 · 22:50';
+const BUILD_ID = 'Oct 28 · 00:03';
 const PALETTE = {"anchors":{"P":"2F4156","A":"567C8D","S":"C8D9E6","N":"F5EFEB"},"P":["2F4156","4F6272","1F2B3A","3F5262","243344","3C5269","3A5266","263546","5E6672","4A5D6C","475A6A","36495F","18222E"],"A":["567C8D","4A6B7C","3F5F6E"],"S":["C8D9E6","DDE5EC","B9C9D6","EEF3F7","E6EEF4","DCE5EF","F5F7FA"],"N":["F5EFEB","E6D9CF","EFE6DF","D9C8BB","ECE6E1","F0E7E0","EADFD6","C9B5A6","FCFAF9","FAF7F5","F8F4F1","F7F2EF","F2ECE8","FFFDFB","E2D2C6","F2EAE4","78604E","967660"],"text":["2F4156","4F6272","3F5262","5E6672","3F5F6E","4A6B7C"]};
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
@@ -2653,7 +2660,7 @@ const MOTIVATION = [
   'REST HARD. <em>RETURN STRONGER.</em>', 'OWN THE WARM-UP. <em>OWN THE GAME.</em>', 'THE FIELD REMEMBERS <em>WHO PUT IN THE WORK.</em>'
 ];
 const COMPLETE_LINES = ["THAT'S HOW CHAMPIONS RESPOND TO ADVERSITY.", 'ANOTHER YARD GAINED. THE FIELD IS SHRINKING.', 'THE WORK IS ON THE RECORD.', 'BANKED. RECOVER WELL, COME BACK READY.'];
-const WEEK_LABELS = ['The foundation', 'Build the base', 'Establish momentum', 'Win the battle', 'Earn your stripes', 'Midseason checkpoint', 'Turn up the pressure', 'Build explosiveness', 'Execute', 'Prepare for the test', 'Game day'];
+const WEEK_LABELS = ['The Foundation', 'Build the Base', 'Finish the Quarter', 'Win the Battle', '2 Minute Drill', 'Half Time', 'Start of the 3rd Quarter', 'Finish the 3rd Quarter', 'Win the 4th', 'Redzone Offense', 'VICTORY'];
 const DEFAULT_SETTINGS = {
   name: 'Cliff', unit: 'lb', incLb: 5, incKg: 2.5, rounding: 'down', restDefault: 120, restAuto: true,
   sound: false, vibrate: true, motion: 'cinematic', reducedMotion: 'system', includeWarmups: false, theme: 'light'
@@ -3784,7 +3791,7 @@ function lastFor(s, x, t) {
 function prepCard() {
   const P = State.program.prep || []; if (!P.length) return '';
   const done = P.filter(w => Stats.statusOf(w.id) === 'completed').length;
-  return `<button class="panel prep-card" type="button" data-act="go-prep" data-stg><span class="lib-ico">${icon('layers')}</span><span class="grow" style="text-align:left"><b style="display:block">Pre-season prep · 6 weeks</b><span class="muted" style="font-size:13px">Mon · Wed · Fri build-up before Week 1 · ${done}/${P.length} done</span></span>${icon('chevron-right')}</button>`;
+  return `<button class="panel prep-card" type="button" data-act="go-prep" data-stg><span class="lib-ico">${icon('layers')}</span><span class="grow" style="text-align:left"><b style="display:block">Pre-Season Prep - 6 Weeks</b><span class="muted" style="font-size:13px">Mon · Wed · Fri build-up before Week 1 · ${done}/${P.length} done</span></span>${icon('chevron-right')}</button>`;
 }
 /* ============ 15. RENDERING — screens ============ */
 const numVal = v => v == null || !isFinite(v) ? '' : String(Math.round(v * 100) / 100);
@@ -4018,8 +4025,8 @@ const Screens = {
         ${isSel ? `<circle cx="${p.x}" cy="${p.y}" r="${isCur ? 29 : 25}" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="3 3"/>` : ''}
         <circle cx="${p.x}" cy="${p.y}" r="19" fill="${isDone ? '#FFFFFF' : isCur ? 'var(--b2)' : 'var(--b1)'}" stroke="${isDone ? '#fff' : '#B7BEC3'}" stroke-width="2"/>
         ${isDone ? `<path d="M${p.x - 7} ${p.y} l5 5 l9 -10" stroke="var(--b1)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` : `<text x="${p.x}" y="${p.y + 6}" text-anchor="middle" fill="#fff" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="900" font-size="18">${i + 1}</text>`}
-        <text class="ml" x="${lx}" y="${p.y - 3}" text-anchor="${anchor}" fill="${isSel ? '#fff' : '#B7BEC3'}" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="800" font-size="14" letter-spacing=".3" paint-order="stroke" stroke="var(--b1dd)" stroke-width="5">${WEEK_LABELS[i] || 'Week ' + (i + 1)}</text>
-        <text class="ml" x="${lx}" y="${p.y + 13}" text-anchor="${anchor}" fill="#B7BEC3" font-family="JetBrains Mono,monospace" font-size="9.5" letter-spacing="1" paint-order="stroke" stroke="var(--b1dd)" stroke-width="4">WK ${i + 1} · ${w.done}/${w.scheduled}${i === n - 1 ? ' · TESTING' : ''}</text></g>`;
+        <text class="ml" x="${lx}" y="${p.y - 3}" text-anchor="${anchor}" fill="#FFFFFF" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="800" font-size="14" letter-spacing=".3" paint-order="stroke" stroke="#163A20" stroke-width="5">${WEEK_LABELS[i] || 'Week ' + (i + 1)}</text>
+        <text class="ml" x="${lx}" y="${p.y + 13}" text-anchor="${anchor}" fill="#E3EEE5" font-family="JetBrains Mono,monospace" font-size="9.5" letter-spacing="1" paint-order="stroke" stroke="#163A20" stroke-width="4">WK ${i + 1} · ${w.done}/${w.scheduled}${i === n - 1 ? ' · TESTING' : ''}</text></g>`;
     }).join('');
     return `<svg viewBox="0 0 ${W} ${H}" role="group" aria-label="Eleven-week journey map"><defs><pattern id="ez" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="rgba(var(--b2rgb),.28)"/><line x1="0" y1="0" x2="0" y2="14" stroke="rgba(255,255,255,.12)" stroke-width="5"/></pattern></defs>
       ${field}<path d="${pathOf(pts)}" fill="none" stroke="rgba(183,190,195,.25)" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
@@ -4038,7 +4045,7 @@ const Screens = {
     const chips = `<div class="chips" data-stg><button class="chip" type="button" data-act="ui" data-k="planCycle" data-v="all" aria-pressed="${cf === 'all'}">All weeks</button>${Object.keys(cycles).map(k => `<button class="chip" type="button" data-act="ui" data-k="planCycle" data-v="${k}" aria-pressed="${cf == k}">${esc(cycles[k].name)} · ${esc(cycles[k].phase)}</button>`).join('')}</div>`;
     const weeks = Array.from({ length: State.program.weeks }, (_, i) => i + 1).filter(n => cf === 'all' || Program.cycleOf(n).id == cf);
     const prepW = (cf === 'all' || cf == 0) && (State.program.prep || []).length ? Array.from({ length: PREP_WEEKS }, (_, i) => i + 1 - PREP_WEEKS) : [];
-    const prepHtml = prepW.length ? `<section class="panel flat" data-stg><div class="label">${icon('layers')} Pre-season prep · 6 weeks</div><p class="muted" style="font-size:14px;margin-top:4px">Monday, Wednesday and Friday build-up before Week 1. Optional — it never counts against your program completion or streak.</p></section>` + prepW.map(n => { const ws = Program.prepWeek(n), dn = ws.filter(w => Stats.statusOf(w.id) === 'completed').length; return `<section class="panel" data-stg><div class="spread" style="margin-bottom:8px"><h2 class="h3">${wkLabel(n)} · Pre-season</h2><span class="label">${dn}/${ws.length}</span></div>
+    const prepHtml = prepW.length ? `<section class="panel flat" data-stg><div class="label">${icon('layers')} Pre-Season Prep - 6 Weeks</div><p class="muted" style="font-size:14px;margin-top:4px">Monday, Wednesday and Friday build-up before Week 1. Optional — it never counts against your program completion or streak.</p></section>` + prepW.map(n => { const ws = Program.prepWeek(n), dn = ws.filter(w => Stats.statusOf(w.id) === 'completed').length; return `<section class="panel" data-stg><div class="spread" style="margin-bottom:8px"><h2 class="h3">${wkLabel(n)} · Pre-season</h2><span class="label">${dn}/${ws.length}</span></div>
       <div class="stack" style="gap:8px">${ws.map(w => `<button class="wk-item" type="button" data-act="preview" data-id="${w.id}"><span class="wk-day" style="font-size:14px">${DAYN(w.day)}</span><span class="grow"><b style="display:block">${esc(w.title)}</b><span class="muted" style="font-size:12.5px">${w.exercises.map(e => esc(Program.exDef(e.ex).name)).slice(0, 3).join(' · ')}${w.exercises.length > 3 ? ' …' : ''}</span></span>${stBadge(Stats.statusOf(w.id))}</button>`).join('')}</div></section>`; }).join('') : '';
     return chips + prepHtml + weeks.map(n => `<section class="panel" data-stg><div class="spread" style="margin-bottom:8px"><h2 class="h3">Week ${n} · ${WEEK_LABELS[n - 1]}</h2><span class="label">${st.weekly[n - 1].done}/${st.weekly[n - 1].scheduled}</span></div>
       <div class="stack" style="gap:8px">${Program.week(n).map(w => `<button class="wk-item" type="button" data-act="preview" data-id="${w.id}"><span class="wk-day" style="font-size:14px">${DAYN(w.day)}</span><span class="grow"><b style="display:block">${esc(w.title)}</b><span class="muted" style="font-size:12.5px">${w.exercises.map(e => esc(Program.exDef(e.ex).name)).slice(0, 3).join(' · ')}${w.exercises.length > 3 ? ' …' : ''}</span></span>${stBadge(st.status[w.id])}</button>`).join('')}</div></section>`).join('');
@@ -5201,8 +5208,8 @@ const Season = {
     const ws = Program.week(wk), stIcon = { completed: 'check', in_progress: 'play', missed: 'x', skipped: 'skip-forward', due: 'flag', upcoming: 'circle' };
     const pills = ws.map(w => { const s = st.status[w.id]; return `<button class="wp ${s}" type="button" data-act="preview" data-id="${w.id}" aria-label="Day ${w.day}, ${esc(w.title)}, ${ST_LABEL[s]}"><span class="ic">${s === 'upcoming' ? '' : icon(stIcon[s] || 'circle')}</span><b>${DAYN(w.day)}</b><small>${esc(w.title)}</small></button>`; }).join('');
     const weekDone = ws.filter(w => st.status[w.id] === 'completed').length;
-    const ms = [[.25, 'First Quarter'], [.5, 'Halftime'], [.75, 'Fourth Quarter'], [1, 'Full Season']].find(([t]) => pct < t);
-    const msText = ms ? `<b>${Math.max(1, Math.ceil(ms[0] * total) - done)}</b> more workout${Math.ceil(ms[0] * total) - done === 1 ? '' : 's'} to <b>${ms[1]}</b> (${ms[0] * 100}%)` : '<b>Every scheduled workout is complete.</b>';
+    const ms = [[.25, 'the end of the first quarter'], [.5, 'half time'], [.75, 'the end of the third quarter'], [1, 'the final whistle']].find(([t]) => pct < t);
+    const msText = ms ? `<b>${Math.max(1, Math.ceil(ms[0] * total) - done)}</b> more workout${Math.ceil(ms[0] * total) - done === 1 ? '' : 's'} until <b>${ms[1]}</b> (${ms[0] * 100}%)` : '<b>Every scheduled workout is complete.</b>';
     return `<section class="panel season" data-stg aria-label="Season progress">
       <div class="spread"><span class="label">Season progress</span><span class="badge blue">${st.preSeason ? 'Pre-season' : `Week ${wk} of ${P.weeks}`}</span></div>
       <div class="season-top"><div class="season-pct"><span data-count="${Math.round(fillPct)}" data-key="${opts.key || 'season'}">${Math.round(fillPct)}</span><small>%</small></div>
@@ -11579,6 +11586,53 @@ const Ambient = {
   }
 };
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => Ambient.init()); else Ambient.init();
+
+/* ============ TITLE CASE for names on screen (Cliff: "Each Major Word Should Start Capitalized") ============
+   Titles, chips, tabs, filters and small labels get capitals on every major word: "Squat & Lunge", "Pull-Up Bar",
+   "Pre-Season Prep". Small words (of, the, to, and…) stay lower case unless they start the title, and units after a
+   number stay as they are (225 lb, 3 sets). Sentences and questions, typed text and quotes are left alone. */
+const TitleCase = {
+  minor: new Set('a an and as at but by for from in into nor of on onto or per the to vs via with'.split(' ')),
+  unit: new Set('lb lbs kg g kcal min mins sec s h m km mi cm ft in x reps rep sets set days day wk wks workouts workout'.split(' ')),
+  sel: '.chip, .iron-pills > *, .seg button, .h1, .h2, .h3, .ex-name, .prep-card b, .label, .lib-chip, .tool span, .badge, .st, .wp small, #nav button span, .ex-tab',
+  skip: 'input, textarea, select, [contenteditable], .qtext, .quote-hero .qtext, #qflash, .post, .msg, .bubble, .c-quote, [data-raw], .comment',
+  cap(w) { return w.charAt(0).toUpperCase() + w.slice(1); },
+  word(w, first, afterNum) {
+    if (/[.@/#]/.test(w)) return w;
+    if (/^[A-Za-z]+(-[A-Za-z]+)+$/.test(w) && !/^[A-Z]+(-[A-Z]+)+$/.test(w)) return w.split('-').map(p => /^[a-z]/.test(p) ? this.cap(p) : p).join('-');   // pull-up → Pull-Up
+    if (!/^[a-z]/.test(w)) return w;                                  // already capitalised, a number or a handle
+    const bare = w.replace(/[^a-z'-]/gi, '').toLowerCase();
+    if (afterNum && this.unit.has(bare)) return w;                                        // 225 lb, 3 sets
+    if (!first && this.minor.has(bare)) return w;
+    return w.split('-').map(p => p ? this.cap(p) : p).join('-');                          // pull-up → Pull-Up
+  },
+  text(t, start = true) {
+    if (!t || !/[a-z]/.test(t) || t.length > 64 || /[?!]\s*$|\.\s*$/.test(t.trim())) return t;   // leave sentences and questions
+    let first = start, prevNum = false;
+    return t.split(/(\s+)/).map(tok => {
+      if (!tok.trim()) return tok;
+      const out = this.word(tok, first, prevNum);
+      first = /[·:—–|(]$/.test(tok) || tok === '-' ; prevNum = /^\d/.test(tok);
+      return out;
+    }).join('');
+  },
+  el(e) {
+    if (e.closest(this.skip)) return;
+    const full = e.textContent.trim(); if (full.length > 64 || /[?!.]$/.test(full)) return;
+    const w = document.createTreeWalker(e, NodeFilter.SHOW_TEXT); let n;
+    let first = true;
+    while ((n = w.nextNode())) { if (n.parentElement && n.parentElement.closest('svg')) continue; const v = n.nodeValue;
+      if (!v.trim()) continue; const nv = this.text(v, first); if (nv !== v) n.nodeValue = nv; first = false; }
+  },
+  run(root) { try { if (root.matches && root.matches(this.sel)) this.el(root); root.querySelectorAll && root.querySelectorAll(this.sel).forEach(e => this.el(e)); } catch (e) { } },
+  init() {
+    this.run(document.body); let q = new Set(), t = 0;
+    new MutationObserver(ms => { ms.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) q.add(n); else if (n.nodeType === 3 && n.parentElement) q.add(n.parentElement); }));
+      if (!t) t = requestAnimationFrame(() => { t = 0; const s = q; q = new Set(); s.forEach(n => n.isConnected && this.run(n.closest ? (n.closest(this.sel) || n) : n)); }); })
+      .observe(document.body, { childList: true, subtree: true });
+  }
+};
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => TitleCase.init()); else TitleCase.init();
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
