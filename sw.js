@@ -1,9 +1,9 @@
-/* Hokie Power — offline cache and phone notifications (Release 4).
+/* RepIQ — offline cache and phone notifications (Release 4).
    • The page, scripts, fonts and icons open instantly from the saved copy and are refreshed in the background,
      so a new upload shows the next time the app is opened (and everything works offline).
    • Account data (supabase.co) is never cached.
    • Push: shows the reminder; tapping it opens or focuses the app on the right screen. */
-const V = 'hp-20261023-0057';
+const V = 'hp-20261028-2114';
 const CORE = ['./', './index.html', './config.js', './manifest.webmanifest', './icon-192.png', './icon-180.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => Promise.all(CORE.map(u => c.add(new Request(u, { cache: 'reload' })).catch(() => null)))));
@@ -31,7 +31,7 @@ self.addEventListener('fetch', e => {
 });
 self.addEventListener('push', e => {
   let d = {}; try { d = e.data ? e.data.json() : {}; } catch (x) { d = { body: e.data ? e.data.text() : '' }; }
-  e.waitUntil(self.registration.showNotification(d.title || 'Hokie Power', { body: d.body || '', tag: d.tag || undefined, renotify: !!d.tag, icon: 'icon-192.png', badge: 'icon-192.png', data: { url: d.url || './' } }));
+  e.waitUntil(self.registration.showNotification(d.title || 'RepIQ', { body: d.body || '', tag: d.tag || undefined, renotify: !!d.tag, icon: 'icon-192.png', badge: 'icon-192.png', data: { url: d.url || './' } }));
 });
 self.addEventListener('notificationclick', e => {
   e.notification.close();
