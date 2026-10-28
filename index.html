@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Cliff Hokie Power</title>
+<title>RepIQ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=Big+Shoulders+Display:wght@600;700;800;900&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -2350,7 +2350,7 @@ html:root body .quote-hero .qtext em{color:#FFFFFF;background:linear-gradient(tr
   <div class="b-stripes"><i></i><i></i><i></i><i></i><i></i></div>
   <div class="b-ring"></div><div class="b-ring r2"></div>
   <svg class="b-ball" viewBox="0 0 120 74"><ellipse cx="60" cy="37" rx="56" ry="33" fill="var(--b1)" stroke="var(--b2)" stroke-width="5"/><path d="M22 37h76" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M42 28v18M51 28v18M60 28v18M69 28v18M78 28v18" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M10 37c8-14 20-22 30-25M110 37c-8-14-20-22-30-25" stroke="var(--b2)" stroke-width="3" fill="none"/></svg>
-  <div class="b-word"><span class="w1">HOKIE</span><span class="w2">POWER</span></div>
+  <div class="b-word"><span class="w1">REP</span><span class="w2">IQ</span></div>
   <div class="b-sub">CLIFF · FLIGHT 2005 TO GLORY</div>
   <div class="b-load"><span class="b-bar"><i></i></span><b id="bootPct">00</b></div>
   <div class="b-flash"></div>
@@ -2392,7 +2392,7 @@ html:root body .quote-hero .qtext em{color:#FFFFFF;background:linear-gradient(tr
   <div class="ui">
     <span class="k reveal">BLACKSBURG · SUMMER 2005 · GATE 2005</span>
     <h1 class="t-cliff reveal">CLIFF</h1>
-    <div class="t-sub reveal">HOKIE POWER<br><span>FLIGHT 2005 TO GLORY</span></div>
+    <div class="t-sub reveal">RepIQ<br><span>FLIGHT 2005 TO GLORY</span></div>
     <p class="t-tag reveal">ELEVEN WEEKS. ONE MISSION. HIT THE GROUND RUNNING.</p>
     <button class="btn big red reveal" id="enterStadium" type="button" style="width:min(100%,360px)">Enter the stadium</button>
   </div>
@@ -2435,7 +2435,7 @@ html:root body .quote-hero .qtext em{color:#FFFFFF;background:linear-gradient(tr
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 28 · 00:03';
+const BUILD_ID = 'Oct 28 · 21:14';
 const PALETTE = {"anchors":{"P":"2F4156","A":"567C8D","S":"C8D9E6","N":"F5EFEB"},"P":["2F4156","4F6272","1F2B3A","3F5262","243344","3C5269","3A5266","263546","5E6672","4A5D6C","475A6A","36495F","18222E"],"A":["567C8D","4A6B7C","3F5F6E"],"S":["C8D9E6","DDE5EC","B9C9D6","EEF3F7","E6EEF4","DCE5EF","F5F7FA"],"N":["F5EFEB","E6D9CF","EFE6DF","D9C8BB","ECE6E1","F0E7E0","EADFD6","C9B5A6","FCFAF9","FAF7F5","F8F4F1","F7F2EF","F2ECE8","FFFDFB","E2D2C6","F2EAE4","78604E","967660"],"text":["2F4156","4F6272","3F5262","5E6672","3F5F6E","4A6B7C"]};
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
@@ -2471,7 +2471,7 @@ const Splash = (() => {
    and again after log-in (the athlete's own school).
    Features: every feature is open today. When paid levels arrive, the database turns its "paywall" on and
    each feature checks the athlete's level here (FEATURE_TIERS) and in social.sql (sx_need) — nothing else changes. */
-const BRAND_DEF = { slug: 'hokie-power', name: 'Hokie Power', app_name: 'Hokie Power', tagline: '', color1: '#2F4156', color2: '#C8D9E6', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
+const BRAND_DEF = { slug: 'hokie-power', name: 'RepIQ', app_name: 'RepIQ', tagline: '', color1: '#2F4156', color2: '#C8D9E6', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
 const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold', food_ai: 'gold', ask_ai: 'gold' };
 const TIER_NAME = { free: 'Basic', silver: 'Silver', gold: 'Gold' };
 const Brand = {
@@ -2483,9 +2483,10 @@ const Brand = {
   /* the school's colours dress the whole app for its coaches and accepted athletes (my_org → member), and on the school's own sign-in link */
   look() { return !!(this.org && (this.org.member || this.org.link)); },
   custom() { return !!(this.org && !this.org.default && this.org.slug !== 'hokie-power'); },
-  name() { return this.o().app_name; },
-  up() { return this.name().toUpperCase(); },
-  words() { const w = this.up().split(/\s+/); return w.length > 1 ? [w.slice(0, -1).join(' '), w[w.length - 1]] : [w[0], '']; },
+  /* the app is RepIQ; a school's members (and its own sign-in link) see the school's app name instead */
+  name() { return this.look() ? (this.o().app_name || BRAND_DEF.app_name) : BRAND_DEF.app_name; },
+  up() { const n = this.name(); return /^[A-Z][a-z]+[A-Z]{2,}$/.test(n) ? n : n.toUpperCase(); },   // a mixed-case wordmark like RepIQ keeps its casing
+  words() { const n = this.up(), m = n.match(/^([A-Z][a-z]+)([A-Z]{2,})$/); if (m) return [m[1].toUpperCase(), m[2]]; const w = n.split(/\s+/); return w.length > 1 ? [w.slice(0, -1).join(' '), w[w.length - 1]] : [w[0], '']; },
   end() { return this.custom() ? (this.o().tagline || this.words()[0]).toUpperCase() : 'HOKIES'; },
   sub() { return this.custom() ? (this.o().tagline || this.o().name).toUpperCase() : 'FLIGHT 2005 TO GLORY'; },
   bench() { return this.o().bench_name || 'Iron Hokie'; },
@@ -2519,7 +2520,7 @@ const Brand = {
     document.querySelectorAll('#boot .w2').forEach(e => e.textContent = w2);
     document.querySelectorAll('.t-sub').forEach(e => { if (e.firstChild && e.firstChild.nodeType === 3) e.firstChild.textContent = this.up(); });
     document.querySelectorAll('#boot .b-sub').forEach(e => { if (this.custom()) e.textContent = this.sub(); });
-    if (this.custom()) document.title = this.name(); else if (!/Hokie Power/.test(document.title)) document.title = 'Cliff Hokie Power';
+    document.title = this.name();
     if (document.body) { document.body.classList.toggle('school', this.custom()); document.body.classList.toggle('school-look', look); }
   },
   /* ---------- re-tinting the palette ----------
@@ -4433,7 +4434,7 @@ const Screens = {
   },
   about() {
     return `<div class="screen">${backBar('About')}
-      <section class="panel stack" data-stg><h2 class="h3">Cliff: Hokie Power</h2><p>A fan-inspired personal training tracker. It is not an official product of, or affiliated with, Virginia Tech or its athletics department. No logos are used.</p>
+      <section class="panel stack" data-stg><h2 class="h3">RepIQ</h2><p>A fan-inspired personal training tracker. It is not an official product of, or affiliated with, Virginia Tech or its athletics department. No logos are used.</p>
         <p><b>Curriculum.</b> ${State.program.source === 'vt2005' ? `Transcribed from the Virginia Tech Summer 2005 strength & conditioning book: the <b>${esc(TRACKS[State.program.track])}</b> track, 11 weeks (May 23 – August 5, 2005 in the original), Cycle I and II, Monday–Friday lifting and conditioning sheets, the 38 Hokie ab exercises, the foot-quickness menus, the Metabolic Speed Pac, the lifting goals and the 16 × 110 conditioning test. Where the book gives a range (for example "3–4 sets") the app uses the top of it. Exercises the book does not describe are marked that way.` : 'Using an imported program: ' + esc(State.program.name) + '.'}</p>
         <p><b>Safety.</b> This is a tracker, not individual coaching or medical advice. Loads are never increased automatically. Stop with sharp pain; skipping or modifying is always allowed.</p>
         <p><b>Data.</b> ${Cloud.on && Cloud.profile ? 'Saved on this phone and backed up to your account, so it follows you to any phone you log in on.' : 'Everything stays in this browser on this device. Export a backup regularly.'}</p></section></div>`;
@@ -4607,7 +4608,7 @@ const Backup = {
     const errs = [], warn = [];
     if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return { errs: ['The file is not a JSON object.'] };
     const programOnly = !obj.app && obj.program;
-    if (!programOnly && obj.app !== APP_ID) return { errs: ['This is not a Cliff: Hokie Power backup.'] };
+    if (!programOnly && obj.app !== APP_ID) return { errs: ['This is not a RepIQ backup.'] };
     if (obj.schema && obj.schema > SCHEMA_VERSION) return { errs: [`This backup comes from a newer version (schema ${obj.schema}). Update the app first.`] };
     let b = obj;
     if (!programOnly && obj.schema < SCHEMA_VERSION) { try { b = runMigrations(JSON.parse(JSON.stringify(obj)), obj.schema); warn.push(`Upgraded from schema ${obj.schema}.`); } catch (e) { return { errs: ['Could not upgrade this backup: ' + e.message] }; } }
@@ -6826,7 +6827,7 @@ const Composer = {
       <div class="field"><label for="cmpBody">${st.kind === 'progress' ? 'Caption & notes' : st.kind === 'text' ? 'What\'s on your mind?' : 'Add a caption (optional)'}</label><textarea class="input" id="cmpBody" rows="${st.kind === 'text' ? 4 : 2}" maxlength="2000" placeholder="${st.kind === 'progress' ? 'How training felt, what changed, what\'s next…' : 'Training thoughts, a milestone, a shout-out…'}">${esc(st.body)}</textarea></div>
       <div class="field"><span class="label">Who can see this</span><div class="chips" role="radiogroup">${audOpts.map(k => `<button type="button" class="chip" role="radio" data-cmp-aud="${k}" aria-checked="${st.audience === k}" aria-pressed="${st.audience === k}">${icon(SOC_AUD[k][0])} ${SOC_AUD[k][1]}</button>`).join('')}</div>
         ${st.audience === 'squad' ? `<select class="input" id="cmpSquad" aria-label="Squad">${sq.map(s => `<option value="${s.id}" ${st.squad === s.id ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}</select>` : ''}
-        <small class="muted">${st.audience === 'private' ? 'Only you. You can share it later.' : st.audience === 'public' ? 'Anyone at ' + esc(Brand.custom() ? Brand.o().name : 'Hokie Power') + ' (followers only, if your account is private).' : st.audience === 'squad' ? 'Only members of this squad.' : 'Only people you approved or who follow you.'}${st.kind === 'progress' && st.audience !== 'private' ? ' <b>Progress photos are shared only because you chose this.</b>' : ''}</small></div>
+        <small class="muted">${st.audience === 'private' ? 'Only you. You can share it later.' : st.audience === 'public' ? 'Anyone at ' + esc(Brand.custom() ? Brand.o().name : Brand.name()) + ' (followers only, if your account is private).' : st.audience === 'squad' ? 'Only members of this squad.' : 'Only people you approved or who follow you.'}${st.kind === 'progress' && st.audience !== 'private' ? ' <b>Progress photos are shared only because you chose this.</b>' : ''}</small></div>
       <p class="err-msg" id="cmpErr" role="alert"></p>
       <button type="button" class="btn big primary block" id="cmpGo">${st.kind === 'progress' && st.audience === 'private' ? 'Save to my journal' : 'Post'}</button>`;
     UI.icons(box); Social.hydrate(box);
@@ -10647,7 +10648,7 @@ const Push = {
   },
   iosSheet() {
     Sheet.open({ title: 'Add to your Home Screen first', html: `<p>On iPhone, reminders only work in the installed app (iOS 16.4 or later).</p>
-      <ol class="nlist"><li>Tap the <b>Share</b> button in Safari (the square with an arrow).</li><li>Choose <b>Add to Home Screen</b>, then <b>Add</b>.</li><li>Open Hokie Power from the new icon and turn reminders on in Settings.</li></ol>
+      <ol class="nlist"><li>Tap the <b>Share</b> button in Safari (the square with an arrow).</li><li>Choose <b>Add to Home Screen</b>, then <b>Add</b>.</li><li>Open ${esc(Brand.name())} from the new icon and turn reminders on in Settings.</li></ol>
       <button class="btn big primary block" type="button" data-sheet-close>Got it</button>` });
   },
   /* ---------- Settings ---------- */
@@ -10674,7 +10675,7 @@ const Push = {
     if (!this.hosted() || this.standalone()) return '';
     try { if (localStorage.getItem('bbp.installSeen')) return ''; } catch (e) { }
     if (!this.ios() && !this.deferred) return '';
-    return `<section class="panel install-card" data-stg>${icon('smartphone')}<div class="grow"><b>Put Hokie Power on your Home Screen</b><small class="muted">${this.ios() ? 'Opens like an app, works without signal and can send reminders. Tap Share, then Add to Home Screen.' : 'Opens like an app and works without signal.'}</small>
+    return `<section class="panel install-card" data-stg>${icon('smartphone')}<div class="grow"><b>Put ${esc(Brand.name())} on your Home Screen</b><small class="muted">${this.ios() ? 'Opens like an app, works without signal and can send reminders. Tap Share, then Add to Home Screen.' : 'Opens like an app and works without signal.'}</small>
       <div class="row" style="gap:8px;margin-top:8px">${this.ios() ? '' : `<button class="btn sm primary" type="button" data-act="push-install">Install</button>`}<button class="btn sm ghost" type="button" data-act="push-install-x">Not now</button></div></div></section>`;
   }
 };
