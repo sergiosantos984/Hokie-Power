@@ -2435,7 +2435,7 @@ html:root body .quote-hero .qtext em{color:#FFFFFF;background:linear-gradient(tr
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 28 · 21:14';
+const BUILD_ID = 'Oct 28 · 22:01';
 const PALETTE = {"anchors":{"P":"2F4156","A":"567C8D","S":"C8D9E6","N":"F5EFEB"},"P":["2F4156","4F6272","1F2B3A","3F5262","243344","3C5269","3A5266","263546","5E6672","4A5D6C","475A6A","36495F","18222E"],"A":["567C8D","4A6B7C","3F5F6E"],"S":["C8D9E6","DDE5EC","B9C9D6","EEF3F7","E6EEF4","DCE5EF","F5F7FA"],"N":["F5EFEB","E6D9CF","EFE6DF","D9C8BB","ECE6E1","F0E7E0","EADFD6","C9B5A6","FCFAF9","FAF7F5","F8F4F1","F7F2EF","F2ECE8","FFFDFB","E2D2C6","F2EAE4","78604E","967660"],"text":["2F4156","4F6272","3F5262","5E6672","3F5F6E","4A6B7C"]};
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
@@ -2471,7 +2471,7 @@ const Splash = (() => {
    and again after log-in (the athlete's own school).
    Features: every feature is open today. When paid levels arrive, the database turns its "paywall" on and
    each feature checks the athlete's level here (FEATURE_TIERS) and in social.sql (sx_need) — nothing else changes. */
-const BRAND_DEF = { slug: 'hokie-power', name: 'RepIQ', app_name: 'RepIQ', tagline: '', color1: '#2F4156', color2: '#C8D9E6', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
+const BRAND_DEF = { slug: 'repiq', name: 'RepIQ', app_name: 'RepIQ', tagline: '', color1: '#2F4156', color2: '#C8D9E6', logo: null, bench_name: 'Iron Hokie', levels: {}, settings: {}, default: true };
 const FEATURE_TIERS = { food_guide: 'silver', food_log: 'gold', nutrition_plan: 'gold', plan_editor: 'gold', food_ai: 'gold', ask_ai: 'gold' };
 const TIER_NAME = { free: 'Basic', silver: 'Silver', gold: 'Gold' };
 const Brand = {
@@ -2482,7 +2482,7 @@ const Brand = {
   o() { const o = Object.assign({}, BRAND_DEF, this.org || {}); if (!this.look()) { o.color1 = BRAND_DEF.color1; o.color2 = BRAND_DEF.color2; } return o; },   // the standard beige & navy look until the person belongs to a school
   /* the school's colours dress the whole app for its coaches and accepted athletes (my_org → member), and on the school's own sign-in link */
   look() { return !!(this.org && (this.org.member || this.org.link)); },
-  custom() { return !!(this.org && !this.org.default && this.org.slug !== 'hokie-power'); },
+  custom() { return !!(this.org && !this.org.default); },   // a real school (Hokie Power included); "repiq" means no school
   /* the app is RepIQ; a school's members (and its own sign-in link) see the school's app name instead */
   name() { return this.look() ? (this.o().app_name || BRAND_DEF.app_name) : BRAND_DEF.app_name; },
   up() { const n = this.name(); return /^[A-Z][a-z]+[A-Z]{2,}$/.test(n) ? n : n.toUpperCase(); },   // a mixed-case wordmark like RepIQ keeps its casing
@@ -2499,8 +2499,11 @@ const Brand = {
   },
   /* where this page was opened: ?school=slug (remembered), the config file, or the web address */
   slug() {
-    try { const q = new URLSearchParams(location.search).get('school'); if (q) { localStorage.setItem('bbp.school', q.toLowerCase()); return q.toLowerCase(); } } catch (e) { }
-    try { const s = localStorage.getItem('bbp.school'); if (s) return s; } catch (e) { }
+    /* only a school's own link (?school=…, remembered for when the app is opened from the Home Screen) names a school.
+       Older versions remembered everyone's school here ("bbp.school") and sent it again at the next sign-up: no longer read. */
+    try { localStorage.removeItem('bbp.school'); } catch (e) { }
+    try { const q = new URLSearchParams(location.search).get('school'); if (q) { localStorage.setItem('bbp.link', q.toLowerCase()); return q.toLowerCase(); } } catch (e) { }
+    try { const s = localStorage.getItem('bbp.link'); if (s) return s; } catch (e) { }
     const cfg = (window.HOKIE_CLOUD || {}); return cfg.school ? String(cfg.school).toLowerCase() : null;
   },
   hex2rgb(h) { const n = parseInt(String(h).slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; },
@@ -2558,14 +2561,14 @@ const Brand = {
     try { if (document.body && document.body.classList.contains('theme-light')) document.documentElement.style.background = map ? map[PALETTE.anchors.N] : '#F5EFEB'; } catch (e) { }
   },
   /* signing out: the next person on this phone starts from the standard look */
-  forget() { if (this.org) { delete this.org.member; delete this.org.link; this.save(this.org); } try { localStorage.removeItem('bbp.paint'); localStorage.removeItem('bbp.school'); } catch (e) { } },
+  forget() { if (this.org) { delete this.org.member; delete this.org.link; this.save(this.org); } try { localStorage.removeItem('bbp.paint'); localStorage.removeItem('bbp.link'); } catch (e) { } },
   logo(s = 30) { const b = this.o(); return b.logo ? `<img class="school-logo" src="${b.logo.replace(/"/g, '')}" width="${s}" height="${s}" alt="">` : null; },
   /* before log-in: the look of the school whose address this is */
   async pre(sb) {
     const slug = this.slug();
     try {
       const { data } = await sb.rpc('org_public', { p_slug: slug, p_host: location.hostname || null });
-      if (data) { const q = new URLSearchParams(location.search).get('school'); data.link = !!(q || !slug || slug !== 'hokie-power'); if (this.org && this.org.id === data.id && this.org.member) data.member = true; }
+      if (data) { const q = new URLSearchParams(location.search).get('school'); data.link = !data.default && !!(q || !slug || slug !== 'repiq'); if (this.org && this.org.id === data.id && this.org.member) data.member = true; }
       if (data && (slug || !data.default || (this.org && this.org.id !== data.id))) this.apply(data);
       else if (!data && this.org && !slug) { this.org = null; try { localStorage.removeItem(this.key); } catch (e) { } this.apply(); }
     } catch (e) { }
@@ -2575,8 +2578,8 @@ const Brand = {
     try {
       const { data, error } = await sb.rpc('my_org'); if (error || !data) return null;
       this.me = data; const pub = Object.assign({}, data);
-      pub.member = 'member' in data ? !!data.member : (data.role === 'coach' || !data.default);   // older databases: coaches and anyone placed in a school ['role', 'head', 'platform_admin', 'tier', 'paywall', 'features', 'owner', 'domains', 'org_tier'].forEach(k => delete pub[k]);
-      this.apply(pub); try { if (pub.member) localStorage.setItem('bbp.school', data.slug); } catch (e) { }
+      pub.member = 'member' in data ? !!data.member : !data.default;   // in a real school ['role', 'head', 'platform_admin', 'tier', 'paywall', 'features', 'owner', 'domains', 'org_tier'].forEach(k => delete pub[k]);
+      this.apply(pub);
       return data;
     } catch (e) { return null; }
   },
