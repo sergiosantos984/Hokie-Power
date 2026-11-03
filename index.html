@@ -2339,6 +2339,255 @@ html:root body .sfield .bubble{color:#1F4D2A}
 /* the home quote card: highlighted words stay white on an accent band */
 html:root body .quote-hero .qtext em{color:#FFFFFF;background:linear-gradient(transparent 62%,rgba(var(--p567C8D-rgb),.9) 62%,rgba(var(--p567C8D-rgb),.9) 92%,transparent 92%)}
 
+/* =====================================================================
+   COACH HQ — the coach's workspace. Built from the same palette (school colours re-tint it).
+   ===================================================================== */
+/* the bar / sidebar while HQ is open */
+html:root body.hq-mode #nav .hq-exit{display:none}
+html:root body.hq-mode #nav .hq-brand{display:none}
+@media (min-width:1024px){
+  html:root body.hq-mode #nav .bar{grid-template-rows:auto repeat(5,52px) 1fr!important}
+  html:root body.hq-mode #nav .hq-brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px}
+  html:root body.hq-mode #nav .hq-brand b{display:block;font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--p2F4156)}
+  html:root body.hq-mode #nav .hq-brand small{display:block;font-size:12px;color:var(--p4F6272);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  html:root body.hq-mode #nav .hq-brand-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--p2F4156);color:#FFFFFF;flex:none}
+  html:root body.hq-mode #nav .hq-exit{display:flex;align-self:end;margin-top:auto;font-size:14px;color:var(--p4F6272);border-top:1px solid var(--pE6D9CF);border-radius:0;padding-top:14px;min-height:52px}
+  html:root body.hq-mode .hq-exit-top{display:none}
+  html:root body.hq-mode #view{max-width:1240px}
+}
+html:root body:not(.theme-light).hq-mode #nav .hq-brand b{color:var(--pF5EFEB)}
+html:root body:not(.theme-light).hq-mode #nav .hq-brand small{color:var(--pB9C9D6)}
+
+/* frame */
+.hq{gap:18px}
+.hq-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 16px;flex-wrap:wrap}
+.hq-title{min-width:0}
+.hq-title .h1{margin:6px 0 0;font-size:clamp(28px,6vw,34px)}
+.hq-sub{font-size:14px;margin-top:4px}
+.hq-team{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--pE6D9CF);background:rgba(255,255,255,.7);color:var(--p2F4156);font:600 13px/1 var(--f-body);cursor:pointer;max-width:100%}
+.hq-team span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hq-team svg{width:15px;height:15px;flex:none}
+.hq-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hq-back{align-self:flex-start;margin-bottom:-6px}
+.hq-note{font-size:12.5px;margin-top:8px}
+body:not(.theme-light) .hq-team{background:rgba(255,255,255,.06);border-color:rgba(var(--pC8D9E6-rgb),.16);color:var(--pF5EFEB)}
+
+/* headline numbers */
+.hq-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:640px){.hq-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1180px){.hq-kpis{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.hq-kpi{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 14px 13px;border-radius:18px;background:rgba(var(--pFFFDFB-rgb),.66);border:1px solid rgba(255,255,255,.85);box-shadow:0 1px 2px rgba(var(--p78604E-rgb),.05),0 10px 26px -12px rgba(var(--p78604E-rgb),.16);min-width:0}
+.hq-kpi .label{font-size:12px;padding-right:34px}
+.hq-kpi-v{font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--p2F4156);font-variant-numeric:tabular-nums}
+.hq-kpi-v small{font-size:14px;font-weight:600;color:var(--p4F6272);margin-left:1px}
+.hq-kpi small.muted{font-size:11.5px;line-height:1.3}
+.hq-kpi-ic{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:rgba(var(--p567C8D-rgb),.12);color:var(--p3F5F6E)}
+.hq-kpi-ic svg{width:16px;height:16px}
+.hq-kpi.good .hq-kpi-ic{background:rgba(47,125,91,.13);color:#24644A}
+.hq-kpi.bad .hq-kpi-ic{background:rgba(194,65,58,.12);color:#A12F29}
+body:not(.theme-light) .hq-kpi{background:rgba(var(--p2F4156-rgb),.62);border-color:rgba(var(--pC8D9E6-rgb),.1);box-shadow:none}
+body:not(.theme-light) .hq-kpi-v{color:var(--pF5EFEB)}
+body:not(.theme-light) .hq-kpi-v small{color:var(--pB9C9D6)}
+body:not(.theme-light) .hq-kpi-ic{background:rgba(var(--pC8D9E6-rgb),.12);color:var(--pC8D9E6)}
+
+/* grids and cards */
+.hq-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:900px){.hq-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hq-grid-fb{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}}
+.hq-card{padding:18px}
+.hq-card>.spread{margin-bottom:12px;gap:10px;flex-wrap:wrap}
+.hq-card .h3{display:flex;align-items:center;gap:8px}
+
+/* bar chart (HTML, so labels stay crisp at any width) */
+.hqb{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:6px;align-items:stretch}
+.hqb-col{display:grid;grid-template-rows:18px 1fr 18px;gap:4px;min-width:0;text-align:center}
+.hqb-col .v{font:700 12px/18px var(--f-body);color:var(--p2F4156);font-variant-numeric:tabular-nums}
+.hqb-col .b{position:relative;border-radius:10px;background:rgba(var(--p2F4156-rgb),.06);overflow:hidden}
+.hqb-col .b i{position:absolute;left:0;right:0;bottom:0;border-radius:10px;background:var(--p567C8D);transition:height var(--t-std)}
+.hqb-col.last .b i{background:var(--p2F4156)}
+.hqb-col .l{font:500 11px/18px var(--f-body);color:var(--p4F6272);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body:not(.theme-light) .hqb-col .v{color:var(--pF5EFEB)}
+body:not(.theme-light) .hqb-col .b{background:rgba(var(--pC8D9E6-rgb),.08)}
+body:not(.theme-light) .hqb-col .b i{background:var(--pC8D9E6)}
+body:not(.theme-light) .hqb-col.last .b i{background:var(--pF5EFEB)}
+body:not(.theme-light) .hqb-col .l{color:var(--pB9C9D6)}
+/* trend line */
+.hql{position:relative;height:140px;padding:16px 44px 16px 0}
+.hql svg{width:100%;height:100%;display:block;overflow:visible}
+.hql .ln{fill:none;stroke:var(--p567C8D);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.hql .area{fill:rgba(var(--p567C8D-rgb),.12)}
+.hql-hi,.hql-lo{position:absolute;left:0;font-size:11px;color:var(--p4F6272)}
+.hql-hi{top:0}.hql-lo{bottom:0}
+.hql-last{position:absolute;right:0;top:50%;transform:translateY(-50%);font:700 15px/1 var(--f-body);color:var(--p2F4156);background:rgba(255,255,255,.75);border-radius:8px;padding:4px 6px}
+.hq-nochart{display:grid;place-items:center;min-height:110px;padding:14px;text-align:center;font-size:13px;color:var(--p4F6272);border:1px dashed var(--pE6D9CF);border-radius:14px}
+body:not(.theme-light) .hql .ln{stroke:var(--pC8D9E6)}
+body:not(.theme-light) .hql .area{fill:rgba(var(--pC8D9E6-rgb),.1)}
+body:not(.theme-light) .hql-last{color:var(--pF5EFEB);background:rgba(255,255,255,.08)}
+body:not(.theme-light) .hql-hi,body:not(.theme-light) .hql-lo,body:not(.theme-light) .hq-nochart{color:var(--pB9C9D6)}
+.hq-ring .trk{fill:none;stroke:rgba(var(--p2F4156-rgb),.1);stroke-width:7}
+.hq-ring .arc{fill:none;stroke:var(--p567C8D);stroke-width:7;stroke-linecap:round}
+.hq-ring text{font:700 14px var(--f-body);fill:var(--p2F4156)}
+
+/* status pills and the attention list */
+.att-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap;line-height:1.5}
+.att-chip svg{width:13px;height:13px}
+.t-bad.att-chip,.att-row.t-bad small{color:#A12F29}.t-bad.att-chip{background:rgba(194,65,58,.1)}
+.t-warn.att-chip,.att-row.t-warn small{color:#7A4F0E}.t-warn.att-chip{background:rgba(183,121,31,.14)}
+.t-info.att-chip,.att-row.t-info small{color:var(--p3F5F6E)}.t-info.att-chip{background:rgba(var(--p567C8D-rgb),.12)}
+.t-ok.att-chip{color:#24644A;background:rgba(47,125,91,.12)}
+body:not(.theme-light) .t-bad.att-chip,body:not(.theme-light) .att-row.t-bad small{color:#F4ABA5}
+body:not(.theme-light) .t-warn.att-chip,body:not(.theme-light) .att-row.t-warn small{color:#F2C46D}
+body:not(.theme-light) .t-info.att-chip,body:not(.theme-light) .att-row.t-info small{color:var(--pC8D9E6)}
+body:not(.theme-light) .t-ok.att-chip{color:#8FD3B0}
+.att-list{display:flex;flex-direction:column}
+.att-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--pE6D9CF)}
+.att-row:last-child{border-bottom:0}
+.att-main{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:none;border:0;padding:0;text-align:left;color:inherit;cursor:pointer;min-width:0;min-height:44px;justify-content:center}
+.att-main b{font-size:14.5px}
+.att-main small{display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:500}
+.att-main small svg{width:13px;height:13px;flex:none}
+.hq-allgood{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 10px;text-align:center}
+.hq-allgood svg{width:30px;height:30px;color:#2F7D5B}
+.hq-lead{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.hq-lead li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--pE6D9CF)}
+.hq-lead li:last-child{border-bottom:0}
+.hq-lead .rk{width:22px;font-weight:700;color:var(--p4F6272);text-align:center}
+.hq-lead .linkish{text-align:left;min-height:36px}
+.hq-lead b{font-variant-numeric:tabular-nums}
+body:not(.theme-light) .att-row,body:not(.theme-light) .hq-lead li{border-color:rgba(var(--pC8D9E6-rgb),.1)}
+
+/* athletes table: a grid on wide screens, cards on phones */
+.hq-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.input-ic{position:relative;min-width:200px}
+.input-ic>i,.input-ic>svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--p4F6272);pointer-events:none}
+.input-ic .input{padding-left:38px;width:100%}
+.hq-sort{display:flex;align-items:center;gap:8px;font-size:13px}
+.hq-sort .input{min-height:40px;padding:0 10px;width:auto}
+.hq-table{display:flex;flex-direction:column;margin-top:4px}
+.hq-row{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name flag" "comp comp" "nums nums";gap:8px 10px;align-items:center;width:100%;padding:12px 6px;background:none;border:0;border-bottom:1px solid var(--pE6D9CF);color:inherit;text-align:left;cursor:pointer;border-radius:12px;font:inherit}
+.hq-row:hover{background:rgba(255,255,255,.45)}
+.hq-row>svg,.hq-row>i:last-child{display:none}
+.hq-row .c-name{grid-area:name;display:flex;align-items:center;gap:10px;min-width:0}
+.hq-row .c-name>span:not(.sav){display:flex;flex-direction:column;min-width:0}
+.hq-row .c-name b{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hq-row .c-name small{font-size:12.5px}
+.hq-row .c-comp{grid-area:comp;display:flex;align-items:center;gap:8px}
+.hq-row .c-flag{grid-area:flag;justify-self:end;min-width:0;overflow:hidden;max-width:100%}
+.hq-row .att-chip{display:inline-block;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+.hq-row .att-chip svg{vertical-align:-2px;margin-right:4px}
+.hq-row .c-flag .att-chip{max-width:44vw;overflow:hidden;text-overflow:ellipsis}
+.hq-row .c-num,.hq-row .c-lvl{display:none}
+.cbar{flex:1;height:8px;border-radius:999px;background:rgba(var(--p2F4156-rgb),.08);overflow:hidden;min-width:60px}
+.cbar i{display:block;height:100%;border-radius:999px;background:var(--p567C8D)}
+.cbar i.good{background:#2F7D5B}.cbar i.bad{background:#C2413A}
+.c-comp b{font-variant-numeric:tabular-nums;font-size:13px;min-width:38px;text-align:right}
+.hq-row-h{display:none}
+b.bad{color:#A12F29}
+@media (min-width:900px){
+  .hq-row{grid-template-columns:minmax(180px,2.1fr) minmax(120px,1.3fr) .7fr .8fr .6fr minmax(90px,1fr) minmax(150px,1.6fr) 18px;grid-template-areas:none;gap:12px;padding:10px 8px}
+  .hq-row>*{grid-area:auto!important}
+  .hq-row .c-num,.hq-row .c-lvl{display:flex;flex-direction:column;font-size:13.5px}
+  .hq-row .c-num b{font-size:15px;font-variant-numeric:tabular-nums}
+  .hq-row .c-num small{font-size:11px}
+  .hq-row .c-flag{justify-self:start}
+  .hq-row .c-flag .att-chip{max-width:100%}
+  .hq-row>svg,.hq-row>i:last-child{display:block;color:var(--p4F6272)}
+  .hq-row-h{display:grid;cursor:default;font-size:11.5px;font-weight:600;color:var(--p4F6272);text-transform:none;padding-top:4px;padding-bottom:8px}
+  .hq-row-h:hover{background:none}
+}
+body:not(.theme-light) .hq-row{border-color:rgba(var(--pC8D9E6-rgb),.1)}
+body:not(.theme-light) .hq-row:hover{background:rgba(255,255,255,.04)}
+body:not(.theme-light) .cbar{background:rgba(var(--pC8D9E6-rgb),.1)}
+body:not(.theme-light) b.bad{color:#F4ABA5}
+
+/* one athlete */
+.hq-ath-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:18px}
+.hq-ath-name{display:block;font-size:24px;font-weight:700;letter-spacing:-.02em}
+.hq-ath-head .iron-pills{margin-top:8px}
+.hq-ath-acts{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:640px){.hq-ath-acts{width:100%}.hq-ath-acts .btn{flex:1}}
+.hq-tabs{overflow-x:auto;scrollbar-width:none;display:flex!important;flex-wrap:nowrap}
+.hq-tabs::-webkit-scrollbar{display:none}
+.hq-tabs button{flex:none;white-space:nowrap;padding:0 14px;min-height:40px}
+.hq-log{display:flex;flex-direction:column}
+.hq-log-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--pE6D9CF)}
+.hq-log-row:last-child{border-bottom:0}
+.hq-log-row .d{display:flex;flex-direction:column;width:66px;flex:none}
+.hq-log-row .grow{display:flex;flex-direction:column;min-width:0}
+.hq-log-row .grow small{font-size:12.5px}
+body:not(.theme-light) .hq-log-row{border-color:rgba(var(--pC8D9E6-rgb),.1)}
+
+/* feedback */
+.fb-kind{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:600;vertical-align:1px}
+.fb-kind svg{width:12px;height:12px}
+.k-praise.fb-kind,.fb-kinds .k-praise[aria-checked="true"]{color:#1F5A41;background:rgba(47,125,91,.14)}
+.k-technique.fb-kind,.fb-kinds .k-technique[aria-checked="true"]{color:var(--p2F4156);background:rgba(var(--p567C8D-rgb),.16)}
+.k-focus.fb-kind,.fb-kinds .k-focus[aria-checked="true"]{color:#6E450B;background:rgba(183,121,31,.16)}
+.k-recovery.fb-kind,.fb-kinds .k-recovery[aria-checked="true"]{color:#47399A;background:rgba(91,77,177,.13)}
+.k-note.fb-kind,.fb-kinds .k-note[aria-checked="true"]{color:var(--p3F5262);background:rgba(var(--p2F4156-rgb),.08)}
+html:root body .fb-kinds .chip[aria-checked="true"]{border-color:currentColor!important}
+body:not(.theme-light) .fb-kind,html:root body:not(.theme-light) .fb-kinds .chip[aria-checked="true"]{color:var(--pF5EFEB);background:rgba(var(--pC8D9E6-rgb),.14)}
+.fb-item{padding:14px 0;border-bottom:1px solid var(--pE6D9CF)}
+.fb-item:last-child{border-bottom:0}
+.fb-top{display:flex;align-items:center;gap:10px}
+.fb-top .grow{min-width:0;line-height:1.5}
+.fb-body{margin:8px 0 0;white-space:pre-wrap;font-size:14.5px;line-height:1.5}
+.fb-ref{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12.5px;color:var(--p4F6272)}
+.fb-ref svg{width:13px;height:13px}
+.fb-seen{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;color:var(--p4F6272);flex:none}
+.fb-seen svg{width:14px;height:14px}
+.fb-seen.on{color:#24644A}
+.fb-acts{display:flex;gap:6px;margin-top:8px}
+.fb-to,.fb-tpl{flex-wrap:wrap}
+.fb-tpl{display:flex;gap:6px}
+.fb-tpl .chip{font-size:12.5px;text-align:left;white-space:normal;line-height:1.3;padding:6px 10px;min-height:36px}
+.fb-tpl .chip svg{width:13px;height:13px;flex:none}
+body:not(.theme-light) .fb-item{border-color:rgba(var(--pC8D9E6-rgb),.1)}
+body:not(.theme-light) .fb-seen.on{color:#8FD3B0}
+body:not(.theme-light) .fb-ref,body:not(.theme-light) .fb-seen{color:var(--pB9C9D6)}
+
+/* training & reports */
+.hq-plan-hero .h2{margin:0}
+.hq-create{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:16px;border:1px solid var(--pE6D9CF);background:rgba(255,255,255,.6);color:inherit;text-align:left;cursor:pointer;font:inherit}
+.hq-create:hover{background:rgba(255,255,255,.85)}
+.hq-create .grow{display:flex;flex-direction:column;gap:2px}
+.hq-create small{font-size:12.5px}
+.hq-create-ic,.hq-rep-ic,.hq-promo-ic,.hq-welcome-ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--p2F4156);color:#FFFFFF;flex:none}
+.hq-create-ic.ai{background:var(--p567C8D)}
+.hq-plans{display:flex;flex-direction:column}
+.hq-plan{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--pE6D9CF);flex-wrap:wrap}
+.hq-plan:last-child{border-bottom:0}
+.hq-plan .grow{display:flex;flex-direction:column;min-width:180px}
+.hq-plan small{font-size:12.5px}
+.hq-rep .h2{margin:0}
+.hq-inc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.hq-inc li{display:flex;gap:8px;align-items:flex-start}
+.hq-inc svg{width:15px;height:15px;color:#2F7D5B;flex:none;margin-top:2px}
+.hq-welcome{align-items:center;text-align:center;padding:32px 22px}
+.hq-welcome-ic{width:56px;height:56px;border-radius:18px}
+.hq-welcome .row{justify-content:center}
+body:not(.theme-light) .hq-create{background:rgba(255,255,255,.04);border-color:rgba(var(--pC8D9E6-rgb),.12)}
+body:not(.theme-light) .hq-plan{border-color:rgba(var(--pC8D9E6-rgb),.1)}
+body:not(.theme-light) :is(.hq-create-ic,.hq-rep-ic,.hq-promo-ic,.hq-welcome-ic){background:var(--pF5EFEB);color:var(--p2F4156)}
+.code-sm{font-family:var(--f-mono);letter-spacing:.12em}
+
+/* entry points */
+.hq-btn{min-height:38px;border-radius:999px!important;font-size:13px!important}
+.hq-promo{display:flex;align-items:center;gap:14px;width:100%;padding:16px;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.hq-promo .grow{display:flex;flex-direction:column;gap:2px}
+.hq-promo b{font-size:16px}
+.hq-promo small{font-size:13px;color:var(--p4F6272)}
+
+/* the athlete's side */
+.fb-home{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.fb-home .grow{display:flex;flex-direction:column;gap:3px;min-width:0}
+.fb-home-q{font-size:14.5px;font-weight:500;line-height:1.4}
+.fb-home-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;background:rgba(var(--p567C8D-rgb),.14);color:var(--p2F4156)}
+.fb-home-ic.k-praise{background:rgba(47,125,91,.14);color:#1F5A41}
+.fb-home-ic.k-focus{background:rgba(183,121,31,.16);color:#6E450B}
+.fb-home-ic.k-recovery{background:rgba(91,77,177,.13);color:#47399A}
+.fb-mine{padding:16px}
+.fb-mine.new{box-shadow:inset 3px 0 0 var(--p567C8D),0 10px 30px -8px rgba(var(--p78604E-rgb),.12)}
+
 </style>
 </head>
 <body>
@@ -2435,7 +2684,7 @@ html:root body .quote-hero .qtext em{color:#FFFFFF;background:linear-gradient(tr
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Oct 28 · 22:01';
+const BUILD_ID = 'Nov 02 · 15:57';
 const PALETTE = {"anchors":{"P":"2F4156","A":"567C8D","S":"C8D9E6","N":"F5EFEB"},"P":["2F4156","4F6272","1F2B3A","3F5262","243344","3C5269","3A5266","263546","5E6672","4A5D6C","475A6A","36495F","18222E"],"A":["567C8D","4A6B7C","3F5F6E"],"S":["C8D9E6","DDE5EC","B9C9D6","EEF3F7","E6EEF4","DCE5EF","F5F7FA"],"N":["F5EFEB","E6D9CF","EFE6DF","D9C8BB","ECE6E1","F0E7E0","EADFD6","C9B5A6","FCFAF9","FAF7F5","F8F4F1","F7F2EF","F2ECE8","FFFDFB","E2D2C6","F2EAE4","78604E","967660"],"text":["2F4156","4F6272","3F5262","5E6672","3F5F6E","4A6B7C"]};
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
@@ -11599,7 +11848,7 @@ const TitleCase = {
   minor: new Set('a an and as at but by for from in into nor of on onto or per the to vs via with'.split(' ')),
   unit: new Set('lb lbs kg g kcal min mins sec s h m km mi cm ft in x reps rep sets set days day wk wks workouts workout'.split(' ')),
   sel: '.chip, .iron-pills > *, .seg button, .h1, .h2, .h3, .ex-name, .prep-card b, .label, .lib-chip, .tool span, .badge, .st, .wp small, #nav button span, .ex-tab',
-  skip: 'input, textarea, select, [contenteditable], .qtext, .quote-hero .qtext, #qflash, .post, .msg, .bubble, .c-quote, [data-raw], .comment',
+  skip: '.fb-tpl, .fb-body, input, textarea, select, [contenteditable], .qtext, .quote-hero .qtext, #qflash, .post, .msg, .bubble, .c-quote, [data-raw], .comment',
   cap(w) { return w.charAt(0).toUpperCase() + w.slice(1); },
   word(w, first, afterNum) {
     if (/[.@/#]/.test(w)) return w;
@@ -11637,6 +11886,614 @@ const TitleCase = {
   }
 };
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => TitleCase.init()); else TitleCase.init();
+
+/* ============ COACH HQ ============
+   A coach's own workspace, separate from their personal training. The bottom bar (phone) or the sidebar
+   (computer) switches to five sections:
+     Overview  · the team at a glance: who trained, compliance, readiness, who needs attention
+     Athletes  · the roster, searchable and sortable; each athlete has their own page (stats, charts,
+                 training log, strength & speed, nutrition targets, feedback, plan)
+     Feedback  · send praise, technique tips, a focus or recovery advice to one athlete, several or the team;
+                 see when they've read it
+     Training  · the team plan, athletes on their own plan, the coach's plans: edit, create, draft with AI, assign
+     Reports   · team and athlete PDF reports (any period), plus the spreadsheet exports
+   "My training" leaves Coach HQ and puts the athlete tabs back. Data: team_roster, hq_team, team_athlete,
+   coach_readiness, feedback_*, flag_list, plan_list (all checked on the server: only the team's coaches). */
+Object.entries({
+  'layout-dashboard': 'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z',
+  users: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+  'message-square-heart': 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2zM14.8 7.5a1.84 1.84 0 0 0-2.6 0l-.2.3-.3-.3a1.84 1.84 0 1 0-2.4 2.8L12 13l2.7-2.7c.9-.9.8-2.1.1-2.8',
+  'file-text': 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zM14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8',
+  'file-down': 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zM14 2v4a2 2 0 0 0 2 2h4M12 18v-6M9 15l3 3 3-3',
+  'arrow-left': 'M12 19l-7-7 7-7M19 12H5', 'chevrons-up-down': 'M7 15l5 5 5-5M7 9l5-5 5 5',
+  'trending-up': 'M22 7l-8.5 8.5-5-5L2 17M16 7h6v6', moon: 'M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z',
+  eye: 'M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7zM12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6', 'check-check': 'M18 6L7 17l-5-5M22 10l-7.5 7.5L13 16',
+  send: 'M22 2L11 13M22 2l-7 20-4-9-9-4z', calendar: 'M8 2v4M16 2v4M3 6h18v15H3zM3 10h18', clock: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M12 6v6l4 2',
+  'thumbs-up': 'M7 10v12M15 5.88L14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88z',
+  lightbulb: 'M15 14c.2-1 .7-1.7 1.5-2.5A5 5 0 1 0 7 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5M9 18h6M10 22h4',
+  target: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M12 6a6 6 0 1 0 0 12a6 6 0 1 0 0-12M12 10a2 2 0 1 0 0 4a2 2 0 1 0 0-4',
+  'heart-pulse': 'M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7zM3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27',
+  'log-out': 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9', search: 'M11 3a8 8 0 1 0 0 16a8 8 0 1 0 0-16M21 21l-4.3-4.3',
+  sparkles: 'M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2zM19 3v4M21 5h-4',
+  flame: 'M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z',
+  'triangle-alert': 'M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01',
+  'user-check': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8M16 11l2 2 4-4',
+  'user-x': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8M17 8l5 5M22 8l-5 5',
+  'message-circle': 'M7.9 20A9 9 0 1 0 4 16.1L2 22z',
+  'share-2': 'M18 2a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 16a3 3 0 1 0 0 6a3 3 0 1 0 0-6M8.6 13.5l6.8 4M15.4 6.5l-6.8 4',
+  'user-plus': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8M19 8v6M22 11h-6',
+  'trash-2': 'M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6',
+  'pen-line': 'M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z', 'table-2': 'M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18'
+}).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+['hq', 'feedback'].forEach(r => Social.live.add(r));
+TAB_OF.hq = 'social'; TAB_OF.feedback = 'home';
+
+const FB_KINDS = { praise: ['Praise', 'thumbs-up'], technique: ['Technique', 'target'], focus: ['Focus', 'flame'], recovery: ['Recovery', 'moon'], note: ['Note', 'message-circle'] };
+const FB_TEMPLATES = {
+  praise: ['Great week of training — you hit every session. Keep it rolling.', 'Big improvement on your lifts. The work is paying off.'],
+  technique: ['On squats, keep your chest up and drive your knees out on the way up.', 'Slow the lowering phase down: three seconds down, then drive up.'],
+  focus: ['This week, make every scheduled workout. Consistency first.', 'Focus on hitting the prescribed weights — log every set.'],
+  recovery: ['Your readiness is low. Take it easy today and aim for 8+ hours of sleep.', 'Hydrate well and add 10 minutes of mobility after training.'],
+  note: ['Check in with me before Friday’s session.']
+};
+
+const HQ = {
+  SECTIONS: [['overview', 'Overview', 'layout-dashboard'], ['athletes', 'Athletes', 'users'], ['feedback', 'Feedback', 'message-square-heart'], ['training', 'Training', 'clipboard-list'], ['reports', 'Reports', 'file-text']],
+  st: { q: '', sort: 'attention', filter: 'all', atab: 'overview', fbKind: 'praise', fbTo: null, fbFilter: 'all', repAth: '' },
+  pref(k, v) { const key = 'bbp.hq.' + k; try { if (v === undefined) return localStorage.getItem(key); localStorage.setItem(key, String(v)); } catch (e) { } return v; },
+  days() { return +(this.pref('days') || 28); },
+  /* ---------- data ---------- */
+  teams() { const t = Coach.teams(); return t.v ? t.v.coaching : null; },
+  team() { const L = this.teams() || [], id = this.pref('team'); return L.find(t => t.id === id) || L[0] || null; },
+  tid() { const t = this.team(); return t && t.id; },
+  roster(tid = this.tid()) { return Social.get('roster:' + tid, () => Social.rpc('team_roster', { p_id: tid }), 30000); },
+  series(tid = this.tid(), days = this.days()) { return Social.get(`hq:${tid}:${days}`, () => Social.rpc('hq_team', { p_team: tid, p_days: days }), 60000); },
+  ready(tid = this.tid()) { return Social.get('cready:' + tid, () => Social.rpc('coach_readiness', { p_team: tid }), 60000); },
+  fb(tid = this.tid()) { return Social.get('fb:' + tid, () => Social.rpc('feedback_list', { p_team: tid, p_user: null, p_limit: 200 }), 30000); },
+  flags() { return Social.get('flags:hq', () => Social.rpc('flag_list', { p_days: 30 }).catch(() => []), 120000); },
+  refresh() { const t = this.tid(); Social.drop('roster:' + t, 'hq:' + t, 'cready:' + t, 'fb:' + t, 'tath:' + t, 'myteams', 'flags:hq', 'plans'); },
+  /* the roster joined with the period's numbers */
+  merge(R, S, RD) {
+    const n = S.days, goal = Math.max(1, S.weekly_goal || R.team.weekly_goal || 4), expect = goal * n / 7, byId = {}, rd = {};
+    S.athletes.forEach(a => { byId[a.id] = a; });
+    ((RD && RD.today) || []).forEach(x => { rd[x.user.id] = x; });
+    return R.athletes.map(a => {
+      const s = byId[a.id] || { sessions: [], ready: [], bw: [], fb: 0 }, ses = s.sessions || [];
+      const w = ses.length, min = ses.reduce((t, x) => t + (+x.min || 0), 0), vol = ses.reduce((t, x) => t + (+x.vol || 0), 0), sets = ses.reduce((t, x) => t + (+x.sets || 0), 0);
+      const rs = (s.ready || []).map(x => +x.s).filter(isFinite), bw = s.bw || [];
+      const lv = TeamCalc.level(a), since = a.last ? daysBetween(String(a.last).slice(0, 10), todayISO()) : null;
+      return Object.assign({}, a, { ses, w, min, vol, sets, comp: Math.min(100, Math.round(w / expect * 100)), perWk: w / (n / 7),
+        readyAvg: rs.length ? rs.reduce((x, y) => x + y, 0) / rs.length : null, readyToday: rd[a.id] ? +rd[a.id].score : null, readyRow: rd[a.id] || null,
+        bwFirst: bw[0] ? bw[0].w : null, bwLast: bw.length ? bw[bw.length - 1].w : (a.bw || null), fb: s.fb || 0, fbLast: s.fb_last || null, lv, pil: TeamCalc.pillars(a), since, readySeries: s.ready || [] });
+    });
+  },
+  /* why an athlete needs the coach today (most urgent first) */
+  attention(a, flagged) {
+    const out = [];
+    if (a.readyToday != null && a.readyToday <= 2.5) out.push({ t: 'bad', ic: 'battery-low', why: `Low readiness today (${fmtNum(a.readyToday, 1)}/5)` });
+    if (a.since == null) out.push({ t: 'warn', ic: 'clock', why: 'Hasn’t logged a workout yet' });
+    else if (a.since >= 5) out.push({ t: a.since >= 10 ? 'bad' : 'warn', ic: 'clock', why: `No workout for ${a.since} days` });
+    if (a.since != null && a.since < 5 && a.comp < 50) out.push({ t: 'warn', ic: 'trending-up', why: `${a.comp}% of planned workouts` });
+    if (flagged && flagged[a.id]) out.push({ t: 'warn', ic: 'triangle-alert', why: `${flagged[a.id]} workout${flagged[a.id] === 1 ? '' : 's'} to review` });
+    if (!out.length && a.w >= 1 && (!a.fbLast || Date.now() - Date.parse(a.fbLast) > 21 * 864e5)) out.push({ t: 'info', ic: 'message-square-heart', why: 'No feedback in 3 weeks' });
+    return out;
+  },
+  flagMap() { const f = this.flags().v || [], m = {}; f.filter(x => !x.status || x.status === 'flagged').forEach(x => { const id = x.user && x.user.id; if (id) m[id] = (m[id] || 0) + 1; }); return m; },
+  /* ---------- small pieces ---------- */
+  pct(v) { return v == null ? '—' : Math.round(v) + '%'; },
+  wFmt(kg, dec = 0) { return kg == null ? '—' : fmtNum(Units.fromKg(kg, unitW()), dec); },
+  volFmt(kg) { const v = Units.fromKg(kg || 0, unitW()); return v >= 10000 ? fmtNum(v / 1000, 1) + 'k' : fmtNum(v, 0); },
+  kindChip(k) { const d = FB_KINDS[k] || FB_KINDS.note; return `<span class="fb-kind k-${k}">${icon(d[1])} ${d[0]}</span>`; },
+  ring(p, size = 64) { const r = size / 2 - 6, c = 2 * Math.PI * r, v = Math.max(0, Math.min(100, p || 0));
+    return `<svg class="hq-ring" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img" aria-label="${Math.round(v)}%"><circle cx="${size / 2}" cy="${size / 2}" r="${r}" class="trk"/><circle cx="${size / 2}" cy="${size / 2}" r="${r}" class="arc" stroke-dasharray="${(c * v / 100).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 ${size / 2} ${size / 2})"/><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle">${Math.round(v)}%</text></svg>`; },
+  /* buckets: days for a week or two, weeks for longer */
+  buckets(days) {
+    const out = [];
+    if (days <= 14) { for (let i = days - 1; i >= 0; i--) { const d = addDays(todayISO(), -i); out.push({ from: d, to: d, label: i === 0 ? 'Today' : fmtDate(d).replace(/,.*$/, '').split(' ').slice(0, 2).join(' ') }); } return out; }
+    const nw = Math.ceil(days / 7);
+    for (let i = nw - 1; i >= 0; i--) { const to = addDays(todayISO(), -7 * i), from = addDays(to, -6); out.push({ from, to, label: i === 0 ? 'This wk' : fmtDate(from).replace(/,.*$/, '').split(' ').slice(0, 2).join(' ') }); }
+    return out;
+  },
+  count(ses, b) { return ses.filter(x => x.d >= b.from && x.d <= b.to).length; },
+  bars(vals, labels, opt = {}) {
+    const max = Math.max(opt.max || 0, ...vals, 1), n = vals.length;
+    return `<div class="hqb" role="img" aria-label="${esc(opt.aria || 'Chart')}: ${vals.map((v, i) => `${labels[i]} ${v}`).join(', ')}" style="--n:${n};height:${opt.h || 170}px">${vals.map((v, i) => `<div class="hqb-col${i === n - 1 ? ' last' : ''}"><span class="v">${v ? (opt.fmt ? opt.fmt(v) : fmtNum(v, 0)) : ''}</span><span class="b"><i style="height:${(v / max * 100).toFixed(1)}%"></i></span><span class="l">${n > 8 && (n - 1 - i) % 3 ? '' : esc(labels[i] || '')}</span></div>`).join('')}</div>`;
+  },
+  line(pts, opt = {}) {
+    const W = 600, H = 120, ys = pts.map(x => x.y).filter(v => v != null && isFinite(v));
+    if (ys.length < 2) return `<div class="hq-nochart">${esc(opt.empty || 'Not enough data yet')}</div>`;
+    let lo = opt.min != null ? opt.min : Math.min(...ys), hi = opt.max != null ? opt.max : Math.max(...ys); if (hi - lo < 1e-6) { lo -= 1; hi += 1; }
+    const X = i => W * (pts.length === 1 ? .5 : i / (pts.length - 1)), Y = v => 6 + (H - 12) * (1 - (v - lo) / (hi - lo));
+    const seg = pts.map((q, i) => q.y == null || !isFinite(q.y) ? null : [X(i), Y(q.y)]).filter(Boolean), d = seg.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ');
+    const area = d + ` L${seg[seg.length - 1][0].toFixed(1)} ${H} L${seg[0][0].toFixed(1)} ${H} Z`, last = ys[ys.length - 1];
+    return `<div class="hql" role="img" aria-label="${esc(opt.aria || 'Trend')}: latest ${fmtNum(last, opt.dec || 0)}"><span class="hql-hi">${esc(opt.hiLab || fmtNum(hi, opt.dec || 0))}</span><span class="hql-lo">${esc(opt.loLab || fmtNum(lo, opt.dec || 0))}</span>
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${area}" class="area"/><path d="${d}" class="ln" vector-effect="non-scaling-stroke"/></svg><span class="hql-last">${fmtNum(last, opt.dec || 0)}</span></div>`;
+  },
+  kpi(label, value, sub, ic, tone = '') { return `<div class="hq-kpi ${tone}"><span class="hq-kpi-ic">${icon(ic)}</span><span class="label">${label}</span><b class="hq-kpi-v">${value}</b><small class="muted">${sub}</small></div>`; },
+  periodChips() { const d = this.days(); return `<div class="chips hq-period" role="group" aria-label="Period">${[[7, '7 days'], [28, '28 days'], [90, '90 days']].map(([v, l]) => `<button type="button" class="chip" data-act="hq-days" data-v="${v}" aria-pressed="${d === v}">${l}</button>`).join('')}</div>`; },
+  /* ---------- the frame ---------- */
+  frame(title, body, opts = {}) {
+    const t = this.team(), L = this.teams() || [];
+    return `<div class="screen hq">
+      <header class="hq-head" data-stg><div class="hq-title"><button type="button" class="hq-team" data-act="hq-team" aria-label="Team: ${esc(t ? t.name : '')}. Switch team">${icon('shield')}<span>${esc(t ? t.name : 'Coach HQ')}</span>${icon('chevrons-up-down')}</button>
+          <h1 class="h1">${title}</h1>${opts.sub ? `<p class="muted hq-sub">${opts.sub}</p>` : ''}</div>
+        <div class="hq-actions">${opts.actions || ''}<button type="button" class="btn sm ghost hq-exit-top" data-act="hq-exit">${icon('arrow-left')} My training</button></div></header>
+      ${body}</div>`;
+  },
+  gate() {
+    if (!Cloud.on) return Social.empty('users', 'Coach HQ needs accounts', 'It switches on when the app runs with accounts.');
+    if (!Social.on()) return Social.empty('cloud-off', 'You’re offline', 'Coach HQ needs a connection. Your own training keeps saving on this phone.');
+    if (!Brand.isCoach()) return Social.empty('shield', 'Coach HQ is for coaches', 'Ask your school’s head coach or an admin to make you a coach.', `<button class="btn sm" type="button" data-act="hq-exit">${icon('arrow-left')} Back to my training</button>`);
+    const t = Coach.teams();
+    if (!t.v) return t.err ? Social.errBox(t.err, 'myteams') : Social.skel(3);
+    if (!t.v.coaching.length) return `<section class="panel hq-welcome stack" data-stg><span class="hq-welcome-ic">${icon('shield')}</span><h2 class="h2">Welcome to Coach HQ</h2>
+      <p class="muted">Create your first team, share its 6-letter code, and your athletes join in one tap. Then everything about them — training, progress, feedback and reports — lives here.</p>
+      <div class="row wrap"><button class="btn primary" type="button" data-act="co-new">${icon('plus')} Create a team</button><button class="btn ghost" type="button" data-act="hq-exit">${icon('arrow-left')} My training</button></div></section>`;
+    return null;
+  },
+  loading(e, key) { return e.err ? Social.errBox(e.err, key) : Social.skel(3); },
+  /* ---------- Overview ---------- */
+  overview() {
+    const tid = this.tid(), R = this.roster(tid), S = this.series(tid), RD = this.ready(tid), F = this.fb(tid); this.flags();
+    if (!R.v || !S.v) return this.frame('Overview', this.loading(R.v ? S : R, R.v ? `hq:${tid}:${this.days()}` : 'roster:' + tid));
+    const A = this.merge(R.v, S.v, RD.v), n = A.length, T = R.v.team, days = S.v.days, fm = this.flagMap();
+    if (!n) return this.frame('Overview', `<section class="panel hq-welcome stack" data-stg><span class="hq-welcome-ic">${icon('user-plus')}</span><h2 class="h2">No athletes yet</h2><p class="muted">Share the code below. Athletes enter it under Social → Team.</p><b class="code-big">${esc(T.join_code || '—')}</b>
+      <div class="row wrap"><button class="btn primary" type="button" data-act="co-code" data-id="${tid}" data-c="${esc(T.join_code || '')}">${icon('share-2')} Share the code</button><button class="btn" type="button" data-act="co-invite" data-id="${tid}">${icon('user-plus')} Invite by username</button></div></section>`);
+    const wk = A.filter(a => a.w7 > 0).length, tot = A.reduce((t, a) => t + a.w, 0), comp = A.reduce((t, a) => t + a.comp, 0) / n;
+    const rt = RD.v ? RD.v.today : [], rAvg = rt.length ? rt.reduce((t, x) => t + +x.score, 0) / rt.length : null, low = rt.filter(x => +x.score <= 2.5).length;
+    const fbN = (F.v || []).filter(f => Date.parse(f.created_at) >= Date.parse(S.v.from)).length;
+    const B = this.buckets(days), vals = B.map(b => A.reduce((t, a) => t + this.count(a.ses, b), 0));
+    const att = A.map(a => ({ a, list: this.attention(a, fm) })).filter(x => x.list.length).sort((x, y) => ({ bad: 0, warn: 1, info: 2 }[x.list[0].t] - { bad: 0, warn: 1, info: 2 }[y.list[0].t]));
+    const leaders = A.slice().sort((x, y) => y.w - x.w || y.vol - x.vol).slice(0, 5);
+    const trend = RD.v && RD.v.trend ? RD.v.trend.map(x => ({ y: x.avg == null ? null : +x.avg })) : [];
+    const recent = (F.v || []).slice(0, 4);
+    const body = `
+      <div class="hq-kpis" data-stg>
+        ${this.kpi('Athletes', n, `${T.weekly_goal || 4} workouts a week planned`, 'users')}
+        ${this.kpi('Trained this week', `${wk}<small>/${n}</small>`, 'at least one workout', 'check-check', wk / n >= .75 ? 'good' : wk / n < .4 ? 'bad' : '')}
+        ${this.kpi('Compliance', this.pct(comp), `of planned workouts · ${days} days`, 'target', comp >= 75 ? 'good' : comp < 50 ? 'bad' : '')}
+        ${this.kpi('Workouts', fmtNum(tot, 0), `logged in ${days} days`, 'dumbbell')}
+        ${this.kpi('Readiness today', rAvg == null ? '—' : fmtNum(rAvg, 1) + '<small>/5</small>', rt.length ? `${rt.length} checked in${low ? ` · ${low} low` : ''}` : 'no check-ins yet', 'heart-pulse', low ? 'bad' : '')}
+        ${this.kpi('Feedback sent', fbN, `in ${days} days`, 'message-square-heart')}
+      </div>
+      <div class="hq-grid">
+        <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Team activity</h2>${this.periodChips()}</div>
+          ${this.bars(vals, B.map(b => b.label), { aria: 'Team workouts per ' + (days <= 14 ? 'day' : 'week') })}
+          <p class="muted hq-note">Workouts logged by the whole team per ${days <= 14 ? 'day' : 'week'}. Planned: ${(T.weekly_goal || 4) * n} a week.</p></section>
+        <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Needs attention</h2><span class="badge">${att.length}</span></div>
+          ${att.length ? `<div class="att-list">${att.slice(0, 6).map(({ a, list }) => `<div class="att-row t-${list[0].t}">${Social.avatar(a, 36)}<button type="button" class="grow att-main" data-act="hq-ath" data-id="${a.id}"><b>${esc(a.name)}</b><small>${icon(list[0].ic)} ${esc(list[0].why)}${list.length > 1 ? ` · +${list.length - 1}` : ''}</small></button><button type="button" class="btn sm ghost" data-act="hq-fb" data-u="${a.id}" data-k="${list[0].ic === 'battery-low' ? 'recovery' : list[0].ic === 'message-square-heart' ? 'praise' : 'focus'}" aria-label="Send feedback to ${esc(a.name)}">${icon('send')}</button></div>`).join('')}</div>${att.length > 6 ? `<button type="button" class="btn sm ghost" data-act="hq-go" data-p="athletes" data-f="attention">See all ${att.length}</button>` : ''}`
+            : `<div class="hq-allgood">${icon('check-check')}<b>Everyone is on track</b><span class="muted">Nobody is inactive or low on readiness.</span></div>`}</section>
+        <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Readiness · 14 days</h2>${rt.length ? `<span class="badge">${rt.length}/${n} today</span>` : ''}</div>
+          ${this.line(trend, { min: 1, max: 5, hiLab: '5 · great', loLab: '1 · poor', aria: 'Team readiness, last 14 days', empty: 'Athletes check in from Home (sleep, soreness, energy, mood, stress). The team average shows here.' })}
+          ${low ? `<p class="hq-note"><b>${low}</b> athlete${low === 1 ? '' : 's'} checked in low today.</p>` : ''}</section>
+        <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Most consistent</h2><span class="muted hq-note">${days} days</span></div>
+          <ol class="hq-lead">${leaders.map((a, i) => `<li><span class="rk">${i + 1}</span>${Social.avatar(a, 30)}<button type="button" class="grow linkish" data-act="hq-ath" data-id="${a.id}">${esc(a.name)}</button><b>${a.w}</b><small class="muted">workouts</small></li>`).join('')}</ol></section>
+      </div>
+      <div class="hq-grid">
+        <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Recent feedback</h2><button type="button" class="btn sm ghost" data-act="hq-go" data-p="feedback">See all</button></div>
+          ${recent.length ? recent.map(f => this.fbItem(f, true)).join('') : `<p class="muted">Nothing sent yet. A quick word after a good session goes a long way.</p><button type="button" class="btn sm primary" data-act="hq-go" data-p="feedback">${icon('send')} Send feedback</button>`}</section>
+        <section class="panel hq-card stack" data-stg><h2 class="h3">Team</h2>
+          <div class="kv"><span>Join code</span><span class="row"><b class="code-sm">${esc(T.join_code || '—')}</b><button class="btn sm ghost" type="button" data-act="co-code" data-id="${tid}" data-c="${esc(T.join_code || '')}" aria-label="Share the join code">${icon('share-2')}</button></span></div>
+          <div class="kv"><span>Training plan</span><button type="button" class="linkish" data-act="hq-go" data-p="training">${T.plan ? esc(T.plan.name) : 'Standard program'} ${icon('chevron-right')}</button></div>
+          <div class="kv"><span>Coaches</span><span>${R.v.coaches.map(c => esc(c.name)).join(', ')}</span></div>
+          <div class="row wrap"><button class="btn sm" type="button" data-act="co-invite" data-id="${tid}">${icon('user-plus')} Invite</button><button class="btn sm" type="button" data-act="co-post" data-id="${tid}" data-n="${esc(T.name)}">${icon('message-circle')} Post to team</button><button class="btn sm" type="button" data-act="co-comp" data-id="${tid}">${icon('swords')} Competition</button></div></section>
+      </div>`;
+    return this.frame('Overview', body, { sub: `${esc(T.name)} · last ${days} days`, actions: `<button class="btn sm primary" type="button" data-act="hq-fb">${icon('send')} Feedback</button>` });
+  },
+  /* ---------- Athletes ---------- */
+  athletes() {
+    const tid = this.tid(), R = this.roster(tid), S = this.series(tid), RD = this.ready(tid); this.flags();
+    if (!R.v || !S.v) return this.frame('Athletes', this.loading(R.v ? S : R, R.v ? `hq:${tid}:${this.days()}` : 'roster:' + tid));
+    const fm = this.flagMap(), A = this.merge(R.v, S.v, RD.v).map(a => Object.assign(a, { att: this.attention(a, fm) })), st = this.st, q = st.q.trim().toLowerCase(), u = unitW();
+    let L = A.filter(a => !q || (a.name + ' ' + a.username + ' ' + (a.position || '')).toLowerCase().includes(q));
+    if (st.filter === 'attention') L = L.filter(a => a.att.length && a.att[0].t !== 'info'); else if (st.filter === 'iron') L = L.filter(a => a.iron); else if (st.filter === 'low') L = L.filter(a => a.readyToday != null && a.readyToday <= 2.5);
+    const rank = a => a.att.length ? { bad: 0, warn: 1, info: 3 }[a.att[0].t] : 2;
+    const sorters = { attention: (x, y) => rank(x) - rank(y) || x.name.localeCompare(y.name), name: (x, y) => x.name.localeCompare(y.name), comp: (x, y) => y.comp - x.comp, last: (x, y) => (x.since == null ? 999 : x.since) - (y.since == null ? 999 : y.since), strength: (x, y) => y.lv.total - x.lv.total, ready: (x, y) => (x.readyToday == null ? 9 : x.readyToday) - (y.readyToday == null ? 9 : y.readyToday) };
+    L.sort(sorters[st.sort] || sorters.attention);
+    const row = a => { const at = a.att[0];
+      return `<button type="button" class="hq-row" data-act="hq-ath" data-id="${a.id}"><span class="c-name">${Social.avatar(a, 38)}<span><b>${esc(a.name)}</b><small class="muted">${esc(a.position || '—')} · ${a.since == null ? 'no workouts yet' : TeamCalc.ago(a.last)}</small></span></span>
+        <span class="c-comp" data-l="Compliance"><span class="cbar"><i style="width:${a.comp}%" class="${a.comp >= 75 ? 'good' : a.comp < 50 ? 'bad' : ''}"></i></span><b>${a.comp}%</b></span>
+        <span class="c-num" data-l="Workouts"><b>${a.w}</b><small class="muted">${S.v.days}d</small></span>
+        <span class="c-num" data-l="Volume"><b>${this.volFmt(a.vol)}</b><small class="muted">${u}</small></span>
+        <span class="c-num" data-l="Readiness">${a.readyToday != null ? `<b class="${a.readyToday <= 2.5 ? 'bad' : ''}">${fmtNum(a.readyToday, 1)}</b>` : '<span class="muted">—</span>'}</span>
+        <span class="c-lvl" data-l="Strength">${a.lv.level ? esc(Brand.lvl(a.lv.level)) : `<span class="muted">${a.lv.known}/4 maxes</span>`}</span>
+        <span class="c-flag">${at ? `<span class="att-chip t-${at.t}">${icon(at.ic)} ${esc(at.why)}</span>` : `<span class="att-chip t-ok">${icon('check')} On track</span>`}</span>${icon('chevron-right')}</button>`; };
+    const body = `<section class="panel hq-card stack" data-stg>
+        <div class="hq-tools"><div class="input-ic grow">${icon('search')}<input class="input" id="hqQ" type="search" placeholder="Search athletes" value="${esc(st.q)}" aria-label="Search athletes" autocomplete="off"></div>${this.periodChips()}</div>
+        <div class="hq-tools"><div class="chips" role="group" aria-label="Show">${[['all', `All ${A.length}`], ['attention', 'Needs attention'], ['low', 'Low readiness'], ['iron', Brand.bench()]].map(([k, l]) => `<button type="button" class="chip" data-act="hq-st" data-k="filter" data-v="${k}" aria-pressed="${st.filter === k}">${esc(l)}</button>`).join('')}</div>
+          <label class="hq-sort"><span class="muted">Sort</span><select class="input" id="hqSort" data-act-change="hq-sort" aria-label="Sort athletes">${[['attention', 'Needs attention first'], ['name', 'Name'], ['comp', 'Compliance'], ['last', 'Last workout'], ['ready', 'Readiness (low first)'], ['strength', 'Strongest']].map(([k, l]) => `<option value="${k}" ${st.sort === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>
+        <div class="hq-table"><div class="hq-row hq-row-h" aria-hidden="true"><span class="c-name">Athlete</span><span class="c-comp">Compliance</span><span class="c-num">Workouts</span><span class="c-num">Volume</span><span class="c-num">Ready</span><span class="c-lvl">Strength</span><span class="c-flag">Status</span><span></span></div>
+          ${L.length ? L.map(row).join('') : `<p class="muted" style="padding:16px 4px">No athletes match.</p>`}</div></section>`;
+    return this.frame('Athletes', body, { sub: `${A.length} athlete${A.length === 1 ? '' : 's'} · ${esc(R.v.team.name)}`, actions: `<button class="btn sm" type="button" data-act="co-invite" data-id="${tid}">${icon('user-plus')} Invite</button>` });
+  },
+  /* ---------- one athlete ---------- */
+  athlete(aid) {
+    const tid = this.tid(), key = `tath:${tid}:${aid}`, E = Social.get(key, () => Social.rpc('team_athlete', { p_team: tid, p_user: aid }), 30000), R = this.roster(tid), S = this.series(tid), RD = this.ready(tid);
+    const fbE = Social.get(`fb:${tid}:${aid}`, () => Social.rpc('feedback_list', { p_team: tid, p_user: aid, p_limit: 100 }), 30000);
+    const back = `<button type="button" class="btn sm ghost hq-back" data-act="hq-go" data-p="athletes">${icon('chevron-left')} Athletes</button>`;
+    if (!E.v || !R.v || !S.v) return this.frame('Athlete', back + this.loading(E.v ? (R.v ? S : R) : E, key));
+    const a = E.v, m = this.merge(R.v, S.v, RD.v).find(x => x.id === aid) || {}, pr = a.profile || {}, tab = this.st.atab, u = unitW(), days = S.v.days;
+    const src = { baselines: pr.baselines, athletic: pr.athletic, position: pr.position, results: a.results, passed110: a.passed110 }, L = TeamCalc.level(src), P = TeamCalc.pillars(src);
+    const myRole = R.v.team.my_role, posName = pr.position ? (POSITIONS[pr.position] ? POSITIONS[pr.position].name : pr.position) : 'No position';
+    const B = this.buckets(days), vals = B.map(b => this.count(m.ses || [], b));
+    const bwPts = (a.bodyweight || []).map(b => ({ y: Units.fromKg(b.w && b.w.kg, u) })), rdPts = (m.readySeries || []).map(x => ({ y: +x.s }));
+    const bwd = m.bwFirst && m.bwLast && m.bwFirst.kg && m.bwLast.kg ? Units.fromKg(m.bwLast.kg - m.bwFirst.kg, u) : null;
+    const tabs = [['overview', 'Overview'], ['training', 'Training log'], ['strength', 'Strength & speed'], ['nutrition', 'Nutrition'], ['feedback', `Feedback${(fbE.v || []).length ? ` · ${fbE.v.length}` : ''}`], ['plan', 'Plan']];
+    const head = `<section class="panel hq-ath-head" data-stg>${Social.avatar(a, 64)}<div class="grow"><b class="hq-ath-name">${esc(a.name)}</b><div class="muted">@${esc(a.username)} · ${esc(posName)}${pr.start ? ' · started ' + fmtDate(pr.start) : ''}</div>
+        <div class="iron-pills">${[['strength', 'Strength'], ['conditioning', 'Conditioning'], ['speed', 'Speed']].map(([k, l]) => `<span class="${P[k] ? 'on' : ''}">${icon(P[k] ? 'check' : 'circle')} ${l}</span>`).join('')}${a.iron ? `<span class="on">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}</div></div>
+      <div class="hq-ath-acts"><button class="btn sm primary" type="button" data-act="hq-fb" data-u="${a.id}">${icon('send')} Feedback</button><button class="btn sm" type="button" data-act="soc-chat" data-id="${a.id}">${icon('message-circle')} Message</button><button class="btn sm" type="button" data-act="hq-pdf" data-k="athlete" data-u="${a.id}">${icon('file-down')} PDF report</button></div></section>
+      <div class="seg hq-tabs" role="tablist" data-stg>${tabs.map(([k, l]) => `<button type="button" role="tab" data-act="hq-st" data-k="atab" data-v="${k}" aria-selected="${tab === k}">${l}</button>`).join('')}</div>`;
+    let body = '';
+    if (tab === 'overview') body = `<div class="hq-kpis" data-stg>
+        ${this.kpi('Workouts', m.w || 0, `in ${days} days`, 'dumbbell')}${this.kpi('Compliance', this.pct(m.comp), `${R.v.team.weekly_goal || 4} a week planned`, 'target', m.comp >= 75 ? 'good' : m.comp < 50 ? 'bad' : '')}
+        ${this.kpi('Training time', fmtNum((m.min || 0) / 60, 1) + '<small> h</small>', `${m.sets || 0} working sets`, 'clock')}${this.kpi('Volume', this.volFmt(m.vol) + `<small> ${u}</small>`, 'weight × reps', 'trending-up')}
+        ${this.kpi('Readiness', m.readyAvg == null ? '—' : fmtNum(m.readyAvg, 1) + '<small>/5</small>', m.readyToday != null ? `today ${fmtNum(m.readyToday, 1)}` : 'average', 'heart-pulse', m.readyToday != null && m.readyToday <= 2.5 ? 'bad' : '')}
+        ${this.kpi('Body weight', m.bwLast && m.bwLast.kg ? this.wFmt(m.bwLast.kg, 1) + `<small> ${u}</small>` : '—', bwd != null ? `${bwd > 0 ? '+' : ''}${fmtNum(bwd, 1)} ${u} in ${days} days` : 'latest', 'scale')}</div>
+      <div class="hq-grid"><section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Workouts per ${days <= 14 ? 'day' : 'week'}</h2>${this.periodChips()}</div>${this.bars(vals, B.map(b => b.label), { aria: 'Workouts', h: 150 })}</section>
+        <section class="panel hq-card" data-stg><h2 class="h3">Readiness</h2>${this.line(rdPts, { min: 1, max: 5, hiLab: '5', loLab: '1', aria: 'Readiness', empty: 'No check-ins in this period.' })}</section>
+        <section class="panel hq-card" data-stg><h2 class="h3">Body weight</h2>${this.line(bwPts, { dec: 1, aria: 'Body weight', empty: 'Fewer than two weigh-ins.' })}${pr.target_bw ? `<p class="hq-note muted">Target ${Units.fmtW(pr.target_bw)} ${u}</p>` : ''}</section>
+        <section class="panel hq-card stack" data-stg><h2 class="h3">Status</h2>${(m.att = this.attention(m, this.flagMap())).length ? m.att.map(x => `<span class="att-chip t-${x.t}">${icon(x.ic)} ${esc(x.why)}</span>`).join('') : `<span class="att-chip t-ok">${icon('check')} On track</span>`}
+          <div class="kv"><span>Last workout</span><b>${TeamCalc.ago(m.last)}</b></div><div class="kv"><span>Strength level</span><b>${L.level ? esc(Brand.lvl(L.level)) : `${L.known}/4 maxes known`}</b></div><div class="kv"><span>Plan</span><b>${a.plan ? esc(a.plan.name) : 'Standard program'}</b></div>${pr.goals ? `<p class="muted hq-note">Goals: ${esc(pr.goals)}</p>` : ''}</section></div>`;
+    else if (tab === 'training') { const ss = a.sessions || [];
+      body = `<section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Training log</h2><span class="badge">${ss.filter(s => s.status === 'completed').length} completed</span></div>
+        ${ss.length ? `<div class="hq-log">${ss.slice(0, 30).map(s => `<div class="hq-log-row"><span class="d"><b>${fmtDate(s.date).replace(/,.*$/, '')}</b><small class="muted">${s.kind === 'active' ? 'Active rest' : s.week != null ? wkLabel(+s.week) : ''}</small></span>
+            <span class="grow"><b>${esc(s.kind === 'active' ? (s.activities || []).map(x => x.name).join(', ') || 'Active rest' : s.title || 'Workout')}</b><small class="muted">${s.status === 'skipped' ? 'Skipped' : `${s.minutes || 0} min · ${s.sets || 0} sets`}${(s.top || []).filter(x => x.w).slice(0, 2).map(x => ` · ${esc(x.name)} ${Units.fmtW(x.w)} ${u} × ${x.reps}`).join('')}</small></span>
+            ${s.status === 'completed' ? `<button type="button" class="btn sm ghost" data-act="hq-fb" data-u="${a.id}" data-sid="${esc(s.id || '')}" data-st="${esc(s.title || 'Workout')}" data-k="praise" aria-label="Feedback on ${esc(s.title || 'this workout')}">${icon('message-square-heart')}</button>` : ''}</div>`).join('')}</div>` : '<p class="muted">No workouts logged yet.</p>'}</section>`; }
+    else if (tab === 'strength') body = `<section class="panel hq-card stack" data-stg><div class="spread"><h2 class="h3">Strength</h2><span class="badge ${L.level ? 'red' : ''}">${L.level ? esc(Brand.lvl(L.level)) : 'No level yet'}</span></div>
+        <div class="metrics">${Object.keys(LIFTS).map(k => `<div class="metric"><span class="label">${LIFTS[k].name}</span><div class="v">${L.m[k] != null ? fmtNum(Units.fromKg(Units.toKg(L.m[k], 'lb'), u), 0) : '—'}<small> ${L.m[k] != null ? u : ''}</small></div></div>`).join('')}</div>
+        <p class="muted hq-note">Tested or recorded maxes only. 16 × 110: ${a.passed110 ? '<b>passed</b>' : 'not passed yet'}.</p></section>
+      <section class="panel hq-card stack" data-stg><h2 class="h3">Speed & agility</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Test</th><th>Best</th><th>Target</th></tr></thead><tbody>${SPEED_METRICS.map(mm => { const v = TeamCalc.speed(src, mm); let t = Speed.std(mm, TeamCalc.group(src)); if (METRICS[mm].kind === 'height' && Units.hUnit() === 'cm') t *= CM_PER_IN; const dec = METRICS[mm].kind === 'time' ? 2 : 1;
+          return `<tr><td>${esc(METRICS[mm].name.replace(/ \(.*\)/, ''))}</td><td>${v != null ? `<b>${fmtNum(v, dec)}</b> ${Units.metricUnit(mm)}` : '—'}</td><td>${TeamCalc.speedMet(src, mm) ? `<span class="att-chip t-ok">${icon('check')} ${fmtNum(t, dec)}</span>` : fmtNum(t, dec) + ' ' + Units.metricUnit(mm)}</td></tr>`; }).join('')}</tbody></table></div></section>`;
+    else if (tab === 'nutrition') { const c = a.coaching || {}, tg = c.targets || {}, days7 = {};
+      (a.food || []).forEach(f => { const d = days7[f.date] = days7[f.date] || { kcal: 0, protein: 0, n: 0 }; const qn = +f.qty || 1; d.kcal += (f.kcal || 0) * qn; d.protein += (f.protein || 0) * qn; d.n++; (f.items || []).forEach(it => { d.kcal += it.kcal || 0; d.protein += it.protein || 0; d.n++; }); });
+      const dk = Array.from({ length: 7 }, (_, i) => addDays(todayISO(), -i));
+      body = `<section class="panel hq-card stack" data-stg><h2 class="h3">Food log · last 7 days</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Day</th><th>Calories</th><th>Protein</th><th>Items</th></tr></thead><tbody>${dk.map(d => { const x = days7[d]; return `<tr><td>${d === todayISO() ? 'Today' : fmtDate(d)}</td><td>${x ? fmtNum(x.kcal, 0) : '—'}${x && tg.kcal ? ` <small class="muted">/ ${tg.kcal}</small>` : ''}</td><td>${x ? fmtNum(x.protein, 0) + ' g' : '—'}</td><td>${x ? x.n : '—'}</td></tr>`; }).join('')}</tbody></table></div></section>
+        <section class="panel hq-card stack" data-stg><h2 class="h3">Nutrition targets</h2><p class="muted hq-note">Leave a box empty to let the app work it out from body weight and goal. The athlete sees these in Fuel.</p>
+          <div class="grid2">${[['kcal', 'Calories', 'kcal'], ['protein', 'Protein', 'g'], ['carbs', 'Carbs', 'g'], ['fat', 'Fat', 'g']].map(([k, l, un]) => `<div class="field"><label for="ct-${k}">${l}</label><div class="input-unit"><input class="input num" id="ct-${k}" inputmode="numeric" value="${tg[k] != null ? tg[k] : ''}"><span>${un}</span></div></div>`).join('')}</div>
+          <div class="field"><label for="ctNote">Pinned note</label><textarea class="input" id="ctNote" rows="2" maxlength="1000" placeholder="Shown on their Home screen.">${esc(c.note || '')}</textarea></div>
+          <button class="btn primary" type="button" data-act="co-set" data-t="${tid}" data-u="${a.id}">${icon('save')} Save targets</button>${c.updated_at ? `<small class="muted">Last saved ${Social.ago(c.updated_at)}${c.coach ? ' by ' + esc(c.coach.name) : ''}</small>` : ''}</section>`; }
+    else if (tab === 'feedback') body = `<section class="panel hq-card stack" data-stg>${this.composer([a.id])}</section>
+      <section class="panel hq-card" data-stg><h2 class="h3">History</h2>${fbE.v ? (fbE.v.length ? fbE.v.map(f => this.fbItem(f, false)).join('') : '<p class="muted">No feedback yet.</p>') : Social.skel(1)}</section>`;
+    else if (tab === 'plan') body = `<section class="panel hq-card stack" data-stg><h2 class="h3">Training plan</h2><p>${a.plan ? `Trains on <b>${esc(a.plan.name)}</b> ${a.plan.own ? '(their own plan)' : '(the team plan)'}.` : 'Trains on the standard program (the team has no plan).'}</p>
+        <div class="row wrap"><button class="btn" type="button" data-act="hq-aplan" data-u="${a.id}">${icon('repeat')} Give ${esc(a.name)} their own plan</button>${a.plan && a.plan.own ? `<button class="btn ghost" type="button" data-act="hq-aplan-off" data-u="${a.id}">Back to the team plan</button>` : ''}${a.plan ? `<button class="btn ghost" type="button" data-act="go" data-r="cplan" data-p="${a.plan.id}">${icon('pen-line')} Edit plan</button>` : ''}</div></section>
+      ${myRole === 'owner' ? `<section class="panel hq-card stack" data-stg><h2 class="h3">On this team</h2><div class="row wrap"><button class="btn" type="button" data-act="co-asst" data-t="${tid}" data-u="${a.id}" data-n="${esc(a.name)}">${icon('user-check')} Make assistant coach</button><button class="btn danger" type="button" data-act="co-remove" data-t="${tid}" data-u="${a.id}" data-n="${esc(a.name)}">${icon('user-x')} Remove from team</button></div></section>` : ''}`;
+    return this.frame(esc(a.name), back + head + body);
+  },
+  /* ---------- Feedback ---------- */
+  fbItem(f, compact) {
+    return `<article class="fb-item"><div class="fb-top">${Social.avatar(f.user, compact ? 30 : 36)}<div class="grow"><b>${esc(f.user ? f.user.name : '')}</b> ${this.kindChip(f.kind)}<small class="muted"> · ${Social.ago(f.created_at)}${f.coach ? ' · ' + esc(f.coach.name) : ''}</small></div>
+        <span class="fb-seen ${f.seen_at ? 'on' : ''}" title="${f.seen_at ? 'Seen' : 'Not seen yet'}">${icon(f.seen_at ? 'check-check' : 'check')}<span>${f.seen_at ? 'Seen' : 'Sent'}</span></span></div>
+      <p class="fb-body">${esc(compact && f.body.length > 160 ? f.body.slice(0, 157) + '…' : f.body)}</p>${f.sid_title ? `<small class="fb-ref">${icon('dumbbell')} ${esc(f.sid_title)}</small>` : ''}
+      ${compact ? '' : `<div class="fb-acts"><button type="button" class="btn sm ghost" data-act="hq-fb" data-u="${f.user.id}" data-k="${f.kind}">${icon('send')} Follow up</button>${f.coach && Cloud.user && f.coach.id === Cloud.user.id ? `<button type="button" class="btn sm ghost" data-act="hq-fb-del" data-id="${f.id}" aria-label="Delete">${icon('trash-2')}</button>` : ''}</div>`}</article>`;
+  },
+  composer(fixed) {
+    const st = this.st, k = st.fbKind, R = this.roster().v, A = R ? R.athletes : [], to = fixed || st.fbTo || [];
+    const who = fixed ? '' : `<div class="field"><span class="label" id="fbToL">To</span><div class="chips fb-to" role="group" aria-labelledby="fbToL"><button type="button" class="chip" data-act="hq-fbto" data-v="all" aria-pressed="${!to.length}">${icon('users')} Whole team</button>${A.map(a => `<button type="button" class="chip" data-act="hq-fbto" data-v="${a.id}" aria-pressed="${to.includes(a.id)}">${esc(a.name)}</button>`).join('')}</div></div>`;
+    return `<h2 class="h3">${icon('send')} New feedback</h2>${who}
+      <div class="field"><span class="label" id="fbKL">Type</span><div class="chips fb-kinds" role="radiogroup" aria-labelledby="fbKL">${Object.entries(FB_KINDS).map(([kk, d]) => `<button type="button" class="chip k-${kk}" role="radio" data-act="hq-st" data-k="fbKind" data-v="${kk}" aria-checked="${k === kk}">${icon(d[1])} ${d[0]}</button>`).join('')}</div></div>
+      <div class="field"><label for="fbBody">Message</label><textarea class="input" id="fbBody" rows="4" maxlength="1500" placeholder="Be specific: what went well, what to work on next."></textarea></div>
+      <div class="fb-tpl">${(FB_TEMPLATES[k] || []).map(t => `<button type="button" class="chip" data-act="hq-tpl" data-v="${esc(t)}">${icon('lightbulb')} ${esc(t.length > 52 ? t.slice(0, 50) + '…' : t)}</button>`).join('')}</div>
+      <button class="btn primary" type="button" data-act="hq-fb-send" data-to="${esc(to.join(','))}">${icon('send')} Send${fixed ? '' : to.length ? ` to ${to.length}` : ' to the whole team'}</button>`;
+  },
+  feedbackScreen() {
+    const tid = this.tid(), F = this.fb(tid), R = this.roster(tid), st = this.st;
+    if (!R.v) return this.frame('Feedback', this.loading(R, 'roster:' + tid));
+    let L = F.v || [];
+    if (st.fbFilter === 'unseen') L = L.filter(f => !f.seen_at); else if (FB_KINDS[st.fbFilter]) L = L.filter(f => f.kind === st.fbFilter);
+    const seen = (F.v || []).filter(f => f.seen_at).length;
+    const body = `<div class="hq-grid hq-grid-fb"><section class="panel hq-card stack" data-stg>${this.composer(null)}</section>
+      <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Sent</h2>${(F.v || []).length ? `<span class="muted hq-note">${seen}/${F.v.length} seen</span>` : ''}</div>
+        <div class="chips" role="group" aria-label="Filter">${[['all', 'All'], ['unseen', 'Not seen']].concat(Object.entries(FB_KINDS).map(([k, d]) => [k, d[0]])).map(([k, l]) => `<button type="button" class="chip" data-act="hq-st" data-k="fbFilter" data-v="${k}" aria-pressed="${st.fbFilter === k}">${l}</button>`).join('')}</div>
+        ${F.v ? (L.length ? L.map(f => this.fbItem(f, false)).join('') : `<p class="muted" style="margin-top:12px">${(F.v || []).length ? 'Nothing matches.' : 'Nothing sent yet.'}</p>`) : this.loading(F, 'fb:' + tid)}</section></div>`;
+    return this.frame('Feedback', body, { sub: 'Praise, technique, focus and recovery advice — athletes get a notification and see it on Home.' });
+  },
+  async send(el) {
+    const b = $('#fbBody'), text = b ? b.value.trim() : '', ids = (el.dataset.to || '').split(',').filter(Boolean);
+    if (!text) { UI.toast('Write the feedback first.', 'bad'); b && b.focus(); return; }
+    const n = await Social.act(el, () => Social.rpc('feedback_send', { p_team: this.tid(), p_users: ids.length ? ids : null, p_kind: this.st.fbKind, p_body: text, p_sid: this.st.sid || null, p_sid_title: this.st.sidTitle || null }));
+    if (n === undefined) return;
+    UI.toast(`Feedback sent to ${n} athlete${n === 1 ? '' : 's'}.`); b.value = ''; this.st.sid = null; this.st.sidTitle = null; this.st.fbTo = null;
+    Social.drop('fb:' + this.tid(), 'hq:' + this.tid()); Sheet.stack && Sheet.close && $('#sheet-root .fb-sheet') && Sheet.close(); UI.render();
+  },
+  /* quick feedback from anywhere in HQ (a sheet) */
+  quick(uid, kind, sid, sidTitle) {
+    const R = this.roster().v, a = R && uid ? R.athletes.find(x => x.id === uid) : null;
+    this.st.fbKind = FB_KINDS[kind] ? kind : 'praise'; this.st.sid = sid || null; this.st.sidTitle = sidTitle || null; this.st.fbTo = uid ? [uid] : null;
+    const draw = sh => { $('.sheet-body', sh).innerHTML = `<div class="stack fb-sheet">${sidTitle ? `<p class="fb-ref">${icon('dumbbell')} About: <b>${esc(sidTitle)}</b></p>` : ''}${this.composer(uid ? [uid] : null)}</div>`; UI.icons(sh); };
+    Sheet.open({ title: a ? `Feedback for ${a.name}` : 'Send feedback', html: '<div class="fb-sheet"></div>', onMount: sh => { this._sheet = sh; draw($('#sheet-root')); } });
+    this._redrawSheet = () => draw($('#sheet-root'));
+  },
+  /* ---------- Training ---------- */
+  training() {
+    const tid = this.tid(), R = this.roster(tid), P = Social.get('plans', () => Social.rpc('plan_list'), 30000);
+    if (!R.v) return this.frame('Training', this.loading(R, 'roster:' + tid));
+    const T = R.v.team, own = R.v.athletes.filter(a => a.plan && a.plan.own), plans = P.v || [];
+    const body = `<div class="hq-grid">
+      <section class="panel hq-card stack hq-plan-hero" data-stg><span class="label">Team plan</span><h2 class="h2">${T.plan ? esc(T.plan.name) : 'Standard program'}</h2>
+        <p class="muted">${T.plan ? 'Everyone on the team trains on this plan unless they have their own.' : 'The team follows the standard 11-week program. Make a plan to swap exercises for your equipment, change sets and reps, or build your own block.'}</p>
+        <div class="row wrap"><button class="btn primary" type="button" data-act="hq-tplan">${icon('repeat')} ${T.plan ? 'Change plan' : 'Choose a plan'}</button>${T.plan ? `<button class="btn" type="button" data-act="go" data-r="cplan" data-p="${T.plan.id}">${icon('pen-line')} Edit plan</button>` : ''}</div></section>
+      <section class="panel hq-card stack" data-stg><h2 class="h3">Create a plan</h2>
+        <button type="button" class="hq-create" data-act="pe-new"><span class="hq-create-ic">${icon('pen-line')}</span><span class="grow"><b>Build it yourself</b><small class="muted">Start from the program: swap exercises, edit sets, reps and rest, add your own</small></span>${icon('chevron-right')}</button>
+        <button type="button" class="hq-create" data-act="ai-draft"><span class="hq-create-ic ai">${icon('sparkles')}</span><span class="grow"><b>Draft a block with AI</b><small class="muted">Pick a goal, days a week and your equipment — check it before athletes see it</small></span>${icon('chevron-right')}</button></section></div>
+      <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Your plans</h2><span class="badge">${plans.length}</span></div>
+        ${P.v ? (plans.length ? `<div class="hq-plans">${plans.map(p => `<div class="hq-plan"><span class="lib-ico">${icon('clipboard-list')}</span><div class="grow"><b>${esc(p.name)}</b><small class="muted">${p.block ? 'Own block' : 'Changes to the program'} · ${(p.teams || []).length ? 'team: ' + p.teams.map(t => esc(t.name)).join(', ') : 'no team'} · ${p.athletes || 0} on it alone · updated ${Social.ago(p.updated_at)}</small></div>
+            <div class="row"><button class="btn sm" type="button" data-act="go" data-r="cplan" data-p="${p.id}">${icon('pen-line')} Edit</button>${!T.plan || T.plan.id !== p.id ? `<button class="btn sm ghost" type="button" data-act="hq-use" data-id="${p.id}">Use for team</button>` : '<span class="badge">Team plan</span>'}</div></div>`).join('')}</div>` : '<p class="muted">No plans yet.</p>') : this.loading(P, 'plans')}</section>
+      <section class="panel hq-card" data-stg><h2 class="h3">Athletes on their own plan</h2>${own.length ? own.map(a => `<div class="kv"><button type="button" class="linkish" data-act="hq-ath" data-id="${a.id}">${esc(a.name)}</button><span>${esc(a.plan.name)}</span></div>`).join('') : '<p class="muted">Nobody — everyone follows the team plan. Give someone their own plan from their page (Plan tab).</p>'}</section>`;
+    return this.frame('Training', body, { sub: 'Plans your athletes train on' });
+  },
+  /* ---------- Reports ---------- */
+  reports() {
+    const tid = this.tid(), R = this.roster(tid), d = this.days();
+    if (!R.v) return this.frame('Reports', this.loading(R, 'roster:' + tid));
+    const A = R.v.athletes, sel = this.st.repAth || (A[0] && A[0].id) || '';
+    const inc = l => `<ul class="hq-inc">${l.map(x => `<li>${icon('check')} ${x}</li>`).join('')}</ul>`;
+    const body = `${this.periodChips()}<div class="hq-grid">
+      <section class="panel hq-card stack hq-rep" data-stg><span class="hq-rep-ic">${icon('users')}</span><h2 class="h2">Team report</h2><p class="muted">${esc(R.v.team.name)} · last ${d} days · ${A.length} athletes</p>
+        ${inc(['Headline numbers: compliance, workouts, training time, volume, readiness', 'Team activity chart and readiness trend', 'Every athlete: workouts, compliance, volume, last workout, strength', 'Highlights and who needs attention'])}
+        <button class="btn primary" type="button" data-act="hq-pdf" data-k="team" ${A.length ? '' : 'disabled'}>${icon('file-down')} Download team PDF</button></section>
+      <section class="panel hq-card stack hq-rep" data-stg><span class="hq-rep-ic">${icon('user')}</span><h2 class="h2">Athlete report</h2>
+        <div class="field"><label for="hqRepAth">Athlete</label><select class="input" id="hqRepAth" data-act-change="hq-repath">${A.map(a => `<option value="${a.id}" ${a.id === sel ? 'selected' : ''}>${esc(a.name)}</option>`).join('')}</select></div>
+        ${inc(['Workouts, compliance, training time, volume, readiness, body weight', 'Workouts chart, readiness and body-weight trends', 'Strength maxes, level and speed tests', 'Recent workouts and your feedback'])}
+        <button class="btn primary" type="button" data-act="hq-pdf" data-k="athlete" data-u="${sel}" ${A.length ? '' : 'disabled'}>${icon('file-down')} Download athlete PDF</button></section></div>
+      <section class="panel hq-card stack" data-stg><h2 class="h3">${icon('table-2')} Spreadsheets</h2><p class="muted hq-note">Roster, attendance, test results and challenges as CSV files for Excel or Google Sheets.</p><div><button class="btn" type="button" data-act="co-export" data-id="${tid}" data-n="${esc(R.v.team.name)}">${icon('download')} Export to a spreadsheet</button></div></section>`;
+    return this.frame('Reports', body, { sub: 'PDF reports to share with athletes, parents or staff' });
+  },
+  screen(param) {
+    const g = this.gate(); if (g) return `<div class="screen hq">${g}</div>`;
+    const p = String(param || 'overview'), [sec, id] = p.split(':');
+    if (sec === 'athlete' && id) return this.athlete(id);
+    return ({ athletes: () => this.athletes(), feedback: () => this.feedbackScreen(), training: () => this.training(), reports: () => this.reports() }[sec] || (() => this.overview()))();
+  },
+  section() { const p = String(UI.route.param || 'overview').split(':')[0]; return p === 'athlete' ? 'athletes' : (this.SECTIONS.find(s => s[0] === p) ? p : 'overview'); },
+  go(p, push) { if (push) Nav.stack.push(UI.route); Nav.go('hq', p, { keep: !!push }); }
+};
+Screens.hq = p => HQ.screen(p);
+After.hq = view => { Social.hydrate && Social.hydrate(view); };
+
+/* ---------- the bottom bar / sidebar becomes HQ's while it is open ---------- */
+const HQNav = {
+  on: false,
+  enter() {
+    const bar = $('#nav .bar'); if (!bar || this.on) return;
+    this.saved = bar.innerHTML; this.savedTabs = bar.style.getPropertyValue('--tabs');
+    const t = HQ.team();
+    bar.innerHTML = `<div class="side-brand hq-brand"><span class="hq-brand-ic">${icon('shield')}</span><div><b>Coach HQ</b><small>${esc(t ? t.name : Brand.name())}</small></div></div><span class="ind" aria-hidden="true"></span>
+      ${HQ.SECTIONS.map(([k, l, ic]) => `<button type="button" data-hq="${k}">${icon(ic)}<span>${l}</span></button>`).join('')}
+      <button type="button" class="hq-exit" data-act="hq-exit">${icon('arrow-left')}<span>My training</span></button>`;
+    bar.style.setProperty('--tabs', HQ.SECTIONS.length); document.body.classList.add('hq-mode'); this.on = true; UI.icons(bar);
+  },
+  exit() {
+    const bar = $('#nav .bar'); if (!bar || !this.on) return;
+    bar.innerHTML = this.saved; bar.style.setProperty('--tabs', this.savedTabs || TABS.length); document.body.classList.remove('hq-mode'); this.on = false;
+  },
+  paint() {
+    const sec = HQ.section(), idx = HQ.SECTIONS.findIndex(s => s[0] === sec);
+    $$('#nav [data-hq]').forEach(b => { b.removeAttribute('aria-current'); if (b.dataset.hq === sec) b.setAttribute('aria-current', 'page'); });
+    const ind = $('#nav .ind'); if (ind) { ind.style.opacity = '1'; ind.style.transform = `translateX(${Math.max(0, idx) * 100}%)`; }
+    const t = HQ.team(), sb = $('#nav .hq-brand small'); if (sb && t) sb.textContent = t.name;
+  }
+};
+(() => {
+  const render = UI.render.bind(UI);
+  UI.render = function (opts) { if (UI.route.name === 'hq') HQNav.enter(); else HQNav.exit(); return render(opts); };
+  const paint = Nav.paint; Nav.paint = function () { if (HQNav.on) { HQNav.paint(); NavFive.resume(); return; } return paint.call(Nav); };
+  document.addEventListener('click', e => { const b = e.target.closest('#nav [data-hq]'); if (!b) return; e.preventDefault(); e.stopPropagation(); HQ.go(b.dataset.hq); try { Haptics.tap(); } catch (x) { } }, true);
+  document.addEventListener('input', e => { if (e.target.id === 'hqQ') { HQ.st.q = e.target.value; clearTimeout(HQ._qt); HQ._qt = setTimeout(() => { Social.repaint(); const i = $('#hqQ'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 220); } });
+  document.addEventListener('change', e => {
+    if (e.target.id === 'hqSort') { HQ.st.sort = e.target.value; UI.render(); }
+    if (e.target.id === 'hqRepAth') { HQ.st.repAth = e.target.value; UI.render(); }
+  });
+})();
+
+/* ============ PDF REPORTS ============ */
+const HQPdf = {
+  SRC: ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', 'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js'],
+  async lib() {
+    if (window.jspdf && window.jspdf.jsPDF) return window.jspdf.jsPDF;
+    for (const u of this.SRC) {
+      try { await new Promise((ok, bad) => { const s = document.createElement('script'); s.src = u; s.async = true; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }); if (window.jspdf && window.jspdf.jsPDF) return window.jspdf.jsPDF; } catch (e) { }
+    }
+    throw new Error('The PDF maker could not load. Check your internet connection and try again.');
+  },
+  /* the standard PDF fonts only know Western characters */
+  t(s) { return String(s == null ? '' : s).replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/…/g, '...').replace(/→/g, '->').replace(/≈/g, '~').replace(/–/g, '-').replace(/[^\x00-\xFF—•]/g, ''); },
+  rgb(h) { const n = parseInt(String(h).trim().replace('#', ''), 16); return isFinite(n) ? [n >> 16 & 255, n >> 8 & 255, n & 255] : [47, 65, 86]; },
+  colors() { const cs = getComputedStyle(document.documentElement), v = (k, d) => (cs.getPropertyValue(k) || '').trim() || d;
+    return { ink: this.rgb(v('--p2F4156', '#2F4156')), acc: this.rgb(v('--p567C8D', '#567C8D')), sky: this.rgb(v('--pC8D9E6', '#C8D9E6')), page: this.rgb(v('--pF5EFEB', '#F5EFEB')), muted: this.rgb(v('--p4F6272', '#4F6272')), line: this.rgb(v('--pE6D9CF', '#E6D9CF')) }; },
+  /* a page-aware writer */
+  make(J) {
+    const doc = new J({ unit: 'mm', format: 'a4' }), C = this.colors(), W = 210, H = 297, M = 16, self = this;
+    const w = { doc, C, W, H, M, y: M, cw: W - 2 * M,
+      ensure(h) { if (this.y + h > H - 18) { doc.addPage(); this.y = M; } },
+      text(s, x, y, o = {}) { doc.setFont('helvetica', o.b ? 'bold' : 'normal'); doc.setFontSize(o.size || 10); doc.setTextColor(...(o.c || C.ink)); doc.text(self.t(s), x, y, { align: o.align || 'left', maxWidth: o.max }); },
+      header(kicker, title, sub) {
+        doc.setFillColor(...C.ink); doc.rect(0, 0, W, 42, 'F'); doc.setFillColor(...C.acc); doc.rect(0, 42, W, 1.6, 'F');
+        this.text(kicker, M, 13, { size: 9, c: [255, 255, 255], b: true }); this.text(title, M, 26, { size: 22, b: true, c: [255, 255, 255] }); this.text(sub, M, 35, { size: 10, c: C.sky });
+        this.text('Generated ' + fmtDate(todayISO()), W - M, 13, { size: 8.5, c: C.sky, align: 'right' }); this.y = 54;
+      },
+      section(t) { this.y += 5; this.ensure(16); this.text(t, M, this.y, { size: 13, b: true }); doc.setDrawColor(...C.line); doc.setLineWidth(.3); doc.line(M, this.y + 2.5, W - M, this.y + 2.5); this.y += 9; },
+      kpis(list) {
+        const per = 3, gap = 4, tw = (this.cw - gap * (per - 1)) / per, th = 22;
+        for (let i = 0; i < list.length; i += per) { this.ensure(th + 4);
+          list.slice(i, i + per).forEach((k, j) => { const x = M + j * (tw + gap); doc.setFillColor(...C.page); doc.roundedRect(x, this.y, tw, th, 3, 3, 'F');
+            this.text(k[0].toUpperCase(), x + 4, this.y + 6, { size: 7, c: C.muted, b: true }); this.text(k[1], x + 4, this.y + 14.5, { size: 15, b: true }); this.text(k[2] || '', x + 4, this.y + 19.5, { size: 7.5, c: C.muted, max: tw - 8 }); });
+          this.y += th + gap; }
+      },
+      bars(vals, labels, h = 46) {
+        this.ensure(h + 10); const x0 = M, y0 = this.y, n = vals.length, max = Math.max(1, ...vals), bw = this.cw / n, gw = Math.min(14, bw * .6);
+        doc.setDrawColor(...C.line); doc.setLineWidth(.2); doc.line(x0, y0 + h, x0 + this.cw, y0 + h);
+        vals.forEach((v, i) => { const bh = (h - 8) * v / max, x = x0 + i * bw + (bw - gw) / 2;
+          doc.setFillColor(...C.page); doc.roundedRect(x, y0 + 8, gw, h - 8, 1.5, 1.5, 'F'); if (bh > 0) { doc.setFillColor(...(i === n - 1 ? C.ink : C.acc)); doc.roundedRect(x, y0 + h - bh, gw, bh, 1.5, 1.5, 'F'); }
+          if (v) this.text(fmtNum(v, 0), x + gw / 2, y0 + h - bh - 1.5, { size: 7, align: 'center', b: true }); this.text(labels[i] || '', x + gw / 2, y0 + h + 4.5, { size: 6.5, c: C.muted, align: 'center' }); });
+        this.y += h + 10;
+      },
+      line(vals, h = 34, o = {}) {
+        const ys = vals.filter(v => v != null && isFinite(v)); this.ensure(h + 8);
+        if (ys.length < 2) { this.text(o.empty || 'Not enough data in this period.', M, this.y + 5, { size: 9, c: C.muted }); this.y += 10; return; }
+        let lo = o.min != null ? o.min : Math.min(...ys), hi = o.max != null ? o.max : Math.max(...ys); if (hi - lo < 1e-6) { lo -= 1; hi += 1; }
+        const x0 = M + 10, cw = this.cw - 10, y0 = this.y, X = i => x0 + cw * (vals.length === 1 ? .5 : i / (vals.length - 1)), Y = v => y0 + h - h * (v - lo) / (hi - lo);
+        doc.setDrawColor(...C.line); doc.setLineWidth(.2); doc.line(x0, y0 + h, x0 + cw, y0 + h); doc.line(x0, y0, x0 + cw, y0);
+        this.text(fmtNum(hi, o.dec || 0), M, y0 + 2.5, { size: 7, c: C.muted }); this.text(fmtNum(lo, o.dec || 0), M, y0 + h, { size: 7, c: C.muted });
+        doc.setDrawColor(...C.acc); doc.setLineWidth(.8); let prev = null;
+        vals.forEach((v, i) => { if (v == null || !isFinite(v)) return; const p = [X(i), Y(v)]; if (prev) doc.line(prev[0], prev[1], p[0], p[1]); prev = p; });
+        if (prev) { doc.setFillColor(...C.ink); doc.circle(prev[0], prev[1], 1.2, 'F'); }
+        this.y += h + 8;
+      },
+      table(cols, rows) {
+        const rh = 7.2, head = () => { this.ensure(rh * 2); doc.setFillColor(...C.ink); doc.rect(M, this.y, this.cw, rh, 'F'); let x = M;
+          cols.forEach(c => { this.text(c.h, c.a === 'r' ? x + c.w - 2 : x + 2, this.y + 4.9, { size: 7.5, b: true, c: [255, 255, 255], align: c.a === 'r' ? 'right' : 'left' }); x += c.w; }); this.y += rh; };
+        head();
+        rows.forEach((r, ri) => { if (this.y + rh > H - 18) { doc.addPage(); this.y = M; head(); }
+          if (ri % 2) { doc.setFillColor(...C.page); doc.rect(M, this.y, this.cw, rh, 'F'); }
+          let x = M; cols.forEach((c, ci) => { let v = self.t(r[ci]); doc.setFontSize(8); while (v.length > 2 && doc.getTextWidth(v) > c.w - 3) v = v.slice(0, -2); if (v !== self.t(r[ci])) v = v.slice(0, -1) + '.';
+            this.text(v, c.a === 'r' ? x + c.w - 2 : x + 2, this.y + 4.9, { size: 8, align: c.a === 'r' ? 'right' : 'left', b: ci === 0 }); x += c.w; }); this.y += rh; });
+        this.y += 5;
+      },
+      para(s, o = {}) { const lines = doc.setFont('helvetica', o.b ? 'bold' : 'normal').setFontSize(o.size || 9.5).splitTextToSize(self.t(s), this.cw - (o.indent || 0)); lines.forEach(l => { this.ensure(5); this.text(l, M + (o.indent || 0), this.y, { size: o.size || 9.5, c: o.c, b: o.b }); this.y += (o.size || 9.5) * .45; }); this.y += 1.5; },
+      finish(name) {
+        const n = doc.getNumberOfPages();
+        for (let i = 1; i <= n; i++) { doc.setPage(i); doc.setDrawColor(...C.line); doc.setLineWidth(.2); doc.line(M, H - 12, W - M, H - 12);
+          this.text(`${Brand.name()} · Coach HQ`, M, H - 7, { size: 7.5, c: C.muted }); this.text(`Page ${i} of ${n}`, W - M, H - 7, { size: 7.5, c: C.muted, align: 'right' }); }
+        return self.save(doc, name);
+      } };
+    return w;
+  },
+  save(doc, name) {
+    const blob = doc.output('blob'), file = typeof File === 'function' ? new File([blob], name, { type: 'application/pdf' }) : null;
+    if (file && navigator.canShare && /iPhone|iPad|iPod/.test(navigator.userAgent) && navigator.canShare({ files: [file] })) return navigator.share({ files: [file], title: name }).catch(() => { });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+  },
+  slug(s) { return String(s || 'report').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'report'; },
+  async team(tid, days) {
+    const [J, R, S, RD, F] = await Promise.all([this.lib(), Social.rpc('team_roster', { p_id: tid }), Social.rpc('hq_team', { p_team: tid, p_days: days }), Social.rpc('coach_readiness', { p_team: tid }).catch(() => null), Social.rpc('feedback_list', { p_team: tid, p_user: null, p_limit: 300 }).catch(() => [])]);
+    const A = HQ.merge(R, S, RD), n = A.length, u = unitW(), w = this.make(J), T = R.team;
+    const tot = A.reduce((t, a) => t + a.w, 0), comp = n ? A.reduce((t, a) => t + a.comp, 0) / n : 0, min = A.reduce((t, a) => t + a.min, 0), vol = A.reduce((t, a) => t + a.vol, 0);
+    const rAll = A.filter(a => a.readyAvg != null), rAvg = rAll.length ? rAll.reduce((t, a) => t + a.readyAvg, 0) / rAll.length : null, fbN = (F || []).filter(f => Date.parse(f.created_at) >= Date.parse(S.from)).length;
+    w.header(`${Brand.name()} · TEAM REPORT`, T.name, `${fmtDate(S.from)} - ${fmtDate(S.to)}  ·  ${n} athletes  ·  ${T.weekly_goal || 4} workouts a week planned`);
+    w.kpis([['Compliance', HQ.pct(comp), 'of planned workouts'], ['Workouts', fmtNum(tot, 0), `${fmtNum(n ? tot / n / (days / 7) : 0, 1)} per athlete per week`], ['Training time', fmtNum(min / 60, 0) + ' h', `${fmtNum(n ? min / n : 0, 0)} min per athlete`],
+      ['Volume', HQ.volFmt(vol) + ' ' + u, 'weight x reps, working sets'], ['Readiness', rAvg == null ? '-' : fmtNum(rAvg, 1) + ' / 5', 'average check-in'], ['Feedback', String(fbN), 'messages from coaches']]);
+    const B = HQ.buckets(days); w.section(`Team workouts per ${days <= 14 ? 'day' : 'week'}`); w.bars(B.map(b => A.reduce((t, a) => t + HQ.count(a.ses, b), 0)), B.map(b => b.label));
+    if (RD && RD.trend && RD.trend.some(x => x.avg != null)) { w.section('Readiness - last 14 days (team average, 1-5)'); w.line(RD.trend.map(x => x.avg == null ? null : +x.avg), 30, { min: 1, max: 5 }); }
+    w.section('Athletes');
+    w.table([{ h: 'Athlete', w: 40 }, { h: 'Pos', w: 12 }, { h: 'Workouts', w: 17, a: 'r' }, { h: 'Compl.', w: 15, a: 'r' }, { h: 'Hours', w: 13, a: 'r' }, { h: 'Volume ' + u, w: 22, a: 'r' }, { h: 'Ready', w: 13, a: 'r' }, { h: 'Last', w: 20, a: 'r' }, { h: 'Strength', w: 26 }],
+      A.slice().sort((x, y) => y.comp - x.comp || x.name.localeCompare(y.name)).map(a => [a.name, a.position || '-', a.w, a.comp + '%', fmtNum(a.min / 60, 1), HQ.volFmt(a.vol), a.readyAvg == null ? '-' : fmtNum(a.readyAvg, 1), a.since == null ? 'never' : a.since === 0 ? 'today' : a.since + 'd ago', a.lv.level ? Brand.lvl(a.lv.level) : `${a.lv.known}/4 maxes`]));
+    w.section('Maxes (' + u + ', tested or recorded)');
+    w.table([{ h: 'Athlete', w: 50 }].concat(Object.keys(LIFTS).map(k => ({ h: LIFTS[k].name, w: (w.cw - 50 - 30) / Object.keys(LIFTS).length, a: 'r' }))).concat([{ h: 'Total', w: 30, a: 'r' }]),
+      A.map(a => [a.name].concat(Object.keys(LIFTS).map(k => a.lv.m[k] != null ? fmtNum(Units.fromKg(Units.toKg(a.lv.m[k], 'lb'), u), 0) : '-')).concat([a.lv.total ? fmtNum(Units.fromKg(Units.toKg(a.lv.total, 'lb'), u), 0) : '-'])));
+    w.section('Highlights');
+    const top = A.slice().sort((x, y) => y.w - x.w).filter(a => a.w).slice(0, 3), att = A.map(a => [a, HQ.attention(a, {}).filter(x => x.t !== 'info')]).filter(x => x[1].length);
+    w.para('Most consistent: ' + (top.length ? top.map(a => `${a.name} (${a.w})`).join(', ') : 'no workouts logged in this period') + '.', { b: true });
+    w.para('Needs attention: ' + (att.length ? att.map(([a, l]) => `${a.name} - ${l[0].why.toLowerCase()}`).join('; ') : 'nobody - everyone is on track') + '.');
+    return w.finish(`${this.slug(T.name)}-team-report-${todayISO()}.pdf`);
+  },
+  async athlete(tid, uid, days) {
+    const [J, A, R, S, RD, F] = await Promise.all([this.lib(), Social.rpc('team_athlete', { p_team: tid, p_user: uid }), Social.rpc('team_roster', { p_id: tid }), Social.rpc('hq_team', { p_team: tid, p_days: days }), Social.rpc('coach_readiness', { p_team: tid }).catch(() => null), Social.rpc('feedback_list', { p_team: tid, p_user: uid, p_limit: 100 }).catch(() => [])]);
+    const m = HQ.merge(R, S, RD).find(x => x.id === uid) || { ses: [], w: 0, comp: 0, min: 0, vol: 0, sets: 0, readySeries: [] }, pr = A.profile || {}, u = unitW(), w = this.make(J);
+    const src = { baselines: pr.baselines, athletic: pr.athletic, position: pr.position, results: A.results, passed110: A.passed110 }, L = TeamCalc.level(src), P = TeamCalc.pillars(src);
+    const pos = pr.position ? (POSITIONS[pr.position] ? POSITIONS[pr.position].name : pr.position) : 'No position';
+    const bw = A.bodyweight || [], bwd = m.bwFirst && m.bwLast && m.bwFirst.kg && m.bwLast.kg ? Units.fromKg(m.bwLast.kg - m.bwFirst.kg, u) : null;
+    w.header(`${Brand.name()} · ATHLETE REPORT`, A.name, `@${A.username}  ·  ${pos}  ·  ${R.team.name}  ·  ${fmtDate(S.from)} - ${fmtDate(S.to)}`);
+    w.kpis([['Workouts', String(m.w), `in ${days} days`], ['Compliance', HQ.pct(m.comp), `${R.team.weekly_goal || 4} a week planned`], ['Training time', fmtNum(m.min / 60, 1) + ' h', `${m.sets} working sets`],
+      ['Volume', HQ.volFmt(m.vol) + ' ' + u, 'weight x reps'], ['Readiness', m.readyAvg == null ? '-' : fmtNum(m.readyAvg, 1) + ' / 5', 'average check-in'], ['Body weight', m.bwLast && m.bwLast.kg ? HQ.wFmt(m.bwLast.kg, 1) + ' ' + u : '-', bwd != null ? `${bwd > 0 ? '+' : ''}${fmtNum(bwd, 1)} ${u} in the period` : 'latest']]);
+    const B = HQ.buckets(days); w.section(`Workouts per ${days <= 14 ? 'day' : 'week'}`); w.bars(B.map(b => HQ.count(m.ses, b)), B.map(b => b.label), 40);
+    w.section('Readiness (1-5)'); w.line((m.readySeries || []).map(x => +x.s), 26, { min: 1, max: 5, empty: 'Fewer than two readiness check-ins in this period.' });
+    w.section('Body weight (' + u + ')'); w.line(bw.map(b => Units.fromKg(b.w && b.w.kg, u)), 26, { dec: 1, empty: 'Fewer than two weigh-ins.' });
+    w.section('Strength - ' + (L.level ? Brand.lvl(L.level) : 'no level yet'));
+    w.table(Object.keys(LIFTS).map(k => ({ h: LIFTS[k].name, w: w.cw / Object.keys(LIFTS).length, a: 'r' })), [Object.keys(LIFTS).map(k => L.m[k] != null ? fmtNum(Units.fromKg(Units.toKg(L.m[k], 'lb'), u), 0) + ' ' + u : '-')]);
+    w.para(`Pillars of ${Brand.bench()}: strength ${P.strength ? 'met' : 'not yet'} · conditioning ${P.conditioning ? 'met' : 'not yet'} · speed ${P.speed ? 'met' : 'not yet'}.`, { c: w.C.muted });
+    w.section('Speed & agility');
+    w.table([{ h: 'Test', w: 80 }, { h: 'Best', w: 49, a: 'r' }, { h: 'Target', w: 49, a: 'r' }], SPEED_METRICS.map(mm => { const v = TeamCalc.speed(src, mm); let t = Speed.std(mm, TeamCalc.group(src)); if (METRICS[mm].kind === 'height' && Units.hUnit() === 'cm') t *= CM_PER_IN; const dec = METRICS[mm].kind === 'time' ? 2 : 1;
+      return [METRICS[mm].name.replace(/ \(.*\)/, ''), v != null ? fmtNum(v, dec) + ' ' + Units.metricUnit(mm) : '-', fmtNum(t, dec) + ' ' + Units.metricUnit(mm) + (TeamCalc.speedMet(src, mm) ? ' (met)' : '')]; }));
+    const rec = (A.sessions || []).filter(s => s.date >= S.from).slice(0, 20);
+    w.section('Recent workouts');
+    if (rec.length) w.table([{ h: 'Date', w: 26 }, { h: 'Workout', w: 66 }, { h: 'Min', w: 16, a: 'r' }, { h: 'Sets', w: 16, a: 'r' }, { h: 'Top set', w: 54 }], rec.map(s => [fmtDate(s.date), s.kind === 'active' ? 'Active rest' : s.title || 'Workout', s.status === 'skipped' ? 'skipped' : s.minutes || 0, s.sets || 0, ((s.top || []).filter(x => x.w)[0] ? (t => `${t.name} ${Units.fmtW(t.w)} ${u} x ${t.reps}`)((s.top || []).filter(x => x.w)[0]) : '-')]));
+    else w.para('No workouts in this period.', { c: w.C.muted });
+    const fb = (F || []).filter(f => Date.parse(f.created_at) >= Date.parse(S.from));
+    w.section('Coach feedback');
+    if (fb.length) fb.slice(0, 12).forEach(f => { w.para(`${fmtDate(String(f.created_at).slice(0, 10))} · ${(FB_KINDS[f.kind] || FB_KINDS.note)[0]}${f.coach ? ' · ' + f.coach.name : ''}${f.sid_title ? ' · ' + f.sid_title : ''}`, { b: true, size: 8.5, c: w.C.muted }); w.para(f.body, { indent: 3 }); });
+    else w.para('No feedback in this period.', { c: w.C.muted });
+    return w.finish(`${this.slug(A.name)}-report-${todayISO()}.pdf`);
+  },
+  async run(el, kind, uid) {
+    const tid = HQ.tid(), days = HQ.days(); if (!tid) return;
+    const lab = el ? el.innerHTML : ''; if (el) { el.disabled = true; el.innerHTML = `${icon('clock')} Making your PDF…`; UI.icons(el); }
+    try { if (kind === 'team') await this.team(tid, days); else await this.athlete(tid, uid, days); UI.toast('PDF report ready.'); }
+    catch (e) { UI.toast(Social.msg(e), 'bad'); }
+    finally { if (el && el.isConnected) { el.disabled = false; el.innerHTML = lab; } }
+  }
+};
+
+/* ============ THE ATHLETE'S SIDE: feedback from coaches ============ */
+const MyFeedback = {
+  list: null, unseen: 0,
+  async sync() {
+    if (!Social.on()) return;
+    try { const L = await Social.rpc('feedback_mine', { p_limit: 50 }); const u = L.filter(f => !f.seen_at).length, ch = u !== this.unseen || !this.list; this.list = L; this.unseen = u; if (ch && UI.route.name === 'home') UI.render(); } catch (e) { }
+  },
+  card() {
+    if (!this.unseen || !this.list) return '';
+    const f = this.list.find(x => !x.seen_at), d = FB_KINDS[f.kind] || FB_KINDS.note;
+    return `<button type="button" class="panel fb-home" data-act="go" data-r="feedback" data-stg><span class="fb-home-ic k-${f.kind}">${icon(d[1])}</span><span class="grow"><span class="label">${this.unseen > 1 ? `${this.unseen} new messages` : 'New'} from ${esc(f.coach ? f.coach.name : 'your coach')}</span><span class="fb-home-q">${esc(f.body.length > 120 ? f.body.slice(0, 117) + '…' : f.body)}</span></span>${icon('chevron-right')}</button>`;
+  },
+  screen() {
+    const e = Social.get('fbmine', () => Social.rpc('feedback_mine', { p_limit: 100 }), 15000);
+    if (e.v && e.v.some(f => !f.seen_at) && !this._marking) { this._marking = true; Social.rpc('feedback_seen').then(() => { this.unseen = 0; (this.list || []).forEach(f => { f.seen_at = f.seen_at || new Date().toISOString(); }); }, () => { }).finally(() => { this._marking = false; }); }
+    const L = e.v || [];
+    return `<div class="screen soc">${backBar('From your coach')}
+      ${!e.v ? (e.err ? Social.errBox(e.err, 'fbmine') : Social.skel(2)) : L.length ? L.map(f => `<article class="panel fb-mine ${f.seen_at ? '' : 'new'}" data-stg><div class="fb-top">${Social.avatar(f.coach, 40)}<div class="grow"><b>${esc(f.coach ? f.coach.name : 'Coach')}</b> ${HQ.kindChip(f.kind)}<small class="muted"> · ${esc(f.team ? f.team.name : '')} · ${Social.ago(f.created_at)}</small></div>${f.seen_at ? '' : '<span class="badge">New</span>'}</div>
+          <p class="fb-body">${esc(f.body)}</p>${f.sid_title ? `<small class="fb-ref">${icon('dumbbell')} About: ${esc(f.sid_title)}</small>` : ''}
+          ${f.coach ? `<div class="fb-acts"><button class="btn sm" type="button" data-act="soc-chat" data-id="${f.coach.id}">${icon('message-circle')} Reply</button></div>` : ''}</article>`).join('')
+        : Social.empty('message-square-heart', 'No feedback yet', 'When your coach sends you praise, a technique tip or something to focus on, it shows here.')}</div>`;
+  }
+};
+Screens.feedback = () => MyFeedback.screen();
+
+/* ---------- entry points and hooks ---------- */
+(() => {
+  /* Home: coaches get a Coach HQ button; athletes see new feedback first */
+  const ah = After.home; After.home = function (view, opts) {
+    if (ah) ah.call(After, view, opts);
+    const row = $('.topbar .row', view);
+    if (row && Cloud.on && Brand.isCoach() && !$('.hq-btn', row)) row.insertAdjacentHTML('afterbegin', `<button type="button" class="btn sm hq-btn" data-act="go" data-r="hq">${icon('layout-dashboard')} Coach HQ</button>`);
+    UI.icons(view);
+  };
+  const mc = Screens.missionCard; Screens.missionCard = function (st, act) { const h = mc.call(Screens, st, act); return act ? h : MyFeedback.card() + h; };
+  /* Social → Coach chip opens Coach HQ for coaches */
+  const so = Screens.social; Screens.social = function (tab) { const h = so.call(Screens, tab); return Brand.isCoach() ? h.replace('data-act="go" data-r="coach" aria-pressed="false" aria-selected="false">Coach</button>', 'data-act="go" data-r="hq" aria-pressed="false" aria-selected="false">Coach HQ</button>') : h; };
+  /* the old Coach page points to Coach HQ */
+  const hub = Screens.coach; Screens.coach = function () { const h = hub.call(Screens); if (!Brand.isCoach() || !Cloud.on) return h;
+    return h.replace(/(<div class="topbar" data-stg>[\s\S]*?<\/div>)/, `$1<button type="button" class="panel hq-promo" data-act="go" data-r="hq" data-stg><span class="hq-promo-ic">${icon('layout-dashboard')}</span><span class="grow"><b>Open Coach HQ</b><small>Team stats, every athlete, feedback, training plans and PDF reports — in one place</small></span>${icon('chevron-right')}</button>`); };
+  const mo = Screens.more; Screens.more = function () { const h = mo.call(Screens); return Brand.isCoach() && Cloud.on ? h.replace(/data-act="go" data-r="coach">([\s\S]*?)<b>Coach<\/b><div class="muted" style="font-size:12.5px">[^<]*<\/div>/, 'data-act="go" data-r="hq">$1<b>Coach HQ</b><div class="muted" style="font-size:12.5px">Team stats, athletes, feedback, plans and reports</div>') : h; };
+  /* notifications about feedback open it */
+  const sn = Actions['soc-notif']; Actions['soc-notif'] = async el => { if (el.dataset.k === 'feedback') { Social.rpc('notif_read', { p_ids: [+el.dataset.id] }).then(() => { Social.drop('notifs', 'me'); Social.pollUnread(); }, () => { }); Nav.go('feedback'); return; } return sn(el); };
+  const show = App.show.bind(App); App.show = function (first) { show(first); if (Social.on()) setTimeout(() => MyFeedback.sync(), 900); };
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && Social.on()) MyFeedback.sync(); });
+  /* after a coach saves, HQ shows fresh numbers */
+  ['co-set', 'co-asst', 'co-remove', 'co-new', 'co-code-reset', 'co-invite'].forEach(k => { const f = Actions[k]; if (!f) return; Actions[k] = async el => { const r = await f(el); if (UI.route.name === 'hq') { HQ.refresh(); UI.render(); } return r; }; });
+})();
+
+Object.assign(Actions, {
+  'hq-go': el => { if (el.dataset.f) { HQ.st.filter = el.dataset.f; } HQ.go(el.dataset.p); },
+  'hq-ath': el => { HQ.st.atab = 'overview'; HQ.go('athlete:' + el.dataset.id, true); },
+  'hq-exit': () => { HQNav.exit(); Nav.go('home'); },
+  'hq-days': el => { HQ.pref('days', el.dataset.v); UI.render(); },
+  'hq-st': el => { HQ.st[el.dataset.k] = el.dataset.v; if (HQ._redrawSheet && $('#sheet-root .fb-sheet')) { const v = $('#fbBody') && $('#fbBody').value; HQ._redrawSheet(); if (v) $('#fbBody').value = v; return; } const v = $('#fbBody') && $('#fbBody').value; const y = scrollY; UI.render(); scrollTo(0, y); if (v && $('#fbBody')) $('#fbBody').value = v; },
+  'hq-team': async () => {
+    const L = HQ.teams() || [], c = await Sheet.choose({ title: 'Switch team', body: '', options: L.map(t => ({ id: t.id, label: `${t.name} · ${t.members} athlete${t.members === 1 ? '' : 's'}` })).concat([{ id: 'new', label: '+ New team', cls: 'ghost' }]) });
+    if (!c) return; if (c === 'new') return Actions['co-new'](); HQ.pref('team', c); HQ.st.repAth = ''; HQ.st.fbTo = null; HQ.go('overview');
+  },
+  'hq-fb': el => HQ.quick(el.dataset.u || null, el.dataset.k, el.dataset.sid, el.dataset.st),
+  'hq-fbto': el => { const v = el.dataset.v, to = HQ.st.fbTo || []; if (v === 'all') HQ.st.fbTo = null; else { const i = to.indexOf(v); if (i >= 0) to.splice(i, 1); else to.push(v); HQ.st.fbTo = to.length ? to : null; } Actions['hq-st']({ dataset: { k: '_', v: '' } }); },
+  'hq-tpl': el => { const b = $('#fbBody'); if (b) { b.value = el.dataset.v; b.focus(); } },
+  'hq-fb-send': el => HQ.send(el),
+  'hq-fb-del': async el => { if (!await Sheet.confirm({ title: 'Delete this feedback?', body: '<p>It disappears for the athlete too.</p>', ok: 'Delete', danger: true })) return; if (await Social.act(el, () => Social.rpc('feedback_delete', { p_id: el.dataset.id }), 'Deleted.') !== undefined) { Social.drop('fb:' + HQ.tid()); UI.render(); } },
+  'hq-pdf': el => HQPdf.run(el, el.dataset.k, el.dataset.u || ($('#hqRepAth') && $('#hqRepAth').value)),
+  'hq-repath': () => { },
+  'hq-tplan': async () => { const p = await Coach.planPick('Plan for the whole team'); if (p === undefined) return; if (await Social.act(null, () => Social.rpc('plan_assign', { p_plan: p, p_team: HQ.tid(), p_user: null }), p ? 'The team trains on this plan now.' : 'Back to the standard program.') !== undefined) { HQ.refresh(); UI.render(); } },
+  'hq-use': async el => { if (await Social.act(el, () => Social.rpc('plan_assign', { p_plan: el.dataset.id, p_team: HQ.tid(), p_user: null }), 'The team trains on this plan now.') !== undefined) { HQ.refresh(); UI.render(); } },
+  'hq-aplan': async el => { const p = await Coach.planPick('Their own plan', false); if (p === undefined) return; if (await Social.act(null, () => Social.rpc('plan_assign', { p_plan: p, p_team: HQ.tid(), p_user: el.dataset.u }), 'Plan given.') !== undefined) { HQ.refresh(); UI.render(); } },
+  'hq-aplan-off': async el => { if (await Social.act(el, () => Social.rpc('plan_assign', { p_plan: null, p_team: HQ.tid(), p_user: el.dataset.u }), 'Back to the team plan.') !== undefined) { HQ.refresh(); UI.render(); } }
+});
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
