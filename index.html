@@ -2785,7 +2785,7 @@ body.parent-mode .hq-exit-top{display:none}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Nov 06 · 01:16';
+const BUILD_ID = 'Nov 10 · 23:39';
 const PALETTE = {"anchors":{"P":"2F4156","A":"567C8D","S":"C8D9E6","N":"F5EFEB"},"P":["2F4156","4F6272","1F2B3A","3F5262","243344","3C5269","3A5266","263546","5E6672","4A5D6C","475A6A","36495F","18222E"],"A":["567C8D","4A6B7C","3F5F6E"],"S":["C8D9E6","DDE5EC","B9C9D6","EEF3F7","E6EEF4","DCE5EF","F5F7FA"],"N":["F5EFEB","E6D9CF","EFE6DF","D9C8BB","ECE6E1","F0E7E0","EADFD6","C9B5A6","FCFAF9","FAF7F5","F8F4F1","F7F2EF","F2ECE8","FFFDFB","E2D2C6","F2EAE4","78604E","967660"],"text":["2F4156","4F6272","3F5262","5E6672","3F5F6E","4A6B7C"]};
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
@@ -13150,7 +13150,7 @@ HQPdf.child = async function (uid, days) {
      Story 1080×1920 (Instagram / Facebook / WhatsApp Status / TikTok) · Post 1080×1350 (Instagram, Facebook)
      Square 1080×1080 (WhatsApp, Instagram, Facebook) · Wide 1200×630 (LinkedIn, Facebook, X)
    Every picture carries the app's name and a watermark; the share itself carries the link back to the app
-   (pictures can't hold a tappable link, so the link travels with the post text). Colours follow the school. */
+   (pictures can't hold a tappable link, so the link travels with the post text). Always the RepIQ look, whatever school the person is in. */
 const ShareKit = {
   FORMATS: [
     { id: 'story', w: 1080, h: 1920, label: 'Story', apps: 'Instagram · Facebook · WhatsApp Status · TikTok' },
@@ -13160,82 +13160,150 @@ const ShareKit = {
   ],
   url() { return `${location.origin}${location.pathname}?ref=share`; },
   short() { return (location.host + location.pathname).replace(/\/$/, '').replace(/\/index\.html$/, ''); },
-  col() { const cs = getComputedStyle(document.documentElement), v = (k, d) => (cs.getPropertyValue(k) || '').trim() || d;
-    return { ink: v('--p2F4156', '#2F4156'), acc: v('--p567C8D', '#567C8D'), sky: v('--pC8D9E6', '#C8D9E6'), page: v('--pF5EFEB', '#F5EFEB'), sand: v('--pE6D9CF', '#E6D9CF'), muted: v('--p4F6272', '#4F6272') }; },
-  rr(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); },
-  fit(g, t, max, size, weight = 800) { let s = size; g.font = `${weight} ${s}px Inter, system-ui, sans-serif`; while (g.measureText(t).width > max && s > 18) { s -= 2; g.font = `${weight} ${s}px Inter, system-ui, sans-serif`; } return s; },
+  /* always the RepIQ look — the share pictures advertise the app, whatever school the person is in */
+  N: 'RepIQ',
+  col() { return { night: '#0E1620', deep: '#18222E', ink: '#2F4156', steel: '#567C8D', sky: '#C8D9E6', ice: '#EEF3F7', page: '#F5EFEB', sand: '#E6D9CF', clay: '#C9B5A6', glow: '#F2C9A0', muted: '#9FB3C2' }; },
+  rr(g, x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); },
+  f(w, px) { return `${w} ${px}px Inter, system-ui, sans-serif`; },
+  fit(g, t, max, size, weight = 800, min = 18) { let s = size; g.font = this.f(weight, s); while (g.measureText(t).width > max && s > min) { s -= 2; g.font = this.f(weight, s); } return s; },
   wrap(g, t, max) { const words = String(t).split(/\s+/), lines = []; let line = ''; words.forEach(w => { const n = line ? line + ' ' + w : w; if (g.measureText(n).width > max && line) { lines.push(line); line = w; } else line = n; }); if (line) lines.push(line); return lines; },
-  /* the wordmark: "RepIQ" with the last capitals in the accent colour */
-  mark(g, x, y, size, C, align = 'left', light = false) {
-    const n = Brand.name(), m = n.match(/^(.*?)([A-Z]{2,})$/), a = m ? m[1] : n, b = m ? m[2] : '';
-    g.font = `800 ${size}px Inter, system-ui, sans-serif`; const wa = g.measureText(a).width, wb = g.measureText(b).width, x0 = align === 'right' ? x - wa - wb : align === 'center' ? x - (wa + wb) / 2 : x;
-    g.textAlign = 'left'; g.fillStyle = light ? '#FFFFFF' : C.ink; g.fillText(a, x0, y); g.fillStyle = light ? C.sky : C.acc; g.fillText(b, x0 + wa, y);
+  spaced(g, t, x, y, sp, align = 'left') { const ch = [...String(t)]; let w = ch.reduce((a, c) => a + g.measureText(c).width + sp, -sp); let cx = align === 'right' ? x - w : align === 'center' ? x - w / 2 : x; g.textAlign = 'left'; ch.forEach(c => { g.fillText(c, cx, y); cx += g.measureText(c).width + sp; }); return w; },
+  /* logo: a sand tile with a barbell glyph + the RepIQ wordmark */
+  logo(g, x, y, size, C, align = 'left') {
+    const t = size * 1.25; g.font = this.f(900, size); const wa = g.measureText('Rep').width, wb = g.measureText('IQ').width, tot = t + size * .38 + wa + wb;
+    const x0 = align === 'right' ? x - tot : align === 'center' ? x - tot / 2 : x, ty = y - t * .8;
+    const gr = g.createLinearGradient(x0, ty, x0 + t, ty + t); gr.addColorStop(0, C.page); gr.addColorStop(1, C.clay); g.fillStyle = gr; this.rr(g, x0, ty, t, t, t * .28); g.fill();
+    g.strokeStyle = C.ink; g.lineCap = 'round'; g.lineWidth = t * .08; const cy = ty + t / 2, cx = x0 + t / 2; g.beginPath(); g.moveTo(cx - t * .3, cy); g.lineTo(cx + t * .3, cy); g.stroke();
+    g.lineWidth = t * .11; [[-.2, .38], [-.3, .24], [.2, .38], [.3, .24]].forEach(([dx, hh]) => { g.beginPath(); g.moveTo(cx + dx * t, cy - hh * t / 2 * 1.4); g.lineTo(cx + dx * t, cy + hh * t / 2 * 1.4); g.stroke(); });
+    const tx = x0 + t + size * .38; g.textAlign = 'left'; g.fillStyle = '#FFFFFF'; g.fillText('Rep', tx, y); const gq = g.createLinearGradient(tx + wa, y - size, tx + wa + wb, y); gq.addColorStop(0, C.glow); gq.addColorStop(1, C.sand); g.fillStyle = gq; g.fillText('IQ', tx + wa, y);
+    return tot;
   },
-  bigBox(g, spec, bx, by, bw, bh, s, C, maxPx) {
-    const gr = g.createLinearGradient(bx, by, bx + bw, by + bh); gr.addColorStop(0, C.ink); gr.addColorStop(1, C.acc); g.fillStyle = gr; this.rr(g, bx, by, bw, bh, 40 * s); g.fill();
-    g.save(); this.rr(g, bx, by, bw, bh, 40 * s); g.clip(); g.globalAlpha = .18; g.strokeStyle = '#FFFFFF'; g.lineWidth = 3 * s; for (let i = 0; i < 3; i++) { g.beginPath(); g.arc(bx + bw - 30 * s, by + 30 * s, (80 + i * 55) * s, 0, Math.PI * 2); g.stroke(); } g.restore(); g.globalAlpha = 1;
-    if (spec.bigLabel) { g.font = `700 ${24 * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.sky; g.fillText(spec.bigLabel.toUpperCase(), bx + 36 * s, by + 58 * s); }
-    const t = String(spec.big), room = bw - 72 * s - (spec.unit ? Math.min(220 * s, bw * .3) : 0), bs = Math.min(this.fit(g, t, room, maxPx * s, 900), bh * .62, (bh - (spec.bigLabel ? 100 : 60) * s) / .74);
-    g.font = `900 ${bs}px Inter, system-ui, sans-serif`; g.fillStyle = '#FFFFFF'; g.fillText(t, bx + 36 * s, by + bh - 40 * s);
-    if (spec.unit) { const tw = g.measureText(t).width; g.font = `700 ${Math.round(bs * .3)}px Inter, system-ui, sans-serif`; g.fillStyle = C.sky; g.fillText(spec.unit, bx + 50 * s + tw, by + bh - 46 * s); }
+  backdrop(g, W, H, s, C, wide) {
+    const bg = g.createLinearGradient(0, 0, W * .4, H); bg.addColorStop(0, C.ink); bg.addColorStop(.5, C.deep); bg.addColorStop(1, C.night); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    const pool = (x, y, r, col, a) => { const rg = g.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, col); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.globalAlpha = a; g.fillStyle = rg; g.fillRect(0, 0, W, H); g.globalAlpha = 1; };
+    pool(W * .95, H * .05, Math.max(W, H) * .55, C.steel, .75); pool(W * .02, H * .78, Math.max(W, H) * .5, C.glow, .22); pool(W * .6, H * .55, Math.max(W, H) * .35, C.sky, .08);
+    /* dot grid */
+    g.fillStyle = 'rgba(200,217,230,.09)'; const st = 28 * s; for (let yy = st / 2; yy < H; yy += st) for (let xx = st / 2; xx < W; xx += st) { g.beginPath(); g.arc(xx, yy, 1.6 * s, 0, 7); g.fill(); }
+    /* speed bars, top right */
+    g.save(); g.translate(W, wide ? H * .05 : H * .1); g.rotate(-Math.PI / 4.2);
+    [[0, 26, .5], [46, 14, .3], [80, 8, .18]].forEach(([o, h, a]) => { const lg = g.createLinearGradient(-W * .7, 0, 0, 0); lg.addColorStop(0, 'rgba(242,201,160,0)'); lg.addColorStop(1, `rgba(242,201,160,${a})`); g.fillStyle = lg; this.rr(g, -W * .75, o * s, W * .75, h * s, h * s / 2); g.fill(); });
+    g.restore();
+    /* watermark: the wordmark in outline, big, across the picture */
+    g.save(); g.translate(W * .5, H * (wide ? .62 : .58)); g.rotate(-Math.PI / 12); g.font = this.f(900, (wide ? 300 : 360) * s); g.textAlign = 'center'; g.lineWidth = 3 * s; g.strokeStyle = 'rgba(230,217,207,.07)'; g.strokeText(this.N, 0, 0); g.strokeText(this.N, -120 * s, 330 * s); g.strokeText(this.N, 120 * s, -330 * s); g.restore();
   },
-  tile(g, x, cx, cy, tw, th, s, C) {
-    g.fillStyle = 'rgba(255,255,255,.84)'; this.rr(g, cx, cy, tw, th, 26 * s); g.fill(); g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = 2; g.stroke();
-    g.font = `600 ${22 * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.muted; g.fillText(String(x[0]).toUpperCase(), cx + 24 * s, cy + Math.min(46 * s, th * .36));
-    this.fit(g, String(x[1]), tw - 48 * s, Math.min(56 * s, th * .4), 800); g.fillStyle = C.ink; g.fillText(String(x[1]), cx + 24 * s, cy + th - Math.min(30 * s, th * .2));
+  /* plate rings behind the hero number */
+  plates(g, x, y, r, s, C) { g.save(); [[1, .16, 2], [.78, .1, 10], [.56, .14, 2], [.34, .08, 18]].forEach(([k, a, lw]) => { g.globalAlpha = a; g.strokeStyle = C.sky; g.lineWidth = lw * s; g.beginPath(); g.arc(x, y, r * k, 0, 7); g.stroke(); }); g.restore(); },
+  pill(g, t, x, y, s, C, size = 26) {
+    g.font = this.f(800, size * s); const w = g.measureText(t.toUpperCase()).width + size * .14 * t.length * s + 64 * s, h = size * 2 * s;
+    const gr = g.createLinearGradient(x, y, x + w, y); gr.addColorStop(0, C.glow); gr.addColorStop(1, C.sand); g.fillStyle = gr; this.rr(g, x, y, w, h, h / 2); g.fill();
+    g.fillStyle = C.night; g.beginPath(); g.arc(x + 24 * s, y + h / 2, 6 * s, 0, 7); g.fill(); this.spaced(g, t.toUpperCase(), x + 42 * s, y + h * .66, size * .14 * s); return h;
   },
+  hero(g, spec, x, y, w, size, s, C) {
+    /* label, then the number in a warm gradient, unit beside it */
+    const t = String(spec.big); let bs = size; g.font = this.f(900, bs); const uw = () => spec.unit ? (g.font = this.f(800, bs * .26), g.measureText(spec.unit).width + 24 * s) : 0;
+    while (bs > 60 * s && (g.font = this.f(900, bs), g.measureText(t).width) + uw() > w) bs -= 6 * s;
+    let yy = y; if (spec.bigLabel) { g.font = this.f(800, 26 * s * Math.max(1, size / (300 * s))); g.fillStyle = C.sky; this.spaced(g, spec.bigLabel.toUpperCase(), x, yy + 26 * s, 6 * s); yy += 44 * s; }
+    g.font = this.f(900, bs); const nw = g.measureText(t).width, base = yy + bs * .76;
+    this.plates(g, x + nw * .55, base - bs * .38, bs * .75, s, C);
+    const gr = g.createLinearGradient(x, base - bs * .8, x, base); gr.addColorStop(0, '#FFFFFF'); gr.addColorStop(1, C.sand); g.fillStyle = gr; g.shadowColor = 'rgba(242,201,160,.35)'; g.shadowBlur = 40 * s; g.fillText(t, x, base); g.shadowBlur = 0;
+    if (spec.unit) { g.font = this.f(800, bs * .26); g.fillStyle = C.glow; g.fillText(spec.unit, x + nw + 18 * s, base); }
+    return base - y + 12 * s;
+  },
+  tiles(g, sts, x, y, w, s, C, th) {
+    th = Math.max(th, 124 * s); const per = 2, gap = 18 * s, tw = (w - gap) / per;
+    sts.forEach((t, i) => { const tx = x + (i % per) * (tw + gap), ty = y + Math.floor(i / per) * (th + gap);
+      g.fillStyle = 'rgba(255,255,255,.06)'; this.rr(g, tx, ty, tw, th, 26 * s); g.fill(); g.strokeStyle = 'rgba(200,217,230,.16)'; g.lineWidth = 2 * s; g.stroke();
+      g.fillStyle = C.glow; this.rr(g, tx + 24 * s, ty + 22 * s, 30 * s, 5 * s, 3 * s); g.fill();
+      g.font = this.f(700, 21 * s); g.fillStyle = C.muted; this.spaced(g, String(t[0]).toUpperCase(), tx + 24 * s, ty + 56 * s, 2.5 * s);
+      this.fit(g, String(t[1]), tw - 48 * s, Math.min(50 * s, (th - 82 * s)), 800); g.fillStyle = '#FFFFFF'; g.fillText(String(t[1]), tx + 24 * s, ty + th - 22 * s); });
+    return Math.ceil(sts.length / per) * (th + gap) - gap;
+  },
+  /* a medal, for wins without a number (badges, milestones) */
+  medal(g, cx, cy, R, s, C) {
+    const halo = g.createRadialGradient(cx, cy, R * .4, cx, cy, R * 1.6); halo.addColorStop(0, 'rgba(242,201,160,.35)'); halo.addColorStop(1, 'rgba(242,201,160,0)'); g.fillStyle = halo; g.fillRect(cx - R * 1.6, cy - R * 1.6, R * 3.2, R * 3.2);
+    this.plates(g, cx, cy, R * 1.45, s, C);
+    const poly = (r, n, rot) => { g.beginPath(); for (let i = 0; i < n; i++) { const a = rot + i * Math.PI * 2 / n; g[i ? 'lineTo' : 'moveTo'](cx + r * Math.cos(a), cy + r * Math.sin(a)); } g.closePath(); };
+    const gr = g.createLinearGradient(cx - R, cy - R, cx + R, cy + R); gr.addColorStop(0, C.glow); gr.addColorStop(1, C.clay); g.fillStyle = gr; g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 50 * s; g.shadowOffsetY = 20 * s; poly(R, 6, -Math.PI / 2); g.fill(); g.shadowColor = 'transparent';
+    g.fillStyle = C.deep; poly(R * .8, 6, -Math.PI / 2); g.fill(); g.strokeStyle = 'rgba(242,201,160,.5)'; g.lineWidth = 3 * s; poly(R * .7, 6, -Math.PI / 2); g.stroke();
+    g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? R * .2 : R * .46; g[i ? 'lineTo' : 'moveTo'](cx + rr * Math.cos(a), cy + rr * Math.sin(a)); } g.closePath();
+    const sg = g.createLinearGradient(cx, cy - R * .46, cx, cy + R * .4); sg.addColorStop(0, '#FFFFFF'); sg.addColorStop(1, C.sand); g.fillStyle = sg; g.fill();
+  },
+  /* a floating preview of the app itself, for the "share the app" picture */
+  appCard(g, x, y, w, h, s, C, tilt = -.045) {
+    g.save(); g.translate(x + w / 2, y + h / 2); g.rotate(tilt); g.translate(-w / 2, -h / 2);
+    g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 70 * s; g.shadowOffsetY = 30 * s; g.fillStyle = C.page; this.rr(g, 0, 0, w, h, 40 * s); g.fill(); g.shadowColor = 'transparent';
+    const p = 34 * s; let yy = p;
+    g.font = this.f(700, 20 * s); g.fillStyle = C.steel; this.spaced(g, 'TODAY · WEEK 3 · DAY 2', p, yy + 20 * s, 3 * s); yy += 36 * s;
+    g.font = this.f(900, 40 * s); g.fillStyle = C.ink; g.fillText('Squat & Press', p, yy + 38 * s);
+    /* progress ring */
+    const rr = 44 * s, rx = w - p - rr, ry = p + rr; g.lineWidth = 12 * s; g.strokeStyle = C.sand; g.beginPath(); g.arc(rx, ry, rr - 6 * s, 0, 7); g.stroke(); g.strokeStyle = C.steel; g.lineCap = 'round'; g.beginPath(); g.arc(rx, ry, rr - 6 * s, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * .72); g.stroke();
+    g.font = this.f(800, 22 * s); g.fillStyle = C.ink; g.textAlign = 'center'; g.fillText('72%', rx, ry + 8 * s); g.textAlign = 'left';
+    yy += 70 * s;
+    const rows = [['Back Squat', ['225×5', '245×5', '265×3'], 2], ['Push Press', ['135×6', '145×6', '155×4'], 1], ['Power Clean', ['155×3', '165×3', '175×2'], 0], ['RDL', ['185×8', '185×8', '185×8'], 0]], rh = 84 * s;
+    const n = Math.max(1, Math.min(rows.length, Math.floor((h - yy - 110 * s) / rh)));
+    rows.slice(0, n).forEach(([nm, sets, done], i) => {
+      g.fillStyle = '#FFFFFF'; this.rr(g, p, yy, w - 2 * p, rh - 14 * s, 20 * s); g.fill();
+      g.font = this.f(800, 24 * s); g.fillStyle = C.ink; g.fillText(nm, p + 20 * s, yy + 44 * s);
+      let cx = w - p - 20 * s; [...sets].reverse().forEach((t, j) => { const k = sets.length - 1 - j, on = k <= done && done > 0 || (i === 0 && k <= done); g.font = this.f(700, 19 * s); const tw = g.measureText(t).width + 26 * s; cx -= tw; g.fillStyle = on ? C.ink : C.sand; this.rr(g, cx, yy + 17 * s, tw, 36 * s, 18 * s); g.fill(); g.fillStyle = on ? '#FFFFFF' : C.ink; g.fillText(t, cx + 13 * s, yy + 42 * s); cx -= 10 * s; });
+      yy += rh; });
+    /* PR flash */
+    const fy = h - p - 64 * s; const gr = g.createLinearGradient(p, fy, w - p, fy); gr.addColorStop(0, C.ink); gr.addColorStop(1, C.steel); g.fillStyle = gr; this.rr(g, p, fy, w - 2 * p, 64 * s, 22 * s); g.fill();
+    g.font = this.f(800, 24 * s); g.fillStyle = C.glow; g.fillText('★  NEW PR', p + 22 * s, fy + 41 * s); g.fillStyle = '#FFFFFF'; g.textAlign = 'right'; g.fillText('Back Squat 265 lb  +15', w - p - 22 * s, fy + 41 * s); g.textAlign = 'left';
+    g.restore();
+  },
+  cta(g, spec, x, y, w, h, s, C, wide) {
+    const gr = g.createLinearGradient(x, y, x + w, y + h); gr.addColorStop(0, C.page); gr.addColorStop(1, C.sand); g.fillStyle = gr; g.shadowColor = 'rgba(0,0,0,.35)'; g.shadowBlur = 40 * s; g.shadowOffsetY = 14 * s; this.rr(g, x, y, w, h, h / 2.4); g.fill(); g.shadowColor = 'transparent';
+    const pad = h * .3, r = h * .32, ax = x + w - pad - r, ay = y + h / 2;
+    g.font = this.f(900, (wide ? 30 : 40) * s); g.fillStyle = C.night; this.fit(g, spec.cta || `Train smarter with ${this.N}`, ax - r - x - pad * 1.3, (wide ? 30 : 40) * s, 900); g.fillText(spec.cta || `Train smarter with ${this.N}`, x + pad, y + h * .46);
+    g.font = this.f(700, (wide ? 21 : 27) * s); g.fillStyle = C.steel; g.fillText(`Join free  →  ${this.short()}`, x + pad, y + h * .78);
+    g.fillStyle = C.night; g.beginPath(); g.arc(ax, ay, r, 0, 7); g.fill(); g.strokeStyle = C.glow; g.lineWidth = 6 * s; g.lineCap = 'round'; g.lineJoin = 'round'; const k = r * .38; g.beginPath(); g.moveTo(ax - k, ay); g.lineTo(ax + k, ay); g.moveTo(ax + k * .15, ay - k * .8); g.lineTo(ax + k, ay); g.lineTo(ax + k * .15, ay + k * .8); g.stroke();
+  },
+  who(g, name, x, y, s, C) { if (!name) return; const nm = '@' + String(name).replace(/^@/, ''); g.font = this.f(700, 26 * s); const w = g.measureText(nm).width, r = 22 * s;
+    g.fillStyle = 'rgba(255,255,255,.08)'; this.rr(g, x - w - r * 2 - 30 * s, y - r - 8 * s, w + r * 2 + 30 * s, r * 2 + 16 * s, r + 8 * s); g.fill();
+    g.fillStyle = C.steel; g.beginPath(); g.arc(x - w - r - 20 * s, y, r, 0, 7); g.fill(); g.fillStyle = '#FFFFFF'; g.font = this.f(800, 22 * s); g.textAlign = 'center'; g.fillText(String(name).replace(/^@/, '')[0].toUpperCase(), x - w - r - 20 * s, y + 8 * s);
+    g.font = this.f(700, 26 * s); g.textAlign = 'right'; g.fillStyle = C.ice; g.fillText(nm, x - 12 * s, y + 9 * s); g.textAlign = 'left'; },
   draw(spec, F) {
-    const W = F.w, H = F.h, wide = F.id === 'wide', s = wide ? H / 630 : W / 1080, c = document.createElement('canvas'); c.width = W; c.height = H;
-    const g = c.getContext('2d'), C = this.col(), P = 64 * s;
-    /* background: warm page, soft colour pools, fine lines */
-    const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#FFFFFF'); bg.addColorStop(.35, C.page); bg.addColorStop(1, C.sand); g.fillStyle = bg; g.fillRect(0, 0, W, H);
-    [[W * .92, H * .12, W * .55, C.sky, .55], [W * .05, H * .55, W * .5, C.acc, .16], [W * .8, H * .9, W * .6, C.sky, .4]].forEach(([x, y, r, col, a]) => { const rg = g.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, col); rg.addColorStop(1, 'rgba(255,255,255,0)'); g.globalAlpha = a; g.fillStyle = rg; g.fillRect(0, 0, W, H); });
-    g.globalAlpha = .08; g.strokeStyle = C.ink; g.lineWidth = 2 * s; for (let i = 0; i < 6; i++) { g.beginPath(); const y0 = H * (.18 + i * .045); g.moveTo(-20, y0); g.bezierCurveTo(W * .3, y0 - 60 * s, W * .6, y0 + 70 * s, W + 20, y0 - 10 * s); g.stroke(); } g.globalAlpha = 1;
-    /* watermark: the wordmark, large and faint, across the picture */
-    g.save(); g.translate(W / 2, H / 2); g.rotate(-Math.PI / 9); g.globalAlpha = .045; g.font = `900 ${(wide ? 260 : 300) * s}px Inter, system-ui, sans-serif`; g.textAlign = 'center'; g.fillStyle = C.ink; g.fillText(Brand.name(), 0, 90 * s); g.restore(); g.globalAlpha = 1;
-    /* top: wordmark + school */
-    this.mark(g, P, P + 46 * s, 52 * s, C);
-    if (Brand.look()) { g.font = `600 ${24 * s}px Inter, system-ui, sans-serif`; g.textAlign = 'right'; g.fillStyle = C.muted; g.fillText(Brand.o().name, W - P, P + 40 * s); g.textAlign = 'left'; }
-    const C2 = C, ch = (wide ? 96 : 150) * s, top = P + 110 * s, bottom = H - P - ch - 40 * s, st = (spec.stats || []).filter(x => x && x[1] != null && x[1] !== '');
-    const F_ = (w, px) => `${w} ${px}px Inter, system-ui, sans-serif`;
+    const W = F.w, H = F.h, wide = F.id === 'wide', story = F.id === 'story', sq = F.id === 'square', s = wide ? H / 630 : W / 1080, c = document.createElement('canvas'); c.width = W; c.height = H;
+    const g = c.getContext('2d'), C = this.col(), P = (wide ? 56 : 72) * s;
+    this.backdrop(g, W, H, s, C, wide);
+    const hy = P + (wide ? 34 : 44) * s; this.logo(g, P, hy, (wide ? 38 : 48) * s, C); this.who(g, spec.name, W - P, hy - 14 * s, s, C);
+    const ch = (wide ? 100 : story ? 150 : 132) * s, cy = H - P - ch, top = hy + (wide ? 46 : 70) * s, bottom = cy - (wide ? 30 : 48) * s;
+    const st = (spec.stats || []).filter(x => x && x[1] != null && x[1] !== '');
     if (!wide) {
-      /* tall formats: measure, then centre the block between the header and the call to action */
-      const story = F.id === 'story', k = story ? 1.34 : F.id === 'square' ? .9 : 1, cw = W - 2 * P;
-      const hsz = 84 * s * k, ssz = 34 * s * k, bh = spec.big != null ? (story ? 420 : F.id === 'square' ? 270 : 330) * s : 0;
-      g.font = F_(800, hsz); const tl = this.wrap(g, spec.title, cw).slice(0, 3); g.font = F_(500, ssz); const sl = spec.sub ? this.wrap(g, spec.sub, cw).slice(0, story ? 4 : 3) : [];
-      let sts = st.slice(0, 4), bh2 = bh; const th = (story ? 180 : F.id === 'square' ? 120 : 140) * s, gap = 22 * s;
-      const hK = spec.kicker ? 86 * s : 0, hT = tl.length * hsz * 1.08, hS = sl.length ? sl.length * ssz * 1.38 + 14 * s : 0;
-      const meas = () => hK + hT + hS + (bh2 ? bh2 + 44 * s : 0) + (sts.length ? Math.ceil(sts.length / 2) * (th + gap) + 24 * s : 0);
-      if (meas() > bottom - top && sts.length > 2) sts = sts.slice(0, 2);
-      while (meas() > bottom - top && bh2 > 180 * s) bh2 -= 20 * s;
-      if (meas() > bottom - top) sts = [];
-      const per = Math.min(2, sts.length), rows = per ? Math.ceil(sts.length / per) : 0, total = meas(); let y = Math.max(top, top + (bottom - top - total) / 2);
-      if (spec.kicker) { g.font = F_(700, 26 * s * k); const kw = g.measureText(spec.kicker.toUpperCase()).width + 44 * s; g.fillStyle = C.ink; this.rr(g, P, y, kw, 54 * s * k, 27 * s * k); g.fill(); g.fillStyle = '#FFFFFF'; g.fillText(spec.kicker.toUpperCase(), P + 22 * s, y + 37 * s * k); y += hK; }
-      g.font = F_(800, hsz); g.fillStyle = C.ink; tl.forEach(l => { g.fillText(l, P, y + hsz * .86); y += hsz * 1.08; });
-      if (sl.length) { y += 14 * s; g.font = F_(500, ssz); g.fillStyle = C.muted; sl.forEach(l => { g.fillText(l, P, y + ssz); y += ssz * 1.38; }); }
-      if (bh2) { y += 44 * s; this.bigBox(g, spec, P, y, cw, bh2, s, C, story ? 250 : 190); y += bh2; }
-      if (rows) { y += 24 * s; const tw = (cw - gap * (per - 1)) / per; sts.forEach((x, i) => this.tile(g, x, P + (i % per) * (tw + gap), y + Math.floor(i / per) * (th + gap), tw, th, s * k, C)); }
+      const cw = W - 2 * P, k = story ? 1.25 : sq ? .86 : 1, hsz = (spec.app ? 118 : 76) * s * k, ssz = 32 * s * k, num = spec.big != null;
+      g.font = this.f(900, hsz); let tl = this.wrap(g, spec.title, cw).slice(0, 3);
+      g.font = this.f(500, ssz); let sl = spec.sub ? this.wrap(g, spec.sub, cw).slice(0, story ? 3 : 2) : [];
+      let nsz = (story ? 330 : sq ? 210 : 260) * s, sts = st.slice(0, 4), th = (story ? 150 : sq ? 112 : 126) * s, cardH = spec.app ? (story ? 640 : 0) * s : 0;
+      const kick = spec.kicker ? 52 * s * k + 34 * s : 0;
+      const hN = () => num ? nsz * .76 + (spec.bigLabel ? 44 * s : 0) + 12 * s + 30 * s : 0, hT = () => tl.length * hsz * 1.04 + 8 * s, hS = () => sl.length ? sl.length * ssz * 1.4 + 16 * s : 0, hR = () => sts.length ? Math.ceil(sts.length / 2) * (th + 18 * s) - 18 * s + 40 * s : 0, hC = () => cardH ? cardH + 60 * s : 0, medal = !num && !spec.app; let mR = (story ? 230 : sq ? 120 : 170) * s;
+      const hM = () => medal ? mR * 2.3 + 40 * s : 0, tot = () => kick + hM() + hN() + hT() + hS() + hR() + hC();
+      if (spec.app && !story) { const room = bottom - top - kick - hT() - hS() - 60 * s; if (room > 300 * s) cardH = Math.min(room, sq ? 330 * s : 470 * s); }
+      while (tot() > bottom - top && sts.length > 2) sts = sts.slice(0, 2);
+      while (tot() > bottom - top && sl.length > 1) sl = sl.slice(0, sl.length - 1);
+      while (tot() > bottom - top && nsz > 150 * s) nsz -= 10 * s;
+      while (tot() > bottom - top && mR > 70 * s) mR -= 10 * s;
+      if (tot() > bottom - top) { sts = []; sl = []; }
+      let y = top + Math.max(0, (bottom - top - tot()) * (spec.app ? .35 : .45));
+      if (spec.kicker) { y += this.pill(g, spec.kicker, P, y, s * k, C) + 34 * s; }
+      if (medal) { this.medal(g, P + mR * 1.15, y + mR * 1.15, mR, s, C); y += hM(); }
+      if (num) { y += this.hero(g, spec, P, y, cw, nsz, s, C) + 30 * s; }
+      g.font = this.f(900, hsz); tl.forEach((l, i) => { if (spec.app && i === tl.length - 1) { const gr = g.createLinearGradient(P, 0, P + g.measureText(l).width, 0); gr.addColorStop(0, C.glow); gr.addColorStop(1, C.sand); g.fillStyle = gr; } else g.fillStyle = '#FFFFFF'; g.fillText(l, P, y + hsz * .82); y += hsz * 1.04; }); y += 8 * s;
+      if (sl.length) { y += 16 * s; g.font = this.f(500, ssz); g.fillStyle = C.sky; sl.forEach(l => { g.fillText(l, P, y + ssz); y += ssz * 1.4; }); }
+      if (sts.length) { y += 40 * s; y += this.tiles(g, sts, P, y, cw, s * (story ? 1.15 : sq ? .92 : 1), C, th); }
+      if (cardH) { y += 60 * s; this.appCard(g, P + 10 * s, y, cw - 20 * s, cardH, s * (story ? 1.25 : sq ? .9 : 1.05), C); }
     } else {
-      /* wide (1200×630): words on the left, the number or the tiles on the right */
-      const lw = W * .5 - P, rx = W * .5 + 10 * s, rw = W - rx - P; let y = top;
-      if (spec.kicker) { g.font = F_(700, 20 * s); const kw = g.measureText(spec.kicker.toUpperCase()).width + 34 * s; g.fillStyle = C.ink; this.rr(g, P, y, kw, 42 * s, 21 * s); g.fill(); g.fillStyle = '#FFFFFF'; g.fillText(spec.kicker.toUpperCase(), P + 17 * s, y + 28 * s); y += 64 * s; }
-      let hsz = 58 * s; g.font = F_(800, hsz); let tl = this.wrap(g, spec.title, lw); while (tl.length > 2 && hsz > 34 * s) { hsz -= 4 * s; g.font = F_(800, hsz); tl = this.wrap(g, spec.title, lw); }
-      g.fillStyle = C.ink; tl.slice(0, 3).forEach(l => { g.fillText(l, P, y + hsz * .86); y += hsz * 1.08; });
-      if (spec.sub) { y += 10 * s; g.font = F_(500, 24 * s); g.fillStyle = C.muted; this.wrap(g, spec.sub, lw).slice(0, Math.max(1, Math.floor((bottom - y) / (34 * s)))).forEach(l => { g.fillText(l, P, y + 24 * s); y += 34 * s; }); }
-      const zone = bottom - top + 10 * s;
-      if (spec.big != null) { const bh = st.length ? zone * .6 : zone; this.bigBox(g, spec, rx, top, rw, bh, s, C, 140); const two = st.slice(0, 2), tw = (rw - 16 * s) / Math.max(1, two.length); two.forEach((x, i) => this.tile(g, x, rx + i * (tw + 16 * s), top + bh + 16 * s, tw, zone - bh - 16 * s, s * .8, C)); }
-      else { const sts = st.slice(0, 4), per = 2, rows = Math.ceil(sts.length / per), gap = 16 * s, th = (zone - gap * (rows - 1)) / Math.max(1, rows), tw = (rw - gap) / per; sts.forEach((x, i) => this.tile(g, x, rx + (i % per) * (tw + gap), top + Math.floor(i / per) * (th + gap), tw, th, s * .85, C)); }
+      const lw = W * .5 - P, rx = W * .52, rw = W - rx - P; let y = top + 10 * s;
+      if (spec.kicker) y += this.pill(g, spec.kicker, P, y, s * .78, C) + 24 * s;
+      let hsz = (spec.app ? 72 : 56) * s; g.font = this.f(900, hsz); let tl = this.wrap(g, spec.title, lw); while (tl.length > 2 && hsz > 34 * s) { hsz -= 4 * s; g.font = this.f(900, hsz); tl = this.wrap(g, spec.title, lw); }
+      tl.slice(0, 3).forEach((l, i) => { if (spec.app && i === tl.length - 1) { const gr = g.createLinearGradient(P, 0, P + g.measureText(l).width, 0); gr.addColorStop(0, C.glow); gr.addColorStop(1, C.sand); g.fillStyle = gr; } else g.fillStyle = '#FFFFFF'; g.fillText(l, P, y + hsz * .82); y += hsz * 1.04; });
+      if (spec.sub) { y += 10 * s; g.font = this.f(500, 22 * s); g.fillStyle = C.sky; this.wrap(g, spec.sub, lw).slice(0, Math.max(0, Math.floor((bottom - y) / (32 * s)))).forEach(l => { g.fillText(l, P, y + 22 * s); y += 32 * s; }); }
+      const zone = bottom - top;
+      if (spec.app) this.appCard(g, rx + 10 * s, top - 6 * s, rw - 10 * s, zone + 6 * s, s * .62, C, -.04);
+      else if (spec.big != null) { const two = st.slice(0, 2), th = 96 * s, hh = this.hero(g, spec, rx, top, rw, (two.length ? 170 : 220) * s, s * .8, C); if (two.length) this.tiles(g, two, rx, Math.min(top + hh + 24 * s, bottom - th), rw, s * .8, C, th); }
+      else if (!st.length) this.medal(g, rx + rw / 2, top + zone / 2, Math.min(zone, rw) * .36, s, C);
+      else if (st.length) this.tiles(g, st.slice(0, 4), rx, top, rw, s * .85, C, (zone - 18 * s) / 2);
     }
-    /* call to action band */
-    const cy = H - P - ch, cx = P, cwid = W - 2 * P;
-    g.fillStyle = C.ink; this.rr(g, cx, cy, cwid, ch, (wide ? 30 : 40) * s); g.fill();
-    g.font = `800 ${(wide ? 32 : 42) * s}px Inter, system-ui, sans-serif`; g.fillStyle = '#FFFFFF'; g.fillText(spec.cta || `Train smarter with ${Brand.name()}`, cx + 36 * s, cy + (wide ? 44 : 64) * s);
-    g.font = `600 ${(wide ? 24 : 30) * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.sky; g.fillText(`Join free → ${this.short()}`, cx + 36 * s, cy + (wide ? 78 : 112) * s);
-    g.fillStyle = C.acc; g.beginPath(); g.arc(cx + cwid - ch / 2, cy + ch / 2, ch * .32, 0, Math.PI * 2); g.fill(); g.strokeStyle = '#FFFFFF'; g.lineWidth = 6 * s; g.lineCap = 'round'; g.beginPath(); const ax = cx + cwid - ch / 2, ay = cy + ch / 2, k = ch * .12; g.moveTo(ax - k, ay); g.lineTo(ax + k, ay); g.moveTo(ax + k * .2, ay - k * .8); g.lineTo(ax + k, ay); g.lineTo(ax + k * .2, ay + k * .8); g.stroke();
-    /* name & watermark corner */
-    if (spec.name) { g.font = `600 ${24 * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.muted; g.textAlign = 'right'; g.fillText(spec.name, W - P, P + (Brand.look() ? 74 : 40) * s); g.textAlign = 'left'; }
-    /* corner watermark inside the call-to-action band */
-    g.globalAlpha = .9; this.mark(g, cx + cwid - ch - 10 * s, cy + ch / 2 + 9 * s, (wide ? 22 : 26) * s, C, 'right', true); g.globalAlpha = 1;
+    this.cta(g, spec, P, cy, W - 2 * P, ch, s, C, wide);
     return c;
   },
   /* the share sheet: pick the format, preview, then share / save / copy the link */
@@ -13247,7 +13315,7 @@ const ShareKit = {
       $('.sheet-body', sh).innerHTML = `<div class="share-fmt chips" role="radiogroup" aria-label="Size">${this.FORMATS.map(f => `<button type="button" class="chip" role="radio" data-fmt="${f.id}" aria-checked="${f.id === F.id}">${f.label}</button>`).join('')}</div>
         <small class="muted share-apps">${F.apps} · ${F.w}×${F.h}</small><div class="share-prev ${F.id}"><img alt="Preview of the picture" src="${pic()}"></div>
         <div class="row wrap share-acts"><button type="button" class="btn primary grow" data-sk="share">${icon('share-2')} Share</button><button type="button" class="btn" data-sk="save">${icon('download')} Save picture</button><button type="button" class="btn ghost" data-sk="link">${icon('link')} Copy link</button></div>
-        <p class="muted" style="font-size:12.5px">The post text carries the link back to ${esc(Brand.name())}: <b>${esc(this.short())}</b></p>`; UI.icons(sh);
+        <p class="muted" style="font-size:12.5px">The post text carries the link back to ${esc(ShareKit.N)}: <b>${esc(this.short())}</b></p>`; UI.icons(sh);
     };
     Sheet.open({ title: spec.sheetTitle || 'Share', html: '', wide: true, onMount: sh => { render(sh);
       sh.addEventListener('click', async e => {
@@ -13258,8 +13326,8 @@ const ShareKit = {
         if (a.dataset.sk === 'link') { try { await navigator.clipboard.writeText(msg); UI.toast('Link copied.'); } catch (x) { UI.toast(this.url()); } return; }
         const blob = await new Promise(r => this.draw(spec, F).toBlob(r, 'image/png')), file = blob && typeof File === 'function' ? new File([blob], name, { type: 'image/png' }) : null;
         if (a.dataset.sk === 'share' && file && navigator.canShare && navigator.canShare({ files: [file] })) {
-          try { await navigator.share({ files: [file], title: Brand.name(), text: msg, url: this.url() }); return; } catch (x) { if (x && x.name === 'AbortError') return; }
-        } else if (a.dataset.sk === 'share' && navigator.share) { try { await navigator.share({ title: Brand.name(), text, url: this.url() }); return; } catch (x) { if (x && x.name === 'AbortError') return; } }
+          try { await navigator.share({ files: [file], title: ShareKit.N, text: msg, url: this.url() }); return; } catch (x) { if (x && x.name === 'AbortError') return; }
+        } else if (a.dataset.sk === 'share' && navigator.share) { try { await navigator.share({ title: ShareKit.N, text, url: this.url() }); return; } catch (x) { if (x && x.name === 'AbortError') return; } }
         const u = URL.createObjectURL(blob), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); setTimeout(() => { URL.revokeObjectURL(u); l.remove(); }, 4000);
         if (a.dataset.sk === 'share') { try { await navigator.clipboard.writeText(msg); UI.toast('Picture saved and link copied — post it with the link.'); } catch (x) { UI.toast('Picture saved.'); } } else UI.toast('Picture saved.');
       });
@@ -13267,39 +13335,38 @@ const ShareKit = {
   },
   /* ---------- what can be shared ---------- */
   me() { return State.settings.name || (Cloud.profile && Cloud.profile.username) || ''; },
-  app() { return this.open({ sheetTitle: `Share ${Brand.name()}`, kicker: 'Strength & conditioning', title: 'Train like it counts.', sub: 'Structured programs, every set logged, real progress you can see — with your coach in your pocket.',
-    stats: [['Programs', 'Pro-built'], ['Every set', 'Tracked'], ['Progress', 'Visible'], ['Coach', 'Connected']], cta: `Join me on ${Brand.name()}` }, `${Brand.name().toLowerCase()}-invite`, `I train with ${Brand.name()} — structured programs and real progress. Join me:`); },
+  app() { return this.open({ app: true, sheetTitle: `Share ${ShareKit.N}`, kicker: 'Strength & conditioning', title: 'Train like it counts.', sub: 'Structured programs, every set logged, real progress you can see — with your coach in your pocket.', cta: `Join me on ${ShareKit.N}` }, `${ShareKit.N.toLowerCase()}-invite`, `I train with ${ShareKit.N} — structured programs and real progress. Join me:`); },
   session(id) {
     const s = State.sessions.find(x => x.id === id); if (!s) return;
     const st = Stats.sessionStats(s), u = unitW(), prs = State.results.filter(r => r.sid === s.id && r._pr);
     const top = (s.exercises || s.ex || []).map(e => (e.sets || []).filter(x => x.done && x.w && x.w.kg).map(x => [Program.exDef ? (Program.exDef(e.ex || e.id) || {}).name || e.name : e.name, x])).flat().sort((a, b) => b[1].w.kg - a[1].w.kg)[0];
     const min = st.minutes != null ? st.minutes : s.endedAt && s.startedAt ? Math.round((s.endedAt - s.startedAt - (s.pausedMs || 0)) / 60000) : null;
     return this.open({ sheetTitle: 'Share this workout', kicker: `${wkLabel(s.week)} · Day ${s.day}`, title: s.title || 'Workout complete', sub: fmtDate(s.date), bigLabel: prs.length ? `${prs.length} new PR${prs.length > 1 ? 's' : ''}` : 'Working sets', big: st.sets, unit: 'sets',
-      stats: [['Volume', st.vol ? `${fmtNum(Units.fromKg(st.vol, u), 0)} ${u}` : null], ['Time', min ? `${min} min` : null], ['Exercises', `${st.exDone}/${st.exTotal}`], ['Top set', top ? `${Units.fmtW(top[1].w)} ${u} × ${top[1].reps}` : null]], name: this.me(), cta: `Train smarter with ${Brand.name()}` },
-      `${Brand.name().toLowerCase()}-${s.date}`, `${s.title} — done. ${st.sets} working sets${prs.length ? `, ${prs.length} new PR${prs.length > 1 ? 's' : ''}` : ''}. Logged with ${Brand.name()}:`);
+      stats: [['Volume', st.vol ? `${fmtNum(Units.fromKg(st.vol, u), 0)} ${u}` : null], ['Time', min ? `${min} min` : null], ['Exercises', `${st.exDone}/${st.exTotal}`], ['Top set', top ? `${Units.fmtW(top[1].w)} ${u} × ${top[1].reps}` : null]], name: this.me(), cta: `Train smarter with ${ShareKit.N}` },
+      `${ShareKit.N.toLowerCase()}-${s.date}`, `${s.title} — done. ${st.sets} working sets${prs.length ? `, ${prs.length} new PR${prs.length > 1 ? 's' : ''}` : ''}. Logged with ${ShareKit.N}:`);
   },
   pr(info) {
     const m = METRICS[info.metric], cur = Units.metricIn(info.metric, info.o), pv = info.prev ? Units.metricIn(info.metric, info.prev.o) : null, u = Units.metricUnit(info.metric), dec = m.kind === 'time' ? 2 : 1;
     return this.open({ sheetTitle: 'Share your PR', kicker: 'New personal record', title: m.name, bigLabel: 'Tested', big: fmtNum(cur, dec), unit: u, stats: pv != null ? [['Previous best', `${fmtNum(pv, dec)} ${u}`], ['Improvement', `${m.kind === 'time' ? '−' : '+'}${fmtNum(Math.abs(cur - pv), dec)} ${u}`]] : [['Date', fmtDate(todayISO())]], name: this.me() },
-      `${Brand.name().toLowerCase()}-pr`, `New PR: ${m.name} ${fmtNum(cur, dec)} ${u}! Tracked with ${Brand.name()}:`);
+      `${ShareKit.N.toLowerCase()}-pr`, `New PR: ${m.name} ${fmtNum(cur, dec)} ${u}! Tracked with ${ShareKit.N}:`);
   },
   progress() {
     const from = addDays(todayISO(), -29), S = State.sessions.filter(s => s.status === 'completed' && s.date >= from), u = unitW();
     const vol = S.reduce((t, s) => t + (Stats.sessionStats(s).vol || 0), 0), prs = State.results.filter(r => r._pr && r.date >= from).length, all = State.sessions.filter(s => s.status === 'completed').length;
     return this.open({ sheetTitle: 'Share your progress', kicker: 'My last 30 days', title: 'Putting in the work.', bigLabel: 'Workouts', big: S.length, unit: 'done',
       stats: [['Volume', vol ? `${fmtNum(Units.fromKg(vol, u) / 1000, 1)}k ${u}` : '—'], ['New PRs', prs], ['All time', `${all} workouts`], ['Program', State.profile && State.profile.pathway === 'prep' ? 'Prep + 11 weeks' : '11 weeks']], name: this.me() },
-      `${Brand.name().toLowerCase()}-progress`, `${S.length} workouts in the last 30 days with ${Brand.name()}:`);
+      `${ShareKit.N.toLowerCase()}-progress`, `${S.length} workouts in the last 30 days with ${ShareKit.N}:`);
   },
   programme() {
     const all = State.sessions.filter(s => s.status === 'completed' && s.week >= 1).length, prs = State.results.filter(r => r._pr).length;
     return this.open({ sheetTitle: 'Share your programme', kicker: 'Programme complete', title: 'Eleven weeks. Done.', bigLabel: 'Weeks', big: 11, unit: 'weeks', stats: [['Workouts', all], ['PRs', prs]], name: this.me() },
-      `${Brand.name().toLowerCase()}-programme`, `I finished the 11-week programme on ${Brand.name()}!`);
+      `${ShareKit.N.toLowerCase()}-programme`, `I finished the 11-week programme on ${ShareKit.N}!`);
   },
-  level(x) { return this.open({ sheetTitle: 'Share your level', kicker: 'Level up', title: `Level ${x.level} reached.`, bigLabel: 'Level', big: x.level, stats: [['XP', fmtNum(x.xp, 0)]], name: this.me() }, `${Brand.name().toLowerCase()}-level`, `Level ${x.level} on ${Brand.name()}:`); },
-  badge(list) { const b = list[0]; return this.open({ sheetTitle: 'Share your badge', kicker: 'Badge unlocked', title: list.map(x => x.name).join(' · '), sub: b.desc, name: this.me() }, `${Brand.name().toLowerCase()}-badge`, `Badge unlocked on ${Brand.name()}: ${b.name}!`); },
+  level(x) { return this.open({ sheetTitle: 'Share your level', kicker: 'Level up', title: `Level ${x.level} reached.`, bigLabel: 'Level', big: x.level, stats: [['XP', fmtNum(x.xp, 0)]], name: this.me() }, `${ShareKit.N.toLowerCase()}-level`, `Level ${x.level} on ${ShareKit.N}:`); },
+  badge(list) { const b = list[0]; return this.open({ sheetTitle: 'Share your badge', kicker: 'Badge unlocked', title: list.map(x => x.name).join(' · '), sub: b.desc, name: this.me() }, `${ShareKit.N.toLowerCase()}-badge`, `Badge unlocked on ${ShareKit.N}: ${b.name}!`); },
   goal(g) { const S = GoalCalc.state(g, GoalUI.mySrc());
     return this.open({ sheetTitle: 'Share your goal', kicker: 'Goal achieved', title: g.title, bigLabel: 'Reached', big: S.cur != null ? fmtNum(S.cur, g.metric === 'dash40' ? 2 : 0) : '✓', unit: S.cur != null ? g.unit || '' : '', stats: [['Started at', GoalCalc.fmt(g.start_value != null ? +g.start_value : null, g)], ['Set by', g.coach ? g.coach.name : 'Coach']], name: this.me() },
-      `${Brand.name().toLowerCase()}-goal`, `Goal achieved: ${g.title}! With ${Brand.name()}:`); }
+      `${ShareKit.N.toLowerCase()}-goal`, `Goal achieved: ${g.title}! With ${ShareKit.N}:`); }
 };
 /* the existing workout share uses the new pictures */
 ShareCard.share = id => ShareKit.session(id);
@@ -13311,7 +13378,7 @@ ShareCard.share = id => ShareKit.session(id);
   const bd = SocialFX.badges.bind(SocialFX);
   SocialFX.badges = function (list) { bd(list); ShareKit._bdg = list; const c = $('#celebrate [data-act=cel-close]'); if (c) c.insertAdjacentHTML('beforebegin', `<button class="btn block" type="button" data-act="share-badge">${icon('image')} Share as a picture</button>`); UI.icons($('#celebrate')); };
   /* Home: a clear share button; Progress and the Program summary: share your results */
-  const ah = After.home; After.home = function (view, opts) { if (ah) ah.call(After, view, opts); const row = $('.topbar .row', view); if (row && !$('.share-btn', row) && !Role.parent()) row.insertAdjacentHTML('afterbegin', `<button type="button" class="btn sm icon ghost share-btn" data-act="share-app" aria-label="Share ${esc(Brand.name())}">${icon('share-2')}</button>`); UI.icons(view); };
+  const ah = After.home; After.home = function (view, opts) { if (ah) ah.call(After, view, opts); const row = $('.topbar .row', view); if (row && !$('.share-btn', row) && !Role.parent()) row.insertAdjacentHTML('afterbegin', `<button type="button" class="btn sm icon ghost share-btn" data-act="share-app" aria-label="Share ${esc(ShareKit.N)}">${icon('share-2')}</button>`); UI.icons(view); };
   const ap = After.progress; After.progress = function (view, opts) { if (ap) ap.call(After, view, opts); const t = $('.topbar', view) || $('.screen > *', view); if (t && !$('.share-prog', view) && State.sessions.some(s => s.status === 'completed')) t.insertAdjacentHTML('afterend', `<button type="button" class="btn sm share-prog" data-act="share-progress" data-stg>${icon('share-2')} Share my progress</button>`); UI.icons(view); };
   const asum = After.summary; After.summary = function (view, opts) { if (asum) asum.call(After, view, opts); const t = $('.screen', view); if (t && !$('.share-prog', view)) t.insertAdjacentHTML('beforeend', `<button type="button" class="btn block share-prog" data-act="share-programme">${icon('share-2')} Share my programme</button>`); UI.icons(view); };
 })();
