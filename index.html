@@ -2588,6 +2588,107 @@ body:not(.theme-light) :is(.hq-create-ic,.hq-rep-ic,.hq-promo-ic,.hq-welcome-ic)
 .fb-mine{padding:16px}
 .fb-mine.new{box-shadow:inset 3px 0 0 var(--p567C8D),0 10px 30px -8px rgba(var(--p78604E-rgb),.12)}
 
+/* ===================== roles, goals, groups, sharing ===================== */
+#sheet-root{z-index:90}
+/* first-run pathway */
+.path{max-width:620px;margin:0 auto;padding-top:8px}
+.path .h1{font-size:clamp(28px,7vw,36px);line-height:1.12;margin:4px 0 2px}
+.path-dots{display:flex;gap:6px;margin:4px 0 10px}
+.path-dots i{width:28px;height:5px;border-radius:99px;background:rgba(var(--p2F4156-rgb),.14)}
+.path-dots i.on{background:var(--p2F4156)}
+.path-list{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.path-card{display:flex;align-items:center;gap:14px;width:100%;padding:18px;border-radius:20px;border:1px solid rgba(255,255,255,.9);background:rgba(var(--pFFFDFB-rgb),.75);box-shadow:0 10px 30px -14px rgba(var(--p78604E-rgb),.3);text-align:left;color:var(--p2F4156);font:inherit;cursor:pointer;min-height:76px;transition:transform var(--t-fast),box-shadow var(--t-fast)}
+.path-card:hover{transform:translateY(-1px);box-shadow:0 14px 34px -14px rgba(var(--p78604E-rgb),.38)}
+.path-card[disabled]{opacity:.55;cursor:not-allowed}
+.path-card .grow{display:flex;flex-direction:column;gap:3px}
+.path-card b{font-size:17px}
+.path-card small{font-size:13.5px;color:var(--p4F6272);line-height:1.35}
+.path-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--p2F4156);color:#FFFFFF;flex:none}
+.path-chosen{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.path-chosen .grow{display:flex;flex-direction:column;gap:2px}
+.path-back{align-self:flex-start}
+#locker .path-card{color:var(--p2F4156)}
+body:not(.theme-light) .path-card{background:rgba(var(--p2F4156-rgb),.7);border-color:rgba(var(--pC8D9E6-rgb),.12);color:var(--pF5EFEB)}
+body:not(.theme-light) .path-card small{color:var(--pB9C9D6)}
+body:not(.theme-light) .path-ic{background:var(--pF5EFEB);color:var(--p2F4156)}
+/* goals */
+.goal-list{display:flex;flex-direction:column;gap:12px}
+.goal-card{padding:16px;border-radius:18px;background:rgba(var(--pFFFDFB-rgb),.72);border:1px solid rgba(255,255,255,.9);box-shadow:0 8px 24px -14px rgba(var(--p78604E-rgb),.25)}
+.goal-top{display:flex;align-items:center;gap:12px}
+.goal-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(var(--p567C8D-rgb),.14);color:var(--p3F5F6E);flex:none}
+.goal-t{display:block;font-size:16px;line-height:1.3}
+.goal-pill{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;background:rgba(var(--p2F4156-rgb),.08);color:var(--p3F5262)}
+.goal-pill.g-good,.goal-pill.g-done{background:rgba(47,125,91,.13);color:#1F5A41}
+.goal-pill.g-warn{background:rgba(183,121,31,.15);color:#6E450B}
+.goal-pill.g-bad{background:rgba(194,65,58,.11);color:#A12F29}
+.goal-bar{height:10px;border-radius:999px;background:rgba(var(--p2F4156-rgb),.08);margin:14px 0 10px;overflow:hidden}
+.goal-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--p2F4156),var(--p567C8D));transition:width var(--t-std)}
+.g-done .goal-bar i,.g-good .goal-bar i{background:linear-gradient(90deg,#2F7D5B,#4FA37B)}
+.g-warn .goal-bar i{background:linear-gradient(90deg,#B7791F,#D9A443)}
+.g-bad .goal-bar i{background:#C2413A}
+.goal-nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.goal-nums span{display:flex;flex-direction:column;min-width:0}
+.goal-nums small{font-size:11px;color:var(--p4F6272);font-weight:600}
+.goal-nums b{font-size:14.5px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.goal-note{margin:10px 0 0;font-size:13.5px;color:var(--p3F5262)}
+.goal-foot{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
+.goal-foot small{flex:1;min-width:140px}
+body:not(.theme-light) .goal-card{background:rgba(var(--p2F4156-rgb),.62);border-color:rgba(var(--pC8D9E6-rgb),.1);box-shadow:none}
+body:not(.theme-light) .goal-nums small,body:not(.theme-light) .goal-note{color:var(--pB9C9D6)}
+body:not(.theme-light) .goal-pill{background:rgba(var(--pC8D9E6-rgb),.14);color:var(--pF5EFEB)}
+body:not(.theme-light) .goal-pill.g-good,body:not(.theme-light) .goal-pill.g-done{color:#8FD3B0}
+body:not(.theme-light) .goal-pill.g-warn{color:#F2C46D}
+body:not(.theme-light) .goal-pill.g-bad{color:#F4ABA5}
+body:not(.theme-light) .goal-ic{background:rgba(var(--pC8D9E6-rgb),.12);color:var(--pC8D9E6)}
+.goal-ed .chips .chip svg{width:14px;height:14px}
+/* school invitation & coach school card */
+.school-inv{display:flex;gap:14px;align-items:flex-start;padding:16px;border-left:4px solid var(--sc1)}
+.school-inv .grow{display:flex;flex-direction:column;gap:4px}
+.school-inv-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--sc1);color:#FFFFFF;flex:none;overflow:hidden}
+.school-inv-ic img{width:100%;height:100%;object-fit:cover}
+.hq-school{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hq-school .grow{display:flex;flex-direction:column;gap:2px;min-width:180px}
+.hq-dm{width:100%;background:none;border:0;border-bottom:1px solid var(--pE6D9CF);color:inherit;text-align:left;cursor:pointer;font:inherit}
+/* group chat */
+.grp-msgs{display:flex;flex-direction:column;gap:10px;padding:6px 0 100px}
+.grp-msg{display:flex;gap:8px;align-items:flex-end;max-width:86%}
+.grp-msg.mine{align-self:flex-end;flex-direction:row-reverse}
+.grp-b{position:relative;padding:10px 14px;border-radius:18px 18px 18px 6px;background:rgba(var(--pFFFDFB-rgb),.85);border:1px solid rgba(255,255,255,.9)}
+.grp-msg.mine .grp-b{background:var(--p2F4156);color:#FFFFFF;border-color:var(--p2F4156);border-radius:18px 18px 6px 18px}
+.grp-b p{margin:2px 0 0;white-space:pre-wrap;font-size:14.5px;line-height:1.45}
+.grp-who{font-size:11.5px;color:var(--p4F6272)}
+.grp-msg.mine .grp-who{color:rgba(255,255,255,.8)}
+.grp-del{position:absolute;top:4px;right:4px;background:none;border:0;color:inherit;opacity:.0;cursor:pointer;padding:4px}
+.grp-b:hover .grp-del,.grp-del:focus{opacity:.7}
+.grp-del svg{width:13px;height:13px}
+.grp-compose{position:sticky;bottom:calc(var(--nav-h, 76px) + 12px);display:flex;gap:8px;padding:10px;border-radius:20px;background:rgba(var(--pFFFDFB-rgb),.92);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 30px -12px rgba(var(--p78604E-rgb),.3);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.grp-compose textarea{flex:1;min-height:44px;resize:none}
+.grp-pick{max-height:46vh;overflow:auto}
+.grp-pick label{cursor:pointer}
+.grp-pick input{width:20px;height:20px;flex:none}
+body:not(.theme-light) .grp-b{background:rgba(var(--p2F4156-rgb),.7);border-color:rgba(var(--pC8D9E6-rgb),.12)}
+body:not(.theme-light) .grp-msg.mine .grp-b{background:var(--pF5EFEB);color:var(--p2F4156)}
+body:not(.theme-light) .grp-msg.mine .grp-who{color:var(--p4F6272)}
+body:not(.theme-light) .grp-who{color:var(--pB9C9D6)}
+body:not(.theme-light) .grp-compose{background:rgba(38,54,74,.92);border-color:rgba(var(--pC8D9E6-rgb),.12)}
+/* parents */
+.pfeed{padding:16px}
+.pfeed-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-top:10px}
+.pfeed-media img{width:100%;border-radius:12px;aspect-ratio:1;object-fit:cover}
+body.parent-mode .hq-exit-top{display:none}
+/* share */
+.share-fmt{flex-wrap:wrap}
+.share-apps{display:block;margin-top:-4px}
+.share-prev{display:grid;place-items:center;background:rgba(var(--p2F4156-rgb),.06);border-radius:18px;padding:14px}
+.share-prev img{max-width:100%;max-height:52vh;border-radius:14px;box-shadow:0 18px 40px -18px rgba(var(--p2F4156-rgb),.45)}
+.share-acts .btn{min-height:46px}
+.share-prog{align-self:flex-start}
+.own-plan .lib-ico{background:var(--p567C8D)}
+.path-tag{align-self:flex-start;margin-bottom:2px}
+.path-card .grow{flex:1 1 auto;min-width:0;align-items:flex-start}
+.path-card .path-tag{position:static;float:none;display:inline-flex;margin:0 0 2px;order:-1}
+.path-card .grow>b,.path-card .grow>small{align-self:stretch}
+
 </style>
 </head>
 <body>
@@ -2684,7 +2785,7 @@ body:not(.theme-light) :is(.hq-create-ic,.hq-rep-ic,.hq-promo-ic,.hq-welcome-ic)
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Nov 02 · 15:57';
+const BUILD_ID = 'Nov 06 · 01:16';
 const PALETTE = {"anchors":{"P":"2F4156","A":"567C8D","S":"C8D9E6","N":"F5EFEB"},"P":["2F4156","4F6272","1F2B3A","3F5262","243344","3C5269","3A5266","263546","5E6672","4A5D6C","475A6A","36495F","18222E"],"A":["567C8D","4A6B7C","3F5F6E"],"S":["C8D9E6","DDE5EC","B9C9D6","EEF3F7","E6EEF4","DCE5EF","F5F7FA"],"N":["F5EFEB","E6D9CF","EFE6DF","D9C8BB","ECE6E1","F0E7E0","EADFD6","C9B5A6","FCFAF9","FAF7F5","F8F4F1","F7F2EF","F2ECE8","FFFDFB","E2D2C6","F2EAE4","78604E","967660"],"text":["2F4156","4F6272","3F5262","5E6672","3F5F6E","4A6B7C"]};
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
@@ -6110,7 +6211,7 @@ const Cloud = {
       const draw = m => {
         mode = m;
         const g = this.shell(`
-          <div class="ghero" data-gs><span class="label">Athlete entrance</span>
+          <div class="ghero" data-gs><span class="label">${typeof PRole !== 'undefined' && PRole.code() ? 'Parent invitation' : 'Athlete entrance'}</span>
             <h1 class="gtitle">${m === 'login' ? 'Welcome back' : 'Join the team'}<span>.</span></h1>
             <p class="gsub">${m === 'login' ? 'Log in with your username and password.' : 'Pick a username and password and you\'re in. Your training is saved to your own account.'}</p></div>
           <form class="gcode gauth" data-gs id="authForm" novalidate>
@@ -6139,7 +6240,7 @@ const Cloud = {
           try {
             const r = mode === 'login'
               ? await this.sb.auth.signInWithPassword({ email: this.email(u), password: p })
-              : await this.sb.auth.signUp({ email: this.email(u), password: p, options: { data: { username: u, contact_email: em, marketing_opt_in: opt, school: Brand.slug() || undefined } } });
+              : await this.sb.auth.signUp({ email: this.email(u), password: p, options: { data: { username: u, contact_email: em, marketing_opt_in: opt, school: Brand.slug() || undefined, parent: (typeof PRole !== 'undefined' && PRole.code()) || undefined } } });
             if (r.error) throw r.error;
             if (!r.data.session) { Kinetic.busy(false); go.disabled = false; return fail('Account created, but Supabase is asking for email confirmation. Turn "Confirm email" off (setup guide, step 2), then log in.'); }
             Kinetic.busy(false); this.user = r.data.session.user; msg.innerHTML = Kinetic.wave('WELCOME.'); Haptics.beep([523, 784], .1);
@@ -6179,7 +6280,7 @@ const Cloud = {
       offline: ['No connection', 'The app needs the internet the first time you log in on this phone. Connect and try again.']
     }[kind];
     return new Promise(res => {
-      const g = this.shell(`<div class="ghero" data-gs><span class="label">Athlete entrance</span><h1 class="gtitle">${T[0]}<span>.</span></h1><p class="gsub">${T[1]}</p></div>
+      const g = this.shell(`<div class="ghero" data-gs><span class="label">${typeof PRole !== 'undefined' && PRole.code() ? 'Parent invitation' : 'Athlete entrance'}</span><h1 class="gtitle">${T[0]}<span>.</span></h1><p class="gsub">${T[1]}</p></div>
         <div class="stack" data-gs><button class="btn big red block" type="button" id="authAgain">${icon('refresh-cw')} Check again</button>${kind !== 'offline' ? '<button class="btn block ghost" type="button" id="authOut">Log out</button>' : ''}</div>`);
       $('#authAgain', g).onclick = async () => { if (kind === 'offline') { location.reload(); return; } await this.close(); res('again'); };
       const o = $('#authOut', g); if (o) o.onclick = async () => { await this.close(); res('logout'); };
@@ -8500,7 +8601,8 @@ const Coach = {
         <div class="field"><label for="sc-slug">Web name</label><input class="input" id="sc-slug" data-sc="slug" maxlength="31" value="${esc(d.slug)}" ${d.slug === 'hokie-power' ? 'disabled' : ''}><small class="muted">The school's link: <b>${esc(link)}</b></small></div>
         <div class="field"><label for="sc-dom">Own web addresses (one per line, optional)</label><textarea class="input" id="sc-dom" data-sc="domains" rows="2" placeholder="raiderpower.app">${esc(d.domains)}</textarea><small class="muted">If the school gets its own address pointed at the app, it opens in the school's colours.</small></div>
         <div class="field"><span class="label">Plan level (for later)</span><div class="seg" role="group">${['free', 'silver', 'gold'].map(t => `<button type="button" data-act="sc-tier" data-v="${t}" aria-pressed="${d.tier === t}">${TIER_NAME[t]}</button>`).join('')}</div><small class="muted">Nothing is locked while paid plans are switched off.</small></div>
-        <div class="field"><label for="sc-head">Head coach (username)</label><div class="row"><input class="input grow" id="sc-head" autocapitalize="none" placeholder="${esc(o.owner ? o.owner.username : 'username')}"><button class="btn" type="button" data-act="sc-head" data-id="${o.id}">Set</button></div><small class="muted">Moves them into this school and makes them a coach.${o.owner ? ` Now: <b>${esc(o.owner.name)}</b>.` : ''}</small></div></section>` : `<section class="panel stack" data-stg><h2 class="h3">Your school's link</h2><p style="font-size:14px;word-break:break-all"><b>${esc(link)}</b></p><button class="btn sm" type="button" data-act="sc-link" data-v="${esc(link)}">${icon('copy')} Copy link</button><small class="muted">Athletes who sign up from this link join ${esc(o.name)}.</small></section>`}
+        <div class="field"><label for="sc-head">Head coach (username)</label><div class="row"><input class="input grow" id="sc-head" autocapitalize="none" placeholder="${esc(o.owner ? o.owner.username : 'username')}"><button class="btn" type="button" data-act="sc-head" data-id="${o.id}">Set</button></div><small class="muted">Moves them into this school and makes them a coach.${o.owner ? ` Now: <b>${esc(o.owner.name)}</b>.` : ''}</small></div>
+        <div class="field"><label for="sc-coach">Add a coach (username)</label><div class="row"><input class="input grow" id="sc-coach" autocapitalize="none" placeholder="username"><button class="btn" type="button" data-act="sc-coach" data-id="${o.id}">Add</button></div><small class="muted">Any existing account becomes a coach of this school and gets Coach HQ.</small></div></section>` : `<section class="panel stack" data-stg><h2 class="h3">Your school's link</h2><p style="font-size:14px;word-break:break-all"><b>${esc(link)}</b></p><button class="btn sm" type="button" data-act="sc-link" data-v="${esc(link)}">${icon('copy')} Copy link</button><small class="muted">Athletes who sign up from this link join ${esc(o.name)}.</small></section>`}
       <section class="panel stack" data-stg><h2 class="h3">People & coaches</h2>${m.v ? m.v.map(p => `<div class="row">${Social.avatar(p, 32)}<span class="grow"><b>${esc(p.name)}</b> <small class="muted">@${esc(p.username)}</small>${p.head ? ' <span class="badge red">Head coach</span>' : p.role === 'coach' ? ' <span class="badge blue">Coach</span>' : p.role === 'admin' ? ' <span class="badge">Admin</span>' : ''}</span>
           ${p.role === 'admin' || p.head || (Cloud.user && p.id === Cloud.user.id) ? '' : `<button class="btn sm ${p.role === 'coach' ? 'ghost' : ''}" type="button" data-act="sc-role" data-id="${p.id}" data-r="${p.role === 'coach' ? 'athlete' : 'coach'}" data-n="${esc(p.name)}">${p.role === 'coach' ? 'Remove coach' : 'Make coach'}</button>`}</div>`).join('') || '<p class="muted">Nobody yet.</p>' : m.err ? Social.errBox(m.err, 'orgmembers:' + o.id) : Social.skel(1)}</section></div>`;
   },
@@ -8628,6 +8730,7 @@ Object.assign(Actions, {
   'sc-req': el => { Coach.readSchool(); const d = Coach.sst.d, cur = (Array.isArray(d.settings.speed_req) && d.settings.speed_req.length ? d.settings.speed_req : SPEED_REQ).slice(), m = el.dataset.m, i = cur.indexOf(m); if (i >= 0) { if (cur.length > 1) cur.splice(i, 1); } else cur.push(m); d.settings.speed_req = cur; const y = scrollY; UI.render(); scrollTo(0, y); },
   'sc-link': async el => { try { await navigator.clipboard.writeText(el.dataset.v); UI.toast('Link copied.'); } catch (e) { UI.toast(el.dataset.v); } },
   'sc-role': async el => { const r = el.dataset.r; if (await Social.act(el, () => Social.rpc('org_set_role', { p_user: el.dataset.id, p_role: r }), r === 'coach' ? `${el.dataset.n} is a coach now.` : `${el.dataset.n} is an athlete again.`) !== undefined) { Social.drop('orgmembers:'); Social.repaint(); } },
+  'sc-coach': async el => { const u = $('#sc-coach').value.trim().replace(/^@/, ''); if (!u) return; if (await Social.act(el, () => Social.rpc('org_add_coach', { p_org: el.dataset.id, p_username: u }), `${u} is now a coach here.`) !== undefined) { $('#sc-coach').value = ''; Social.drop('orgs', 'orgmembers:'); Coach.sst = null; Social.repaint(); } },
   'sc-head': async el => { const u = $('#sc-head').value.trim().replace(/^@/, ''); if (!u) return; if (await Social.act(el, () => Social.rpc('org_set_head', { p_org: el.dataset.id, p_username: u }), `${u} is head coach.`) !== undefined) { Social.drop('orgs', 'orgmembers:'); Coach.sst = null; Social.repaint(); } },
   'sc-new': () => {
     Sheet.open({ title: 'Add a school', html: `<div class="field"><label for="snN">School / team name</label><input class="input" id="snN" maxlength="60" placeholder="Ridley Green Raiders"></div>
@@ -12493,6 +12596,733 @@ Object.assign(Actions, {
   'hq-use': async el => { if (await Social.act(el, () => Social.rpc('plan_assign', { p_plan: el.dataset.id, p_team: HQ.tid(), p_user: null }), 'The team trains on this plan now.') !== undefined) { HQ.refresh(); UI.render(); } },
   'hq-aplan': async el => { const p = await Coach.planPick('Their own plan', false); if (p === undefined) return; if (await Social.act(null, () => Social.rpc('plan_assign', { p_plan: p, p_team: HQ.tid(), p_user: el.dataset.u }), 'Plan given.') !== undefined) { HQ.refresh(); UI.render(); } },
   'hq-aplan-off': async el => { if (await Social.act(el, () => Social.rpc('plan_assign', { p_plan: null, p_team: HQ.tid(), p_user: el.dataset.u }), 'Back to the team plan.') !== undefined) { HQ.refresh(); UI.render(); } }
+});
+
+/* ============ ONE PLATFORM, THREE EXPERIENCES ============
+   athlete · the standard app (training, progress, goals, sharing)
+   coach   · lands in Coach HQ (school, athletes, parents, goals, messages, reports); "My training" for their own lifting
+   parent  · their own app: their child's progress, goals, achievements, reports, coach messages and parent groups
+   Plus: the first-run pathway (experience → Olympic lifting → prep weeks / full programme / own plan). */
+Object.entries({
+  baby: 'M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1',
+  'graduation-cap': 'M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 3 9 3 12 0v-5',
+  'bar-chart-3': 'M3 3v18h18M18 17V9M13 17V5M8 17v-3', 'clipboard-check': 'M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 2h6v4H9zM9 14l2 2 4-4',
+  'messages-square': 'M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2zM18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1',
+  newspaper: 'M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M10 6h8v4h-8z',
+  'circle-user': 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M12 8a3 3 0 1 0 0 6a3 3 0 1 0 0-6M7 20.7v-.7a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v.7',
+  footprints: 'M4 16v-2.4C4 11.5 3 10.5 3 8c0-2.7 1.5-6 4.5-6C9.4 2 10 3.8 10 5.5c0 3.1-2 5.7-2 8.7V16a2 2 0 1 1-4 0zM20 20v-2.4c0-2.1 1-3.1 1-5.6 0-2.7-1.5-6-4.5-6C14.6 6 14 7.8 14 9.5c0 3.1 2 5.7 2 8.7V20a2 2 0 1 0 4 0z',
+  rocket: 'M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1zM12 15l-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22.4 22.4 0 0 1-4 2zM9 12H4s.6-3 2-4c1.6-1 5 0 5 0M12 15v5s3-.6 4-2c1-1.6 0-5 0-5',
+  'mail-plus': 'M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8M22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7M19 16v6M16 19h6',
+  link: 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71',
+  school: 'M14 22v-4a2 2 0 1 0-4 0v4M18 10l4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2M18 5v17M4 6l8-4 8 4M6 5v17M12 7a2 2 0 1 0 0 4a2 2 0 1 0 0-4'
+}).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+
+/* a sheet that answers: resolves with what Sheet.close(value) is given (undefined when dismissed) */
+Sheet.ask = o => new Promise(res => Sheet.open(Object.assign({}, o, { onClose: r => res(r) })));
+
+const Role = {
+  kind() { if (!Cloud.on || !Brand.me) return 'athlete'; const r = Brand.me.role; return r === 'parent' ? 'parent' : (r === 'coach' || r === 'admin') ? 'coach' : 'athlete'; },
+  parent() { return this.kind() === 'parent'; },
+  school() { return Brand.me && Brand.me.school ? Brand.me.school : null; }
+};
+
+/* ============ 1. FIRST RUN: the training pathway ============ */
+const Path = {
+  monday(d = todayISO()) { const x = new Date(d + 'T12:00:00'); return addDays(d, -((x.getDay() + 6) % 7)); },
+  card(act, v, ic, title, sub, tag, extra = '') { return `<button type="button" class="path-card" data-act="${act}" data-v="${v}" data-stg ${extra}><span class="path-ic">${icon(ic)}</span><span class="grow">${tag ? `<span class="badge path-tag">${tag}</span>` : ''}<b>${title}</b><small>${sub}</small></span>${icon('chevron-right')}</button>`; },
+  render(d) {
+    const step = d.exp ? (d.exp !== 'beginner' && !d.oly ? 'oly' : 'path') : 'exp';
+    const back = step === 'exp' ? '' : `<button type="button" class="btn sm ghost path-back" data-act="ob-back">${icon('chevron-left')} Back</button>`;
+    const dots = `<div class="path-dots" aria-hidden="true">${[0, 1, 2].map(i => `<i class="${i <= ['exp', 'oly', 'path'].indexOf(step) ? 'on' : ''}"></i>`).join('')}</div>`;
+    let body = '';
+    if (step === 'exp') body = `<span class="label">Welcome, ${esc(State.settings.name || 'athlete')}</span><h1 class="h1">How much weightlifting have you done?</h1><p class="muted">So we start you on the right training.</p>
+      <div class="path-list">${this.card('ob-exp', 'beginner', 'footprints', 'Beginner', 'New to the barbell, or less than about six months of lifting')}${this.card('ob-exp', 'intermediate', 'dumbbell', 'Intermediate', 'You train regularly and know squat, bench and deadlift')}${this.card('ob-exp', 'expert', 'trophy', 'Expert', 'Years of structured strength training')}</div>`;
+    else if (step === 'oly') body = `<span class="label">${d.exp === 'expert' ? 'Expert' : 'Intermediate'}</span><h1 class="h1">Have you trained in Olympic-style weightlifting?</h1><p class="muted">Cleans, jerks and snatches — the program uses power cleans and push jerks.</p>
+      <div class="path-list">${this.card('ob-oly', 'yes', 'check', 'Yes', 'I can power clean and jerk with good technique')}${this.card('ob-oly', 'no', 'x', 'No', 'Not yet, or only a little')}</div>`;
+    else { const own = Cloud.on, ownSub = own ? 'Build your own block: pick exercises, sets and reps' : 'Needs an account — available in the online version';
+      const prep = this.card('ob-path', 'prep', 'layers', 'Start with the Preparation Weeks', '6 weeks, Mon · Wed · Fri — builds the base before Week 1', d.exp === 'beginner' || d.oly === 'no' ? 'Recommended' : '');
+      const full = this.card('ob-path', 'full', 'rocket', 'Jump into the Full Programme', 'Week 1 of the 11-week program starts this week');
+      const mine = this.card('ob-path', 'own', 'pen-line', 'Create my own training plan', ownSub, '', own ? '' : 'disabled');
+      body = `<span class="label">Your training</span><h1 class="h1">${d.oly === 'yes' ? 'You’re ready for more' : 'Where do you want to start?'}</h1><p class="muted">You can change this later in Training.</p>
+        <div class="path-list">${d.oly === 'yes' ? prep + full : prep + mine}</div>`; }
+    $('#lockerContent').innerHTML = `<div class="path stack">${back}${dots}${body}</div>`;
+    UI.icons(); Motion.stagger($('#lockerContent'), '[data-stg]', 120);
+  },
+  set(k, v) { const d = Locker.draft(); d[k] = v; if (k === 'exp') { delete d.oly; delete d.path; } if (k === 'oly') delete d.path;
+    if (k === 'path') d.startDate = v === 'prep' ? addDays(this.monday(), 42) : this.monday();
+    LSX.set(LS.draft, d); Locker.render(); const L = $('#locker'); if (L) L.scrollTop = 0; },
+  label(d) { return { prep: 'Preparation Weeks first', full: 'Full Programme', own: 'Your own plan' }[d.path] || ''; }
+};
+(() => {
+  const lr = Locker.render.bind(Locker);
+  Locker.render = function () {
+    const d = this.draft(); if (!d.path) return Path.render(d);
+    lr();
+    const h = $('#lockerContent .stack'); if (h) h.insertAdjacentHTML('afterend', `<div class="panel path-chosen" data-stg><span class="path-ic">${icon(d.path === 'prep' ? 'layers' : d.path === 'own' ? 'pen-line' : 'rocket')}</span><div class="grow"><span class="label">Your start</span><b>${Path.label(d)}</b><small class="muted">${d.path === 'prep' ? `Prep Week 1 starts ${fmtDate(Path.monday())}. Week 1 of the program: ${fmtDate(d.startDate)}.` : d.path === 'own' ? 'After this step you build your plan. Until it’s ready you have the standard program.' : `Week 1 starts ${fmtDate(d.startDate)}.`}</small></div><button type="button" class="btn sm ghost" data-act="ob-back">Change</button></div>`);
+    UI.icons($('#lockerContent'));
+  };
+  Locker.skipPath = () => { const d = Locker.draft(); if (!d.path) { d.exp = 'expert'; d.oly = 'yes'; d.path = 'full'; LSX.set(LS.draft, d); Locker.render(); } };
+  const ls = Locker.submit.bind(Locker);
+  Locker.submit = function () { const d = this.draft(), r = ls(); if (State.profile && d.path) { Object.assign(State.profile, { experience: d.exp, oly: d.oly || (d.exp === 'beginner' ? 'no' : null), pathway: d.path }); Store.saveProfile(); } return r; };
+  const ef = App.enterFacility.bind(App);
+  App.enterFacility = function () { const p = State.profile; ef(); if (p && p.pathway === 'own' && Cloud.on && !p.ownPlanOffered) { p.ownPlanOffered = true; Store.saveProfile(); setTimeout(() => { PlanEdit.st = null; Nav.go('cplan', 'new'); UI.toast('Build your plan — save it, then tap “Train on this plan”.'); }, Motion.off ? 300 : 1800); } };
+})();
+
+/* ============ 2. GOALS & TARGETS ============ */
+const GOAL_CATS = { weight_loss: ['Weight loss', 'scale'], muscle_gain: ['Muscle gain', 'dumbbell'], strength: ['Strength', 'trending-up'], technique: ['Lifting technique', 'target'], performance: ['Performance', 'zap'], mobility: ['Mobility & conditioning', 'activity'], wellbeing: ['Fitness & wellbeing', 'heart-pulse'], other: ['Other', 'flag'] };
+const GOAL_METRICS = { bodyweight: ['Body weight', 'w'], squat: ['Back squat max', 'w'], bench: ['Bench press max', 'w'], clean: ['Power clean max', 'w'], jerk: ['Push jerk max', 'w'], total: ['Total of the 4 lifts', 'w'], workouts_week: ['Workouts per week', 'n'], dash40: ['40-yard dash', 's'], vj: ['Vertical jump', 'h'], custom: ['Something else (update by hand)', 'c'] };
+const GoalCalc = {
+  /* where the number comes from: the athlete's own data (src: profile maxes/results, body weight, sessions), or the coach's / athlete's updates */
+  current(g, src) {
+    const toU = kg => kg == null ? null : (g.unit === 'kg' ? kg : kg * 2.20462), m = g.metric;
+    if (m === 'custom') return g.current_value != null ? +g.current_value : null;
+    try {
+      if (m === 'bodyweight') { const b = (src.bodyweight || []).filter(x => x.w && x.w.kg).sort((x, y) => String(x.date).localeCompare(String(y.date))); return b.length ? toU(b[b.length - 1].w.kg) : (g.current_value != null ? +g.current_value : null); }
+      if (['squat', 'bench', 'clean', 'jerk', 'total'].includes(m)) { const L = TeamCalc.level(src), lb = m === 'total' ? (L.total || null) : L.m[m]; return lb == null ? (g.current_value != null ? +g.current_value : null) : (g.unit === 'kg' ? lb / 2.20462 : lb); }
+      if (m === 'workouts_week') { const from = addDays(todayISO(), -27); return Math.round((src.sessions || []).filter(s => (s.d || s.date) >= from && (s.status == null || s.status === 'completed')).length / 4 * 10) / 10; }
+      if (m === 'dash40' || m === 'vj') { const v = TeamCalc.speed(src, m === 'dash40' ? 'sprint40' : 'vj'); return v != null ? v : (g.current_value != null ? +g.current_value : null); }
+    } catch (e) { }
+    return g.current_value != null ? +g.current_value : null;
+  },
+  state(g, src) {
+    const cur = this.current(g, src), s0 = g.start_value != null ? +g.start_value : null, t = g.target_value != null ? +g.target_value : null;
+    let pct = null; if (cur != null && t != null && s0 != null && t !== s0) pct = Math.max(0, Math.min(1, (cur - s0) / (t - s0)));
+    else if (cur != null && t != null && s0 == null) pct = t === 0 ? null : Math.max(0, Math.min(1, cur / t));
+    const reached = pct != null && pct >= 1;
+    let st = 'progress', label = 'In progress';
+    if (g.status === 'achieved' || reached) { st = 'done'; label = 'Achieved'; }
+    else if (g.due_date && pct != null) {
+      const span = Math.max(1, daysBetween(g.start_date || todayISO(), g.due_date)), gone = daysBetween(g.start_date || todayISO(), todayISO()), exp = Math.max(0, Math.min(1, gone / span));
+      if (gone > span) { st = 'bad'; label = 'Past the deadline'; } else if (pct >= exp - .1) { st = 'good'; label = 'On track'; } else { st = 'warn'; label = 'Behind'; }
+    } else if (g.due_date && daysBetween(todayISO(), g.due_date) < 0) { st = 'bad'; label = 'Past the deadline'; }
+    else if (pct == null) { st = 'progress'; label = cur == null ? 'Waiting for data' : 'In progress'; }
+    return { cur, pct, st, label };
+  },
+  fmt(v, g) { if (v == null || !isFinite(v)) return '—'; const dec = g.metric === 'dash40' ? 2 : Math.abs(v) < 20 && v % 1 ? 1 : 0; return fmtNum(v, dec) + (g.unit ? ' ' + g.unit : ''); }
+};
+const GoalUI = {
+  card(g, src, opts = {}) {
+    const S = GoalCalc.state(g, src), c = GOAL_CATS[g.category] || GOAL_CATS.other, left = g.due_date ? daysBetween(todayISO(), g.due_date) : null;
+    return `<article class="goal-card g-${S.st}" data-stg><div class="goal-top"><span class="goal-ic">${icon(c[1])}</span><div class="grow"><span class="label">${esc(c[0])}</span><b class="goal-t">${esc(g.title)}</b></div><span class="goal-pill g-${S.st}">${S.label}</span></div>
+      <div class="goal-bar" role="progressbar" aria-label="${esc(g.title)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${S.pct == null ? 0 : Math.round(S.pct * 100)}"><i style="width:${S.pct == null ? 0 : (S.pct * 100).toFixed(0)}%"></i></div>
+      <div class="goal-nums"><span><small>Start</small><b>${GoalCalc.fmt(g.start_value != null ? +g.start_value : null, g)}</b></span><span><small>Now</small><b>${GoalCalc.fmt(S.cur, g)}</b></span><span><small>Target</small><b>${GoalCalc.fmt(g.target_value != null ? +g.target_value : null, g)}</b></span><span><small>${left == null ? 'Deadline' : left < 0 ? 'Was due' : 'Due'}</small><b>${g.due_date ? (left >= 0 ? `${fmtDate(g.due_date).replace(/,.*$/, '')}` : fmtDate(g.due_date).replace(/,.*$/, '')) : 'None'}</b></span></div>
+      ${g.notes ? `<p class="goal-note">${esc(g.notes)}</p>` : ''}
+      <div class="goal-foot"><small class="muted">${g.coach ? 'Set by ' + esc(g.coach.name) : ''}${g.metric === 'custom' ? ' · updated by hand' : ` · from ${esc((GOAL_METRICS[g.metric] || [''])[0].toLowerCase())}`}</small>
+        ${opts.edit ? `<button type="button" class="btn sm ghost" data-act="goal-edit" data-id="${g.id}">${icon('pen-line')} Edit</button>` : ''}${(opts.edit || opts.self) && g.status !== 'achieved' && (g.metric === 'custom' || S.cur == null) ? `<button type="button" class="btn sm ghost" data-act="goal-log" data-id="${g.id}">${icon('plus')} Update</button>` : ''}${opts.share && S.st === 'done' ? `<button type="button" class="btn sm ghost" data-act="share-goal" data-id="${g.id}">${icon('share-2')} Share</button>` : ''}</div></article>`;
+  },
+  list(goals, src, opts) { const a = (goals || []).filter(g => g.status !== 'archived'); return a.length ? `<div class="goal-list">${a.map(g => this.card(g, src, opts)).join('')}</div>` : ''; },
+  /* coach: create / edit */
+  async edit(athlete, g, src) {
+    const isNew = !g; g = g || { category: 'strength', metric: 'squat', unit: unitW(), start_date: todayISO() };
+    const pre = g.id ? null : GoalCalc.current(g, src);
+    const html = `<div class="stack goal-ed">
+      <div class="field"><span class="label" id="gcL">Type of goal</span><div class="chips" role="radiogroup" aria-labelledby="gcL">${Object.entries(GOAL_CATS).map(([k, c]) => `<button type="button" class="chip" role="radio" data-gc="${k}" aria-checked="${g.category === k}">${icon(c[1])} ${c[0]}</button>`).join('')}</div></div>
+      <div class="field"><label for="gTitle">Goal</label><input class="input" id="gTitle" maxlength="80" value="${esc(g.title || '')}" placeholder="e.g. Squat 1.5× body weight"></div>
+      <div class="field"><label for="gMetric">Measured by</label><select class="input" id="gMetric">${Object.entries(GOAL_METRICS).map(([k, m]) => `<option value="${k}" ${g.metric === k ? 'selected' : ''}>${m[0]}</option>`).join('')}</select><small class="muted" id="gMetricHelp"></small></div>
+      <div class="grid3"><div class="field"><label for="gStart">Start</label><input class="input num" id="gStart" inputmode="decimal" value="${g.start_value != null ? g.start_value : pre != null ? fmtNum(pre, 1).replace(/,/g, '') : ''}"></div>
+        <div class="field"><label for="gTarget">Target</label><input class="input num" id="gTarget" inputmode="decimal" value="${g.target_value != null ? g.target_value : ''}"></div>
+        <div class="field"><label for="gUnit">Unit</label><input class="input" id="gUnit" maxlength="12" value="${esc(g.unit || '')}" placeholder="kg, lb, s…"></div></div>
+      <div class="grid2"><div class="field"><label for="gDue">Deadline</label><input class="input" type="date" id="gDue" value="${esc(g.due_date || '')}" min="${todayISO()}"></div>
+        ${g.id ? `<div class="field"><span class="label">Status</span><div class="seg" role="group">${[['active', 'Active'], ['achieved', 'Achieved']].map(([k, l]) => `<button type="button" data-gs="${k}" aria-pressed="${(g.status || 'active') === k}">${l}</button>`).join('')}</div></div>` : '<div></div>'}</div>
+      <div class="field"><label for="gNotes">Notes for the athlete (optional)</label><textarea class="input" id="gNotes" rows="2" maxlength="500">${esc(g.notes || '')}</textarea></div>
+      <p class="muted" style="font-size:12.5px">The athlete and their parents see this goal. Body weight, lift maxes, sprint and jump times and workouts per week update by themselves from what the athlete logs.</p>
+      <div class="row wrap"><button type="button" class="btn primary grow" id="gSave">${icon('save')} ${isNew ? 'Set goal' : 'Save'}</button>${g.id ? `<button type="button" class="btn danger" id="gDel">${icon('trash-2')}</button>` : ''}</div></div>`;
+    return new Promise(res => {
+      Sheet.ask({ title: isNew ? 'New goal' : 'Edit goal', html, onMount: sh => {
+        const st = { cat: g.category, status: g.status || 'active' };
+        const help = () => { const m = $('#gMetric', sh).value, k = (GOAL_METRICS[m] || [])[1]; $('#gMetricHelp', sh).textContent = m === 'custom' ? 'You or the athlete update the number by hand.' : 'Updates automatically from the athlete’s logs.'; const u = $('#gUnit', sh); if (!u.dataset.touched) u.value = k === 'w' ? unitW() : k === 'n' ? 'a week' : k === 's' ? 's' : k === 'h' ? Units.hUnit() : u.value; };
+        $('#gUnit', sh).oninput = e => { e.target.dataset.touched = 1; }; $('#gMetric', sh).onchange = help; if (isNew) help(); else $('#gUnit', sh).dataset.touched = 1;
+        sh.addEventListener('click', async e => {
+          const c = e.target.closest('[data-gc]'), s = e.target.closest('[data-gs]');
+          if (c) { st.cat = c.dataset.gc; $$('[data-gc]', sh).forEach(b => b.setAttribute('aria-checked', b === c)); const t = $('#gTitle', sh); if (!t.value) t.placeholder = { weight_loss: 'e.g. Lose 4 kg by the season', muscle_gain: 'e.g. Gain 3 kg of lean mass', strength: 'e.g. Squat 1.5× body weight', technique: 'e.g. Clean technique score 8/10', performance: 'e.g. 40-yard dash under 5.0 s', mobility: 'e.g. Deep squat with heels down', wellbeing: 'e.g. 4 workouts every week' }[st.cat] || ''; }
+          if (s) { st.status = s.dataset.gs; $$('[data-gs]', sh).forEach(b => b.setAttribute('aria-pressed', b === s)); }
+          if (e.target.closest('#gDel')) { if (!await Sheet.confirm({ title: 'Remove this goal?', body: '<p>It disappears for the athlete and their parents.</p>', ok: 'Remove', danger: true })) return; const r = await Social.act(null, () => Social.rpc('goal_delete', { p_goal: g.id }), 'Goal removed.'); if (r !== undefined) { Sheet.close(); res(true); } }
+          if (e.target.closest('#gSave')) {
+            const p = { category: st.cat, title: $('#gTitle', sh).value.trim(), metric: $('#gMetric', sh).value, unit: $('#gUnit', sh).value.trim(), start_value: $('#gStart', sh).value.replace(',', '.'), target_value: $('#gTarget', sh).value.replace(',', '.'), due_date: $('#gDue', sh).value, notes: $('#gNotes', sh).value };
+            if (p.title.length < 2) { UI.toast('Write the goal.', 'bad'); $('#gTitle', sh).focus(); return; }
+            if (p.target_value === '' && p.metric !== 'custom') { UI.toast('Set a target number.', 'bad'); $('#gTarget', sh).focus(); return; }
+            if (g.id) { p.id = g.id; p.status = st.status; } else p.athlete = athlete;
+            const r = await Social.act(e.target.closest('#gSave'), () => Social.rpc('goal_save', { p }), g.id ? 'Goal saved.' : 'Goal set — the athlete has been told.');
+            if (r !== undefined) { Sheet.close(); res(true); }
+          }
+        });
+      } }).then(() => res(false));
+    });
+  },
+  async log(g) {
+    const v = await Sheet.ask({ title: 'Update progress', html: `<div class="stack"><p><b>${esc(g.title)}</b></p><div class="field"><label for="glV">Where it is now${g.unit ? ` (${esc(g.unit)})` : ''}</label><input class="input num" id="glV" inputmode="decimal" value="${g.current_value != null ? g.current_value : ''}"></div><div class="field"><label for="glN">Note (optional)</label><input class="input" id="glN" maxlength="200"></div><button class="btn primary" type="button" id="glOk">${icon('check')} Save</button></div>`,
+      onMount: sh => { $('#glOk', sh).onclick = () => Sheet.close({ v: $('#glV', sh).value.replace(',', '.'), n: $('#glN', sh).value }); } });
+    if (!v || v.v === '' || !isFinite(+v.v)) return false;
+    return await Social.act(null, () => Social.rpc('goal_checkin', { p_goal: g.id, p_value: +v.v, p_note: v.n || null }), 'Progress saved.') !== undefined;
+  },
+  find(id) { for (const k of Object.keys(Social.c)) { const v = Social.c[k] && Social.c[k].v; const L = Array.isArray(v) ? v : v && v.goals; if (Array.isArray(L)) { const g = L.find(x => x && x.id === id && x.title); if (g) return g; } } return null; },
+  mySrc() { const p = State.profile || {}; return { baselines: p.baselines, athletic: p.athletic, position: p.position, results: State.results, passed110: false, bodyweight: State.bodyweight || [], sessions: State.sessions || [] }; }
+};
+
+/* ============ 3. ATHLETE: school invitations, goals, family, own plans ============ */
+const AthRole = {
+  reqs() { return Social.get('schoolreqs', () => Social.rpc('school_requests_mine'), 60000); },
+  goals() { return Social.get('mygoals', () => Social.rpc('goals_for', { p_athlete: null }), 60000); },
+  home() {
+    if (!Cloud.on || !Social.on() || Role.kind() !== 'athlete') return '';
+    let h = ''; const R = this.reqs().v || [];
+    R.forEach(r => { h += `<section class="panel school-inv" data-stg style="--sc1:${esc(r.school.color1 || '#2F4156')}"><span class="school-inv-ic">${r.school.logo ? `<img src="${esc(r.school.logo)}" alt="">` : icon('school')}</span><div class="grow"><span class="label">Invitation</span><b>${esc(r.school.name)} wants you on the team</b><small class="muted">From coach ${esc(r.coach ? r.coach.name : '')}${r.team ? ` · team ${esc(r.team.name)}` : ''}. Your coaches will see your training, and the app will wear the school’s colours.</small>
+      <div class="row wrap"><button class="btn sm primary" type="button" data-act="sreq" data-id="${r.id}" data-v="1">${icon('check')} Accept</button><button class="btn sm ghost" type="button" data-act="sreq" data-id="${r.id}" data-v="0">Decline</button></div></div></section>`; });
+    const G = (this.goals().v || []).filter(g => g.status === 'active');
+    if (G.length) { const src = GoalCalc && GoalUI.mySrc(); h += `<section class="stack" data-stg><div class="spread"><h2 class="h3">${icon('target')} Your goals</h2><button type="button" class="btn sm ghost" data-act="go" data-r="goals">See all</button></div>${GoalUI.list(G.slice(0, 2), src, { self: true })}</section>`; }
+    return h;
+  },
+  goalsScreen() {
+    const e = this.goals(), src = GoalUI.mySrc();
+    return `<div class="screen">${backBar('Your goals')}<p class="muted" data-stg>Goals and targets your coaches set for you. Strength, body weight, speed and workouts update from what you log.</p>
+      ${e.v ? (e.v.length ? GoalUI.list(e.v, src, { self: true, share: true }) : Social.empty('target', 'No goals yet', 'When your coach sets you a goal, it shows here with your progress.')) : e.err ? Social.errBox(e.err, 'mygoals') : Social.skel(2)}</div>`;
+  },
+  family() {
+    const e = Social.get('myparents', () => Social.rpc('my_parents'), 30000);
+    return `<div class="screen soc">${backBar('Family')}<section class="panel flat" data-stg><p>Parents and guardians your coach has linked to you. They can see your training progress, goals, achievements and your coaches’ feedback — not your messages.</p></section>
+      ${e.v ? (e.v.length ? e.v.map(l => `<section class="panel row" data-stg>${Social.avatar(l.parent, 40)}<div class="grow"><b>${esc(l.parent.name)}</b><div class="muted" style="font-size:12.5px">${esc(l.relation)} · linked ${Social.ago(l.decided_at || l.created_at)}</div></div><button class="btn sm ghost" type="button" data-act="pl-unlink" data-id="${l.id}" data-n="${esc(l.parent.name)}">Remove</button></section>`).join('')
+        : Social.empty('users', 'Nobody linked', 'When a parent or guardian joins through your coach and is approved, they show here.')) : e.err ? Social.errBox(e.err, 'myparents') : Social.skel(1)}</div>`;
+  }
+};
+Screens.goals = () => Role.parent() ? PRole.home() : AthRole.goalsScreen();
+Screens.family = () => AthRole.family();
+TAB_OF.goals = 'home'; TAB_OF.family = 'more';
+Social.live.add('goals'); Social.live.add('family');
+(() => {
+  const mc = Screens.missionCard; Screens.missionCard = function (st, act) { const h = mc.call(Screens, st, act); return act ? h : AthRole.home() + h; };
+  const pc = prepCard; prepCard = function () {
+    let h = pc();
+    if (Cloud.on && Social.on() && Role.kind() === 'athlete' && (Brand.me ? Brand.me.features ? Brand.me.features.plan_editor !== false : true : true)) {
+      const P = PlanFx.cur; h += `<button class="panel prep-card own-plan" type="button" data-act="go" data-r="plans" data-stg><span class="lib-ico">${icon('pen-line')}</span><span class="grow" style="text-align:left"><b style="display:block">${P && P.own ? esc(P.name) : 'Create your own plan'}</b><small class="muted">${P ? 'You’re training on ' + esc(P.name) : 'Swap exercises, change sets and reps, make the program yours'}</small></span>${icon('chevron-right')}</button>`;
+    }
+    return h;
+  };
+  /* plan editor "Use it" tab for athletes: train on it yourself */
+  const use = PlanEdit.use.bind(PlanEdit);
+  PlanEdit.use = function () {
+    if (Brand.isCoach()) return use();
+    const st = this.st; if (!st.id) return `<section class="panel" data-stg><p>Save the plan first, then train on it.</p></section>`;
+    const on = PlanFx.cur && PlanFx.cur.id === st.id;
+    return `<section class="panel stack" data-stg><h2 class="h3">Train on this plan</h2><p class="muted" style="font-size:13.5px">${on ? 'You’re training on this plan. Your workouts follow it from now on.' : 'Your next workouts follow this plan instead of the standard program.'}</p>
+      <button type="button" class="btn ${on ? '' : 'primary'}" data-act="plan-mine" data-id="${on ? '' : st.id}">${icon(on ? 'x' : 'check')} ${on ? 'Stop — back to the standard program' : 'Train on this plan'}</button></section>
+      ${st.can && st.id ? `<button class="btn block danger" type="button" data-act="pe-del" data-stg>${icon('trash-2')} Delete this plan</button>` : ''}`;
+  };
+  const sp = Screens.plans; Screens.plans = function () { const h = sp.call(Screens); return Brand.isCoach() ? h : h.replace('A plan is your version of the program: swap exercises for the equipment you have, change sets and reps, add or remove work, and leave notes. Give it to a whole team or to one athlete.', 'Make the program yours: swap exercises for the equipment you have, change sets and reps, add or remove work. Then open the plan’s “Use it” tab to train on it.'); };
+  const mo = Screens.more; Screens.more = function () {
+    let h = mo.call(Screens); if (!Cloud.on) return h;
+    const it = (r, ic, t, d) => `<button class="list-item" type="button" data-act="go" data-r="${r}">${icon(ic)}<div class="grow"><b>${t}</b><div class="muted" style="font-size:12.5px">${d}</div></div>${icon('chevron-right')}</button>`;
+    const extra = `<section class="panel" data-stg>${it('goals', 'target', 'Your goals', 'Targets your coaches set and your progress')}${it('plans', 'pen-line', 'Your own plans', 'Make the program yours')}${it('family', 'users', 'Family', 'Parents and guardians who follow your progress')}<button class="list-item" type="button" data-act="share-app">${icon('share-2')}<div class="grow"><b>Share ${esc(Brand.name())}</b><div class="muted" style="font-size:12.5px">Invite friends and teammates</div></div>${icon('chevron-right')}</button></section>`;
+    return h.replace('<section class="panel" data-stg>', extra + '<section class="panel" data-stg>');
+  };
+})();
+
+/* ============ 4. COACH: lands in Coach HQ; school, parents, goals, messages ============ */
+(() => {
+  const show = App.show.bind(App);
+  App.show = function (first) {
+    show(first);
+    if (Role.parent()) { UI.route = { name: 'p-home', param: null }; UI.render({ swap: true }); return; }
+    if (Cloud.on && Brand.isCoach() && HQ.pref('mode') !== 'training' && Social.on()) { UI.route = { name: 'hq', param: 'overview' }; Nav.stack = []; UI.render({ swap: true }); }
+  };
+  const ex = Actions['hq-exit']; Actions['hq-exit'] = el => { HQ.pref('mode', 'training'); return ex(el); };
+  const go = Nav.go.bind(Nav); Nav.go = function (name, param, opts) { if (name === 'hq') HQ.pref('mode', 'hq'); return go(name, param, opts); };
+})();
+/* sections: Messages takes in Feedback, chats with parents and groups */
+HQ.SECTIONS = [['overview', 'Overview', 'layout-dashboard'], ['athletes', 'Athletes', 'users'], ['messages', 'Messages', 'messages-square'], ['training', 'Training', 'clipboard-list'], ['reports', 'Reports', 'file-text']];
+Object.assign(HQ.st, { atab2: 'team', mtab: 'feedback', addQ: '' });
+Object.assign(HQ, {
+  school() { return Role.school(); },
+  noSchool(what) { return `<section class="panel hq-welcome stack" data-stg><span class="hq-welcome-ic">${icon('school')}</span><h2 class="h2">You’re not in a school yet</h2><p class="muted">${what} An admin adds coaches to a school. Ask them to add you.</p></section>`; },
+  subtabs(k, list) { return `<div class="seg hq-tabs" role="tablist" data-stg>${list.map(([v, l, n]) => `<button type="button" role="tab" data-act="hq-st" data-k="${k}" data-v="${v}" aria-selected="${this.st[k] === v}">${l}${n ? ` <span class="badge">${n}</span>` : ''}</button>`).join('')}</div>`; },
+  links() { return Social.get('plinks', () => Social.rpc('parent_links_school', { p_status: null }), 30000); },
+  addScreen() {
+    if (!this.school()) return this.noSchool('Adding athletes needs a school.');
+    const q = this.st.addQ.trim(), R = q.length >= 2 ? Social.get('sas:' + q, () => Social.rpc('school_athlete_search', { p_q: q }), 20000) : null, S = Social.get('sreqsent', () => Social.rpc('school_requests_sent'), 20000), T = this.teams() || [];
+    return `<section class="panel hq-card stack" data-stg><h2 class="h3">${icon('user-plus')} Add athletes to ${esc(Brand.o().name)}</h2><p class="muted hq-note">Search athletes who aren’t at a school yet. They get an invitation and join when they accept.</p>
+        <div class="input-ic">${icon('search')}<input class="input" id="hqAddQ" type="search" placeholder="Name or username" value="${esc(this.st.addQ)}" autocomplete="off" aria-label="Search athletes to add"></div>
+        ${T.length ? `<div class="field"><label for="hqAddTeam">Also put them on a team</label><select class="input" id="hqAddTeam"><option value="">No team</option>${T.map(t => `<option value="${t.id}" ${t.id === this.tid() ? 'selected' : ''}>${esc(t.name)}</option>`).join('')}</select></div>` : ''}
+        ${R ? (R.v ? (R.v.length ? `<div class="att-list">${R.v.map(a => `<div class="att-row">${Social.avatar(a, 36)}<div class="grow"><b>${esc(a.name)}</b><small class="muted">@${esc(a.username)}</small></div>${a.pending ? '<span class="badge">Invited</span>' : `<button class="btn sm primary" type="button" data-act="hq-sreq" data-id="${a.id}" data-n="${esc(a.name)}">${icon('user-plus')} Invite</button>`}</div>`).join('')}</div>` : '<p class="muted">Nobody found. Athletes already at a school don’t show.</p>') : R.err ? Social.errBox(R.err, 'sas:' + q) : Social.skel(1)) : '<p class="muted hq-note">Type at least two letters.</p>'}</section>
+      <section class="panel hq-card" data-stg><h2 class="h3">Invitations</h2>${S.v ? (S.v.length ? S.v.map(r => `<div class="att-row">${Social.avatar(r.athlete, 32)}<div class="grow"><b>${esc(r.athlete.name)}</b><small class="muted">${r.status === 'pending' ? 'Waiting · sent ' + Social.ago(r.created_at) : r.status === 'accepted' ? 'Joined ' + Social.ago(r.decided_at) : r.status === 'declined' ? 'Declined' : 'Cancelled'}${r.team ? ' · ' + esc(r.team.name) : ''}</small></div>${r.status === 'pending' ? `<button class="btn sm ghost" type="button" data-act="hq-sreq-x" data-id="${r.id}">Cancel</button>` : `<span class="att-chip t-${r.status === 'accepted' ? 'ok' : 'info'}">${r.status === 'accepted' ? 'Joined' : r.status}</span>`}</div>`).join('') : '<p class="muted">None yet.</p>') : S.err ? Social.errBox(S.err, 'sreqsent') : Social.skel(1)}</section>`;
+  },
+  parentsScreen() {
+    if (!this.school()) return this.noSchool('Inviting parents needs a school.');
+    const L = this.links(), P = Social.get('sparents', () => Social.rpc('school_parents'), 30000), I = Social.get('pinvites', () => Social.rpc('parent_invites_list'), 30000);
+    const pend = (L.v || []).filter(l => l.status === 'pending');
+    return `<div class="hq-grid"><section class="panel hq-card stack" data-stg><h2 class="h3">${icon('mail-plus')} Invite parents</h2><p class="muted hq-note">Share an invite link with parents and guardians. They make an account, pick their child, and you approve the link — then they see their child’s progress, goals and reports, and can message you.</p>
+        <button class="btn primary" type="button" data-act="hq-pinv">${icon('link')} New invite link</button>
+        ${I.v && I.v.length ? I.v.map(i => `<div class="att-row"><span class="hq-kpi-ic" style="position:static">${icon('link')}</span><div class="grow"><b class="code-sm">${esc(i.code)}</b><small class="muted">${i.note ? esc(i.note) + ' · ' : ''}${i.uses}/${i.max_uses} used · ${i.active ? 'expires ' + fmtDate(String(i.expires_at).slice(0, 10)) : 'closed'}</small></div>${i.active ? `<button class="btn sm ghost" type="button" data-act="hq-pinv-share" data-c="${esc(i.code)}" aria-label="Share invite ${esc(i.code)}">${icon('share-2')}</button><button class="btn sm ghost" type="button" data-act="hq-pinv-x" data-c="${esc(i.code)}" aria-label="Close invite ${esc(i.code)}">${icon('x')}</button>` : ''}</div>`).join('') : ''}</section>
+      <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Waiting for approval</h2><span class="badge">${pend.length}</span></div>
+        ${L.v ? (pend.length ? pend.map(l => `<div class="att-row t-warn">${Social.avatar(l.parent, 36)}<div class="grow"><b>${esc(l.parent.name)}</b><small>wants to follow <b>${esc(l.athlete.name)}</b> as ${esc(l.relation)}</small></div><button class="btn sm primary" type="button" data-act="hq-plink" data-id="${l.id}" data-v="1">${icon('check')} Approve</button><button class="btn sm ghost" type="button" data-act="hq-plink" data-id="${l.id}" data-v="0" aria-label="Decline">${icon('x')}</button></div>`).join('') : '<p class="muted">Nothing waiting. Only approve parents you know belong to the athlete.</p>') : L.err ? Social.errBox(L.err, 'plinks') : Social.skel(1)}</section></div>
+      <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Parents</h2>${P.v && P.v.length ? `<button class="btn sm" type="button" data-act="grp-new" data-all="1">${icon('messages-square')} Group with all parents</button>` : ''}</div>
+        ${P.v ? (P.v.length ? `<div class="att-list">${P.v.map(p => `<div class="att-row">${Social.avatar(p, 36)}<div class="grow"><b>${esc(p.name)}</b><small class="muted">${p.children.length ? p.children.map(c => `${esc(c.name)}${c.status === 'approved' ? '' : ' (' + c.status + ')'}`).join(', ') : 'No child linked yet'}</small></div>
+            <button class="btn sm ghost" type="button" data-act="soc-chat" data-id="${p.id}" aria-label="Message ${esc(p.name)}">${icon('message-circle')}</button>${p.children.filter(c => c.status === 'approved').map(c => `<button class="btn sm ghost" type="button" data-act="hq-unlink" data-id="${c.link}" data-n="${esc(p.name)} ↔ ${esc(c.name)}" aria-label="Unlink ${esc(c.name)}">${icon('x')}</button>`).join('')}</div>`).join('')}</div>` : '<p class="muted">No parents yet. Send an invite link.</p>') : P.err ? Social.errBox(P.err, 'sparents') : Social.skel(1)}</section>`;
+  },
+  chatsScreen() {
+    const D = Social.get('dmthreads', () => Social.rpc('dm_threads'), 15000), G = Social.get('groups', () => Social.rpc('group_list'), 15000);
+    return `<div class="hq-grid"><section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">${icon('messages-square')} Groups</h2>${this.school() ? `<button class="btn sm primary" type="button" data-act="grp-new">${icon('plus')} New group</button>` : ''}</div>
+        ${G.v ? (G.v.length ? G.v.map(g => PRole.groupRow(g)).join('') : `<p class="muted">${this.school() ? 'Start a group with parents — a whole team’s parents, or a few.' : 'Groups with parents need a school.'}</p>`) : G.err ? Social.errBox(G.err, 'groups') : Social.skel(1)}</section>
+      <section class="panel hq-card" data-stg><h2 class="h3">${icon('message-circle')} Direct messages</h2>${D.v ? (D.v.length ? D.v.slice(0, 30).map(t => `<button type="button" class="att-row hq-dm" data-act="soc-chat" data-id="${t.id}">${Social.avatar(t, 36)}<span class="grow att-main"><b>${esc(t.name)}</b><small class="muted">${t.last ? (t.last.mine ? 'You: ' : '') + esc(String(t.last.body || '').slice(0, 60)) : ''}</small></span>${t.unread ? `<span class="badge">${t.unread}</span>` : ''}</button>`).join('') : '<p class="muted">No messages yet. Message a parent from Athletes → Parents.</p>') : D.err ? Social.errBox(D.err, 'dmthreads') : Social.skel(1)}</section></div>`;
+  },
+  goalsTab(a, src) {
+    const G = Social.get('goals:' + a.id, () => Social.rpc('goals_for', { p_athlete: a.id }), 30000);
+    return `<section class="panel hq-card stack" data-stg><div class="spread"><h2 class="h3">${icon('target')} Goals & targets</h2><button class="btn sm primary" type="button" data-act="goal-new" data-u="${a.id}">${icon('plus')} New goal</button></div>
+      <p class="muted hq-note">${esc(a.name)} and their parents see these goals. Strength, body weight, speed and workouts per week update from their logs.</p>
+      ${G.v ? (GoalUI.list(G.v, src, { edit: true }) || '<p class="muted">No goals yet.</p>') : G.err ? Social.errBox(G.err, 'goals:' + a.id) : Social.skel(1)}</section>`;
+  }
+});
+(() => {
+  /* Athletes section: Team · Add athletes · Parents */
+  const ath = HQ.athletes.bind(HQ);
+  HQ.athletes = function () {
+    const L = this.links().v || [], pend = L.filter(l => l.status === 'pending').length;
+    const tabs = this.subtabs('atab2', [['team', 'Team'], ['add', 'Add athletes'], ['parents', 'Parents', pend || '']]);
+    if (this.st.atab2 === 'add') return this.frame('Athletes', tabs + this.addScreen(), { sub: 'Grow your school' });
+    if (this.st.atab2 === 'parents') return this.frame('Athletes', tabs + this.parentsScreen(), { sub: 'Parents and guardians' });
+    const h = ath(); return h.replace('<section class="panel hq-card stack" data-stg>', tabs + '<section class="panel hq-card stack" data-stg>');
+  };
+  /* athlete page: Goals tab */
+  const one = HQ.athlete.bind(HQ);
+  HQ.athlete = function (aid) {
+    let h = one(aid);
+    h = h.replace(/(<button type="button" role="tab" data-act="hq-st" data-k="atab" data-v="overview"[^>]*>Overview<\/button>)/, `$1<button type="button" role="tab" data-act="hq-st" data-k="atab" data-v="goals" aria-selected="${this.st.atab === 'goals'}">Goals</button>`);
+    if (this.st.atab === 'goals') {
+      const E = Social.c[`tath:${this.tid()}:${aid}`], a = E && E.v; if (!a) return h;
+      const pr = a.profile || {}, src = { baselines: pr.baselines, athletic: pr.athletic, position: pr.position, results: a.results, passed110: a.passed110, bodyweight: a.bodyweight || [], sessions: (a.sessions || []).map(s => ({ d: s.date, status: s.status })) };
+      const i = h.indexOf('</div>', h.indexOf('class="seg hq-tabs"')) + 6;
+      h = h.slice(0, i) + this.goalsTab(a, src) + '</div>';
+    }
+    return h;
+  };
+  /* Messages: Feedback · Chats & groups */
+  HQ.messages = function () {
+    const tabs = this.subtabs('mtab', [['feedback', 'Feedback'], ['chats', 'Chats & groups']]);
+    if (this.st.mtab === 'chats') return this.frame('Messages', tabs + this.chatsScreen(), { sub: 'Parents, coaches and groups' });
+    return this.feedbackScreen().replace('<h1 class="h1">Feedback</h1>', '<h1 class="h1">Messages</h1>').replace('<div class="hq-grid hq-grid-fb">', tabs + '<div class="hq-grid hq-grid-fb">');
+  };
+  const scr = HQ.screen.bind(HQ);
+  HQ.screen = function (param) { const s = String(param || '').split(':')[0]; if (s === 'messages' || s === 'feedback') { const g = this.gate(); if (g) return `<div class="screen hq">${g}</div>`; if (s === 'feedback') this.st.mtab = 'feedback'; return this.messages(); } return scr(param); };
+  const sec = HQ.section.bind(HQ); HQ.section = function () { const s = String(UI.route.param || '').split(':')[0]; return s === 'feedback' ? 'messages' : sec(); };
+  /* Overview: a School card for coaches with a school */
+  const ov = HQ.overview.bind(HQ);
+  HQ.overview = function () {
+    let h = ov(); if (!this.school()) return h;
+    const L = this.links().v || [], pend = L.filter(l => l.status === 'pending').length, pc = new Set(L.filter(l => l.status === 'approved').map(l => l.parent.id)).size;
+    const card = `<section class="panel hq-card hq-school" data-stg><span class="hq-promo-ic">${Brand.o().logo ? `<img src="${esc(Brand.o().logo)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">` : icon('school')}</span><div class="grow"><span class="label">Your school</span><b>${esc(Brand.o().name)}</b><small class="muted">${pc} parent${pc === 1 ? '' : 's'} linked${pend ? ` · <b>${pend} waiting for approval</b>` : ''}</small></div>
+      <div class="row wrap"><button class="btn sm" type="button" data-act="hq-go2" data-p="athletes" data-t="add">${icon('user-plus')} Add athletes</button><button class="btn sm ${pend ? 'primary' : ''}" type="button" data-act="hq-go2" data-p="athletes" data-t="parents">${icon('users')} Parents${pend ? ` · ${pend}` : ''}</button></div></section>`;
+    const i = h.indexOf('</header>'); return i < 0 ? h : h.slice(0, i + 9) + card + h.slice(i + 9);
+  };
+  /* goals in the athlete PDF */
+  const ar = HQPdf.athlete.bind(HQPdf);
+  HQPdf.athlete = async function (tid, uid, days) { this._goalsFor = uid; try { return await ar(tid, uid, days); } finally { this._goalsFor = null; } };
+  const mk = HQPdf.make.bind(HQPdf);
+  HQPdf.make = function (J) {
+    const w = mk(J), fin = w.finish.bind(w), self = this;
+    w.goals = (goals, src) => { const G = (goals || []).filter(g => g.status !== 'archived'); w.section('Goals & targets');
+      if (!G.length) { w.para('No goals set.', { c: w.C.muted }); return; }
+      w.table([{ h: 'Goal', w: 62 }, { h: 'Start', w: 22, a: 'r' }, { h: 'Now', w: 22, a: 'r' }, { h: 'Target', w: 22, a: 'r' }, { h: 'Due', w: 24, a: 'r' }, { h: 'Status', w: 26 }],
+        G.map(g => { const S = GoalCalc.state(g, src); return [g.title, GoalCalc.fmt(g.start_value != null ? +g.start_value : null, g), GoalCalc.fmt(S.cur, g), GoalCalc.fmt(g.target_value != null ? +g.target_value : null, g), g.due_date ? fmtDate(g.due_date) : '-', S.label]; })); };
+    w.finish = async name => { if (self._goalsFor && !w._goalsDone) { w._goalsDone = true; try { const [G, A] = await Promise.all([Social.rpc('goals_for', { p_athlete: self._goalsFor }), Social.rpc('team_athlete', { p_team: HQ.tid(), p_user: self._goalsFor })]); const pr = A.profile || {}; w.goals(G, { baselines: pr.baselines, athletic: pr.athletic, position: pr.position, results: A.results, bodyweight: A.bodyweight, sessions: (A.sessions || []).map(s => ({ d: s.date, status: s.status })) }); } catch (e) { } } return fin(name); };
+    return w;
+  };
+})();
+
+/* ============ 5. GROUP CONVERSATIONS (coaches & parents) ============ */
+Screens.group = id => {
+  const e = Social.get('group:' + id, () => Social.rpc('group_get', { p_group: id }), 8000), g = e.v;
+  if (!g) return `<div class="screen soc">${backBar('Group')}${e.err ? Social.errBox(e.err, 'group:' + id) : Social.skel(2)}</div>`;
+  const admin = g.role === 'admin', me = Cloud.user && Cloud.user.id;
+  return `<div class="screen soc grp">${backBar(esc(g.name), `<button class="btn sm ghost" type="button" data-act="grp-info" data-id="${g.id}" aria-label="Group members">${icon('users')} ${g.members.length}</button>`)}
+    <div class="grp-msgs" id="grpMsgs">${g.messages.length ? g.messages.map(m => `<div class="grp-msg ${m.mine ? 'mine' : ''}">${m.mine ? '' : Social.avatar(m.sender, 30)}<div class="grp-b"><small class="grp-who">${m.mine ? '' : esc(m.sender ? m.sender.name : '') + ' · '}${Social.ago(m.at)}</small><p>${m.deleted ? '<i class="muted">Deleted</i>' : esc(m.body)}</p>${!m.deleted && (m.mine || admin) ? `<button type="button" class="grp-del" data-act="grp-del" data-id="${m.id}" data-g="${g.id}" aria-label="Delete message">${icon('trash-2')}</button>` : ''}</div></div>`).join('') : '<p class="muted" style="text-align:center;padding:24px">No messages yet. Say hello.</p>'}</div>
+    <div class="grp-compose"><textarea class="input" id="grpBody" rows="1" maxlength="2000" placeholder="Message the group" aria-label="Message"></textarea><button class="btn primary" type="button" data-act="grp-send" data-id="${g.id}" aria-label="Send">${icon('send')}</button></div></div>`;
+};
+TAB_OF.group = 'social'; Social.live.add('group');
+After.group = view => { const m = $('#grpMsgs', view); if (m) m.scrollTop = m.scrollHeight; requestAnimationFrame(() => scrollTo(0, document.body.scrollHeight)); };
+
+/* ============ 6. THE PARENT EXPERIENCE ============ */
+const PRole = {
+  ROUTES: new Set(['p-home', 'p-child', 'p-msgs', 'p-feed', 'p-me', 'chat', 'group', 'notifs', 'goals']),
+  SECTIONS: [['p-home', 'Home', 'house'], ['p-child', 'Progress', 'bar-chart-3'], ['p-msgs', 'Messages', 'messages-square'], ['p-feed', 'Community', 'newspaper'], ['p-me', 'Account', 'circle-user']],
+  code() { try { const q = new URLSearchParams(location.search).get('parent'); if (q) { localStorage.setItem('bbp.pcode', q.toUpperCase()); return q.toUpperCase(); } return localStorage.getItem('bbp.pcode'); } catch (e) { return null; } },
+  kids() { return Social.get('mykids', () => Social.rpc('my_children'), 30000); },
+  child() { const K = this.kids().v; if (!K) return null; const act = K.children.filter(c => c.status === 'approved' && c.active); const id = HQ.pref('child'); return act.find(c => c.athlete.id === id) || act[0] || null; },
+  data(id, days = 28) { return Social.get(`pchild:${id}:${days}`, () => Social.rpc('parent_child', { p_athlete: id, p_days: days }), 60000); },
+  src(d) { return { baselines: d.profile && d.profile.baselines, athletic: d.profile && d.profile.athletic, position: d.profile && d.profile.position, results: d.results, passed110: d.passed110, bodyweight: d.bodyweight, sessions: d.sessions }; },
+  groupRow(g) { return `<button type="button" class="att-row hq-dm" data-act="go" data-r="group" data-p="${g.id}"><span class="hq-kpi-ic" style="position:static">${icon('messages-square')}</span><span class="grow att-main"><b>${esc(g.name)}</b><small class="muted">${g.last ? esc((g.last.sender ? g.last.sender.name + ': ' : '') + String(g.last.body || '').slice(0, 60)) : g.members + ' members'}</small></span>${g.unread ? `<span class="badge">${g.unread}</span>` : ''}</button>`; },
+  head(title, sub) { return `<header class="hq-head" data-stg><div class="hq-title"><span class="hq-team" style="cursor:default">${icon('school')}<span>${esc(Brand.o().name)}</span></span><h1 class="h1">${title}</h1>${sub ? `<p class="muted hq-sub">${sub}</p>` : ''}</div></header>`; },
+  /* find your child (and wait for the coach) */
+  find() {
+    const q = (this.q || '').trim(), A = Social.get('pkids:' + q, () => Social.rpc('parent_school_athletes', { p_q: q }), 20000), K = this.kids().v;
+    const pend = K ? K.children.filter(c => c.status === 'pending') : [];
+    return `${pend.length ? `<section class="panel hq-card stack" data-stg><h2 class="h3">${icon('clock')} Waiting for the coach</h2>${pend.map(c => `<div class="att-row t-warn">${Social.avatar(c.athlete, 36)}<div class="grow"><b>${esc(c.athlete.name)}</b><small>A coach will confirm you’re their ${esc(c.relation)}. You’ll get a notification.</small></div></div>`).join('')}</section>` : ''}
+      <section class="panel hq-card stack" data-stg><h2 class="h3">${icon('baby')} Find your child</h2><p class="muted hq-note">Athletes at ${esc(Brand.o().name)}. Pick your child — a coach approves the link before you see anything.</p>
+        <div class="field"><span class="label" id="prelL">You are their</span><div class="chips" role="radiogroup" aria-labelledby="prelL">${[['mother', 'Mother'], ['father', 'Father'], ['guardian', 'Guardian'], ['other', 'Other']].map(([k, l]) => `<button type="button" class="chip" role="radio" data-act="p-rel" data-v="${k}" aria-checked="${(this.rel || 'mother') === k}">${l}</button>`).join('')}</div></div>
+        <div class="input-ic">${icon('search')}<input class="input" id="pkQ" type="search" placeholder="Child’s name" value="${esc(this.q || '')}" autocomplete="off" aria-label="Search your child"></div>
+        ${A.v ? (A.v.length ? `<div class="att-list">${A.v.slice(0, 40).map(a => `<div class="att-row">${Social.avatar(a, 36)}<div class="grow"><b>${esc(a.name)}</b><small class="muted">@${esc(a.username)}</small></div>${a.link === 'approved' ? '<span class="att-chip t-ok">Linked</span>' : a.link === 'pending' ? '<span class="badge">Waiting</span>' : `<button class="btn sm primary" type="button" data-act="p-link" data-id="${a.id}" data-n="${esc(a.name)}">This is my child</button>`}</div>`).join('')}</div>` : '<p class="muted">Nobody found.</p>') : A.err ? Social.errBox(A.err, 'pkids:' + q) : Social.skel(1)}</section>`;
+  },
+  home() {
+    if (!Social.on()) return `<div class="screen hq">${Social.empty('cloud-off', 'You’re offline', 'Connect to see your child’s progress.')}</div>`;
+    const K = this.kids(); if (!K.v) return `<div class="screen hq">${K.err ? Social.errBox(K.err, 'mykids') : Social.skel(3)}</div>`;
+    const kids = K.v.children.filter(c => c.status === 'approved' && c.active), c = this.child();
+    if (!kids.length || this.finding) return `<div class="screen hq">${this.head(kids.length ? 'Add a child' : 'Welcome', kids.length ? '' : 'Let’s connect you to your child.')}${kids.length ? `<button class="btn sm ghost hq-back" type="button" data-act="p-find" data-v="0">${icon('chevron-left')} Back</button>` : ''}${this.find()}</div>`;
+    const D = this.data(c.athlete.id); if (!D.v) return `<div class="screen hq">${this.head('Hi ' + esc((Cloud.profile && Cloud.profile.username || '').split(/[._]/)[0]))}${D.err ? Social.errBox(D.err, `pchild:${c.athlete.id}:28`) : Social.skel(3)}</div>`;
+    const d = D.v, src = this.src(d), wk = d.sessions.filter(s => s.d >= addDays(todayISO(), -6)).length, G = (d.goals || []).filter(g => g.status === 'active'), fb = d.feedback || [], badges = d.badges || [];
+    const rs = (d.ready || []).map(x => +x.s), rAvg = rs.length ? rs.reduce((a, b) => a + b, 0) / rs.length : null, last = d.sessions[0];
+    return `<div class="screen hq">${this.head(esc(d.name), `${esc(d.profile && d.profile.position ? (POSITIONS[d.profile.position] ? POSITIONS[d.profile.position].name : d.profile.position) : 'Athlete')}${d.teams.length ? ' · ' + esc(d.teams.map(t => t.name).join(', ')) : ''}`)}
+      ${kids.length > 1 ? `<div class="chips" role="group" aria-label="Child" data-stg>${kids.map(k => `<button type="button" class="chip" data-act="p-pick" data-id="${k.athlete.id}" aria-pressed="${k.athlete.id === c.athlete.id}">${esc(k.athlete.name)}</button>`).join('')}</div>` : ''}
+      <div class="hq-kpis" data-stg>${HQ.kpi('This week', wk, 'workouts', 'dumbbell', wk >= 3 ? 'good' : '')}${HQ.kpi('Last 28 days', d.sessions.length, 'workouts', 'calendar')}${HQ.kpi('Last workout', last ? TeamCalc.ago(last.d) : 'none', last ? esc(last.title || 'Workout') : 'nothing logged yet', 'clock')}
+        ${HQ.kpi('Readiness', rAvg == null ? '—' : fmtNum(rAvg, 1) + '<small>/5</small>', 'how they feel on average', 'heart-pulse')}${HQ.kpi('Goals', G.length, 'active', 'target')}${HQ.kpi('Badges', badges.length, 'earned', 'trophy')}</div>
+      <div class="hq-grid"><section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">${icon('target')} Goals</h2><button class="btn sm ghost" type="button" data-act="go" data-r="p-child">All progress</button></div>${GoalUI.list(G.slice(0, 3), src) || '<p class="muted">No goals set by the coach yet.</p>'}</section>
+        <section class="panel hq-card" data-stg><h2 class="h3">${icon('message-square-heart')} From the coaches</h2>${fb.length ? fb.slice(0, 3).map(f => `<article class="fb-item"><div class="fb-top">${Social.avatar(f.coach, 30)}<div class="grow"><b>${esc(f.coach ? f.coach.name : 'Coach')}</b> ${HQ.kindChip(f.kind)}<small class="muted"> · ${Social.ago(f.created_at)}</small></div></div><p class="fb-body">${esc(f.body)}</p></article>`).join('') : '<p class="muted">No feedback yet.</p>'}
+          <button class="btn sm" type="button" data-act="go" data-r="p-msgs">${icon('message-circle')} Message a coach</button></section></div>
+      <div class="row wrap" data-stg><button class="btn" type="button" data-act="p-pdf" data-id="${c.athlete.id}">${icon('file-down')} Progress report (PDF)</button><button class="btn ghost" type="button" data-act="p-find" data-v="1">${icon('plus')} Add another child</button></div></div>`;
+  },
+  progress() {
+    const c = this.child(); if (!c) return this.home();
+    const days = HQ.days(), D = this.data(c.athlete.id, days); if (!D.v) return `<div class="screen hq">${this.head('Progress')}${D.err ? Social.errBox(D.err, `pchild:${c.athlete.id}:${days}`) : Social.skel(3)}</div>`;
+    const d = D.v, src = this.src(d), u = unitW(), L = TeamCalc.level(src), B = HQ.buckets(days), vals = B.map(b => d.sessions.filter(s => s.d >= b.from && s.d <= b.to).length);
+    const min = d.sessions.reduce((t, s) => t + (+s.min || 0), 0), bw = (d.bodyweight || []).map(b => ({ y: Units.fromKg(b.w && b.w.kg, u) })), rd = (d.ready || []).map(x => ({ y: +x.s }));
+    return `<div class="screen hq">${this.head(esc(d.name) + '’s progress', `Last ${days} days`)}${HQ.periodChips()}
+      <div class="hq-kpis" data-stg>${HQ.kpi('Workouts', d.sessions.length, `in ${days} days`, 'dumbbell')}${HQ.kpi('Training time', fmtNum(min / 60, 1) + '<small> h</small>', 'total', 'clock')}${HQ.kpi('All time', d.all_workouts, 'workouts', 'trophy')}
+        ${HQ.kpi('Level', esc(d.xp && d.xp.level != null ? 'Level ' + d.xp.level : '—'), d.xp ? fmtNum(d.xp.xp || 0, 0) + ' XP' : '', 'award')}${HQ.kpi('Strength', L.level ? esc(Brand.lvl(L.level)) : `${L.known}/4`, L.level ? 'level' : 'maxes known', 'trending-up')}${HQ.kpi('Badges', (d.badges || []).length, 'earned', 'star')}</div>
+      <div class="hq-grid"><section class="panel hq-card" data-stg><h2 class="h3">Workouts per ${days <= 14 ? 'day' : 'week'}</h2>${HQ.bars(vals, B.map(b => b.label), { aria: 'Workouts', h: 150 })}</section>
+        <section class="panel hq-card" data-stg><h2 class="h3">How they feel (readiness)</h2>${HQ.line(rd, { min: 1, max: 5, hiLab: '5', loLab: '1', aria: 'Readiness', empty: 'No check-ins in this period.' })}</section>
+        <section class="panel hq-card" data-stg><h2 class="h3">Body weight</h2>${HQ.line(bw, { dec: 1, aria: 'Body weight', empty: 'Fewer than two weigh-ins.' })}</section>
+        <section class="panel hq-card stack" data-stg><h2 class="h3">Strength maxes</h2><div class="metrics">${Object.keys(LIFTS).map(k => `<div class="metric"><span class="label">${LIFTS[k].name}</span><div class="v">${L.m[k] != null ? fmtNum(Units.fromKg(Units.toKg(L.m[k], 'lb'), u), 0) : '—'}<small> ${L.m[k] != null ? u : ''}</small></div></div>`).join('')}</div></section></div>
+      <section class="stack" data-stg><h2 class="h3">${icon('target')} Goals & targets</h2>${GoalUI.list(d.goals, src) || '<p class="muted">No goals yet.</p>'}</section>
+      <section class="panel hq-card" data-stg><h2 class="h3">${icon('trophy')} Achievements</h2>${(d.badges || []).length ? `<div class="chips">${d.badges.slice(0, 24).map(b => `<span class="chip">${icon('award')} ${esc(((typeof BADGES !== 'undefined' && BADGES[b.badge]) || {}).name || b.badge.replace(/_/g, ' '))}</span>`).join('')}</div>` : '<p class="muted">Badges show up here as they earn them.</p>'}</section>
+      <section class="panel hq-card" data-stg><h2 class="h3">Recent workouts</h2>${d.sessions.length ? d.sessions.slice(0, 12).map(s => `<div class="hq-log-row"><span class="d"><b>${fmtDate(s.d).replace(/,.*$/, '')}</b></span><span class="grow"><b>${esc(s.kind === 'active' ? 'Active rest' : s.title || 'Workout')}</b><small class="muted">${s.min} min · ${s.sets} sets</small></span></div>`).join('') : '<p class="muted">No workouts in this period.</p>'}</section>
+      <button class="btn primary" type="button" data-act="p-pdf" data-id="${c.athlete.id}" data-stg>${icon('file-down')} Download progress report (PDF)</button></div>`;
+  },
+  msgs() {
+    const K = this.kids().v, G = Social.get('groups', () => Social.rpc('group_list'), 15000), D = Social.get('dmthreads', () => Social.rpc('dm_threads'), 15000);
+    return `<div class="screen hq">${this.head('Messages', 'Your child’s coaches and parent groups')}
+      <section class="panel hq-card" data-stg><h2 class="h3">${icon('shield')} Coaches</h2>${K ? (K.coaches.length ? K.coaches.map(c => `<button type="button" class="att-row hq-dm" data-act="soc-chat" data-id="${c.id}">${Social.avatar(c, 36)}<span class="grow att-main"><b>${esc(c.name)}</b><small class="muted">${c.head ? 'Head coach' : 'Coach'}</small></span>${(() => { const t = (D.v || []).find(x => x.id === c.id); return t && t.unread ? `<span class="badge">${t.unread}</span>` : icon('chevron-right'); })()}</button>`).join('') : '<p class="muted">No coaches listed yet.</p>') : Social.skel(1)}</section>
+      <section class="panel hq-card" data-stg><h2 class="h3">${icon('messages-square')} Groups</h2>${G.v ? (G.v.length ? G.v.map(g => this.groupRow(g)).join('') : '<p class="muted">When a coach adds you to a parents’ group, it shows here.</p>') : G.err ? Social.errBox(G.err, 'groups') : Social.skel(1)}</section></div>`;
+  },
+  feed() {
+    const e = Social.get('pfeed', () => Social.rpc('parent_feed'), 30000);
+    return `<div class="screen hq">${this.head('Community', 'News from the coaches and your child’s posts')}
+      ${e.v ? (e.v.length ? e.v.map(p => `<article class="panel pfeed" data-stg><div class="fb-top">${Social.avatar(p.author, 36)}<div class="grow"><b>${esc(p.author ? p.author.name : '')}</b><small class="muted"> · ${Social.ago(p.created_at)}</small></div></div>${p.body ? `<p class="fb-body">${esc(p.body)}</p>` : ''}${(p.media || []).length ? `<div class="pfeed-media">${p.media.slice(0, 4).map(m => Social.img ? Social.img(m.url || m, '') : '').join('')}</div>` : ''}${p.kind === 'workout' && p.payload ? `<small class="fb-ref">${icon('dumbbell')} ${esc(p.payload.title || 'Workout')}</small>` : ''}</article>`).join('')
+        : Social.empty('newspaper', 'Nothing yet', 'Posts from the coaches and your child show here.')) : e.err ? Social.errBox(e.err, 'pfeed') : Social.skel(2)}</div>`;
+  },
+  me() {
+    const K = this.kids().v, light = !!State.settings.theme && State.settings.theme === 'light' || document.body.classList.contains('theme-light');
+    return `<div class="screen hq">${this.head('Account')}
+      <section class="panel hq-card stack" data-stg><div class="row">${Social.avatar({ name: Cloud.profile && Cloud.profile.username }, 48)}<div class="grow"><b>@${esc(Cloud.profile ? Cloud.profile.username : '')}</b><div class="muted">Parent / guardian · ${esc(Brand.o().name)}</div></div></div></section>
+      <section class="panel hq-card stack" data-stg><h2 class="h3">Your children</h2>${K ? (K.children.length ? K.children.map(c => `<div class="att-row">${Social.avatar(c.athlete, 34)}<div class="grow"><b>${esc(c.athlete.name)}</b><small class="muted">${esc(c.relation)} · ${c.status === 'approved' ? (c.active ? 'linked' : 'no longer at the school') : c.status === 'pending' ? 'waiting for a coach' : 'not approved'}</small></div><button class="btn sm ghost" type="button" data-act="pl-unlink" data-id="${c.id}" data-n="${esc(c.athlete.name)}">Remove</button></div>`).join('') : '<p class="muted">None yet.</p>') : Social.skel(1)}
+        <button class="btn sm" type="button" data-act="p-find" data-v="1">${icon('plus')} Add a child</button></section>
+      <section class="panel hq-card stack" data-stg><h2 class="h3">Appearance</h2><div class="seg" role="group" aria-label="Theme"><button type="button" data-act="p-theme" data-v="light" aria-pressed="${light}">Light</button><button type="button" data-act="p-theme" data-v="dark" aria-pressed="${!light}">Night</button></div></section>
+      <section class="panel hq-card stack" data-stg><button class="btn" type="button" data-act="share-app">${icon('share-2')} Share ${esc(Brand.name())}</button><button class="btn" type="button" data-act="go" data-r="notifs">${icon('bell')} Notifications</button><button class="btn danger" type="button" data-act="cloud-logout">${icon('log-out')} Log out</button></section></div>`;
+  }
+};
+Screens['p-home'] = () => PRole.home(); Screens['p-child'] = () => PRole.progress(); Screens['p-msgs'] = () => PRole.msgs(); Screens['p-feed'] = () => PRole.feed(); Screens['p-me'] = () => PRole.me();
+['p-home', 'p-child', 'p-msgs', 'p-feed', 'p-me'].forEach(r => { TAB_OF[r] = r; Social.live.add(r); });
+After['p-home'] = view => { const i = $('#pkQ', view); if (i) i.oninput = debounce(() => { PRole.q = i.value; Social.repaint(); const n = $('#pkQ'); if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); } }, 300); };
+After.hq = (f => view => { if (f) f(view); const i = $('#hqAddQ', view); if (i) i.oninput = debounce(() => { HQ.st.addQ = i.value; Social.repaint(); const n = $('#hqAddQ'); if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); } }, 300); })(After.hq);
+
+/* the parent's bar */
+const PNav = {
+  on: false,
+  enter() {
+    const bar = $('#nav .bar'); if (!bar || this.on) return; HQNav.exit();
+    this.saved = bar.innerHTML; this.savedTabs = bar.style.getPropertyValue('--tabs');
+    bar.innerHTML = `<div class="side-brand hq-brand"><span class="hq-brand-ic">${icon('school')}</span><div><b>${esc(Brand.name())}</b><small>Parents</small></div></div><span class="ind" aria-hidden="true"></span>${PRole.SECTIONS.map(([k, l, ic]) => `<button type="button" data-pn="${k}">${icon(ic)}<span>${l}</span></button>`).join('')}`;
+    bar.style.setProperty('--tabs', PRole.SECTIONS.length); document.body.classList.add('hq-mode', 'parent-mode'); this.on = true; UI.icons(bar);
+  },
+  paint() {
+    const r = UI.route.name, k = r === 'chat' || r === 'group' ? 'p-msgs' : r === 'notifs' ? 'p-me' : r === 'goals' ? 'p-child' : r, idx = PRole.SECTIONS.findIndex(s => s[0] === k);
+    $$('#nav [data-pn]').forEach(b => { b.removeAttribute('aria-current'); if (b.dataset.pn === k) b.setAttribute('aria-current', 'page'); });
+    const ind = $('#nav .ind'); if (ind) { ind.style.opacity = idx < 0 ? '0' : '1'; ind.style.transform = `translateX(${Math.max(0, idx) * 100}%)`; }
+  }
+};
+(() => {
+  const render = UI.render.bind(UI);
+  UI.render = function (opts) {
+    if (Role.parent()) { if (!PRole.ROUTES.has(UI.route.name)) UI.route = { name: 'p-home', param: null }; PNav.enter(); }
+    return render(opts);
+  };
+  const paint = Nav.paint; Nav.paint = function () { if (PNav.on) { PNav.paint(); return; } return paint.call(Nav); };
+  document.addEventListener('click', e => { const b = e.target.closest('#nav [data-pn]'); if (!b) return; e.preventDefault(); e.stopPropagation(); Nav.stack = []; Nav.go(b.dataset.pn); }, true);
+  /* the invite link: sign up as a parent, or turn a fresh account into one */
+  PRole.code();
+  try { const s = Cloud.authScreen.bind(Cloud); Cloud.authScreen = function (mode) { return s(PRole.code() ? 'signup' : mode); }; } catch (e) { }
+  const st = Cloud.start.bind(Cloud);
+  Cloud.start = async function () {
+    const ok = await st(); if (!ok) return ok;
+    const c = PRole.code();
+    if (c && Brand.me && Brand.me.role !== 'parent') {
+      const yes = await Sheet.confirm({ title: 'Parent invitation', body: '<p>You opened a parent invitation. Use <b>this account</b> as a parent account? Only do this on a new account — athletes should keep their own.</p>', ok: 'Yes, I’m a parent' });
+      if (yes) { try { await Cloud.sb.rpc('parent_redeem', { p_code: c }).then(r => { if (r.error) throw r.error; }); localStorage.removeItem('bbp.pcode'); await Brand.mine(Cloud.sb); UI.toast('Welcome! Now find your child.'); } catch (e) { UI.toast(Social.msg(e), 'bad'); } }
+      try { localStorage.removeItem('bbp.pcode'); } catch (e) { }
+    } else if (c && Brand.me && Brand.me.role === 'parent') { try { localStorage.removeItem('bbp.pcode'); } catch (e) { } }
+    return ok;
+  };
+  /* parents skip the athlete intro and baseline */
+  const ob = () => Role.parent() && !State.profile;
+  const bootGuard = App.locker.bind(App); App.locker = function () { if (ob()) { State.meta.onboarded = true; Store.saveMeta(); return App.show(true); } return bootGuard(); };
+  try { const ip = Intro.play.bind(Intro); Intro.play = function (cb) { if (Role.parent()) return cb(); return ip(cb); }; } catch (e) { }
+})();
+
+/* ---------- notifications open the right place ---------- */
+(() => {
+  const sn = Actions['soc-notif'];
+  Actions['soc-notif'] = async el => {
+    const k = el.dataset.k, rid = el.dataset.rid || el.dataset.ref || '';
+    const map = { school_req: () => Nav.go('home'), goals: () => Nav.go(Role.parent() ? 'p-child' : 'goals'), parents: () => { if (Brand.isCoach()) { HQ.st.atab2 = 'parents'; Nav.go('hq', 'athletes'); } else Nav.go('family'); }, children: () => Nav.go('p-home'), school: () => { HQ.st.atab2 = 'add'; Nav.go('hq', 'athletes'); }, group: () => rid ? Nav.go('group', rid) : Nav.go(Role.parent() ? 'p-msgs' : 'hq', Role.parent() ? null : 'messages') };
+    if (map[k]) { Social.rpc('notif_read', { p_ids: [+el.dataset.id] }).then(() => { Social.drop('notifs', 'me'); Social.pollUnread(); }, () => { }); Social.drop('schoolreqs', 'mygoals', 'mykids', 'plinks', 'groups'); map[k](); return; }
+    return sn(el);
+  };
+})();
+
+Object.assign(Actions, {
+  'ob-exp': el => Path.set('exp', el.dataset.v), 'ob-oly': el => Path.set('oly', el.dataset.v), 'ob-path': el => { if (el.disabled) return; Path.set('path', el.dataset.v); },
+  'ob-back': () => { const d = Locker.draft(); if (d.path) delete d.path; else if (d.oly) delete d.oly; else delete d.exp; LSX.set(LS.draft, d); Locker.render(); },
+  sreq: async el => { const ok = el.dataset.v === '1'; if (ok && !await Sheet.confirm({ title: 'Join this school?', body: '<p>Your coaches will see your training, progress and goals, and the app switches to the school’s colours.</p>', ok: 'Join' })) return;
+    const r = await Social.act(el, () => Social.rpc('school_request_respond', { p_id: el.dataset.id, p_accept: ok }), ok ? 'Welcome to the team!' : 'Invitation declined.');
+    if (r !== undefined) { Social.drop('schoolreqs', 'myteams', 'org:mine'); if (ok) { await Brand.mine(Cloud.sb); PlanFx.sync && PlanFx.sync(true); } UI.render(); } },
+  'goal-new': async el => { const E = Social.c[`tath:${HQ.tid()}:${el.dataset.u}`], a = E && E.v, pr = (a && a.profile) || {}; if (await GoalUI.edit(el.dataset.u, null, a ? { baselines: pr.baselines, athletic: pr.athletic, position: pr.position, results: a.results, bodyweight: a.bodyweight, sessions: (a.sessions || []).map(s => ({ d: s.date, status: s.status })) } : {})) { Social.drop('goals:'); UI.render(); } },
+  'goal-edit': async el => { const g = GoalUI.find(el.dataset.id); if (g && await GoalUI.edit(null, g, {})) { Social.drop('goals:', 'mygoals'); UI.render(); } },
+  'goal-log': async el => { const g = GoalUI.find(el.dataset.id); if (g && await GoalUI.log(g)) { Social.drop('goals:', 'mygoals'); UI.render(); } },
+  'hq-go2': el => { HQ.st.atab2 = el.dataset.t; HQ.go(el.dataset.p); },
+  'hq-sreq': async el => { const t = $('#hqAddTeam'); if (await Social.act(el, () => Social.rpc('school_request_send', { p_user: el.dataset.id, p_team: t && t.value ? t.value : null }), `Invitation sent to ${el.dataset.n}.`) !== undefined) { Social.drop('sas:', 'sreqsent'); UI.render(); } },
+  'hq-sreq-x': async el => { if (await Social.act(el, () => Social.rpc('school_request_cancel', { p_id: el.dataset.id }), 'Cancelled.') !== undefined) { Social.drop('sreqsent', 'sas:'); UI.render(); } },
+  'hq-pinv': async el => { const r = await Social.act(el, () => Social.rpc('parent_invite_create', { p_note: null, p_max: 30 })); if (!r) return; Social.drop('pinvites'); UI.render(); Actions['hq-pinv-share']({ dataset: { c: r.code } }); },
+  'hq-pinv-share': async el => { const url = `${location.origin}${location.pathname}?parent=${encodeURIComponent(el.dataset.c)}`, text = `You're invited to follow your child's training at ${Brand.o().name} on ${Brand.name()}. Make your parent account here:`;
+    try { if (navigator.share) { await navigator.share({ title: `${Brand.name()} — parent invitation`, text, url }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+    try { await navigator.clipboard.writeText(`${text} ${url}`); UI.toast('Invite link copied — paste it into a message or email.'); } catch (e) { Sheet.open({ title: 'Parent invite link', html: `<div class="stack"><p>Send this link to parents:</p><input class="input" readonly value="${esc(url)}" onclick="this.select()"></div>` }); } },
+  'hq-pinv-x': async el => { if (await Social.act(el, () => Social.rpc('parent_invite_revoke', { p_code: el.dataset.c }), 'Invite closed.') !== undefined) { Social.drop('pinvites'); UI.render(); } },
+  'hq-plink': async el => { const ok = el.dataset.v === '1'; if (await Social.act(el, () => Social.rpc('parent_link_decide', { p_id: el.dataset.id, p_ok: ok }), ok ? 'Approved — the parent can see their child now.' : 'Declined.') !== undefined) { Social.drop('plinks', 'sparents', 'org:mine'); UI.render(); } },
+  'hq-unlink': async el => { if (!await Sheet.confirm({ title: 'Remove this link?', body: `<p>${esc(el.dataset.n)}. The parent won’t see the athlete any more.</p>`, ok: 'Remove', danger: true })) return; if (await Social.act(el, () => Social.rpc('parent_unlink', { p_id: el.dataset.id }), 'Link removed.') !== undefined) { Social.drop('plinks', 'sparents'); UI.render(); } },
+  'pl-unlink': async el => { if (!await Sheet.confirm({ title: `Remove ${esc(el.dataset.n)}?`, body: '<p>The link ends. A coach would have to approve it again.</p>', ok: 'Remove', danger: true })) return; if (await Social.act(el, () => Social.rpc('parent_unlink', { p_id: el.dataset.id }), 'Removed.') !== undefined) { Social.drop('myparents', 'mykids', 'pchild:'); UI.render(); } },
+  'grp-new': async el => {
+    const P = await Social.rpc('group_people').catch(e => { UI.toast(Social.msg(e), 'bad'); return null; }); if (!P) return;
+    const all = el.dataset.all === '1', sel = new Set(all ? P.filter(p => p.kind === 'parent').map(p => p.id) : []);
+    const r = await Sheet.ask({ title: 'New group', html: `<div class="stack"><div class="field"><label for="gName">Group name</label><input class="input" id="gName" maxlength="60" value="${all ? esc(Brand.o().name + ' parents') : ''}" placeholder="e.g. Varsity parents"></div>
+      <span class="label">Members</span><div class="att-list grp-pick">${P.map(p => `<label class="att-row"><input type="checkbox" data-gp="${p.id}" ${sel.has(p.id) ? 'checked' : ''}>${Social.avatar(p, 30)}<span class="grow"><b>${esc(p.name)}</b><small class="muted">${p.kind === 'coach' ? 'Coach' : p.children.length ? 'Parent of ' + p.children.map(esc).join(', ') : 'Parent'}</small></span></label>`).join('') || '<p class="muted">No parents yet.</p>'}</div>
+      <button class="btn primary" type="button" id="gMake">${icon('check')} Create group</button></div>`, onMount: sh => { $('#gMake', sh).onclick = () => Sheet.close({ name: $('#gName', sh).value.trim(), ids: $$('[data-gp]', sh).filter(c => c.checked).map(c => c.dataset.gp) }); } });
+    if (!r) return; if (r.name.length < 2) return UI.toast('Give the group a name.', 'bad');
+    const g = await Social.act(null, () => Social.rpc('group_create', { p_name: r.name, p_users: r.ids }), 'Group created.'); if (g) { Social.drop('groups'); Nav.go('group', g.id); } },
+  'grp-send': async el => { const b = $('#grpBody'); const t = b ? b.value.trim() : ''; if (!t) return; const r = await Social.act(el, () => Social.rpc('group_send', { p_group: el.dataset.id, p_body: t })); if (r) { b.value = ''; Social.drop('group:' + el.dataset.id, 'groups'); UI.render(); } },
+  'grp-del': async el => { if (await Social.act(el, () => Social.rpc('group_delete_msg', { p_id: el.dataset.id })) !== undefined) { Social.drop('group:' + el.dataset.g); UI.render(); } },
+  'grp-info': async el => { const g = (Social.c['group:' + el.dataset.id] || {}).v; if (!g) return; const me = Cloud.user && Cloud.user.id;
+    const c = await Sheet.choose({ title: g.name, body: `<div class="att-list">${g.members.map(m => `<div class="att-row">${Social.avatar(m, 30)}<div class="grow"><b>${esc(m.name)}</b><small class="muted">${m.kind === 'parent' ? (m.children && m.children.length ? 'Parent of ' + m.children.map(esc).join(', ') : 'Parent') : 'Coach'}${m.role === 'admin' ? ' · runs the group' : ''}</small></div></div>`).join('')}</div>`,
+      options: (g.role === 'admin' ? [{ id: 'add', label: 'Add people' }, { id: 'rename', label: 'Rename' }] : []).concat([{ id: 'leave', label: 'Leave group', cls: 'danger' }]) });
+    if (c === 'leave') { if (await Social.act(null, () => Social.rpc('group_remove', { p_group: g.id, p_user: me }), 'You left the group.') !== undefined) { Social.drop('groups'); Nav.back(); } }
+    if (c === 'rename') { const r = await Sheet.ask({ title: 'Rename', html: `<div class="stack"><input class="input" id="gRn" maxlength="60" value="${esc(g.name)}"><button class="btn primary" id="gRnOk" type="button">Save</button></div>`, onMount: sh => { $('#gRnOk', sh).onclick = () => Sheet.close($('#gRn', sh).value); } }); if (r && await Social.act(null, () => Social.rpc('group_rename', { p_group: g.id, p_name: r }), 'Renamed.') !== undefined) { Social.drop('group:' + g.id, 'groups'); UI.render(); } }
+    if (c === 'add') { const P = await Social.rpc('group_people').catch(() => []), have = new Set(g.members.map(m => m.id)), L = P.filter(p => !have.has(p.id)); if (!L.length) return UI.toast('Everyone is already in the group.');
+      const r = await Sheet.ask({ title: 'Add people', html: `<div class="stack"><div class="att-list">${L.map(p => `<label class="att-row"><input type="checkbox" data-gp="${p.id}">${Social.avatar(p, 30)}<span class="grow"><b>${esc(p.name)}</b></span></label>`).join('')}</div><button class="btn primary" id="gAdd" type="button">Add</button></div>`, onMount: sh => { $('#gAdd', sh).onclick = () => Sheet.close($$('[data-gp]', sh).filter(c => c.checked).map(c => c.dataset.gp)); } });
+      if (r && r.length && await Social.act(null, () => Social.rpc('group_add', { p_group: g.id, p_users: r }), 'Added.') !== undefined) { Social.drop('group:' + g.id); UI.render(); } } },
+  'plan-mine': async el => { const r = await Social.act(el, () => Social.rpc('plan_use_mine', { p_plan: el.dataset.id || null }), el.dataset.id ? 'You’re training on this plan now.' : 'Back to the standard program.'); if (r !== undefined) { await PlanFx.sync(true); Social.drop('plans'); UI.render(); } },
+  'p-rel': el => { PRole.rel = el.dataset.v; UI.render(); },
+  'p-link': async el => { const r = await Social.act(el, () => Social.rpc('parent_link_request', { p_athlete: el.dataset.id, p_relation: PRole.rel || 'mother' }), `Sent — a coach will confirm you’re ${el.dataset.n}’s parent.`); if (r) { PRole.finding = false; Social.drop('mykids', 'pkids:'); UI.render(); } },
+  'p-find': el => { PRole.finding = el.dataset.v === '1'; Nav.go('p-home'); UI.render(); },
+  'p-pick': el => { HQ.pref('child', el.dataset.id); UI.render(); },
+  'p-theme': el => { State.settings.theme = el.dataset.v; Store.saveSettings(); Theme.apply(); UI.render(); },
+  'p-pdf': async el => { const lab = el.innerHTML; el.disabled = true; el.innerHTML = `${icon('clock')} Making your PDF…`; UI.icons(el);
+    try { await HQPdf.child(el.dataset.id, HQ.days()); UI.toast('PDF report ready.'); } catch (e) { UI.toast(Social.msg(e), 'bad'); } finally { if (el.isConnected) { el.disabled = false; el.innerHTML = lab; } } }
+});
+
+/* the parent's PDF: the same report, built from what parents may see */
+HQPdf.child = async function (uid, days) {
+  const [J, d] = await Promise.all([this.lib(), Social.rpc('parent_child', { p_athlete: uid, p_days: days })]);
+  const w = this.make(J), u = unitW(), src = PRole.src(d), L = TeamCalc.level(src), min = d.sessions.reduce((t, s) => t + (+s.min || 0), 0), vol = d.sessions.reduce((t, s) => t + (+s.vol || 0), 0);
+  const rs = (d.ready || []).map(x => +x.s), rAvg = rs.length ? rs.reduce((a, b) => a + b, 0) / rs.length : null, bw = d.bodyweight || [];
+  w.header(`${Brand.name()} · PROGRESS REPORT`, d.name, `${d.school ? d.school.name : ''}  ·  ${fmtDate(d.from)} - ${fmtDate(d.to)}`);
+  w.kpis([['Workouts', String(d.sessions.length), `in ${d.days} days`], ['Training time', fmtNum(min / 60, 1) + ' h', 'total'], ['Volume', HQ.volFmt(vol) + ' ' + u, 'weight x reps'],
+    ['Readiness', rAvg == null ? '-' : fmtNum(rAvg, 1) + ' / 5', 'average check-in'], ['All time', String(d.all_workouts), 'workouts'], ['Badges', String((d.badges || []).length), 'earned']]);
+  const B = HQ.buckets(d.days); w.section(`Workouts per ${d.days <= 14 ? 'day' : 'week'}`); w.bars(B.map(b => d.sessions.filter(s => s.d >= b.from && s.d <= b.to).length), B.map(b => b.label), 40);
+  w.section('Body weight (' + u + ')'); w.line(bw.map(b => Units.fromKg(b.w && b.w.kg, u)), 26, { dec: 1, empty: 'Fewer than two weigh-ins.' });
+  w.goals(d.goals, src);
+  w.section('Strength - ' + (L.level ? Brand.lvl(L.level) : 'no level yet'));
+  w.table(Object.keys(LIFTS).map(k => ({ h: LIFTS[k].name, w: w.cw / Object.keys(LIFTS).length, a: 'r' })), [Object.keys(LIFTS).map(k => L.m[k] != null ? fmtNum(Units.fromKg(Units.toKg(L.m[k], 'lb'), u), 0) + ' ' + u : '-')]);
+  w.section('Recent workouts');
+  if (d.sessions.length) w.table([{ h: 'Date', w: 30 }, { h: 'Workout', w: 90 }, { h: 'Minutes', w: 28, a: 'r' }, { h: 'Sets', w: 30, a: 'r' }], d.sessions.slice(0, 20).map(s => [fmtDate(s.d), s.kind === 'active' ? 'Active rest' : s.title || 'Workout', s.min, s.sets]));
+  else w.para('No workouts in this period.', { c: w.C.muted });
+  w.section('From the coaches');
+  const fb = (d.feedback || []).filter(f => Date.parse(f.created_at) >= Date.parse(d.from));
+  if (fb.length) fb.slice(0, 10).forEach(f => { w.para(`${fmtDate(String(f.created_at).slice(0, 10))} · ${(FB_KINDS[f.kind] || FB_KINDS.note)[0]}${f.coach ? ' · ' + f.coach.name : ''}`, { b: true, size: 8.5, c: w.C.muted }); w.para(f.body, { indent: 3 }); });
+  else w.para('No feedback in this period.', { c: w.C.muted });
+  return w.finish(`${this.slug(d.name)}-progress-${todayISO()}.pdf`);
+};
+
+/* ============ SHARE: the app, and your results ============
+   One renderer draws a branded picture in the right size for each place it's going:
+     Story 1080×1920 (Instagram / Facebook / WhatsApp Status / TikTok) · Post 1080×1350 (Instagram, Facebook)
+     Square 1080×1080 (WhatsApp, Instagram, Facebook) · Wide 1200×630 (LinkedIn, Facebook, X)
+   Every picture carries the app's name and a watermark; the share itself carries the link back to the app
+   (pictures can't hold a tappable link, so the link travels with the post text). Colours follow the school. */
+const ShareKit = {
+  FORMATS: [
+    { id: 'story', w: 1080, h: 1920, label: 'Story', apps: 'Instagram · Facebook · WhatsApp Status · TikTok' },
+    { id: 'post', w: 1080, h: 1350, label: 'Post', apps: 'Instagram · Facebook feed' },
+    { id: 'square', w: 1080, h: 1080, label: 'Square', apps: 'WhatsApp · Instagram · Facebook' },
+    { id: 'wide', w: 1200, h: 630, label: 'Wide', apps: 'LinkedIn · Facebook · X' }
+  ],
+  url() { return `${location.origin}${location.pathname}?ref=share`; },
+  short() { return (location.host + location.pathname).replace(/\/$/, '').replace(/\/index\.html$/, ''); },
+  col() { const cs = getComputedStyle(document.documentElement), v = (k, d) => (cs.getPropertyValue(k) || '').trim() || d;
+    return { ink: v('--p2F4156', '#2F4156'), acc: v('--p567C8D', '#567C8D'), sky: v('--pC8D9E6', '#C8D9E6'), page: v('--pF5EFEB', '#F5EFEB'), sand: v('--pE6D9CF', '#E6D9CF'), muted: v('--p4F6272', '#4F6272') }; },
+  rr(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); },
+  fit(g, t, max, size, weight = 800) { let s = size; g.font = `${weight} ${s}px Inter, system-ui, sans-serif`; while (g.measureText(t).width > max && s > 18) { s -= 2; g.font = `${weight} ${s}px Inter, system-ui, sans-serif`; } return s; },
+  wrap(g, t, max) { const words = String(t).split(/\s+/), lines = []; let line = ''; words.forEach(w => { const n = line ? line + ' ' + w : w; if (g.measureText(n).width > max && line) { lines.push(line); line = w; } else line = n; }); if (line) lines.push(line); return lines; },
+  /* the wordmark: "RepIQ" with the last capitals in the accent colour */
+  mark(g, x, y, size, C, align = 'left', light = false) {
+    const n = Brand.name(), m = n.match(/^(.*?)([A-Z]{2,})$/), a = m ? m[1] : n, b = m ? m[2] : '';
+    g.font = `800 ${size}px Inter, system-ui, sans-serif`; const wa = g.measureText(a).width, wb = g.measureText(b).width, x0 = align === 'right' ? x - wa - wb : align === 'center' ? x - (wa + wb) / 2 : x;
+    g.textAlign = 'left'; g.fillStyle = light ? '#FFFFFF' : C.ink; g.fillText(a, x0, y); g.fillStyle = light ? C.sky : C.acc; g.fillText(b, x0 + wa, y);
+  },
+  bigBox(g, spec, bx, by, bw, bh, s, C, maxPx) {
+    const gr = g.createLinearGradient(bx, by, bx + bw, by + bh); gr.addColorStop(0, C.ink); gr.addColorStop(1, C.acc); g.fillStyle = gr; this.rr(g, bx, by, bw, bh, 40 * s); g.fill();
+    g.save(); this.rr(g, bx, by, bw, bh, 40 * s); g.clip(); g.globalAlpha = .18; g.strokeStyle = '#FFFFFF'; g.lineWidth = 3 * s; for (let i = 0; i < 3; i++) { g.beginPath(); g.arc(bx + bw - 30 * s, by + 30 * s, (80 + i * 55) * s, 0, Math.PI * 2); g.stroke(); } g.restore(); g.globalAlpha = 1;
+    if (spec.bigLabel) { g.font = `700 ${24 * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.sky; g.fillText(spec.bigLabel.toUpperCase(), bx + 36 * s, by + 58 * s); }
+    const t = String(spec.big), room = bw - 72 * s - (spec.unit ? Math.min(220 * s, bw * .3) : 0), bs = Math.min(this.fit(g, t, room, maxPx * s, 900), bh * .62, (bh - (spec.bigLabel ? 100 : 60) * s) / .74);
+    g.font = `900 ${bs}px Inter, system-ui, sans-serif`; g.fillStyle = '#FFFFFF'; g.fillText(t, bx + 36 * s, by + bh - 40 * s);
+    if (spec.unit) { const tw = g.measureText(t).width; g.font = `700 ${Math.round(bs * .3)}px Inter, system-ui, sans-serif`; g.fillStyle = C.sky; g.fillText(spec.unit, bx + 50 * s + tw, by + bh - 46 * s); }
+  },
+  tile(g, x, cx, cy, tw, th, s, C) {
+    g.fillStyle = 'rgba(255,255,255,.84)'; this.rr(g, cx, cy, tw, th, 26 * s); g.fill(); g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = 2; g.stroke();
+    g.font = `600 ${22 * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.muted; g.fillText(String(x[0]).toUpperCase(), cx + 24 * s, cy + Math.min(46 * s, th * .36));
+    this.fit(g, String(x[1]), tw - 48 * s, Math.min(56 * s, th * .4), 800); g.fillStyle = C.ink; g.fillText(String(x[1]), cx + 24 * s, cy + th - Math.min(30 * s, th * .2));
+  },
+  draw(spec, F) {
+    const W = F.w, H = F.h, wide = F.id === 'wide', s = wide ? H / 630 : W / 1080, c = document.createElement('canvas'); c.width = W; c.height = H;
+    const g = c.getContext('2d'), C = this.col(), P = 64 * s;
+    /* background: warm page, soft colour pools, fine lines */
+    const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#FFFFFF'); bg.addColorStop(.35, C.page); bg.addColorStop(1, C.sand); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    [[W * .92, H * .12, W * .55, C.sky, .55], [W * .05, H * .55, W * .5, C.acc, .16], [W * .8, H * .9, W * .6, C.sky, .4]].forEach(([x, y, r, col, a]) => { const rg = g.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, col); rg.addColorStop(1, 'rgba(255,255,255,0)'); g.globalAlpha = a; g.fillStyle = rg; g.fillRect(0, 0, W, H); });
+    g.globalAlpha = .08; g.strokeStyle = C.ink; g.lineWidth = 2 * s; for (let i = 0; i < 6; i++) { g.beginPath(); const y0 = H * (.18 + i * .045); g.moveTo(-20, y0); g.bezierCurveTo(W * .3, y0 - 60 * s, W * .6, y0 + 70 * s, W + 20, y0 - 10 * s); g.stroke(); } g.globalAlpha = 1;
+    /* watermark: the wordmark, large and faint, across the picture */
+    g.save(); g.translate(W / 2, H / 2); g.rotate(-Math.PI / 9); g.globalAlpha = .045; g.font = `900 ${(wide ? 260 : 300) * s}px Inter, system-ui, sans-serif`; g.textAlign = 'center'; g.fillStyle = C.ink; g.fillText(Brand.name(), 0, 90 * s); g.restore(); g.globalAlpha = 1;
+    /* top: wordmark + school */
+    this.mark(g, P, P + 46 * s, 52 * s, C);
+    if (Brand.look()) { g.font = `600 ${24 * s}px Inter, system-ui, sans-serif`; g.textAlign = 'right'; g.fillStyle = C.muted; g.fillText(Brand.o().name, W - P, P + 40 * s); g.textAlign = 'left'; }
+    const C2 = C, ch = (wide ? 96 : 150) * s, top = P + 110 * s, bottom = H - P - ch - 40 * s, st = (spec.stats || []).filter(x => x && x[1] != null && x[1] !== '');
+    const F_ = (w, px) => `${w} ${px}px Inter, system-ui, sans-serif`;
+    if (!wide) {
+      /* tall formats: measure, then centre the block between the header and the call to action */
+      const story = F.id === 'story', k = story ? 1.34 : F.id === 'square' ? .9 : 1, cw = W - 2 * P;
+      const hsz = 84 * s * k, ssz = 34 * s * k, bh = spec.big != null ? (story ? 420 : F.id === 'square' ? 270 : 330) * s : 0;
+      g.font = F_(800, hsz); const tl = this.wrap(g, spec.title, cw).slice(0, 3); g.font = F_(500, ssz); const sl = spec.sub ? this.wrap(g, spec.sub, cw).slice(0, story ? 4 : 3) : [];
+      let sts = st.slice(0, 4), bh2 = bh; const th = (story ? 180 : F.id === 'square' ? 120 : 140) * s, gap = 22 * s;
+      const hK = spec.kicker ? 86 * s : 0, hT = tl.length * hsz * 1.08, hS = sl.length ? sl.length * ssz * 1.38 + 14 * s : 0;
+      const meas = () => hK + hT + hS + (bh2 ? bh2 + 44 * s : 0) + (sts.length ? Math.ceil(sts.length / 2) * (th + gap) + 24 * s : 0);
+      if (meas() > bottom - top && sts.length > 2) sts = sts.slice(0, 2);
+      while (meas() > bottom - top && bh2 > 180 * s) bh2 -= 20 * s;
+      if (meas() > bottom - top) sts = [];
+      const per = Math.min(2, sts.length), rows = per ? Math.ceil(sts.length / per) : 0, total = meas(); let y = Math.max(top, top + (bottom - top - total) / 2);
+      if (spec.kicker) { g.font = F_(700, 26 * s * k); const kw = g.measureText(spec.kicker.toUpperCase()).width + 44 * s; g.fillStyle = C.ink; this.rr(g, P, y, kw, 54 * s * k, 27 * s * k); g.fill(); g.fillStyle = '#FFFFFF'; g.fillText(spec.kicker.toUpperCase(), P + 22 * s, y + 37 * s * k); y += hK; }
+      g.font = F_(800, hsz); g.fillStyle = C.ink; tl.forEach(l => { g.fillText(l, P, y + hsz * .86); y += hsz * 1.08; });
+      if (sl.length) { y += 14 * s; g.font = F_(500, ssz); g.fillStyle = C.muted; sl.forEach(l => { g.fillText(l, P, y + ssz); y += ssz * 1.38; }); }
+      if (bh2) { y += 44 * s; this.bigBox(g, spec, P, y, cw, bh2, s, C, story ? 250 : 190); y += bh2; }
+      if (rows) { y += 24 * s; const tw = (cw - gap * (per - 1)) / per; sts.forEach((x, i) => this.tile(g, x, P + (i % per) * (tw + gap), y + Math.floor(i / per) * (th + gap), tw, th, s * k, C)); }
+    } else {
+      /* wide (1200×630): words on the left, the number or the tiles on the right */
+      const lw = W * .5 - P, rx = W * .5 + 10 * s, rw = W - rx - P; let y = top;
+      if (spec.kicker) { g.font = F_(700, 20 * s); const kw = g.measureText(spec.kicker.toUpperCase()).width + 34 * s; g.fillStyle = C.ink; this.rr(g, P, y, kw, 42 * s, 21 * s); g.fill(); g.fillStyle = '#FFFFFF'; g.fillText(spec.kicker.toUpperCase(), P + 17 * s, y + 28 * s); y += 64 * s; }
+      let hsz = 58 * s; g.font = F_(800, hsz); let tl = this.wrap(g, spec.title, lw); while (tl.length > 2 && hsz > 34 * s) { hsz -= 4 * s; g.font = F_(800, hsz); tl = this.wrap(g, spec.title, lw); }
+      g.fillStyle = C.ink; tl.slice(0, 3).forEach(l => { g.fillText(l, P, y + hsz * .86); y += hsz * 1.08; });
+      if (spec.sub) { y += 10 * s; g.font = F_(500, 24 * s); g.fillStyle = C.muted; this.wrap(g, spec.sub, lw).slice(0, Math.max(1, Math.floor((bottom - y) / (34 * s)))).forEach(l => { g.fillText(l, P, y + 24 * s); y += 34 * s; }); }
+      const zone = bottom - top + 10 * s;
+      if (spec.big != null) { const bh = st.length ? zone * .6 : zone; this.bigBox(g, spec, rx, top, rw, bh, s, C, 140); const two = st.slice(0, 2), tw = (rw - 16 * s) / Math.max(1, two.length); two.forEach((x, i) => this.tile(g, x, rx + i * (tw + 16 * s), top + bh + 16 * s, tw, zone - bh - 16 * s, s * .8, C)); }
+      else { const sts = st.slice(0, 4), per = 2, rows = Math.ceil(sts.length / per), gap = 16 * s, th = (zone - gap * (rows - 1)) / Math.max(1, rows), tw = (rw - gap) / per; sts.forEach((x, i) => this.tile(g, x, rx + (i % per) * (tw + gap), top + Math.floor(i / per) * (th + gap), tw, th, s * .85, C)); }
+    }
+    /* call to action band */
+    const cy = H - P - ch, cx = P, cwid = W - 2 * P;
+    g.fillStyle = C.ink; this.rr(g, cx, cy, cwid, ch, (wide ? 30 : 40) * s); g.fill();
+    g.font = `800 ${(wide ? 32 : 42) * s}px Inter, system-ui, sans-serif`; g.fillStyle = '#FFFFFF'; g.fillText(spec.cta || `Train smarter with ${Brand.name()}`, cx + 36 * s, cy + (wide ? 44 : 64) * s);
+    g.font = `600 ${(wide ? 24 : 30) * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.sky; g.fillText(`Join free → ${this.short()}`, cx + 36 * s, cy + (wide ? 78 : 112) * s);
+    g.fillStyle = C.acc; g.beginPath(); g.arc(cx + cwid - ch / 2, cy + ch / 2, ch * .32, 0, Math.PI * 2); g.fill(); g.strokeStyle = '#FFFFFF'; g.lineWidth = 6 * s; g.lineCap = 'round'; g.beginPath(); const ax = cx + cwid - ch / 2, ay = cy + ch / 2, k = ch * .12; g.moveTo(ax - k, ay); g.lineTo(ax + k, ay); g.moveTo(ax + k * .2, ay - k * .8); g.lineTo(ax + k, ay); g.lineTo(ax + k * .2, ay + k * .8); g.stroke();
+    /* name & watermark corner */
+    if (spec.name) { g.font = `600 ${24 * s}px Inter, system-ui, sans-serif`; g.fillStyle = C.muted; g.textAlign = 'right'; g.fillText(spec.name, W - P, P + (Brand.look() ? 74 : 40) * s); g.textAlign = 'left'; }
+    /* corner watermark inside the call-to-action band */
+    g.globalAlpha = .9; this.mark(g, cx + cwid - ch - 10 * s, cy + ch / 2 + 9 * s, (wide ? 22 : 26) * s, C, 'right', true); g.globalAlpha = 1;
+    return c;
+  },
+  /* the share sheet: pick the format, preview, then share / save / copy the link */
+  async open(spec, base, text) {
+    try { if (document.fonts && document.fonts.load) await Promise.all(['800 40px Inter', '600 20px Inter', '900 40px Inter'].map(f => document.fonts.load(f))); } catch (e) { }
+    let F = this.FORMATS.find(f => f.id === (this.pref || 'post')) || this.FORMATS[1];
+    const msg = `${text} ${this.url()}`, pic = () => this.draw(spec, F).toDataURL('image/png');
+    const render = sh => {
+      $('.sheet-body', sh).innerHTML = `<div class="share-fmt chips" role="radiogroup" aria-label="Size">${this.FORMATS.map(f => `<button type="button" class="chip" role="radio" data-fmt="${f.id}" aria-checked="${f.id === F.id}">${f.label}</button>`).join('')}</div>
+        <small class="muted share-apps">${F.apps} · ${F.w}×${F.h}</small><div class="share-prev ${F.id}"><img alt="Preview of the picture" src="${pic()}"></div>
+        <div class="row wrap share-acts"><button type="button" class="btn primary grow" data-sk="share">${icon('share-2')} Share</button><button type="button" class="btn" data-sk="save">${icon('download')} Save picture</button><button type="button" class="btn ghost" data-sk="link">${icon('link')} Copy link</button></div>
+        <p class="muted" style="font-size:12.5px">The post text carries the link back to ${esc(Brand.name())}: <b>${esc(this.short())}</b></p>`; UI.icons(sh);
+    };
+    Sheet.open({ title: spec.sheetTitle || 'Share', html: '', wide: true, onMount: sh => { render(sh);
+      sh.addEventListener('click', async e => {
+        const f = e.target.closest('[data-fmt]'), a = e.target.closest('[data-sk]');
+        if (f) { F = this.FORMATS.find(x => x.id === f.dataset.fmt); this.pref = F.id; render(sh); return; }
+        if (!a) return;
+        const name = `${base}-${F.id}.png`;
+        if (a.dataset.sk === 'link') { try { await navigator.clipboard.writeText(msg); UI.toast('Link copied.'); } catch (x) { UI.toast(this.url()); } return; }
+        const blob = await new Promise(r => this.draw(spec, F).toBlob(r, 'image/png')), file = blob && typeof File === 'function' ? new File([blob], name, { type: 'image/png' }) : null;
+        if (a.dataset.sk === 'share' && file && navigator.canShare && navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file], title: Brand.name(), text: msg, url: this.url() }); return; } catch (x) { if (x && x.name === 'AbortError') return; }
+        } else if (a.dataset.sk === 'share' && navigator.share) { try { await navigator.share({ title: Brand.name(), text, url: this.url() }); return; } catch (x) { if (x && x.name === 'AbortError') return; } }
+        const u = URL.createObjectURL(blob), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); setTimeout(() => { URL.revokeObjectURL(u); l.remove(); }, 4000);
+        if (a.dataset.sk === 'share') { try { await navigator.clipboard.writeText(msg); UI.toast('Picture saved and link copied — post it with the link.'); } catch (x) { UI.toast('Picture saved.'); } } else UI.toast('Picture saved.');
+      });
+    } });
+  },
+  /* ---------- what can be shared ---------- */
+  me() { return State.settings.name || (Cloud.profile && Cloud.profile.username) || ''; },
+  app() { return this.open({ sheetTitle: `Share ${Brand.name()}`, kicker: 'Strength & conditioning', title: 'Train like it counts.', sub: 'Structured programs, every set logged, real progress you can see — with your coach in your pocket.',
+    stats: [['Programs', 'Pro-built'], ['Every set', 'Tracked'], ['Progress', 'Visible'], ['Coach', 'Connected']], cta: `Join me on ${Brand.name()}` }, `${Brand.name().toLowerCase()}-invite`, `I train with ${Brand.name()} — structured programs and real progress. Join me:`); },
+  session(id) {
+    const s = State.sessions.find(x => x.id === id); if (!s) return;
+    const st = Stats.sessionStats(s), u = unitW(), prs = State.results.filter(r => r.sid === s.id && r._pr);
+    const top = (s.exercises || s.ex || []).map(e => (e.sets || []).filter(x => x.done && x.w && x.w.kg).map(x => [Program.exDef ? (Program.exDef(e.ex || e.id) || {}).name || e.name : e.name, x])).flat().sort((a, b) => b[1].w.kg - a[1].w.kg)[0];
+    const min = st.minutes != null ? st.minutes : s.endedAt && s.startedAt ? Math.round((s.endedAt - s.startedAt - (s.pausedMs || 0)) / 60000) : null;
+    return this.open({ sheetTitle: 'Share this workout', kicker: `${wkLabel(s.week)} · Day ${s.day}`, title: s.title || 'Workout complete', sub: fmtDate(s.date), bigLabel: prs.length ? `${prs.length} new PR${prs.length > 1 ? 's' : ''}` : 'Working sets', big: st.sets, unit: 'sets',
+      stats: [['Volume', st.vol ? `${fmtNum(Units.fromKg(st.vol, u), 0)} ${u}` : null], ['Time', min ? `${min} min` : null], ['Exercises', `${st.exDone}/${st.exTotal}`], ['Top set', top ? `${Units.fmtW(top[1].w)} ${u} × ${top[1].reps}` : null]], name: this.me(), cta: `Train smarter with ${Brand.name()}` },
+      `${Brand.name().toLowerCase()}-${s.date}`, `${s.title} — done. ${st.sets} working sets${prs.length ? `, ${prs.length} new PR${prs.length > 1 ? 's' : ''}` : ''}. Logged with ${Brand.name()}:`);
+  },
+  pr(info) {
+    const m = METRICS[info.metric], cur = Units.metricIn(info.metric, info.o), pv = info.prev ? Units.metricIn(info.metric, info.prev.o) : null, u = Units.metricUnit(info.metric), dec = m.kind === 'time' ? 2 : 1;
+    return this.open({ sheetTitle: 'Share your PR', kicker: 'New personal record', title: m.name, bigLabel: 'Tested', big: fmtNum(cur, dec), unit: u, stats: pv != null ? [['Previous best', `${fmtNum(pv, dec)} ${u}`], ['Improvement', `${m.kind === 'time' ? '−' : '+'}${fmtNum(Math.abs(cur - pv), dec)} ${u}`]] : [['Date', fmtDate(todayISO())]], name: this.me() },
+      `${Brand.name().toLowerCase()}-pr`, `New PR: ${m.name} ${fmtNum(cur, dec)} ${u}! Tracked with ${Brand.name()}:`);
+  },
+  progress() {
+    const from = addDays(todayISO(), -29), S = State.sessions.filter(s => s.status === 'completed' && s.date >= from), u = unitW();
+    const vol = S.reduce((t, s) => t + (Stats.sessionStats(s).vol || 0), 0), prs = State.results.filter(r => r._pr && r.date >= from).length, all = State.sessions.filter(s => s.status === 'completed').length;
+    return this.open({ sheetTitle: 'Share your progress', kicker: 'My last 30 days', title: 'Putting in the work.', bigLabel: 'Workouts', big: S.length, unit: 'done',
+      stats: [['Volume', vol ? `${fmtNum(Units.fromKg(vol, u) / 1000, 1)}k ${u}` : '—'], ['New PRs', prs], ['All time', `${all} workouts`], ['Program', State.profile && State.profile.pathway === 'prep' ? 'Prep + 11 weeks' : '11 weeks']], name: this.me() },
+      `${Brand.name().toLowerCase()}-progress`, `${S.length} workouts in the last 30 days with ${Brand.name()}:`);
+  },
+  programme() {
+    const all = State.sessions.filter(s => s.status === 'completed' && s.week >= 1).length, prs = State.results.filter(r => r._pr).length;
+    return this.open({ sheetTitle: 'Share your programme', kicker: 'Programme complete', title: 'Eleven weeks. Done.', bigLabel: 'Weeks', big: 11, unit: 'weeks', stats: [['Workouts', all], ['PRs', prs]], name: this.me() },
+      `${Brand.name().toLowerCase()}-programme`, `I finished the 11-week programme on ${Brand.name()}!`);
+  },
+  level(x) { return this.open({ sheetTitle: 'Share your level', kicker: 'Level up', title: `Level ${x.level} reached.`, bigLabel: 'Level', big: x.level, stats: [['XP', fmtNum(x.xp, 0)]], name: this.me() }, `${Brand.name().toLowerCase()}-level`, `Level ${x.level} on ${Brand.name()}:`); },
+  badge(list) { const b = list[0]; return this.open({ sheetTitle: 'Share your badge', kicker: 'Badge unlocked', title: list.map(x => x.name).join(' · '), sub: b.desc, name: this.me() }, `${Brand.name().toLowerCase()}-badge`, `Badge unlocked on ${Brand.name()}: ${b.name}!`); },
+  goal(g) { const S = GoalCalc.state(g, GoalUI.mySrc());
+    return this.open({ sheetTitle: 'Share your goal', kicker: 'Goal achieved', title: g.title, bigLabel: 'Reached', big: S.cur != null ? fmtNum(S.cur, g.metric === 'dash40' ? 2 : 0) : '✓', unit: S.cur != null ? g.unit || '' : '', stats: [['Started at', GoalCalc.fmt(g.start_value != null ? +g.start_value : null, g)], ['Set by', g.coach ? g.coach.name : 'Coach']], name: this.me() },
+      `${Brand.name().toLowerCase()}-goal`, `Goal achieved: ${g.title}! With ${Brand.name()}:`); }
+};
+/* the existing workout share uses the new pictures */
+ShareCard.share = id => ShareKit.session(id);
+(() => {
+  const pr = Celebrate.pr.bind(Celebrate);
+  Celebrate.pr = function (info) { pr(info); ShareKit._pr = info; const c = $('#celebrate [data-act=cel-close]'); if (c) c.insertAdjacentHTML('beforebegin', `<button class="btn big block" type="button" data-act="share-pr" data-stg>${icon('share-2')} Share this PR</button>`); UI.icons($('#celebrate')); };
+  const lu = SocialFX.levelUp.bind(SocialFX);
+  SocialFX.levelUp = function (x, fresh) { lu(x, fresh); ShareKit._lvl = x; const c = $('#celebrate [data-act=cel-close]'); if (c) c.insertAdjacentHTML('beforebegin', `<button class="btn big block" type="button" data-act="share-level">${icon('share-2')} Share</button>`); UI.icons($('#celebrate')); };
+  const bd = SocialFX.badges.bind(SocialFX);
+  SocialFX.badges = function (list) { bd(list); ShareKit._bdg = list; const c = $('#celebrate [data-act=cel-close]'); if (c) c.insertAdjacentHTML('beforebegin', `<button class="btn block" type="button" data-act="share-badge">${icon('image')} Share as a picture</button>`); UI.icons($('#celebrate')); };
+  /* Home: a clear share button; Progress and the Program summary: share your results */
+  const ah = After.home; After.home = function (view, opts) { if (ah) ah.call(After, view, opts); const row = $('.topbar .row', view); if (row && !$('.share-btn', row) && !Role.parent()) row.insertAdjacentHTML('afterbegin', `<button type="button" class="btn sm icon ghost share-btn" data-act="share-app" aria-label="Share ${esc(Brand.name())}">${icon('share-2')}</button>`); UI.icons(view); };
+  const ap = After.progress; After.progress = function (view, opts) { if (ap) ap.call(After, view, opts); const t = $('.topbar', view) || $('.screen > *', view); if (t && !$('.share-prog', view) && State.sessions.some(s => s.status === 'completed')) t.insertAdjacentHTML('afterend', `<button type="button" class="btn sm share-prog" data-act="share-progress" data-stg>${icon('share-2')} Share my progress</button>`); UI.icons(view); };
+  const asum = After.summary; After.summary = function (view, opts) { if (asum) asum.call(After, view, opts); const t = $('.screen', view); if (t && !$('.share-prog', view)) t.insertAdjacentHTML('beforeend', `<button type="button" class="btn block share-prog" data-act="share-programme">${icon('share-2')} Share my programme</button>`); UI.icons(view); };
+})();
+Object.assign(Actions, {
+  'share-app': () => ShareKit.app(),
+  'share-progress': () => ShareKit.progress(),
+  'share-programme': () => ShareKit.programme(),
+  'share-pr': () => ShareKit._pr && ShareKit.pr(ShareKit._pr),
+  'share-level': () => ShareKit._lvl && ShareKit.level(ShareKit._lvl),
+  'share-badge': () => ShareKit._bdg && ShareKit.badge(ShareKit._bdg),
+  'share-goal': el => { const g = GoalUI.find(el.dataset.id); if (g) ShareKit.goal(g); }
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
