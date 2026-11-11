@@ -147,7 +147,7 @@ p{margin:0}
 .badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
   border-radius:6px;padding:3px 7px;border:1px solid var(--line);color:var(--silver);white-space:nowrap}
 .badge.wrap{white-space:normal;line-height:1.35}
-.badge.blue{background:rgba(var(--b1lrgb),.25);border-color:rgba(183,190,195,.45);color:#B7BEC3}
+.badge.blue{background:rgba(var(--b1lrgb),.25);border-color:rgba(183,190,195,.45);color:#D6DCE0}
 .badge.red{background:rgba(var(--b2rgb),.28);border-color:rgba(var(--b2rgb),.5);color:#FFFFFF}
 .badge.warn{color:var(--warn);border-color:rgba(183,190,195,.45)}
 .badge.ok{color:var(--ok);border-color:rgba(183,190,195,.4)}
@@ -2688,6 +2688,46 @@ body.parent-mode .hq-exit-top{display:none}
 .path-card .grow{flex:1 1 auto;min-width:0;align-items:flex-start}
 .path-card .path-tag{position:static;float:none;display:inline-flex;margin:0 0 2px;order:-1}
 .path-card .grow>b,.path-card .grow>small{align-self:stretch}
+/* ---------- the update: check-in, what's new, beta card, delete ---------- */
+.rq .h1{font-size:clamp(24px,6.4vw,30px);line-height:1.12}
+.rq-hero{display:grid;gap:8px}.rq-hero .badge{justify-self:start}
+.rq-news{list-style:none;margin:6px 0 4px;padding:0;display:grid;gap:10px}
+.rq-news li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:rgba(var(--p2F4156-rgb),.05)}
+.rq-news li>i{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--p2F4156);color:var(--pF5EFEB);flex:none}
+.rq-news li>i svg{width:18px;height:18px}
+.rq-news b{display:block;font-size:15.5px}.rq-news small{display:block;color:var(--p4F6272);font-size:13px;line-height:1.35}
+body:not(.theme-light) .rq-news li{background:rgba(var(--pC8D9E6-rgb),.07)}body:not(.theme-light) .rq-news small{color:var(--pB9C9D6)}
+body:not(.theme-light) .rq-news li>i{background:var(--pF5EFEB);color:var(--p2F4156)}
+.beta-card{position:relative;overflow:hidden;margin:4px 0 14px;padding:16px;border-radius:22px;color:var(--pF5EFEB);background:linear-gradient(135deg,var(--p2F4156) 0%,var(--p18222E) 70%);box-shadow:0 18px 40px -22px rgba(var(--p18222E-rgb),.7);display:grid;gap:9px}
+.beta-card::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(242,201,160,.35),transparent 70%);pointer-events:none}
+.beta-top{display:flex;justify-content:space-between;align-items:center}
+.beta-tag{display:inline-flex;gap:6px;align-items:center;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--p18222E);background:linear-gradient(90deg,#F2C9A0,var(--pE6D9CF))}
+.beta-tag svg{width:14px;height:14px}
+.beta-card.hot .beta-tag{animation:betaPulse 1.8s ease-in-out infinite}
+@keyframes betaPulse{50%{box-shadow:0 0 0 6px rgba(242,201,160,.18)}}
+@media (prefers-reduced-motion:reduce){.beta-card.hot .beta-tag{animation:none}}
+.beta-edit{color:var(--pF5EFEB)!important}
+.beta-count{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.beta-count b{font-size:38px;font-weight:900;line-height:1;background:linear-gradient(180deg,#FFFFFF,var(--pE6D9CF));-webkit-background-clip:text;background-clip:text;color:transparent}
+.beta-count span{flex:1 1 150px;font-size:14px;line-height:1.3;color:var(--pC8D9E6);font-weight:600}
+.beta-bar{height:10px;border-radius:999px;background:rgba(var(--pC8D9E6-rgb),.16);overflow:hidden}
+.beta-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#F2C9A0,var(--pE6D9CF))}
+.beta-why{margin:0;font-size:13.5px;color:var(--pC8D9E6);line-height:1.4}
+.beta-reward{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(var(--pC8D9E6-rgb),.14)}
+.beta-reward b{display:block;font-size:15px}.beta-reward small{color:var(--pC8D9E6);font-size:12.5px}
+.beta-dots{display:flex;gap:6px}
+.beta-dots i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;color:var(--pC8D9E6);border:2px dashed rgba(var(--pC8D9E6-rgb),.35)}
+.beta-dots i.on{border:0;background:linear-gradient(135deg,#F2C9A0,var(--pE6D9CF));color:var(--p18222E)}
+.beta-dots i svg{width:14px;height:14px}
+#view .beta-card .btn.primary{background:linear-gradient(90deg,#F2C9A0,var(--pE6D9CF));color:var(--p18222E);border:0}
+#view .beta-card .btn:not(.primary):not(.ghost){background:rgba(255,255,255,.1);color:var(--pF5EFEB);border:1px solid rgba(var(--pC8D9E6-rgb),.22)}
+.share-banner{display:block;margin:0 0 10px;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.45;color:var(--p18222E);background:linear-gradient(90deg,#F2C9A0,var(--pE6D9CF))}
+.share-banner i[data-lucide]{display:inline-flex;vertical-align:-3px;margin-right:4px;width:16px;height:16px}
+.share-acts .btn.primary{flex:1 1 100%}
+.gbeta{display:inline-flex;gap:8px;align-items:center;margin-top:12px;padding:7px 14px;border-radius:999px;font-size:13px;color:var(--p18222E);background:linear-gradient(90deg,#F2C9A0,var(--pE6D9CF))}
+.gbeta[hidden]{display:none}.gbeta svg{width:15px;height:15px}
+.gref{margin:8px 0 0;font-size:13.5px;opacity:.85}
+.acct-del b{color:#B4423A}body:not(.theme-light) .acct-del b{color:#F2A8A0}
 
 </style>
 </head>
@@ -2785,7 +2825,7 @@ body.parent-mode .hq-exit-top{display:none}
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD_ID = 'Nov 10 · 23:39';
+const BUILD_ID = 'Nov 11 · 00:58';
 const PALETTE = {"anchors":{"P":"2F4156","A":"567C8D","S":"C8D9E6","N":"F5EFEB"},"P":["2F4156","4F6272","1F2B3A","3F5262","243344","3C5269","3A5266","263546","5E6672","4A5D6C","475A6A","36495F","18222E"],"A":["567C8D","4A6B7C","3F5F6E"],"S":["C8D9E6","DDE5EC","B9C9D6","EEF3F7","E6EEF4","DCE5EF","F5F7FA"],"N":["F5EFEB","E6D9CF","EFE6DF","D9C8BB","ECE6E1","F0E7E0","EADFD6","C9B5A6","FCFAF9","FAF7F5","F8F4F1","F7F2EF","F2ECE8","FFFDFB","E2D2C6","F2EAE4","78604E","967660"],"text":["2F4156","4F6272","3F5262","5E6672","3F5F6E","4A6B7C"]};
 /* ============ LOAD-UP EFFECT ============
    The splash is static HTML/CSS at the top of <body>, so it paints instantly while the app boots
@@ -4667,7 +4707,9 @@ const Screens = {
     const it = (r, ic, t, d) => `<button class="list-item" type="button" data-act="go" data-r="${r}">${icon(ic)}<div class="grow"><b>${t}</b><div class="muted" style="font-size:12.5px">${d}</div></div>${icon('chevron-right')}</button>`;
     const acct = Cloud.on && Cloud.profile ? `<section class="panel stack acct" data-stg><div class="row"><span class="lib-ico">${icon('user')}</span><div class="grow"><span class="label">Signed in as</span><b style="display:block;font-size:18px">${esc(Cloud.profile.username)}</b></div>${Cloud.isAdmin() ? '<span class="badge blue">Admin</span>' : ''}</div>
       ${'email' in Cloud.profile ? `<button class="list-item" type="button" data-act="my-email">${icon('mail')}<div class="grow"><b>${esc(Cloud.profile.email || 'Add your email')}</b><div class="muted" style="font-size:12.5px">News & offers: ${Cloud.profile.marketing_opt_in ? 'yes' : 'no'} · tap to change</div></div>${icon('chevron-right')}</button>` : ''}
-      <div class="row wrap">${Cloud.badge()}</div><div class="row wrap"><button class="btn sm" type="button" data-act="cloud-sync">${icon('refresh-cw')} Sync now</button><button class="btn sm ghost" type="button" data-act="cloud-logout">${icon('log-out')} Log out</button></div></section>` : '';
+      <div class="row wrap">${Cloud.badge()}</div><div class="row wrap"><button class="btn sm" type="button" data-act="cloud-sync">${icon('refresh-cw')} Sync now</button><button class="btn sm ghost" type="button" data-act="cloud-logout">${icon('log-out')} Log out</button></div>
+      <button class="list-item" type="button" data-act="whats-new">${icon('sparkles')}<div class="grow"><b>What’s new in RepIQ</b><div class="muted" style="font-size:12.5px">The latest update${State.profile && !State.profile.experience ? ' · 30-second check-in' : ''}</div></div>${icon('chevron-right')}</button>
+      <button class="list-item acct-del" type="button" data-act="acct-delete">${icon('trash-2')}<div class="grow"><b>Delete my account</b><div class="muted" style="font-size:12.5px">Permanently removes your account and data</div></div>${icon('chevron-right')}</button></section>` : '';
     const adm = Cloud.isAdmin() ? `<section class="panel" data-stg>${it('admin', 'shield', 'Team access', 'See who joined, revoke access, reset passwords')}</section>` : '';
     return `<div class="screen"><div class="topbar" data-stg>${brand()}${logoutBtn()}</div>${acct}${adm}
       <section class="panel" data-stg>${it('history', 'history', 'Workout history', 'Search, filter and edit every session')}${it('summary', 'trophy', 'Program summary', 'Completion, testing report and the Game Day finale')}${it('profile', 'user', 'Athlete profile & baselines', 'Body weight, maxes, start date, goals')}${it('settings', 'settings', 'Settings', 'Units, plates, rest timer, sound, animation')}${it('backup', 'hard-drive-download', 'Backup & restore', 'Export or import your data as JSON')}${it('about', 'info', 'About this app', 'Curriculum source, data and disclaimer')}</section>
@@ -6240,7 +6282,7 @@ const Cloud = {
           try {
             const r = mode === 'login'
               ? await this.sb.auth.signInWithPassword({ email: this.email(u), password: p })
-              : await this.sb.auth.signUp({ email: this.email(u), password: p, options: { data: { username: u, contact_email: em, marketing_opt_in: opt, school: Brand.slug() || undefined, parent: (typeof PRole !== 'undefined' && PRole.code()) || undefined } } });
+              : await this.sb.auth.signUp({ email: this.email(u), password: p, options: { data: { username: u, contact_email: em, marketing_opt_in: opt, school: Brand.slug() || undefined, parent: (typeof PRole !== 'undefined' && PRole.code()) || undefined, ref: (typeof Beta !== 'undefined' && Beta.ref()) || undefined } } });
             if (r.error) throw r.error;
             if (!r.data.session) { Kinetic.busy(false); go.disabled = false; return fail('Account created, but Supabase is asking for email confirmation. Turn "Confirm email" off (setup guide, step 2), then log in.'); }
             Kinetic.busy(false); this.user = r.data.session.user; msg.innerHTML = Kinetic.wave('WELCOME.'); Haptics.beep([523, 784], .1);
@@ -7759,7 +7801,7 @@ Screens.journal = function () {
 /* ---------- notifications ---------- */
 Screens.notifs = function () {
   const e = Social.get('notifs', () => Social.rpc('notif_list'), 10000), me = Social.me().v;
-  const ic = { mention: 'at-sign', mention_comment: 'at-sign', follow: 'user-plus', follow_request: 'user-plus', follow_accept: 'user-check', reaction: 'heart', comment: 'message-circle', reply: 'reply', challenge_invite: 'swords', challenge_squad: 'shield', challenge_accept: 'check', challenge_lead: 'trending-up', challenge_target: 'target', challenge_final: 'flag', squad_invite: 'shield', squad_join: 'users', squad_goal: 'party-popper', badge: 'award', report: 'flag' };
+  const ic = { app_update: 'sparkles', referral: 'gift', referral_reward: 'crown', mention: 'at-sign', mention_comment: 'at-sign', follow: 'user-plus', follow_request: 'user-plus', follow_accept: 'user-check', reaction: 'heart', comment: 'message-circle', reply: 'reply', challenge_invite: 'swords', challenge_squad: 'shield', challenge_accept: 'check', challenge_lead: 'trending-up', challenge_target: 'target', challenge_final: 'flag', squad_invite: 'shield', squad_join: 'users', squad_goal: 'party-popper', badge: 'award', report: 'flag' };
   const L = e.v || [], today = todayISO(), grp = { Today: L.filter(n => String(n.created_at).slice(0, 10) === today), Earlier: L.filter(n => String(n.created_at).slice(0, 10) !== today) };
   const row = n => `<button type="button" class="nrow ${n.read ? '' : 'unread'}" data-act="soc-notif" data-id="${n.id}" data-k="${esc(n.ref_kind)}" data-ref="${esc(n.ref_id)}">${n.actor ? Social.avatar(n.actor, 40) : `<span class="sav n" style="--s:40px">${icon(ic[n.kind] || 'bell')}</span>`}
       <span class="grow"><span>${n.actor ? `<b>${esc(n.actor.name)}</b> ` : ''}${esc(n.body)}</span><small class="muted">${Social.ago(n.created_at)}</small></span>${n.read ? '' : '<i class="udot" aria-label="Unread"></i>'}</button>`;
@@ -13012,7 +13054,7 @@ const PRole = {
       <section class="panel hq-card stack" data-stg><h2 class="h3">Your children</h2>${K ? (K.children.length ? K.children.map(c => `<div class="att-row">${Social.avatar(c.athlete, 34)}<div class="grow"><b>${esc(c.athlete.name)}</b><small class="muted">${esc(c.relation)} · ${c.status === 'approved' ? (c.active ? 'linked' : 'no longer at the school') : c.status === 'pending' ? 'waiting for a coach' : 'not approved'}</small></div><button class="btn sm ghost" type="button" data-act="pl-unlink" data-id="${c.id}" data-n="${esc(c.athlete.name)}">Remove</button></div>`).join('') : '<p class="muted">None yet.</p>') : Social.skel(1)}
         <button class="btn sm" type="button" data-act="p-find" data-v="1">${icon('plus')} Add a child</button></section>
       <section class="panel hq-card stack" data-stg><h2 class="h3">Appearance</h2><div class="seg" role="group" aria-label="Theme"><button type="button" data-act="p-theme" data-v="light" aria-pressed="${light}">Light</button><button type="button" data-act="p-theme" data-v="dark" aria-pressed="${!light}">Night</button></div></section>
-      <section class="panel hq-card stack" data-stg><button class="btn" type="button" data-act="share-app">${icon('share-2')} Share ${esc(Brand.name())}</button><button class="btn" type="button" data-act="go" data-r="notifs">${icon('bell')} Notifications</button><button class="btn danger" type="button" data-act="cloud-logout">${icon('log-out')} Log out</button></section></div>`;
+      <section class="panel hq-card stack" data-stg><button class="btn" type="button" data-act="share-app">${icon('share-2')} Share ${esc(Brand.name())}</button><button class="btn" type="button" data-act="go" data-r="notifs">${icon('bell')} Notifications</button><button class="btn" type="button" data-act="whats-new">${icon('sparkles')} What’s new</button><button class="btn danger" type="button" data-act="cloud-logout">${icon('log-out')} Log out</button><button class="btn ghost acct-del" type="button" data-act="acct-delete">${icon('trash-2')} Delete my account</button></section></div>`;
   }
 };
 Screens['p-home'] = () => PRole.home(); Screens['p-child'] = () => PRole.progress(); Screens['p-msgs'] = () => PRole.msgs(); Screens['p-feed'] = () => PRole.feed(); Screens['p-me'] = () => PRole.me();
@@ -13312,7 +13354,7 @@ const ShareKit = {
     let F = this.FORMATS.find(f => f.id === (this.pref || 'post')) || this.FORMATS[1];
     const msg = `${text} ${this.url()}`, pic = () => this.draw(spec, F).toDataURL('image/png');
     const render = sh => {
-      $('.sheet-body', sh).innerHTML = `<div class="share-fmt chips" role="radiogroup" aria-label="Size">${this.FORMATS.map(f => `<button type="button" class="chip" role="radio" data-fmt="${f.id}" aria-checked="${f.id === F.id}">${f.label}</button>`).join('')}</div>
+      $('.sheet-body', sh).innerHTML = `${spec.banner ? `<p class="share-banner">${spec.banner}</p>` : ''}<div class="share-fmt chips" role="radiogroup" aria-label="Size">${this.FORMATS.map(f => `<button type="button" class="chip" role="radio" data-fmt="${f.id}" aria-checked="${f.id === F.id}">${f.label}</button>`).join('')}</div>
         <small class="muted share-apps">${F.apps} · ${F.w}×${F.h}</small><div class="share-prev ${F.id}"><img alt="Preview of the picture" src="${pic()}"></div>
         <div class="row wrap share-acts"><button type="button" class="btn primary grow" data-sk="share">${icon('share-2')} Share</button><button type="button" class="btn" data-sk="save">${icon('download')} Save picture</button><button type="button" class="btn ghost" data-sk="link">${icon('link')} Copy link</button></div>
         <p class="muted" style="font-size:12.5px">The post text carries the link back to ${esc(ShareKit.N)}: <b>${esc(this.short())}</b></p>`; UI.icons(sh);
@@ -13390,6 +13432,202 @@ Object.assign(Actions, {
   'share-level': () => ShareKit._lvl && ShareKit.level(ShareKit._lvl),
   'share-badge': () => ShareKit._bdg && ShareKit.badge(ShareKit._bdg),
   'share-goal': el => { const g = GoalUI.find(el.dataset.id); if (g) ShareKit.goal(g); }
+});
+
+/* ============ THE UPDATE: existing members' check-in, free beta spots & invites, deleting your account ============
+   • Check-in: people who were here before the onboarding questions answer them once (experience → Olympic lifting →
+     where to start), then choose to keep their progress or start from the beginning. Starting again opens a new
+     season (Seasons.start), so every past workout, PR and badge stays in their history.
+   • Beta: a live count of free spots left, invite links that carry your username (?ref=you), and the reward for
+     bringing friends. All numbers come from the database (beta_public / beta_status); nothing here is made up.
+   • Delete account: removes your photos, then the account and everything stored with it, then this phone's copy. */
+Object.entries({ gift: 'M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z',
+  'rotate-ccw': 'M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5', route: 'M6 16a3 3 0 1 0 0 6a3 3 0 1 0 0-6M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15M18 2a3 3 0 1 0 0 6a3 3 0 1 0 0-6',
+  'trash-2': 'M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6',
+  'settings-2': 'M20 7h-9M14 17H5M17 14a3 3 0 1 0 0 6a3 3 0 1 0 0-6M7 4a3 3 0 1 0 0 6a3 3 0 1 0 0-6', 'line-chart': 'M3 3v18h18M7 16l4-4 4 4 5-6',
+  'file-text': 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8',
+  'layout-dashboard': 'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z' }).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+const Requal = {
+  st: null,
+  needed() { const p = State.profile; return !!(p && !p.experience && !(typeof Role !== 'undefined' && Role.parent())); },
+  later() { return (State.meta && State.meta.requalLater) === todayISO(); },
+  started() { const st = Seasons.scoped(() => Stats.get()); return { n: st.completed.length, week: st.preSeason ? 0 : st.programWeek, post: st.postProgram }; },
+  open(force) {
+    if (!this.needed() && !force) return WhatsNew.open();
+    this.st = { step: 'intro', d: {} };
+    Sheet.open({ title: 'A quick check-in', html: '', wide: true, onMount: sh => { this.sh = sh; this.draw(); }, onClose: () => { this.sh = null; } });
+  },
+  card(act, v, ic, t, sub, tag) { return Path.card(act, v, ic, t, sub, tag).replace('data-stg ', ''); },
+  draw() {
+    const sh = this.sh; if (!sh) return; const { step, d } = this.st, S = this.started();
+    const order = ['exp', d.exp && d.exp !== 'beginner' ? 'oly' : null, 'path', S.n ? 'keep' : null].filter(Boolean), at = order.indexOf(step);
+    const dots = step === 'intro' ? '' : `<div class="path-dots" aria-hidden="true">${order.map((k, i) => `<i class="${i <= at ? 'on' : ''}"></i>`).join('')}</div>`;
+    const back = step === 'intro' || step === 'exp' ? '' : `<button type="button" class="btn sm ghost path-back" data-rq="back">${icon('chevron-left')} Back</button>`;
+    let b = '';
+    if (step === 'intro') b = `<div class="rq-hero"><span class="badge">New in RepIQ</span><h2 class="h1">Let’s set up your training</h2><p class="muted">Three quick questions so RepIQ starts you in the right place. ${S.n ? 'You decide whether to keep your progress.' : ''}</p></div>
+      <ul class="rq-news"><li>${icon('route')}<span><b>Your own starting point</b><small>Prep weeks, the full programme, or a plan you build</small></span></li><li>${icon('target')}<span><b>Goals from your coach</b><small>Targets, deadlines and whether you’re on track</small></span></li><li>${icon('share-2')}<span><b>Share your wins</b><small>Pictures for Stories, posts and WhatsApp</small></span></li></ul>
+      <div class="row wrap"><button type="button" class="btn primary grow" data-rq="go">Start — 30 seconds</button><button type="button" class="btn ghost" data-rq="later">Later</button></div>`;
+    else if (step === 'exp') b = `<h2 class="h1">How much weightlifting have you done?</h2><p class="muted">So we start you on the right training.</p><div class="path-list">${this.card('rq-exp', 'beginner', 'footprints', 'Beginner', 'New to the barbell, or less than about six months of lifting')}${this.card('rq-exp', 'intermediate', 'dumbbell', 'Intermediate', 'You train regularly and know squat, bench and deadlift')}${this.card('rq-exp', 'expert', 'trophy', 'Expert', 'Years of structured strength training')}</div>`;
+    else if (step === 'oly') b = `<h2 class="h1">Have you trained in Olympic-style weightlifting?</h2><p class="muted">Cleans, jerks and snatches — the program uses power cleans and push jerks.</p><div class="path-list">${this.card('rq-oly', 'yes', 'check', 'Yes', 'I can power clean and jerk with good technique')}${this.card('rq-oly', 'no', 'x', 'No', 'Not yet, or only a little')}</div>`;
+    else if (step === 'path') { const rec = d.exp === 'beginner' || d.oly === 'no';
+      const prep = this.card('rq-path', 'prep', 'layers', 'Start with the Preparation Weeks', '6 weeks, Mon · Wed · Fri — builds the base before Week 1', rec ? 'Recommended' : ''), full = this.card('rq-path', 'full', 'rocket', 'The Full Programme', 'The 11-week program'), own = this.card('rq-path', 'own', 'pen-line', 'Create my own training plan', Cloud.on ? 'Build your own block: pick exercises, sets and reps' : 'Needs an account');
+      b = `<h2 class="h1">${d.oly === 'yes' ? 'You’re ready for more' : 'Where do you want to train?'}</h2><p class="muted">You can change this later in Training.</p><div class="path-list">${d.oly === 'yes' ? prep + full : prep + (Cloud.on ? own : full)}</div>`; }
+    else if (step === 'keep') { const nm = { prep: 'Preparation Week 1', full: 'Week 1', own: 'your own plan' }[d.path];
+      b = `<h2 class="h1">Keep going, or start from the beginning?</h2><p class="muted">You have <b>${S.n} workout${S.n === 1 ? '' : 's'}</b> logged${S.week ? `, and you’re in <b>${S.post ? 'the weeks after the program' : wkLabel(S.week)}</b>` : ''}.</p>
+        <div class="path-list">${this.card('rq-keep', 'keep', 'trending-up', 'Keep my progress', 'Carry on from where you are. Nothing changes in your schedule.')}${this.card('rq-keep', 'restart', 'rotate-ccw', `Start from the beginning`, `${nm[0].toUpperCase() + nm.slice(1)} starts ${fmtDate(d.path === 'prep' ? addDays(Path.monday(), 0) : Path.monday())}. Your workouts, PRs and badges stay in your history.`)}</div>`; }
+    $('.sheet-body', sh).innerHTML = `<div class="path rq stack">${back}${dots}${b}</div>`; UI.icons(sh);
+    if (!sh._rq) { sh._rq = true; sh.addEventListener('click', e => { const x = e.target.closest('[data-rq],[data-act^="rq-"]'); if (!x) return; e.stopPropagation(); this.click(x); }, true); }
+  },
+  click(x) {
+    const st = this.st, S = this.started(), a = x.dataset.rq || x.dataset.act, v = x.dataset.v;
+    const nextAfterPath = () => S.n && st.d.path !== 'own' ? 'keep' : null;
+    if (a === 'later') { State.meta.requalLater = todayISO(); Store.saveMeta(); return Sheet.close(); }
+    if (a === 'go') st.step = 'exp';
+    else if (a === 'back') st.step = { oly: 'exp', path: st.d.exp === 'beginner' ? 'exp' : 'oly', keep: 'path' }[st.step] || 'exp';
+    else if (a === 'rq-exp') { st.d = { exp: v }; st.step = v === 'beginner' ? 'path' : 'oly'; }
+    else if (a === 'rq-oly') { st.d.oly = v; delete st.d.path; st.step = 'path'; }
+    else if (a === 'rq-path') { st.d.path = v; const n = nextAfterPath(); if (n) st.step = n; else return this.apply(S.n ? 'keep' : 'restart'); }
+    else if (a === 'rq-keep') return this.apply(v);
+    this.draw(); const b = $('.sheet-body', this.sh); if (b) b.scrollTop = 0;
+  },
+  async apply(how) {
+    const p = State.profile, d = this.st.d; if (!p) return;
+    Object.assign(p, { experience: d.exp, oly: d.oly || (d.exp === 'beginner' ? 'no' : null), checkedIn: todayISO() });
+    if (d.path === 'own') { p.pathway = p.pathway || 'full'; p.ownPlanOffered = true; }
+    else if (how === 'restart') {
+      const start = d.path === 'prep' ? addDays(Path.monday(), 42) : Path.monday();
+      if (this.started().n) await Seasons.start({ maxes: {}, block: 'summer', startDate: start });
+      else { p.startDate = start; State.version++; }
+      p.pathway = d.path;
+    } else p.pathwayPick = d.path;
+    Store.saveProfile(); if (typeof Cloud !== 'undefined' && Cloud.on) Cloud.dirty();
+    Sheet.close();
+    const msg = d.path === 'own' ? 'Saved. Build your plan, then tap “Train on this plan”.' : how === 'restart' ? (d.path === 'prep' ? 'Fresh start: Preparation Week 1 begins this week.' : 'Fresh start: Week 1 begins this week.') : 'Saved — carry on where you were.';
+    UI.toast(msg);
+    if (d.path === 'own' && Cloud.on) { PlanEdit.st = null; Nav.go('cplan', 'new'); } else { Nav.go('home'); UI.render(); }
+  },
+  /* once per visit to Home; waits politely if another sheet (a reminder prompt, say) is open */
+  maybe() {
+    if (this.asked || this.waiting || !this.needed() || this.later() || Workout.active()) return;
+    this.waiting = true; let tries = 0;
+    const tick = () => {
+      if (!this.needed() || UI.route.name !== 'home' || Workout.active()) { this.waiting = false; return; }
+      const busy = ($('#sheet-root') && $('#sheet-root').innerHTML) || ($('#celebrate') && !$('#celebrate').hidden);
+      if (busy && ++tries < 40) return setTimeout(tick, 1500);
+      this.waiting = false; if (busy) return; this.asked = true; this.open();
+    };
+    setTimeout(tick, Motion.off ? 50 : 1200);
+  }
+};
+
+/* "What's new" — what the update notification opens */
+const WhatsNew = {
+  open() {
+    const coach = Brand.isCoach && Brand.isCoach(), parent = typeof Role !== 'undefined' && Role.parent();
+    const items = parent ? [['line-chart', 'Your child’s progress', 'Workouts, readiness, goals and badges in one place'], ['target', 'Goals & targets', 'See what the coach set and whether it’s on track'], ['messages-square', 'Talk to the coaches', 'Messages and parent group chats'], ['file-text', 'Reports', 'Download a progress report any time']]
+      : coach ? [['layout-dashboard', 'Coach HQ', 'Your team’s stats, every athlete, reports — all in one hub'], ['user-plus', 'Add athletes & invite parents', 'Pick athletes from the app and link their parents'], ['target', 'Goals & targets', 'Set measurable targets with deadlines; see who’s on track'], ['messages-square', 'Parent messages & groups', 'Message parents one-to-one or in groups']]
+      : [['route', 'Your starting point', 'Prep weeks, the full programme or your own plan'], ['target', 'Goals from your coach', 'Targets, deadlines and whether you’re on track'], ['share-2', 'Share your wins', 'PRs, workouts and progress as pictures for socials'], ['gift', 'Free beta spots', 'Invite friends while spots last — and earn Gold for life']];
+    Sheet.open({ title: 'What’s new in RepIQ', wide: true, html: `<ul class="rq-news big">${items.map(([ic, t, s]) => `<li>${icon(ic)}<span><b>${t}</b><small>${s}</small></span></li>`).join('')}</ul>
+      <div class="row wrap">${!parent ? `<button type="button" class="btn primary grow" data-act="share-app">${icon('share-2')} Invite friends</button>` : ''}<button type="button" class="btn ghost grow" data-act="sheet-close">Got it</button></div>` });
+  }
+};
+
+/* ---------- free beta spots & invites ---------- */
+const Beta = {
+  me() { return Social.get('beta', () => Social.rpc('beta_status'), 60000); },
+  ref() { try { const q = new URLSearchParams(location.search).get('ref'); if (q && q !== 'share' && /^[a-z0-9._-]{3,24}$/i.test(q)) { localStorage.setItem('bbp.ref', q.toLowerCase()); return q.toLowerCase(); } return localStorage.getItem('bbp.ref'); } catch (e) { return null; } },
+  fmt(n) { return fmtNum(+n || 0, 0); },
+  card() {
+    if (!Cloud.on || !Cloud.profile || (typeof Role !== 'undefined' && Role.parent())) return '';
+    const e = this.me(), B = e.v;
+    if (!B) { if (!this.wait) { this.wait = true; const t0 = Date.now(), poll = () => { if (e.v || Date.now() - t0 > 15000) { this.wait = false; if (e.v && UI.route.name === 'home' && !$('.beta-card')) UI.render(); } else setTimeout(poll, 400); }; setTimeout(poll, 400); } return ''; }
+    const pct = Math.min(100, Math.round((B.taken / Math.max(1, B.spots)) * 100)), refs = Math.min(B.refs, B.goal), hot = B.left <= Math.max(50, B.spots * .25);
+    const dots = Array.from({ length: B.goal }, (_, i) => `<i class="${i < refs ? 'on' : ''}">${i < refs ? icon('check') : i + 1}</i>`).join('');
+    return `<section class="beta-card${hot ? ' hot' : ''}" data-stg aria-label="Free beta spots">
+      <div class="beta-top"><span class="beta-tag">${icon('flame')} Beta · limited</span>${B.admin ? `<button type="button" class="btn sm ghost beta-edit" data-act="beta-edit">${icon('settings-2')} Edit</button>` : ''}</div>
+      <div class="beta-count"><b>${this.fmt(B.left)}</b><span>of ${this.fmt(B.spots)} free spots left${B.left > 0 ? ' — share before they’re gone' : ''}</span></div>
+      <div class="beta-bar" role="progressbar" aria-label="Free spots taken" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div>
+      <div class="beta-reward"><div class="grow"><b>${B.rewarded ? 'Gold is yours — free for life' : `Bring ${B.goal} friends → Gold free for life`}</b><small>${B.rewarded ? 'Thanks for growing RepIQ.' : `${refs} of ${B.goal} friends joined with your link`}</small></div><div class="beta-dots" aria-hidden="true">${dots}</div></div>
+      <div class="row wrap"><button type="button" class="btn sm primary grow" data-act="share-app">${icon('share-2')} Share invite</button><button type="button" class="btn sm grow" data-act="beta-copy">${icon('link')} Copy my link</button></div></section>`;
+  },
+  edit() {
+    const B = this.me().v; if (!B) return;
+    Sheet.open({ title: 'Beta settings', html: `<div class="stack"><div class="field"><label for="bSpots">Free beta spots</label><input class="input" id="bSpots" type="number" min="1" inputmode="numeric" value="${B.spots}"><small class="muted">${this.fmt(B.taken)} taken so far.</small></div>
+      <div class="field"><label for="bGoal">Friends needed for Gold for life</label><input class="input" id="bGoal" type="number" min="1" max="50" inputmode="numeric" value="${B.goal}"></div>
+      <button type="button" class="btn primary block" data-act="beta-save">Save</button></div>` });
+  }
+};
+
+/* ---------- delete my account ---------- */
+const Account = {
+  async del() {
+    if (!Cloud.on || !Cloud.profile) return;
+    const u = Cloud.profile.username;
+    const ok = await Sheet.confirm({ title: 'Delete your account?', danger: true, ok: 'Delete forever', typed: u.toUpperCase(),
+      body: `<p>This permanently deletes <b>@${esc(u)}</b>: your training, results, photos, posts, messages and goals. It cannot be undone.</p><p class="muted" style="font-size:13px">Tip: save a copy first in More → Backup & restore.</p>` });
+    if (!ok) return;
+    UI.toast('Deleting your account…');
+    const me = Cloud.sb && (await Cloud.sb.auth.getUser()).data; const uid = me && me.user && me.user.id;
+    for (const b of ['progress', 'social']) {   // photos live in a folder named after you
+      try { const { data } = await Cloud.sb.storage.from(b).list(uid, { limit: 1000 }); const paths = (data || []).filter(f => f && f.name).map(f => `${uid}/${f.name}`); if (paths.length) await Cloud.sb.storage.from(b).remove(paths); } catch (e) { }
+    }
+    try { await Social.rpc('delete_my_account', { p_confirm: u }); }
+    catch (e) { return UI.toast((e && e.message) || 'Could not delete the account. Try again.', 'bad'); }
+    Cloud.push = async () => { }; Cloud.dirty = () => { };
+    try { await Cloud.sb.auth.signOut(); } catch (e) { }
+    try { Object.keys(localStorage).filter(k => k.startsWith('bbp.') || k.startsWith('sb-')).forEach(k => localStorage.removeItem(k)); } catch (e) { }
+    try { if (Store.db) Store.db.close(); indexedDB.deleteDatabase(Store.name || APP_ID); } catch (e) { }
+    UI.toast('Your account was deleted. Thanks for training with RepIQ.'); setTimeout(() => location.replace(location.pathname), 1800);
+  }
+};
+
+(() => {
+  Beta.ref();
+  const shell = Cloud.shell.bind(Cloud);
+  Cloud.shell = function (html) {
+    const g = shell(html);
+    if (g && $('#authForm', g)) {
+      const hero = $('.ghero', g), r = Beta.ref();
+      if (hero && !$('.gbeta', hero)) { hero.insertAdjacentHTML('beforeend', `<div class="gbeta" hidden>${icon('flame')}<span></span></div>${r ? `<p class="gref">Invited by <b>@${esc(r)}</b></p>` : ''}`); UI.icons(hero);
+        if (Cloud.sb) Cloud.sb.rpc('beta_public').then(({ data }) => { const el = $('.gbeta', hero); if (el && data && data.spots) { $('span', el).innerHTML = data.left > 0 ? `<b>${Beta.fmt(data.left)}</b> of ${Beta.fmt(data.spots)} free beta spots left` : 'All free beta spots are taken'; el.hidden = false; } }, () => { }); }
+    }
+    return g;
+  };
+  /* Home: the beta card under the header; the one-time check-in for people who were here before */
+  const ah = After.home; After.home = function (view, opts) {
+    if (ah) ah.call(After, view, opts);
+    const anchor = $('.topbar', view); if (anchor && !$('.beta-card', view)) { const h = Beta.card(); if (h) { anchor.insertAdjacentHTML('afterend', h); UI.icons(view); } }
+    Requal.maybe();
+  };
+  /* the share picture & text say how many free spots are left, and the link carries your username */
+  ShareKit.url = function () { const u = Cloud.on && Cloud.profile && Cloud.profile.username; return `${location.origin}${location.pathname}?ref=${encodeURIComponent(u || 'share')}`; };
+  const app = ShareKit.app.bind(ShareKit);
+  ShareKit.app = async function () {
+    let B = null; try { B = Cloud.on && Cloud.profile ? await Social.rpc('beta_status') : Cloud.sb ? (await Cloud.sb.rpc('beta_public')).data : null; } catch (e) { }
+    if (!B || !B.spots) return app();
+    const left = Beta.fmt(B.left);
+    return this.open({ app: true, sheetTitle: 'Share RepIQ', kicker: B.left > 0 ? `Free beta · ${left} spots left` : 'Now in beta', title: 'Train like it counts.', sub: 'Structured programs, every set logged, real progress you can see — with your coach in your pocket.', cta: B.left > 0 ? 'Claim your free spot' : 'Join me on RepIQ',
+      banner: B.left > 0 ? `${icon('flame')} <b>Only ${left} free spots left.</b> ${B.goal && !B.rewarded ? `Bring ${B.goal} friends and keep Gold free for life${B.refs ? ` (${Math.min(B.refs, B.goal)}/${B.goal})` : ''}.` : ''}` : '' },
+      'repiq-invite', B.left > 0 ? `I train with RepIQ — structured programs and real progress. Only ${left} free beta spots left, grab one:` : 'I train with RepIQ — structured programs and real progress. Join me:');
+  };
+  /* notifications from the update and from invites */
+  const sn = Actions['soc-notif'];
+  Actions['soc-notif'] = async el => {
+    const k = el.dataset.k;
+    if (k === 'whatsnew' || k === 'invite') { Social.rpc('notif_read', { p_ids: [+el.dataset.id] }).then(() => { Social.drop('notifs', 'me', 'beta'); Social.pollUnread(); }, () => { }); if (k === 'whatsnew') return Requal.needed() ? Requal.open() : WhatsNew.open(); Social.drop('beta'); return Nav.go('home'); }
+    return sn(el);
+  };
+  /* the update's phone notification opens What's new (or the check-in) */
+  try { const g = new URLSearchParams(location.search).get('go'); if (g === 'whatsnew') { history.replaceState(null, '', location.pathname); setTimeout(() => { if (State.profile) (Requal.needed() ? Requal.open() : WhatsNew.open()); }, Motion.off ? 300 : 2200); } } catch (e) { }
+})();
+
+Object.assign(Actions, {
+  'beta-copy': async () => { try { await navigator.clipboard.writeText(ShareKit.url()); UI.toast('Your invite link is copied.'); } catch (e) { UI.toast(ShareKit.url()); } },
+  'beta-edit': () => Beta.edit(),
+  'beta-save': async el => { const s = +$('#bSpots').value, g = +$('#bGoal').value; if (await Social.act(el, () => Social.rpc('beta_config', { p_spots: s, p_goal: g }), 'Beta updated.') !== undefined) { Social.drop('beta'); Sheet.close(); UI.render(); } },
+  'acct-delete': () => Account.del(),
+  'whats-new': () => Requal.needed() ? Requal.open() : WhatsNew.open(),
+  'sheet-close': () => Sheet.close()
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
