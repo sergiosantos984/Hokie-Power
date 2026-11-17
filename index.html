@@ -2823,6 +2823,11 @@ body:not(.theme-light) .in-ret>div{background:rgba(200,217,230,.07)}
 body:not(.theme-light) .in-list span{color:#B9C9D6}
 .in-empty{margin:0;padding:18px 0;text-align:center;font-size:13px}
 @media (max-width:370px){#view .beta-card .row .btn{font-size:13.5px;padding-inline:10px;white-space:nowrap}}
+.pw-wrap{position:relative}.pw-wrap .input{padding-right:48px}
+.pw-eye{position:absolute;right:4px;top:50%;transform:translateY(-50%)}
+.pw-eye[aria-pressed="true"]{opacity:.6}
+.pw-err{min-height:0;margin:0;color:#B4423A;font-size:13.5px}.pw-err:empty{display:none}
+body:not(.theme-light) .pw-err{color:#F2A8A0}
 </style>
 </head>
 <body>
@@ -13946,6 +13951,73 @@ const Insights = {
     'in-days': el => { Insights.days = +el.dataset.v; UI.render(); },
     'in-csv': () => Insights.csv()
   });
+})();
+
+</script>
+<script>
+/* ============ PASSWORDS (Nov 17) ============
+   • Everyone: More → Change password (current password, then the new one twice).
+   • Admins: their own from the same place or from Team access ("This is you"), and anyone else's from Team access,
+     whatever the account's state (waiting, active or switched off). */
+if (typeof ICONS !== 'undefined' && !ICONS['key-round']) ICONS['key-round'] = 'M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4ZM16.5 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1';
+if (typeof ICONS !== 'undefined' && !ICONS.eye) ICONS.eye = 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6';
+const Password = {
+  field(id, label, auto) { return `<div class="field"><label for="${id}">${label}</label><div class="pw-wrap"><input class="input" id="${id}" type="password" autocomplete="${auto}" autocapitalize="none" spellcheck="false" maxlength="72"><button type="button" class="btn icon sm ghost pw-eye" data-eye="${id}" aria-label="Show password" aria-pressed="false">${icon('eye')}</button></div></div>`; },
+  strength(v) { let n = 0; if (v.length >= 8) n++; if (v.length >= 12) n++; if (/[A-Z]/.test(v) && /[a-z]/.test(v)) n++; if (/\d/.test(v)) n++; if (/[^A-Za-z0-9]/.test(v)) n++; return v ? ['Too short', 'Weak', 'Okay', 'Good', 'Strong', 'Very strong'][v.length < 8 ? 0 : Math.min(5, n)] : ''; },
+  eyes(sh) { $$('[data-eye]', sh).forEach(b => b.onclick = () => { const i = $('#' + b.dataset.eye, sh), on = i.type === 'password'; i.type = on ? 'text' : 'password'; b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-label', on ? 'Hide password' : 'Show password'); }); },
+  /* my own password */
+  mine() {
+    if (!Cloud.on || !Cloud.profile) return;
+    Sheet.open({ title: 'Change password', html: `<form class="stack" id="pwForm" novalidate>
+        <input type="text" autocomplete="username" value="${esc(Cloud.profile.username)}" hidden>
+        ${this.field('pwCur', 'Current password', 'current-password')}${this.field('pwNew', 'New password', 'new-password')}
+        <small class="muted pw-meter" id="pwMeter" aria-live="polite">At least 8 characters. Longer is stronger.</small>
+        ${this.field('pwNew2', 'Repeat the new password', 'new-password')}
+        <p class="gmsg pw-err" id="pwErr" role="alert"></p>
+        <button class="btn big primary block" type="submit" id="pwGo">Change password</button>
+        <p class="muted" style="font-size:12.5px;margin:0">Forgot your current password? Ask an admin to reset it.</p></form>`,
+      onMount: sh => {
+        this.eyes(sh); const err = $('#pwErr', sh), nw = $('#pwNew', sh);
+        nw.oninput = () => { $('#pwMeter', sh).textContent = nw.value ? `Strength: ${this.strength(nw.value)}` : 'At least 8 characters. Longer is stronger.'; };
+        $('#pwForm', sh).onsubmit = async e => {
+          e.preventDefault(); err.textContent = '';
+          const cur = $('#pwCur', sh).value, a = nw.value, b = $('#pwNew2', sh).value;
+          if (!cur) return err.textContent = 'Type your current password.';
+          if (a.length < 8) return err.textContent = 'The new password needs at least 8 characters.';
+          if (a !== b) return err.textContent = 'The two new passwords don’t match.';
+          if (a === cur) return err.textContent = 'Choose a password different from the current one.';
+          const go = $('#pwGo', sh); go.disabled = true;
+          try { const { error } = await Cloud.sb.rpc('change_my_password', { p_current: cur, p_new: a }); if (error) throw error; await Sheet.close(); UI.toast('Password changed. Use the new one next time you log in.'); }
+          catch (x) { err.textContent = Cloud.msg ? Cloud.msg(x) : (x.message || 'Could not change the password.'); go.disabled = false; }
+        };
+      } });
+  },
+  /* an admin sets someone's password */
+  forUser(id, name) {
+    Sheet.open({ title: `New password for ${name}`, html: `<form class="stack" id="apwForm" novalidate>${this.field('apw', 'New password', 'new-password')}
+        <small class="muted" id="apwMeter">At least 8 characters. Tell ${esc(name)} the new password yourself — nothing is sent to them.</small>
+        <p class="gmsg pw-err" id="apwErr" role="alert"></p><button class="btn big primary block" type="submit">Set password</button></form>`,
+      onMount: sh => { this.eyes(sh); const i = $('#apw', sh); i.oninput = () => { $('#apwMeter', sh).textContent = i.value ? `Strength: ${this.strength(i.value)}` : `At least 8 characters.`; };
+        $('#apwForm', sh).onsubmit = async e => { e.preventDefault(); if (i.value.length < 8) { $('#apwErr', sh).textContent = 'At least 8 characters.'; return; } const v = i.value; await Sheet.close(); Cloud.adminDo('admin_reset_password', { target: id, new_password: v }, `Password changed for ${name}.`); }; } });
+  }
+};
+(() => {
+  const item = `<button class="list-item" type="button" data-act="pw-mine">${icon('key-round')}<div class="grow"><b>Change password</b><div class="muted" style="font-size:12.5px">Choose a new password for your account</div></div>${icon('chevron-right')}</button>`;
+  const more = Screens.more; Screens.more = function () { const h = more.call(Screens); return h.includes('data-act="pw-mine"') ? h : h.replace('<button class="list-item acct-del"', item + '<button class="list-item acct-del"'); };
+  if (typeof PRole !== 'undefined' && PRole.me) { const pm = PRole.me.bind(PRole); PRole.me = function () { return pm().replace('<button class="btn ghost acct-del"', `<button class="btn" type="button" data-act="pw-mine">${icon('key-round')} Change password</button><button class="btn ghost acct-del"`); }; Screens['p-me'] = () => PRole.me(); }
+  /* Team access: "This is you" gets its own button; every other account can get a new password, whatever its state */
+  const adm = Screens.admin; Screens.admin = function () {
+    let h = adm.call(Screens);
+    h = h.replace('<span class="label">This is you</span>', `<span class="label">This is you</span><button class="btn sm ghost" type="button" data-act="pw-mine">${icon('key-round')} Change my password</button>`);
+    h = h.replace(/(<div class="row wrap adm-acts">)((?:(?!<\/div>)[\s\S])*?)(<\/div>)/g, (m, a, acts, c) => {
+      if (/data-act="pw-mine"|data-op="pw"/.test(acts)) return m;
+      const id = (acts.match(/data-id="([^"]+)"/) || [])[1], nm = (acts.match(/data-name="([^"]*)"/) || [])[1];
+      return id ? `${a}${acts}<button class="btn sm ghost" type="button" data-act="adm" data-op="pw" data-id="${id}" data-name="${nm}">${icon('key-round')} Reset password</button>${c}` : m;
+    });
+    return h.replace('reset passwords or delete accounts here.', 'reset anyone’s password (yours too) or delete accounts here.');
+  };
+  const ad = Actions.adm; Actions.adm = el => el.dataset.op === 'pw' ? Password.forUser(el.dataset.id, el.dataset.name) : ad(el);
+  Actions['pw-mine'] = () => Password.mine();
 })();
 
 </script>
