@@ -2750,6 +2750,79 @@ body:not(.theme-light) .rq-news li>i{background:var(--pF5EFEB);color:var(--p2F41
 .share-how{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px;font-size:12.5px;line-height:1.4;color:var(--p4F6272)}
 body:not(.theme-light) .share-how{color:var(--pB9C9D6)}
 
+
+/* ---- RepIQ splash & intro (Nov 17) ---- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html:root body #boot,html:root body.theme-light #boot{background:radial-gradient(90% 60% at 85% 0%,rgba(86,124,141,.55),transparent 60%),radial-gradient(80% 60% at 0% 100%,rgba(242,201,160,.22),transparent 60%),linear-gradient(160deg,var(--b1,#2F4156) 0%,#18222E 55%,#0E1620 100%)!important}
+html:root body #boot .b-stripes,html:root body #boot .b-grid,html:root body #boot .b-ring,html:root body #boot .b-half,html:root body #boot .b-flash{display:none!important}
+html:root body #boot .b-ball{width:min(30vw,128px)!important;height:auto!important;filter:drop-shadow(0 18px 40px rgba(0,0,0,.45))!important}
+html:root body #boot .w1,html:root body.theme-light #boot .w1{color:#FFFFFF!important;-webkit-text-stroke:0!important;text-shadow:none!important}
+html:root body #boot .w2,html:root body.theme-light #boot .w2{background:linear-gradient(90deg,#F2C9A0,#E6D9CF);-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-stroke:0!important;text-shadow:none!important}
+html:root body #boot .b-sub,html:root body.theme-light #boot .b-sub{color:#C8D9E6!important}
+html:root body #boot .b-load b,html:root body.theme-light #boot .b-load b{color:#E6D9CF!important}
+html:root body #boot .b-bar,html:root body.theme-light #boot .b-bar{background:rgba(200,217,230,.16)!important}
+html:root body #boot .b-bar i,html:root body.theme-light #boot .b-bar i{background:linear-gradient(90deg,#F2C9A0,#E6D9CF)!important}
+html:root body #boot.out{background:inherit;animation:rqBootOut .42s cubic-bezier(.4,0,.2,1) forwards!important}
+html:root body #boot.out>*:not(.b-half){visibility:visible!important}
+@keyframes rqBootOut{to{opacity:0;transform:scale(1.04)}}
+@media (prefers-reduced-motion:reduce){html:root body #boot.out{animation-duration:.01ms!important}}
+body.rq-intro #intro .sky{background:radial-gradient(90% 60% at 85% 0%,rgba(86,124,141,.5),transparent 60%),linear-gradient(180deg,#0E1620 0%,#18222E 55%,#2F4156 100%)!important}
+body.rq-intro #intro .t-sub span{color:#F2C9A0!important}
+body.rq-intro #intro .ui .k,body.rq-intro #intro .t-tag{color:#C8D9E6!important}
+/* phones: the Home header stays on one line (brand left, buttons right) */
+#view .topbar:has(>.brandmark){flex-wrap:nowrap!important}
+#view .topbar>.brandmark{flex:1 1 auto;min-width:0}
+#view .topbar>.brandmark>div{min-width:0}
+#view .topbar>.brandmark small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#view .topbar:has(>.brandmark)>.row{flex:none;flex-wrap:nowrap}
+@media (max-width:440px){#view .topbar:has(>.brandmark)>.row>.badge{display:none}}
+body.rq-intro #intro #enterStadium{background:linear-gradient(90deg,#F2C9A0,#E6D9CF)!important;color:#18222E!important;border:0!important;box-shadow:0 14px 34px -12px rgba(242,201,160,.55)!important}
+/* ---- Insights (admin) ---- */
+.insights .in-range{margin:-4px 0 0}
+.in-since{margin:-6px 0 0;font-size:12.5px}
+.in-note{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.45}.in-note p{margin:0}.in-note svg{width:18px;height:18px;flex:none;margin-top:2px}
+.in-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:640px){.in-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.in-kpi{display:grid;gap:4px;padding:14px;border-radius:18px;background:rgba(255,255,255,.72);border:1px solid rgba(47,65,86,.08);min-width:0}
+body:not(.theme-light) .in-kpi{background:rgba(255,255,255,.05);border-color:rgba(200,217,230,.12)}
+.in-k{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:700;color:#4F6272}.in-k svg{width:14px;height:14px}
+body:not(.theme-light) .in-k{color:#B9C9D6}
+.in-kpi b{font-size:28px;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+.in-kpi small{font-size:12px;color:#4F6272;line-height:1.35}body:not(.theme-light) .in-kpi small{color:#B9C9D6}
+.in-card{display:grid;gap:12px}
+.in-head{display:flex;gap:10px;align-items:flex-start}.in-head>i,.in-head>svg{width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;background:#2F4156;color:#F5EFEB}
+.in-head>i svg{width:17px;height:17px}
+.in-head h2{margin:0;font-size:17px;line-height:1.25}.in-head p{margin:2px 0 0;font-size:12.5px;color:#4F6272;line-height:1.35}
+body:not(.theme-light) .in-head p{color:#B9C9D6}
+.in-bars{display:flex;align-items:flex-end;gap:2px;height:132px;padding-bottom:18px;position:relative;border-bottom:1px solid rgba(47,65,86,.14)}
+.in-bars+.in-bars{margin-top:8px}
+.in-bar{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.in-bar i{display:block;width:100%;background:#567C8D;border-radius:4px 4px 0 0;min-height:0;transition:filter .15s}
+.in-bar.top i{background:#E8A971}
+.in-bar:hover i{filter:brightness(1.15)}
+.in-bar span{position:absolute;left:50%;bottom:-18px;transform:translateX(-50%);font-size:10px;color:#4F6272;white-space:nowrap}
+body:not(.theme-light) .in-bar span{color:#B9C9D6}
+.in-bars.dense{height:110px}
+.in-h{display:grid;gap:8px}
+.in-hrow{display:grid;grid-template-columns:minmax(84px,34%) 1fr auto;gap:10px;align-items:center;font-size:13px}
+.in-hl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.in-ht{height:10px;border-radius:5px;background:rgba(47,65,86,.08);overflow:hidden}
+body:not(.theme-light) .in-ht{background:rgba(200,217,230,.1)}
+.in-ht i{display:block;height:100%;border-radius:5px;background:#567C8D}.in-ht i.top{background:#E8A971}
+.in-hrow b{font-size:12.5px;font-weight:700;white-space:nowrap}
+.in-foot{margin:0;font-size:12.5px;line-height:1.4}
+.in-sub{margin:6px 0 0;font-size:14px}
+.in-tips{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.in-tips li{padding:10px 12px;border-radius:14px;font-size:13.5px;line-height:1.45;background:linear-gradient(90deg,rgba(242,201,160,.35),rgba(230,217,207,.35))}
+body:not(.theme-light) .in-tips li{background:rgba(242,201,160,.1)}
+.in-ret{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.in-ret.five{grid-template-columns:repeat(auto-fit,minmax(88px,1fr))}
+.in-ret>div{display:grid;gap:2px;padding:12px;border-radius:14px;background:rgba(47,65,86,.05);text-align:center}
+body:not(.theme-light) .in-ret>div{background:rgba(200,217,230,.07)}
+.in-ret b{font-size:22px;font-weight:800}.in-ret span{font-size:12px;color:#4F6272}body:not(.theme-light) .in-ret span{color:#B9C9D6}
+.in-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}.in-list li{display:flex;justify-content:space-between;gap:10px;font-size:13px;flex-wrap:wrap}.in-list span{color:#4F6272}
+body:not(.theme-light) .in-list span{color:#B9C9D6}
+.in-empty{margin:0;padding:18px 0;text-align:center;font-size:13px}
+@media (max-width:370px){#view .beta-card .row .btn{font-size:13.5px;padding-inline:10px;white-space:nowrap}}
 </style>
 </head>
 <body>
@@ -2760,9 +2833,9 @@ body:not(.theme-light) .share-how{color:var(--pB9C9D6)}
   <div class="b-grid"></div>
   <div class="b-stripes"><i></i><i></i><i></i><i></i><i></i></div>
   <div class="b-ring"></div><div class="b-ring r2"></div>
-  <svg class="b-ball" viewBox="0 0 120 74"><ellipse cx="60" cy="37" rx="56" ry="33" fill="var(--b1)" stroke="var(--b2)" stroke-width="5"/><path d="M22 37h76" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M42 28v18M51 28v18M60 28v18M69 28v18M78 28v18" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M10 37c8-14 20-22 30-25M110 37c-8-14-20-22-30-25" stroke="var(--b2)" stroke-width="3" fill="none"/></svg>
+  <svg class="b-ball" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="bTile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5EFEB"/><stop offset="1" stop-color="#C9B5A6"/></linearGradient></defs><rect x="6" y="6" width="108" height="108" rx="30" fill="url(#bTile)"/><path d="M26 60h68" stroke="#2F4156" stroke-width="7" stroke-linecap="round"/><path d="M37 38v44M83 38v44" stroke="#2F4156" stroke-width="11" stroke-linecap="round"/><path d="M26 47v26M94 47v26" stroke="#567C8D" stroke-width="9" stroke-linecap="round"/></svg>
   <div class="b-word"><span class="w1">REP</span><span class="w2">IQ</span></div>
-  <div class="b-sub">CLIFF · FLIGHT 2005 TO GLORY</div>
+  <div class="b-sub">TRAIN LIKE IT COUNTS</div>
   <div class="b-load"><span class="b-bar"><i></i></span><b id="bootPct">00</b></div>
   <div class="b-flash"></div>
   <div class="b-half top"></div><div class="b-half bot"></div>
@@ -2898,8 +2971,8 @@ const Brand = {
   name() { return this.look() ? (this.o().app_name || BRAND_DEF.app_name) : BRAND_DEF.app_name; },
   up() { const n = this.name(); return /^[A-Z][a-z]+[A-Z]{2,}$/.test(n) ? n : n.toUpperCase(); },   // a mixed-case wordmark like RepIQ keeps its casing
   words() { const n = this.up(), m = n.match(/^([A-Z][a-z]+)([A-Z]{2,})$/); if (m) return [m[1].toUpperCase(), m[2]]; const w = n.split(/\s+/); return w.length > 1 ? [w.slice(0, -1).join(' '), w[w.length - 1]] : [w[0], '']; },
-  end() { return this.custom() ? (this.o().tagline || this.words()[0]).toUpperCase() : 'HOKIES'; },
-  sub() { return this.custom() ? (this.o().tagline || this.o().name).toUpperCase() : 'FLIGHT 2005 TO GLORY'; },
+  end() { return this.custom() ? (this.o().tagline || this.words()[0]).toUpperCase() : 'REPIQ'; },
+  sub() { return this.custom() ? (this.o().tagline || this.o().name).toUpperCase() : 'TRAIN LIKE IT COUNTS'; },
   bench() { return this.o().bench_name || 'Iron Hokie'; },
   /* award level names: the school's own words where it chose them */
   lvl(l) {
@@ -4141,6 +4214,7 @@ const Intro = {
       <text x="300" y="180" text-anchor="middle" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="800" font-size="8" fill="#FFFFFF" letter-spacing="2.5">GATE 2005</text>
       <rect x="0" y="206" width="600" height="16" fill="#0C0608"/>${park}
     </svg>${[6.7, 50, 93.3].map((l, i) => `<div class="cone" style="left:${l}%;transform:translateX(-50%) rotate(${(i - 1) * 9}deg);bottom:62%"></div>`).join('')}`;
+    if (typeof Brand !== 'undefined' && !Brand.custom()) { $('#stadium').innerHTML = this.repiq(); $('#skyFar').innerHTML = $('#skyFar').innerHTML.replace('#24151B', '#1E2A38'); $('#skyNear').innerHTML = $('#skyNear').innerHTML.replace('#160C10', '#131C27'); }
     $('#tunnel').insertAdjacentHTML('beforeend', Array.from({ length: 9 }, () => '<div class="tf"></div>').join(''));
   },
   stars() {
@@ -4167,8 +4241,35 @@ const Intro = {
     if (!this.raf) this.raf = requestAnimationFrame(tick);
   },
   /* about two seconds from black to title: ridgelines → stadium rises → lights come on → title */
+  /* RepIQ's own opening: a lit barbell on the platform instead of the stadium */
+  repiq() {
+    const plate = (x, h, w, c) => `<rect x="${x - w / 2}" y="${118 - h / 2}" width="${w}" height="${h}" rx="${Math.min(8, w / 2)}" fill="${c}" stroke="rgba(245,239,235,.25)" stroke-width="1"/>`;
+    return `<svg viewBox="0 0 600 222" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+      <defs><radialGradient id="rqHalo" cx="50%" cy="60%" r="60%"><stop offset="0" stop-color="#F2C9A0" stop-opacity=".55"/><stop offset=".45" stop-color="#C8D9E6" stop-opacity=".18"/><stop offset="1" stop-color="#2F4156" stop-opacity="0"/></radialGradient>
+      <linearGradient id="rqBar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#9FB3C2"/></linearGradient>
+      <linearGradient id="rqPlat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F4156"/><stop offset="1" stop-color="#0E1620"/></linearGradient></defs>
+      <ellipse class="lights" cx="300" cy="120" rx="300" ry="96" fill="url(#rqHalo)"/>
+      <rect x="40" y="168" width="520" height="38" rx="6" fill="url(#rqPlat)" stroke="rgba(200,217,230,.25)"/>
+      <rect class="lights" x="40" y="168" width="520" height="2.4" fill="#F2C9A0" opacity=".8"/>
+      <rect x="60" y="114" width="480" height="8" rx="4" fill="url(#rqBar)"/>
+      ${plate(132, 104, 22, '#18222E')}${plate(158, 84, 16, '#2F4156')}${plate(178, 64, 12, '#567C8D')}
+      ${plate(468, 104, 22, '#18222E')}${plate(442, 84, 16, '#2F4156')}${plate(422, 64, 12, '#567C8D')}
+      <rect x="190" y="110" width="8" height="16" rx="2" fill="#E6D9CF"/><rect x="402" y="110" width="8" height="16" rx="2" fill="#E6D9CF"/>
+      <text x="300" y="196" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="900" font-size="15" letter-spacing="6" fill="#E6D9CF" opacity=".85">REPIQ</text>
+      <rect class="scan" x="-160" y="60" width="110" height="140" fill="rgba(255,255,255,.18)"/>
+    </svg>${[20, 50, 80].map((l, i) => `<div class="cone" style="left:${l}%;transform:translateX(-50%) rotate(${(i - 1) * 9}deg);bottom:62%"></div>`).join('')}`;
+  },
+  words() {
+    if (typeof Brand === 'undefined' || Brand.custom()) return;
+    const k = $('#intro .ui .k'), sub = $('#intro .t-sub'), tag = $('#intro .t-tag'), go = $('#enterStadium'), d = $('#intro .disclaimer'), t = $('#intro .t-cliff');
+    if (k) k.textContent = 'WELCOME TO REPIQ'; if (sub) sub.innerHTML = 'RepIQ<br><span>TRAIN LIKE IT COUNTS</span>';
+    if (tag) tag.textContent = 'YOUR PROGRAM. EVERY REP. REAL PROGRESS.'; if (go) go.textContent = 'Let’s go'; if (d) d.hidden = true;
+    const nm = (State.settings && State.settings.name) || (typeof Cloud !== 'undefined' && Cloud.profile && Cloud.profile.username) || '';
+    if (t && nm && t.textContent === 'CLIFF') t.textContent = String(nm).toUpperCase();
+    document.body.classList.add('rq-intro');
+  },
   play(onDone) {
-    this.onDone = onDone; this.build();
+    this.onDone = onDone; this.build(); this.words();
     const el = $('#intro'); el.hidden = false; el.className = ''; $('#flash').style.opacity = 0;
     $$('#tunnel .tf').forEach(f => { f.style.opacity = 0; });
     this.stars(); this.speed = .4; this.camZ = 0; this.loop();
@@ -4214,8 +4315,8 @@ const ST_LABEL = { completed: 'Completed', in_progress: 'In progress', skipped: 
 const DAYN = d => (State.program.dayNames || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'])[d - 1] || 'Day ' + d;
 const restItem = r => r.ar ? AR.item(r) : `<div class="wk-item rest" data-stg><span class="wk-day" style="font-size:13px">${DAYN(r.day)}</span><span class="grow"><b style="display:block">${esc(r.title)}</b><span class="muted" style="font-size:12.5px">${esc(r.note)}</span></span><span class="st upcoming">Rest</span></div>`;
 const stBadge = st => `<span class="st ${st}">${ST_LABEL[st] || st}</span>`;
-const shield = (s = 30) => (typeof Brand !== 'undefined' && Brand.logo(s)) || `<svg class="shield" width="${s}" height="${s}" viewBox="0 0 40 40" aria-hidden="true"><g transform="rotate(-35 20 20)"><ellipse cx="20" cy="20" rx="17" ry="10.5" fill="var(--b1)" stroke="var(--b2)" stroke-width="2"/><path d="M10 20h20" stroke="#fff" stroke-width="1.6"/><path d="M14 17.5v5M17.3 17.5v5M20.6 17.5v5M23.9 17.5v5M27 18v4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></g></svg>`;
-const brand = () => `<div class="brandmark">${shield()}<div><b>${esc(Brand.up())}</b><small>${Brand.custom() ? esc((Brand.o().tagline || Brand.o().name).toUpperCase()) + ' · ' : 'SUMMER 2005 · '}${esc(String(State.settings.name || 'Cliff').toUpperCase())}</small></div></div>`;
+const shield = (s = 30) => (typeof Brand !== 'undefined' && Brand.logo(s)) || `<svg class="shield" width="${s}" height="${s}" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="11" fill="var(--b1)"/><path d="M9 20h22" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M12.5 13.5v13M28 13.5v13" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M9 16v8M31.5 16v8" stroke="var(--b2)" stroke-width="3" stroke-linecap="round"/></svg>`;
+const brand = () => `<div class="brandmark">${shield()}<div><b>${esc(Brand.up())}</b><small>${Brand.custom() ? esc((Brand.o().tagline || Brand.o().name).toUpperCase()) + ' · ' : ''}${esc(String(State.settings.name || 'Cliff').toUpperCase())}</small></div></div>`;
 const sampleTag = () => State.program.coachPlan ? `<span class="badge ok" title="Your coach's plan">${icon('clipboard-list')} ${esc(State.program.coachPlan.name)}</span>` : State.program.source === 'vt2005' ? `<span class="badge blue">${esc(TRACKS[State.program.track])}${State.profile && State.profile.position ? ' · ' + esc(State.profile.position) : ''}</span>` : `<span class="badge ok">${esc(State.program.name || 'Imported program')}</span>`;
 /* log-out shortcut shown wherever the athlete is signed in */
 const logoutBtn = (label = true) => Cloud.on && Cloud.profile ? `<button class="btn sm logout-btn" type="button" data-act="cloud-logout" aria-label="Log out of ${esc(Cloud.profile.username)}">${icon('log-out')}${label ? ' Log out' : ''}</button>` : '';
@@ -6283,7 +6384,7 @@ const Cloud = {
             <div class="field"><label for="authPass">Password</label><input class="input" id="authPass" name="password" type="password" autocomplete="${m === 'login' ? 'current-password' : 'new-password'}" required minlength="8"></div>
             ${m === 'signup' ? '<div class="field"><label for="authPass2">Repeat password</label><input class="input" id="authPass2" type="password" autocomplete="new-password" required></div>' + Cloud.emailFields() + Cloud.teamField() + '<p class="gnote">3–24 characters: letters, numbers, dot, dash or underscore. Password: at least 8 characters.</p>' : ''}
             <p class="gmsg" id="authMsg" role="status" aria-live="polite"></p>
-            <button type="submit" class="btn big red block" id="authGo">${m === 'login' ? 'Enter the facility' : 'Create my account'}</button>
+            <button type="submit" class="btn big red block" id="authGo">${m === 'login' ? 'Log in' : 'Create my account'}</button>
           </form>
           <p class="gfoot" data-gs>Forgot your password? Ask the coach to reset it.</p>`);
         $$('[data-auth-mode]', g).forEach(b => b.onclick = () => { if (b.dataset.authMode !== mode) draw(b.dataset.authMode); });
@@ -13666,6 +13767,186 @@ Object.assign(Actions, {
 });
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+
+</script>
+<script>
+/* ============ USAGE TRACKING + ADMIN INSIGHTS (Nov 17) ============
+   Track: while someone is logged in, the app notes when it is opened (with their local hour and weekday, the kind of
+   device, and whether it runs installed), how long each screen stays in front of them, and share taps. Events are
+   batched and sent every 30 s, and once more when the app is put away. Nothing is sent when logged out.
+   Insights: an admin-only screen (More → Insights) built from those events plus accounts, workouts and social activity. */
+Object.entries({
+  'bar-chart-3': 'M3 3v18h18M18 17V9M13 17V5M8 17v-3',
+  clock: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M12 6v6l4 2',
+  users: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+  megaphone: 'M3 11l18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6',
+  'user-x': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8M17 8l5 5M22 8l-5 5',
+  calendar: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+  'trending-up': 'M22 7l-8.5 8.5-5-5L2 17M16 7h6v6', lightbulb: 'M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z'
+}).forEach(([k, v]) => { if (typeof ICONS !== 'undefined' && !ICONS[k]) ICONS[k] = v; });
+
+const Track = {
+  q: [], sid: null, route: null, since: 0, hiddenAt: 0, timer: null, token: null,
+  dev() { const u = navigator.userAgent || ''; return /iPhone|iPad|iPod/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1) ? 'ios' : /Android/.test(u) ? 'android' : /Windows|Macintosh|Linux|CrOS/.test(u) ? 'desktop' : 'other'; },
+  pwa() { try { return !!(matchMedia('(display-mode: standalone)').matches || navigator.standalone); } catch (e) { return false; } },
+  on() { return typeof Cloud !== 'undefined' && Cloud.on && Cloud.sb && Cloud.user && Cloud.profile; },
+  push(kind, name, ms) { if (!this.on()) return; if (!this.sid) this.start(); const d = new Date(); this.q.push({ sid: this.sid, kind, name: String(name || '').slice(0, 60), ms: Math.round(ms || 0), hr: d.getHours(), dow: d.getDay(), dev: this.dev(), pwa: this.pwa() }); if (this.q.length > 150) this.flush(); },
+  start() { this.sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); this.route = null; this.since = 0; const d = new Date(); this.q.push({ sid: this.sid, kind: 'open', name: '', ms: 0, hr: d.getHours(), dow: d.getDay(), dev: this.dev(), pwa: this.pwa() }); },
+  /* the screen in front of the person: closes the previous one with its seconds */
+  view(force) {
+    if (!this.on() || document.hidden) return;
+    const r = UI.route && UI.route.name; const now = Date.now();
+    if (r !== this.route || force) { if (this.route && this.since) this.push('view', this.route, Math.min(now - this.since, 1800000)); this.route = r; this.since = now; }
+  },
+  close() { if (this.route && this.since) this.push('view', this.route, Math.min(Date.now() - this.since, 1800000)); this.since = 0; },
+  async flush(leaving) {
+    if (!this.q.length || !this.on()) return;
+    const batch = this.q.splice(0, 200);
+    try {
+      if (leaving && this.token && typeof CLOUD_CFG !== 'undefined') {   // the page may be going away: a request that outlives it
+        fetch(`${CLOUD_CFG.url.replace(/\/$/, '')}/rest/v1/rpc/track`, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json', apikey: CLOUD_CFG.anonKey, Authorization: `Bearer ${this.token}` }, body: JSON.stringify({ p_events: batch }) }).catch(() => { });
+        return;
+      }
+      const { error } = await Cloud.sb.rpc('track', { p_events: batch }); if (error) throw error;
+    } catch (e) { if (this.q.length < 400) this.q.unshift(...batch); }
+  },
+  async tok() { try { const { data } = await Cloud.sb.auth.getSession(); this.token = data && data.session && data.session.access_token; } catch (e) { } },
+  init() {
+    if (this.timer) return;
+    this.timer = setInterval(() => { if (this.on()) { if (!this.sid) this.start(); this.view(); this.tok(); this.flush(); } }, 30000);
+    setInterval(() => this.view(), 1000);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { this.hiddenAt = Date.now(); this.close(); this.flush(true); }
+      else { if (Date.now() - this.hiddenAt > 30 * 60000) this.sid = null; if (this.on()) { if (!this.sid) this.start(); this.route = null; this.view(); } }
+    });
+    addEventListener('pagehide', () => { this.close(); this.flush(true); });
+    addEventListener('appinstalled', () => this.push('install', ''));
+    /* share taps: what was shared and how (picture / link / save) */
+    document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-sk]'); if (b) this.push('share', `${ShareKit._base || 'share'}|${b.dataset.sk}`); }, true);
+    setTimeout(() => { this.tok(); if (this.on()) { this.start(); this.view(); this.flush(); } }, 4000);
+  }
+};
+(() => {
+  if (typeof ShareKit !== 'undefined') { const o = ShareKit.open.bind(ShareKit); ShareKit.open = function (spec, base, text) { this._base = String(base || 'share').replace(/^repiq-/, '').replace(/-\d.*$/, ''); return o(spec, base, text); }; }
+  if (typeof Workout !== 'undefined' && Workout.start) { const ws = Workout.start.bind(Workout); Workout.start = function (...a) { try { Track.push('act', 'workout_start'); } catch (e) { } return ws(...a); }; }
+  Track.init();
+})();
+
+/* ---------------- the admin screen ---------------- */
+const Insights = {
+  days: 30,
+  SCREEN: { home: 'Home', training: 'Training', workout: 'Workout', progress: 'Progress', more: 'More', social: 'Social feed', 'soc-feed': 'Social feed', fuel: 'Fuel', nutrition: 'Fuel', history: 'History', session: 'Workout details', settings: 'Settings', hq: 'Coach HQ', 'p-home': 'Parent home', 'p-child': 'Parent · child', 'p-msgs': 'Parent messages', chat: 'Messages', dms: 'Messages', notifs: 'Notifications', profile: 'Profile', goals: 'Goals', cplan: 'Plan editor', summary: 'Workout summary', recap: 'Weekly recap', insights: 'Insights', admin: 'Team access', athlete: 'Athlete page', group: 'Group chat' },
+  sname(n) { return this.SCREEN[n] || (n.charAt(0).toUpperCase() + n.slice(1).replace(/-/g, ' ')); },
+  load() { return Social.get(`insights:${this.days}`, () => Social.rpc('admin_insights', { p_days: this.days }), 60000); },
+  n(v, d = 0) { return v == null ? '—' : fmtNum(+v, d); },
+  pct(a, b) { return b ? Math.round(100 * a / b) : 0; },
+  kpi(label, value, sub, ic) { return `<div class="in-kpi"><span class="in-k">${ic ? icon(ic) : ''}${label}</span><b>${value}</b>${sub ? `<small>${sub}</small>` : ''}</div>`; },
+  /* bars: one hue; the biggest bar in peach; the number on hover/tap and in the text under it */
+  bars(vals, labels, o = {}) {
+    const max = Math.max(1, ...vals), top = vals.indexOf(Math.max(...vals)), n = vals.length;
+    const show = i => !o.every || i === n - 1 || (i % o.every === 0 && n - 1 - i >= o.every * .6);
+    if (!vals.some(v => v > 0)) return `<p class="muted in-empty">${esc(o.empty || 'Nothing yet in this period.')}</p>`;
+    return `<div class="in-bars${o.dense ? ' dense' : ''}" role="img" aria-label="${esc(o.aria || '')}">${vals.map((v, i) => `<div class="in-bar${i === top && v > 0 ? ' top' : ''}" title="${esc(labels[i])}: ${fmtNum(v, 0)}${o.unit || ''}"><i style="height:${v ? Math.max(3, Math.round(100 * v / max)) : 0}%"></i><span>${show(i) ? esc(o.short ? o.short(labels[i], i) : labels[i]) : ''}</span></div>`).join('')}</div>`;
+  },
+  hbars(rows, o = {}) {   // rows: [label, value, note]
+    const max = Math.max(1, ...rows.map(r => r[1]));
+    return `<div class="in-h">${rows.map(([l, v, note], i) => `<div class="in-hrow"><span class="in-hl">${esc(l)}</span><span class="in-ht"><i class="${i === 0 && o.lead ? 'top' : ''}" style="width:${v ? Math.max(2, Math.round(100 * v / max)) : 0}%"></i></span><b>${note != null ? note : fmtNum(v, 0)}</b></div>`).join('')}</div>`;
+  },
+  card(title, ic, body, sub) { return `<section class="panel in-card" data-stg><div class="in-head">${icon(ic)}<div><h2>${title}</h2>${sub ? `<p>${sub}</p>` : ''}</div></div>${body}</section>`; },
+  hourName(h) { return h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`; },
+  DAYS: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  peak(arr, w) { let best = -1, at = 0; for (let i = 0; i < arr.length; i++) { let s = 0; for (let k = 0; k < w; k++) s += arr[(i + k) % arr.length] || 0; if (s > best) { best = s; at = i; } } return { at, sum: best }; },
+  tips(D) {
+    const T = [], P = D.people || {}, A = D.active || {}, S = D.shares || {}, hrs = D.hours || [], wd = D.weekdays || [], F = D.funnel || {}, tr = D.training || {};
+    if (hrs.some(x => x)) { const pk = this.peak(hrs, 2); T.push(`<b>Best time to post:</b> ${this.hourName(pk.at)}–${this.hourName((pk.at + 2) % 24)} — that’s when people open RepIQ most (their local time).`); }
+    if (wd.some(x => x)) { const i = wd.indexOf(Math.max(...wd)); T.push(`<b>Busiest day:</b> ${['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][i]}. Schedule announcements and challenges for it.`); }
+    if (A.quiet) T.push(`<b>${this.n(A.quiet)} people have gone quiet</b> (no visit in 14+ days). A “we miss you” message or a new challenge can bring them back.`);
+    if (F.signed_up && F.first != null) { const drop = F.signed_up - F.first; if (drop > 0) T.push(`<b>${this.pct(drop, F.signed_up)}% never logged a workout.</b> A first-workout reminder or an easier first session would help most.`); }
+    const by = S.by_how || {}; if (S.total) { const top = Object.entries(S.by_what || {}).sort((a, b) => b[1] - a[1])[0]; T.push(`<b>${this.n(S.total)} share${S.total === 1 ? '' : 's'}</b> by ${this.n(S.people)} ${S.people === 1 ? 'person' : 'people'}${top ? ` — most shared: ${esc(this.WHAT[top[0]] || top[0])}` : ''}. ${P.invited ? `${this.n(P.invited)} new members came from an invite.` : 'No sign-ups from invites yet — push the “Bring 3 friends” reward.'}`); }
+    else T.push('<b>No shares yet in this period.</b> Remind people that PRs and finished workouts can be shared as pictures.');
+    if (P.optin) T.push(`<b>${this.n(P.optin)} members agreed to news and offers</b> — your email list for campaigns.`);
+    if (tr.workouts && tr.people) T.push(`<b>${fmtNum(tr.workouts / tr.people, 1)} workouts per training member</b> in this period${tr.avg_min ? `, about ${tr.avg_min} min each` : ''}.`);
+    return T;
+  },
+  WHAT: { invite: 'app invites', session: 'workouts', pr: 'PRs', progress: 'progress', programme: 'programme completion', level: 'level-ups', badge: 'badges', goal: 'goals', share: 'other' },
+  HOW: { pic: 'Picture', link: 'Link', save: 'Saved picture', other: 'Other' },
+  screen() {
+    if (!Cloud.isAdmin()) return `<div class="screen">${backBar('Insights')}<section class="panel"><p>Only an admin can open this page.</p></section></div>`;
+    const e = this.load(), D = e.v;
+    const chips = `<div class="chips in-range" role="radiogroup" aria-label="Period">${[7, 30, 90].map(d => `<button type="button" class="chip" role="radio" aria-checked="${this.days === d}" data-act="in-days" data-v="${d}">${d} days</button>`).join('')}</div>`;
+    const head = `${backBar('Insights', `<button class="btn icon" type="button" data-act="in-csv" aria-label="Download as a spreadsheet (CSV)" ${D ? '' : 'disabled'}>${icon('download')}</button>`)}${chips}`;
+    if (!D) return `<div class="screen insights">${head}${e.err ? Social.errBox(e.err, `insights:${this.days}`) : Social.skel(4)}</div>`;
+    const P = D.people || {}, A = D.active || {}, S = D.sessions || {}, T = D.training || {}, F = D.funnel || {}, R = D.retention || {}, L = D.levels || {}, Dv = D.devices || {}, So = D.social || {}, SH = D.shares || {};
+    const ser = D.series || [], dl = ser.map(x => x.day), every = ser.length > 31 ? 14 : ser.length > 8 ? 7 : 1, sd = (d, i) => { const t = new Date(d + 'T12:00:00'); return `${t.getDate()}/${t.getMonth() + 1}`; };
+    const delta = P.new_prev != null ? (P.new >= P.new_prev ? `+${this.n(P.new - P.new_prev)}` : `−${this.n(P.new_prev - P.new)}`) + ' vs the previous ' + D.days + ' days' : '';
+    const stick = A.month ? Math.round(100 * (ser.length ? ser.reduce((a, x) => a + x.active, 0) / ser.length : 0) / A.month) : null;
+    const noTrack = !D.tracked_since;
+    const tips = this.tips(D);
+    const funnel = [['Signed up', F.signed_up], ['Finished setup', F.set_up], ['Logged a workout', F.first], ['3+ workouts', F.three], ['10+ workouts', F.ten]];
+    const dev = [['iPhone / iPad', Dv.ios], ['Android', Dv.android], ['Computer', Dv.desktop]];
+    const html = `<div class="screen insights">${head}
+      ${noTrack ? `<section class="panel in-note" data-stg>${icon('clock')}<p>Usage tracking starts with this update, so screens, times and devices fill in as people use the new version. Accounts, workouts and social numbers are already complete.</p></section>` : `<p class="muted in-since">Usage tracked since ${fmtDate(D.tracked_since)} · admins not counted · times are each person’s local time</p>`}
+      <section class="in-kpis" data-stg>
+        ${this.kpi('Members', this.n(P.total), `${this.n(P.athletes)} athletes · ${this.n(P.coaches)} coaches · ${this.n(P.parents)} parents`, 'users')}
+        ${this.kpi(`New in ${D.days} days`, this.n(P.new), delta, 'trending-up')}
+        ${this.kpi('Active today', this.n(A.today), `${this.n(A.week)} this week · ${this.n(A.month)} this month`, 'activity')}
+        ${this.kpi('Stickiness', stick == null ? '—' : stick + '%', 'average day ÷ monthly actives', 'target')}
+        ${this.kpi('Visits', this.n(D.opens), S.people ? `${fmtNum(S.count / Math.max(1, S.people), 1)} per active person` : '', 'smartphone')}
+        ${this.kpi('Time per visit', S.median_min != null ? `${fmtNum(S.median_min, 1)} min` : '—', S.avg_min != null ? `median · average ${fmtNum(S.avg_min, 1)} min` : '', 'clock')}
+        ${this.kpi('Workouts logged', this.n(T.workouts), `by ${this.n(T.people)} people${T.avg_min ? ` · ~${T.avg_min} min` : ''}`, 'dumbbell')}
+        ${this.kpi('Shares', this.n(SH.total), `${this.n(P.invited)} sign-ups from invites`, 'share-2')}
+      </section>
+      ${this.card('What this tells you', 'lightbulb', `<ul class="in-tips">${tips.map(t => `<li>${t}</li>`).join('')}</ul>`)}
+      ${this.card('Active people per day', 'activity', this.bars(ser.map(x => x.active), dl, { every, short: sd, aria: 'Active people per day' }), 'People who opened the app each day')}
+      ${this.card('New sign-ups per day', 'user-plus', this.bars(ser.map(x => x.signups), dl, { every, short: sd, aria: 'Sign-ups per day' }), `${this.n(P.new)} in total${P.invited ? ` · ${this.n(P.invited)} from invite links` : ''}`)}
+      ${this.card('When people open RepIQ', 'clock', this.bars(D.hours || [], (D.hours || []).map((_, h) => this.hourName(h)), { every: 3, dense: true, aria: 'Visits by hour of day' }) + this.bars(D.weekdays || [], this.DAYS, { aria: 'Visits by weekday' }), 'Visits by hour, then by weekday — use the peaks to time posts and pushes')}
+      ${this.card('Where time goes', 'bar-chart-3', (D.screens || []).length ? this.hbars(D.screens.map(x => [this.sname(x.name), +x.min, `${+x.min < 1 ? '<1' : fmtNum(+x.min, 0)} min · ${this.n(x.people)} ${x.people === 1 ? 'person' : 'people'}`]), { lead: true }) : '<p class="muted">Fills in as people use the new version.</p>', 'Minutes on each screen in this period')}
+      ${this.card('From sign-up to habit', 'route', this.hbars(funnel.map(([l, v]) => [l, v || 0, `${this.n(v)}${F.signed_up ? ` · ${this.pct(v || 0, F.signed_up)}%` : ''}`]), { lead: true }), 'Everyone who joined, all time (athletes and coaches)')}
+      ${this.card('Coming back', 'rotate-ccw', `<div class="in-ret">${[['After 1 day', R.d1], ['After 7 days', R.d7], ['After 30 days', R.d30]].map(([l, v]) => `<div><b>${v == null ? '—' : v + '%'}</b><span>${l}</span></div>`).join('')}</div>`, 'Share of members who used RepIQ again that long after joining')}
+      ${this.card('Training', 'dumbbell', this.bars(T.by_weekday || [], this.DAYS, { aria: 'Workouts by weekday' }) + this.bars(ser.map(x => x.workouts), dl, { every, short: sd, aria: 'Workouts per day' }), 'Workouts by weekday, then per day')}
+      ${this.card('Who they are', 'users', this.hbars([['Beginner', L.beginner || 0], ['Intermediate', L.intermediate || 0], ['Expert', L.expert || 0], ['Not answered yet', L.unknown || 0]]) + `<p class="muted in-foot">${this.n(L.oly_yes)} have done Olympic lifting · started with: ${this.n(L.prep)} prep weeks, ${this.n(L.full)} full programme, ${this.n(L.own)} own plan</p>`, 'Experience level from the set-up questions')}
+      ${this.card('Devices', 'smartphone', this.hbars(dev.map(([l, v]) => [l, v || 0])) + `<p class="muted in-foot">${this.n(Dv.installed)} use it installed on the home screen · ${this.n(Dv.browser)} in the browser · ${this.n(P.push)} get phone notifications</p>`, 'People by device in this period')}
+      ${this.card('Sharing & invites', 'megaphone', (SH.total ? this.hbars(Object.entries(SH.by_what || {}).sort((a, b) => b[1] - a[1]).map(([k, v]) => [this.WHAT[k] || k, v])) + `<p class="muted in-foot">How: ${Object.entries(SH.by_how || {}).map(([k, v]) => `${this.HOW[k] || k} ${this.n(v)}`).join(' · ')}</p>` : '<p class="muted">No shares in this period yet.</p>') + ((D.inviters || []).length ? `<h3 class="in-sub">Top inviters (all time)</h3>${this.hbars(D.inviters.map(x => ['@' + x.username, x.n]), { lead: true })}` : ''), `${this.n(P.optin)} members agreed to news & offers`)}
+      ${this.card('Going quiet', 'user-x', (D.quiet_list || []).length ? `<ul class="in-list">${D.quiet_list.map(x => `<li><b>@${esc(x.username)}</b><span>last seen ${fmtDate(x.last)} · ${this.n(x.workouts)} workouts</span></li>`).join('')}</ul>` : '<p class="muted">Nobody — everyone has been around in the last two weeks.</p>', `${this.n(A.quiet)} members away for 14–90 days · ${this.n(A.never)} never logged a workout`)}
+      ${this.card('Community', 'messages-square', `<div class="in-ret five">${[['Posts', So.posts], ['Comments', So.comments], ['Reactions', So.reactions], ['Messages', So.messages], ['New follows', So.follows]].map(([l, v]) => `<div><b>${this.n(v)}</b><span>${l}</span></div>`).join('')}</div>`, `In the last ${D.days} days`)}
+      ${(D.schools || []).length ? this.card('Schools', 'shield', this.hbars(D.schools.map(x => [x.name, x.members, `${this.n(x.members)} members · ${this.n(x.active)} active`])), `${this.n(P.in_school)} members are in a school`) : ''}
+    </div>`;
+    return html;
+  },
+  csv() {
+    const D = this.load().v; if (!D) return;
+    const rows = [['Section', 'Item', 'Value']], add = (s, k, v) => rows.push([s, k, v == null ? '' : v]);
+    Object.entries(D.people || {}).forEach(([k, v]) => add('Members', k, v)); Object.entries(D.active || {}).forEach(([k, v]) => add('Active', k, v));
+    Object.entries(D.sessions || {}).forEach(([k, v]) => add('Visits', k, v)); add('Visits', 'opens', D.opens);
+    (D.series || []).forEach(x => { add('Per day', `${x.day} active`, x.active); add('Per day', `${x.day} sign-ups`, x.signups); add('Per day', `${x.day} workouts`, x.workouts); add('Per day', `${x.day} opens`, x.opens); });
+    (D.hours || []).forEach((v, h) => add('Visits by hour', this.hourName(h), v)); (D.weekdays || []).forEach((v, i) => add('Visits by weekday', this.DAYS[i], v));
+    (D.screens || []).forEach(x => { add('Screens (minutes)', this.sname(x.name), x.min); add('Screens (people)', this.sname(x.name), x.people); });
+    Object.entries(D.funnel || {}).forEach(([k, v]) => add('Funnel', k, v)); Object.entries(D.retention || {}).forEach(([k, v]) => add('Retention %', k, v));
+    Object.entries(D.levels || {}).forEach(([k, v]) => add('Levels', k, v)); Object.entries(D.devices || {}).forEach(([k, v]) => add('Devices', k, v));
+    Object.entries((D.shares || {}).by_what || {}).forEach(([k, v]) => add('Shares (what)', k, v)); Object.entries((D.shares || {}).by_how || {}).forEach(([k, v]) => add('Shares (how)', k, v));
+    (D.inviters || []).forEach(x => add('Top inviters', x.username, x.n)); Object.entries(D.social || {}).forEach(([k, v]) => add('Community', k, v));
+    (D.quiet_list || []).forEach(x => add('Going quiet', x.username, x.last)); (D.schools || []).forEach(x => add('Schools', x.name, x.members));
+    const txt = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const u = URL.createObjectURL(new Blob([txt], { type: 'text/csv' })), a = document.createElement('a'); a.href = u; a.download = `repiq-insights-${D.days}d-${todayISO()}.csv`; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(u); a.remove(); }, 4000);
+    UI.toast('Spreadsheet saved.');
+  }
+};
+(() => {
+  TAB_OF.insights = 'more'; Social.live.add('insights');
+  Screens.insights = () => Insights.screen();
+  /* More → Insights, for admins, next to Team access */
+  const more = Screens.more.bind(Screens);
+  Screens.more = function () {
+    const h = more();
+    if (!Cloud.isAdmin()) return h;
+    const item = `<button class="list-item" type="button" data-act="go" data-r="insights">${icon('bar-chart-3')}<div class="grow"><b>Insights</b><div class="muted" style="font-size:12.5px">How people use RepIQ — for marketing and running the app</div></div>${icon('chevron-right')}</button>`;
+    return h.replace(`data-r="admin">`, `data-r="insights-anchor">`).replace(/<button class="list-item" type="button" data-act="go" data-r="insights-anchor">/, item + '<button class="list-item" type="button" data-act="go" data-r="admin">');
+  };
+  Object.assign(Actions, {
+    'in-days': el => { Insights.days = +el.dataset.v; UI.render(); },
+    'in-csv': () => Insights.csv()
+  });
+})();
 
 </script>
 </body>
