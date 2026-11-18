@@ -2811,6 +2811,18 @@ body:not(.theme-light) .in-list span{color:#B9C9D6}
 .pw-eye[aria-pressed="true"]{opacity:.6}
 .pw-err{min-height:0;margin:0;color:#B4423A;font-size:13.5px}.pw-err:empty{display:none}
 body:not(.theme-light) .pw-err{color:#F2A8A0}
+/* ---- Fold: long text tucked into one line (Nov 18) ---- */
+#view .fold{position:relative;padding-right:30px!important;cursor:pointer;display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:1;line-clamp:1;overflow:hidden;-webkit-tap-highlight-color:transparent}
+#view .fold.open{display:block!important;-webkit-line-clamp:unset;line-clamp:none;overflow:visible}
+#view li.fold{display:list-item!important}
+#view li.fold:not(.open){display:list-item!important;white-space:nowrap;text-overflow:ellipsis}
+#view .fold-b{position:absolute;top:50%;right:0;transform:translateY(-50%);width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:999px;background:color-mix(in srgb,currentColor 9%,transparent);color:inherit;padding:0;margin:0;cursor:pointer;opacity:.8}
+#view .fold.open .fold-b{top:auto;bottom:0;transform:none}
+#view .fold-b svg{transition:transform .2s ease}
+#view .fold.open .fold-b svg{transform:rotate(180deg)}
+#view .fold-b:focus-visible{outline:2px solid var(--b2,#567C8D);outline-offset:2px}
+#view .fold:not(.open){min-height:28px;line-height:28px}
+@media (prefers-reduced-motion:reduce){#view .fold-b svg{transition:none}}
 </style>
 </head>
 <body>
@@ -13974,6 +13986,49 @@ const Password = {
   const ad = Actions.adm; Actions.adm = el => el.dataset.op === 'pw' ? Password.forUser(el.dataset.id, el.dataset.name) : ad(el);
   Actions['pw-mine'] = () => Password.mine();
 })();
+
+</script>
+<script>
+/* Fold: long explanations collapse to one line with a "more" chevron; examples, numbers and actions stay in full.
+   Tap the text (or the chevron) to open it. Safety notes and disclaimers are never folded. */
+const Fold = {
+  SEL: 'p, li, small.muted, span.muted, div.muted',
+  MIN: 110,                                   // characters before a paragraph folds
+  SHORT: ['.medal-head .muted'],              // always fold these short rule lines (food medals)
+  KEEP: /risk|doctor|medical|allerg|injur|pain|warning|pasteuri|not affiliated|can't be undone|cannot be undone|permanent/i,
+  SKIP: 'button,a,label,input,textarea,select,svg,details,form,[data-nofold],[role=alert],[role=status],.metrics,.metric,.foods,.timeline,.chips,.ghead,.toast,.warn,.danger,.err',
+  scan(root) {
+    if (!root) return;
+    root.querySelectorAll(this.SEL).forEach(e => {
+      if (e.dataset.fold || e.closest(this.SKIP) || e.closest('.fold')) return;
+      if (e.querySelector('button,a,input,select,textarea,img,svg,ul,ol,p,div')) return;
+      const t = e.textContent.replace(/\s+/g, ' ').trim();
+      const short = this.SHORT.some(s => e.matches(s));
+      if (t.length < (short ? 60 : this.MIN) || this.KEEP.test(t)) return;
+      e.dataset.fold = '1'; e.classList.add('fold');
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'fold-b'; b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-label', 'Show more');
+      b.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      e.appendChild(b);
+    });
+  },
+  toggle(e) {
+    const open = !e.classList.contains('open'); e.classList.toggle('open', open);
+    const b = e.querySelector(':scope > .fold-b'); if (b) { b.setAttribute('aria-expanded', String(open)); b.setAttribute('aria-label', open ? 'Show less' : 'Show more'); }
+  },
+  init() {
+    const v = document.getElementById('view'); if (!v) return;
+    let q = 0; const run = () => { q = 0; this.scan(v); };
+    new MutationObserver(() => { if (!q) q = requestAnimationFrame(run); }).observe(v, { childList: true, subtree: true });
+    run();
+    v.addEventListener('click', ev => {
+      const e = ev.target.closest('.fold'); if (!e || !v.contains(e)) return;
+      if (!ev.target.closest('.fold-b') && String(getSelection && getSelection()).length) return;   // let people select text
+      this.toggle(e);
+    });
+  }
+};
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => Fold.init()); else Fold.init();
 
 </script>
 </body>
