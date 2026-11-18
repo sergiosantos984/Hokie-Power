@@ -2753,22 +2753,6 @@ body:not(.theme-light) .share-how{color:var(--pB9C9D6)}
 
 /* ---- RepIQ splash & intro (Nov 17) ---- */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-html:root body #boot,html:root body.theme-light #boot{background:radial-gradient(90% 60% at 85% 0%,rgba(86,124,141,.55),transparent 60%),radial-gradient(80% 60% at 0% 100%,rgba(242,201,160,.22),transparent 60%),linear-gradient(160deg,var(--b1,#2F4156) 0%,#18222E 55%,#0E1620 100%)!important}
-html:root body #boot .b-stripes,html:root body #boot .b-grid,html:root body #boot .b-ring,html:root body #boot .b-half,html:root body #boot .b-flash{display:none!important}
-html:root body #boot .b-ball{width:min(30vw,128px)!important;height:auto!important;filter:drop-shadow(0 18px 40px rgba(0,0,0,.45))!important}
-html:root body #boot .w1,html:root body.theme-light #boot .w1{color:#FFFFFF!important;-webkit-text-stroke:0!important;text-shadow:none!important}
-html:root body #boot .w2,html:root body.theme-light #boot .w2{background:linear-gradient(90deg,#F2C9A0,#E6D9CF);-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-stroke:0!important;text-shadow:none!important}
-html:root body #boot .b-sub,html:root body.theme-light #boot .b-sub{color:#C8D9E6!important}
-html:root body #boot .b-load b,html:root body.theme-light #boot .b-load b{color:#E6D9CF!important}
-html:root body #boot .b-bar,html:root body.theme-light #boot .b-bar{background:rgba(200,217,230,.16)!important}
-html:root body #boot .b-bar i,html:root body.theme-light #boot .b-bar i{background:linear-gradient(90deg,#F2C9A0,#E6D9CF)!important}
-html:root body #boot.out{background:inherit;animation:rqBootOut .42s cubic-bezier(.4,0,.2,1) forwards!important}
-html:root body #boot.out>*:not(.b-half){visibility:visible!important}
-@keyframes rqBootOut{to{opacity:0;transform:scale(1.04)}}
-@media (prefers-reduced-motion:reduce){html:root body #boot.out{animation-duration:.01ms!important}}
-body.rq-intro #intro .sky{background:radial-gradient(90% 60% at 85% 0%,rgba(86,124,141,.5),transparent 60%),linear-gradient(180deg,#0E1620 0%,#18222E 55%,#2F4156 100%)!important}
-body.rq-intro #intro .t-sub span{color:#F2C9A0!important}
-body.rq-intro #intro .ui .k,body.rq-intro #intro .t-tag{color:#C8D9E6!important}
 /* phones: the Home header stays on one line (brand left, buttons right) */
 #view .topbar:has(>.brandmark){flex-wrap:nowrap!important}
 #view .topbar>.brandmark{flex:1 1 auto;min-width:0}
@@ -2776,7 +2760,6 @@ body.rq-intro #intro .ui .k,body.rq-intro #intro .t-tag{color:#C8D9E6!important}
 #view .topbar>.brandmark small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #view .topbar:has(>.brandmark)>.row{flex:none;flex-wrap:nowrap}
 @media (max-width:440px){#view .topbar:has(>.brandmark)>.row>.badge{display:none}}
-body.rq-intro #intro #enterStadium{background:linear-gradient(90deg,#F2C9A0,#E6D9CF)!important;color:#18222E!important;border:0!important;box-shadow:0 14px 34px -12px rgba(242,201,160,.55)!important}
 /* ---- Insights (admin) ---- */
 .insights .in-range{margin:-4px 0 0}
 .in-since{margin:-6px 0 0;font-size:12.5px}
@@ -2838,7 +2821,7 @@ body:not(.theme-light) .pw-err{color:#F2A8A0}
   <div class="b-grid"></div>
   <div class="b-stripes"><i></i><i></i><i></i><i></i><i></i></div>
   <div class="b-ring"></div><div class="b-ring r2"></div>
-  <svg class="b-ball" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="bTile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5EFEB"/><stop offset="1" stop-color="#C9B5A6"/></linearGradient></defs><rect x="6" y="6" width="108" height="108" rx="30" fill="url(#bTile)"/><path d="M26 60h68" stroke="#2F4156" stroke-width="7" stroke-linecap="round"/><path d="M37 38v44M83 38v44" stroke="#2F4156" stroke-width="11" stroke-linecap="round"/><path d="M26 47v26M94 47v26" stroke="#567C8D" stroke-width="9" stroke-linecap="round"/></svg>
+  <svg class="b-ball" viewBox="0 0 120 74"><ellipse cx="60" cy="37" rx="56" ry="33" fill="var(--b1)" stroke="var(--b2)" stroke-width="5"/><path d="M22 37h76" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M42 28v18M51 28v18M60 28v18M69 28v18M78 28v18" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M10 37c8-14 20-22 30-25M110 37c-8-14-20-22-30-25" stroke="var(--b2)" stroke-width="3" fill="none"/></svg>
   <div class="b-word"><span class="w1">REP</span><span class="w2">IQ</span></div>
   <div class="b-sub">TRAIN LIKE IT COUNTS</div>
   <div class="b-load"><span class="b-bar"><i></i></span><b id="bootPct">00</b></div>
@@ -4219,7 +4202,6 @@ const Intro = {
       <text x="300" y="180" text-anchor="middle" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="800" font-size="8" fill="#FFFFFF" letter-spacing="2.5">GATE 2005</text>
       <rect x="0" y="206" width="600" height="16" fill="#0C0608"/>${park}
     </svg>${[6.7, 50, 93.3].map((l, i) => `<div class="cone" style="left:${l}%;transform:translateX(-50%) rotate(${(i - 1) * 9}deg);bottom:62%"></div>`).join('')}`;
-    if (typeof Brand !== 'undefined' && !Brand.custom()) { $('#stadium').innerHTML = this.repiq(); $('#skyFar').innerHTML = $('#skyFar').innerHTML.replace('#24151B', '#1E2A38'); $('#skyNear').innerHTML = $('#skyNear').innerHTML.replace('#160C10', '#131C27'); }
     $('#tunnel').insertAdjacentHTML('beforeend', Array.from({ length: 9 }, () => '<div class="tf"></div>').join(''));
   },
   stars() {
@@ -4246,35 +4228,8 @@ const Intro = {
     if (!this.raf) this.raf = requestAnimationFrame(tick);
   },
   /* about two seconds from black to title: ridgelines → stadium rises → lights come on → title */
-  /* RepIQ's own opening: a lit barbell on the platform instead of the stadium */
-  repiq() {
-    const plate = (x, h, w, c) => `<rect x="${x - w / 2}" y="${118 - h / 2}" width="${w}" height="${h}" rx="${Math.min(8, w / 2)}" fill="${c}" stroke="rgba(245,239,235,.25)" stroke-width="1"/>`;
-    return `<svg viewBox="0 0 600 222" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-      <defs><radialGradient id="rqHalo" cx="50%" cy="60%" r="60%"><stop offset="0" stop-color="#F2C9A0" stop-opacity=".55"/><stop offset=".45" stop-color="#C8D9E6" stop-opacity=".18"/><stop offset="1" stop-color="#2F4156" stop-opacity="0"/></radialGradient>
-      <linearGradient id="rqBar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#9FB3C2"/></linearGradient>
-      <linearGradient id="rqPlat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F4156"/><stop offset="1" stop-color="#0E1620"/></linearGradient></defs>
-      <ellipse class="lights" cx="300" cy="120" rx="300" ry="96" fill="url(#rqHalo)"/>
-      <rect x="40" y="168" width="520" height="38" rx="6" fill="url(#rqPlat)" stroke="rgba(200,217,230,.25)"/>
-      <rect class="lights" x="40" y="168" width="520" height="2.4" fill="#F2C9A0" opacity=".8"/>
-      <rect x="60" y="114" width="480" height="8" rx="4" fill="url(#rqBar)"/>
-      ${plate(132, 104, 22, '#18222E')}${plate(158, 84, 16, '#2F4156')}${plate(178, 64, 12, '#567C8D')}
-      ${plate(468, 104, 22, '#18222E')}${plate(442, 84, 16, '#2F4156')}${plate(422, 64, 12, '#567C8D')}
-      <rect x="190" y="110" width="8" height="16" rx="2" fill="#E6D9CF"/><rect x="402" y="110" width="8" height="16" rx="2" fill="#E6D9CF"/>
-      <text x="300" y="196" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="900" font-size="15" letter-spacing="6" fill="#E6D9CF" opacity=".85">REPIQ</text>
-      <rect class="scan" x="-160" y="60" width="110" height="140" fill="rgba(255,255,255,.18)"/>
-    </svg>${[20, 50, 80].map((l, i) => `<div class="cone" style="left:${l}%;transform:translateX(-50%) rotate(${(i - 1) * 9}deg);bottom:62%"></div>`).join('')}`;
-  },
-  words() {
-    if (typeof Brand === 'undefined' || Brand.custom()) return;
-    const k = $('#intro .ui .k'), sub = $('#intro .t-sub'), tag = $('#intro .t-tag'), go = $('#enterStadium'), d = $('#intro .disclaimer'), t = $('#intro .t-cliff');
-    if (k) k.textContent = 'WELCOME TO REPIQ'; if (sub) sub.innerHTML = 'RepIQ<br><span>TRAIN LIKE IT COUNTS</span>';
-    if (tag) tag.textContent = 'YOUR PROGRAM. EVERY REP. REAL PROGRESS.'; if (go) go.textContent = 'Let’s go'; if (d) d.hidden = true;
-    const nm = (State.settings && State.settings.name) || (typeof Cloud !== 'undefined' && Cloud.profile && Cloud.profile.username) || '';
-    if (t && nm && t.textContent === 'CLIFF') t.textContent = String(nm).toUpperCase();
-    document.body.classList.add('rq-intro');
-  },
   play(onDone) {
-    this.onDone = onDone; this.build(); this.words();
+    this.onDone = onDone; this.build();
     const el = $('#intro'); el.hidden = false; el.className = ''; $('#flash').style.opacity = 0;
     $$('#tunnel .tf').forEach(f => { f.style.opacity = 0; });
     this.stars(); this.speed = .4; this.camZ = 0; this.loop();
