@@ -2823,6 +2823,204 @@ body:not(.theme-light) .pw-err{color:#F2A8A0}
 #view .fold-b:focus-visible{outline:2px solid var(--b2,#567C8D);outline-offset:2px}
 #view .fold:not(.open){min-height:28px;line-height:28px}
 @media (prefers-reduced-motion:reduce){#view .fold-b svg{transition:none}}
+
+/* ---- Circuits (Coach HQ): builder, teams board, live screens, exercise library — Nov 24 ---- */
+.cx-scroll{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}.cx-scroll::-webkit-scrollbar{display:none}
+.cx-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.cx-tag{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:999px;background:rgba(var(--b1rgb),.07);color:var(--fg)}
+.cx-tag svg{width:12px;height:12px}.cx-tag.coach{background:rgba(var(--b2rgb),.14)}.cx-tag.vid{background:rgba(220,38,38,.09)}
+.cx-th{--s:44px;width:var(--s);height:var(--s);flex:0 0 var(--s);border-radius:12px;overflow:hidden;display:inline-grid;place-items:center;background:rgba(var(--b1rgb),.08);color:var(--b1)}
+.cx-th img{width:100%;height:100%;object-fit:cover}.cx-th.ic svg{width:calc(var(--s) * .45);height:calc(var(--s) * .45)}
+.cx-no{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:9px;background:var(--b1);color:#fff;font-weight:800;font-size:13px;font-variant-numeric:tabular-nums}
+.cx-dot{width:10px;height:10px;border-radius:50%;background:#E5484D;display:inline-block;flex:none;box-shadow:0 0 0 0 rgba(229,72,77,.5);animation:cxPulse 1.6s infinite}
+@keyframes cxPulse{70%{box-shadow:0 0 0 9px rgba(229,72,77,0)}100%{box-shadow:0 0 0 0 rgba(229,72,77,0)}}
+.cx-note{font-size:12.5px}
+/* drag & drop */
+[data-dnd]{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+[data-dnd-handle]{touch-action:none;cursor:grab}
+.cx-grip{display:grid;place-items:center;width:34px;min-height:44px;border:0;background:transparent;color:var(--muted);border-radius:10px;padding:0;flex:none}
+.cx-grip:hover{background:rgba(var(--b1rgb),.06);color:var(--fg)}.cx-grip:focus-visible{outline:2px solid var(--b2);outline-offset:1px}
+.cx-ghost{position:fixed!important;left:0;top:0;z-index:9999;pointer-events:none;margin:0!important;box-shadow:0 22px 44px -14px rgba(0,0,0,.45)!important;opacity:.96;transition:none!important;border-radius:16px}
+.cx-dragging{opacity:.28}
+.cx-armed{transform:scale(1.03);box-shadow:0 0 0 3px rgba(var(--b2rgb),.5)!important;transition:transform .15s}
+.cx-ph{height:6px;margin:4px 0;border-radius:6px;background:var(--b2);box-shadow:0 0 0 4px rgba(var(--b2rgb),.18);animation:cxPh .5s ease}
+.cx-ph.x{width:6px;height:auto;margin:0 3px;align-self:stretch}
+@keyframes cxPh{from{opacity:0;transform:scaleX(.6)}}
+body.cx-dnd-on{cursor:grabbing}body.cx-dnd-on *{cursor:grabbing!important}
+body.cx-dnd-on [data-drop]:not(.cx-list){transition:box-shadow .15s,background .15s}
+body.cx-dnd-ath .cx-team,body.cx-dnd-ath .cx-pool,body.cx-dnd-team .cx-slot,body.cx-dnd-ex .cxb-lane,body.cx-dnd-st .cxb-lane{box-shadow:0 0 0 2px rgba(var(--b2rgb),.35)}
+[data-drop].cx-over{box-shadow:0 0 0 3px var(--b2)!important;background:rgba(var(--b2rgb),.08)!important}
+.cx-flash{animation:cxFlash .9s ease}@keyframes cxFlash{0%{box-shadow:0 0 0 3px var(--b2)}100%{box-shadow:0 0 0 0 transparent}}
+.cx-trash{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,30px);opacity:0;pointer-events:none;z-index:60;display:flex;gap:8px;align-items:center;padding:14px 22px;border-radius:999px;background:var(--bad,#C2410C);color:#fff;font-weight:700;transition:.2s}
+body.cx-dnd-st .cx-trash{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.cx-trash.cx-over{transform:translate(-50%,0) scale(1.08)!important;background:#B91C1C!important}
+.cx-undo{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:70;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 16px;border-radius:14px;background:var(--navy,#2F4156);color:#fff;font-size:14px;box-shadow:var(--sh-3);transition:.22s;max-width:calc(100vw - 24px)}
+.cx-undo.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}.cx-undo .btn{background:rgba(255,255,255,.14);color:#fff;border:0;min-height:36px}
+@media (min-width:900px){.cx-undo,.cx-trash{bottom:28px}}
+/* circuits list */
+.cx-new{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}.cx-starters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.cx-starters .label{margin-right:2px}
+.cx-cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));margin-bottom:14px}
+.cx-card{display:flex;flex-direction:column;gap:8px}.cx-card-d{font-size:13.5px;margin:0}
+.cx-mini{list-style:none;counter-reset:cx;margin:4px 0;padding:0;display:grid;gap:4px}
+.cx-mini li{counter-increment:cx;display:flex;align-items:center;gap:8px;font-size:13.5px}.cx-mini li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cx-mini li:not(.muted)::before{content:counter(cx);display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:rgba(var(--b1rgb),.08);font-size:11px;font-weight:700;flex:none}
+.cx-mini small{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cx-livebar{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-bottom:12px;border-color:rgba(229,72,77,.35)}
+.cx-livebar.lobby .cx-dot{background:var(--b2);animation:none}.cx-livebar small{display:block;color:var(--muted);font-size:12.5px}
+.cx-hist{display:grid}.cx-hrow{display:flex;align-items:center;gap:12px;padding:10px 4px;border:0;border-top:1px solid var(--line);background:none;text-align:left;width:100%;color:inherit;min-height:52px}
+.cx-hrow:first-child{border-top:0}.cx-hrow .d{width:52px;flex:none;font-size:13px}.cx-hrow small{display:block}
+.cx-st-pill{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:rgba(var(--b1rgb),.08);white-space:nowrap}
+.cx-st-pill.good{background:rgba(22,163,74,.12);color:#166534}.cx-st-pill.warn{background:rgba(217,119,6,.14);color:#92400E}.cx-st-pill.live{background:rgba(229,72,77,.12);color:#B42318}
+/* builder */
+.cxb{display:flex;flex-direction:column;gap:14px;padding-bottom:84px}
+.cxb-meta{display:flex;flex-direction:column;gap:12px}
+.cxb-name{font-size:20px;font-weight:700;min-height:52px}
+.cxb-desc summary,.cx-moref summary,.cx-movebox summary,.cx-howto summary{cursor:pointer;min-height:40px;display:flex;align-items:center;gap:6px}
+.cxb-desc textarea{margin-top:6px}
+.cxb-set{display:flex;flex-wrap:wrap;gap:14px 24px}.cxb-field{display:flex;flex-direction:column;gap:6px;min-width:0;max-width:100%}.cxb-field .chips{flex-wrap:wrap}
+.cx-stepper{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:0 2px}.cx-stepper b{min-width:26px;text-align:center;font-variant-numeric:tabular-nums}
+.cx-stepper.on{border-color:var(--b2);background:rgba(var(--b2rgb),.08)}.cx-stepper .btn{min-height:34px;width:34px;padding:0}
+.cxb-sum{margin:0;font-size:14px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;color:var(--muted)}.cxb-sum b{color:var(--fg)}
+.cxb-grid{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}.cxb-grid>*,.cx-board>*,.cxb-meta>*{min-width:0}
+@media (min-width:980px){.cxb-grid{grid-template-columns:minmax(300px,360px) minmax(0,1fr);align-items:start}.cxb-shelf{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}.cxb-shelf .cx-tiles{flex-direction:column;overflow:visible}.cxb-shelf .cx-tile{width:auto}}
+.cxb-shelf{display:flex;flex-direction:column;gap:10px}
+@media (max-width:979px){.cxb-shelf{position:sticky;top:0;z-index:20;box-shadow:var(--sh-2)}}
+.cxb-shelf.shut .cxb-shelf-b{display:none}.cxb-shelf-b{display:flex;flex-direction:column;gap:10px;min-width:0}
+.cx-tiles{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:2px 2px 6px;-webkit-overflow-scrolling:touch}
+.cx-tile{position:relative;flex:0 0 auto;width:168px;display:flex;border:1px solid var(--line);border-radius:14px;background:var(--panel-solid,var(--panel))}
+.cx-tile-main{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:8px 30px 8px 8px;border:0;background:none;text-align:left;color:inherit;min-height:56px;border-radius:14px}
+.cx-tile-main b{display:block;font-size:13px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cx-tile-main small{display:flex;align-items:center;gap:3px;color:var(--muted);font-size:11px;margin-top:2px}.cx-tile-main small svg{width:11px;height:11px}
+.cx-tile-main span{min-width:0}.cx-plus{position:absolute;right:8px;bottom:8px;color:var(--b2);display:none}
+.cx-tile-i{position:absolute;right:2px;top:2px;width:30px;height:30px;border:0;background:none;color:var(--muted);display:grid;place-items:center;border-radius:8px}.cx-tile-i svg{width:15px;height:15px}
+.cx-tile:hover{border-color:rgba(var(--b2rgb),.5)}.cx-tile:hover .cx-plus{display:block}
+.cx-hint{font-size:12px;margin:0}
+.cxb-lane{display:flex;flex-direction:column;gap:8px;min-height:200px}
+.cxb-lane .cx-list{display:flex;flex-direction:column;gap:8px}
+.cx-st{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"grip no ex ex" "grip no times acts" "pop pop pop pop";gap:6px 8px;align-items:center;padding:8px 8px 8px 2px;border:1px solid var(--line);border-radius:16px;background:var(--panel-solid,var(--panel))}
+.cx-st .cx-grip{grid-area:grip;align-self:stretch}.cx-st .cx-no{grid-area:no;align-self:start;margin-top:9px}
+.cx-st-ex{grid-area:ex;display:flex;align-items:center;gap:10px;min-width:0;border:0;background:none;padding:0;text-align:left;color:inherit;min-height:44px}
+.cx-st-ex b{display:block;font-size:15px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cx-st-ex small{display:flex;gap:4px;align-items:center;font-size:12px}.cx-st-ex small svg{width:12px;height:12px}.cx-st-ex .grow{min-width:0}
+.cx-st-times{grid-area:times;display:flex;flex-wrap:wrap;gap:6px}
+.cx-st-acts{grid-area:acts;display:flex}.cx-st-acts .btn{width:36px;min-height:36px;padding:0}
+.cx-time{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--b1rgb),.04);color:var(--fg);font-variant-numeric:tabular-nums}
+.cx-time svg{width:15px;height:15px}.cx-time.work{background:rgba(22,163,74,.09);border-color:rgba(22,163,74,.28)}.cx-time.rest{background:rgba(var(--b1rgb),.05)}
+.cx-time.on{box-shadow:0 0 0 2px var(--b2)}
+.cx-pop{grid-area:pop;display:flex;flex-direction:column;gap:8px;padding:10px;margin:2px 0 0 6px;border-radius:12px;background:rgba(var(--b2rgb),.07);animation:cxPh .2s ease}
+.cx-pop-row{display:flex;gap:6px;align-items:center}.cx-pop-row .input{width:90px;text-align:center;font-weight:700;min-height:40px;font-variant-numeric:tabular-nums}
+.cx-pop .chips{gap:6px}.cx-pop .chip{min-height:34px}
+.cx-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:28px 12px;border:2px dashed rgba(var(--b2rgb),.35);border-radius:16px;color:var(--muted)}.cx-empty b{color:var(--fg)}.cx-empty svg{width:26px;height:26px;color:var(--b2)}
+.cx-rr-row{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);padding:6px 8px}.cx-rr-row b{color:var(--fg)}
+.cxb-bar{position:sticky;bottom:calc(82px + env(safe-area-inset-bottom));z-index:25;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px;border-radius:18px;background:var(--glass-d,rgba(47,65,86,.9));color:#fff;box-shadow:var(--sh-3);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+@media (min-width:900px){.cxb-bar{bottom:14px}}
+.cxb-bar .btn:not(.primary){background:rgba(255,255,255,.12);color:#fff;border-color:transparent}.cxb-bar .btn.ghost.danger{color:#FECACA}
+.cxb-state{display:flex;align-items:center;gap:6px;font-size:13px;opacity:.85;margin-right:auto}.cxb-state svg{width:14px;height:14px}
+.cxb-bar .seg{background:rgba(255,255,255,.1);border-color:transparent}.cxb-bar .seg button{color:rgba(255,255,255,.8)}
+/* team board */
+.cx-lobby{display:flex;flex-direction:column;gap:12px;padding-bottom:90px}
+.cx-movebox .cx-lobby{padding-bottom:0;margin-top:10px}
+.cx-lobby-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cx-lobby-h small{display:block}
+.cx-strip{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;scroll-snap-type:x proximity}
+.cx-slot{flex:0 0 152px;scroll-snap-align:start;display:flex;flex-direction:column;gap:4px;padding:10px;border:1.5px dashed rgba(var(--b1rgb),.2);border-radius:14px;min-height:118px}
+.cx-slot.has{border-style:solid;border-color:rgba(var(--b2rgb),.45);background:rgba(var(--b2rgb),.05)}
+.cx-slot b{font-size:13.5px;line-height:1.2}.cx-slot small{color:var(--muted);font-size:11.5px}.cx-slot em{font-size:12px;color:var(--muted)}
+.cx-slot-t{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto}.cx-tpill{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--b1);color:#fff}
+.cx-tbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.cx-split{display:inline-flex;align-items:center;gap:2px}.cx-tstate{font-size:12.5px;color:var(--muted);margin-left:auto}
+.cx-board{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:860px){.cx-board{grid-template-columns:minmax(240px,300px) minmax(0,1fr);align-items:start}.cx-pool{position:sticky;top:12px}}
+.cx-pool{display:flex;flex-direction:column;gap:10px}
+.cx-teams{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));align-content:start}
+.cx-team{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid var(--line);border-radius:16px;background:var(--panel-solid,var(--panel));min-height:150px}
+.cx-team header{display:flex;align-items:center;gap:4px}.cx-tname{flex:1;min-width:0;min-height:40px;font-weight:700;border-color:transparent;background:transparent;padding:0 6px}
+.cx-tname:focus{border-color:var(--line);background:var(--panel)}
+.cx-count{min-width:28px;justify-content:center;font-size:12px}
+.cx-start{display:flex;align-items:center;gap:6px;min-height:38px;border:0;border-radius:10px;padding:0 10px;background:rgba(var(--b1rgb),.05);color:var(--fg);font-size:13px;text-align:left}.cx-start svg{width:15px;height:15px}
+.cx-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:44px;align-content:flex-start}
+.cx-ath{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:4px 12px 4px 4px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:13.5px;font-weight:600;cursor:grab;max-width:100%}
+.cx-ath span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cx-ath.sel{background:rgba(var(--b2rgb),.16);border-color:var(--b2);box-shadow:0 0 0 2px rgba(var(--b2rgb),.35)}
+.cx-dropme{display:flex;align-items:center;gap:6px;width:100%;justify-content:center;min-height:44px;border:1.5px dashed rgba(var(--b1rgb),.18);border-radius:12px;color:var(--muted);font-size:13px}
+.cx-startbar{bottom:calc(82px + env(safe-area-inset-bottom))}.cx-startbar .grow{font-size:14px}
+/* live */
+.cx-net{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(217,119,6,.14);color:#92400E;font-size:13px;margin:0 0 10px}
+.cx-live{display:flex;flex-direction:column;gap:12px}
+.cx-hero{--ph:var(--b1);border-radius:24px;padding:18px 18px 16px;color:#fff;background:linear-gradient(150deg,var(--ph),color-mix(in srgb,var(--ph) 70%,#000));box-shadow:var(--sh-3);text-align:center;transition:background .4s}
+.cx-hero.phase-work{--ph:#15803D}.cx-hero.phase-rest{--ph:#B45309}.cx-hero.phase-recovery{--ph:#1D4ED8}.cx-hero.phase-ready{--ph:var(--navy,#2F4156)}.cx-hero.phase-paused,.cx-hero.phase-wait{--ph:#475569}
+.cx-hero-top{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;font-size:13px;opacity:.95}
+.cx-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.16);font-weight:700;font-size:12px}.cx-pill svg{width:13px;height:13px}
+.cx-pill .cx-dot{width:8px;height:8px;background:#fff}
+.cx-hero-lab{font-size:clamp(18px,4vw,26px);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.cx-big{font-size:clamp(76px,22vw,168px);line-height:1;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;margin:4px 0 10px}
+.cx-bar{height:8px;border-radius:8px;background:rgba(255,255,255,.2);overflow:hidden}.cx-bar i{display:block;height:100%;width:100%;background:#fff;transform-origin:left;transform:scaleX(var(--p,0));transition:transform .2s linear}
+.cx-hero-next{margin-top:10px;font-size:14.5px;opacity:.95}
+.cx-ctrls{display:flex;flex-wrap:wrap;gap:8px}.cx-ctrls .btn{flex:1 1 150px}.cx-ctrls .btn.big{flex-basis:100%;min-height:56px;font-size:17px}
+.cx-ctrls2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}.cx-ctrls2 .seg{flex:1 1 260px}
+.cx-rounds-prog{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.cx-rounds-prog span{display:flex;gap:3px;padding:4px;border-radius:8px}.cx-rounds-prog span.on{background:rgba(var(--b2rgb),.1)}
+.cx-rounds-prog i{width:10px;height:10px;border-radius:3px;background:rgba(var(--b1rgb),.14)}.cx-rounds-prog i.done{background:var(--b1)}.cx-rounds-prog i.on{background:var(--b2);box-shadow:0 0 0 2px rgba(var(--b2rgb),.35)}
+.cx-tls{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr))}
+.cx-tl{--ph:var(--b1);display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:16px;border:1px solid var(--line);background:var(--panel-solid,var(--panel));border-top:5px solid var(--ph)}
+.cx-tl.phase-work{--ph:#15803D}.cx-tl.phase-rest{--ph:#B45309}.cx-tl.phase-recovery{--ph:#1D4ED8}.cx-tl.phase-paused,.cx-tl.phase-wait{--ph:#64748B}
+.cx-tl header{display:flex;justify-content:space-between;align-items:center}.cx-tl-st{display:flex;gap:8px;align-items:center}.cx-tl-st b{font-size:16px;line-height:1.2}
+.cx-tl-ph{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--muted)}.cx-tl-ph b{font-size:26px;color:var(--ph);font-variant-numeric:tabular-nums}
+.cx-faces{display:flex;flex-wrap:wrap;gap:3px;align-items:center}.cx-more{font-size:12px;color:var(--muted);margin-left:2px}
+.cx-movebox{padding:6px 14px}
+/* athlete live */
+.cx-live.ath{align-items:center;text-align:center;gap:10px;padding:4px 0 24px}
+.cx-ath-top{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.cx-ath-top span{padding:5px 11px;border-radius:999px;background:rgba(var(--b1rgb),.07);font-weight:700;font-size:13px}
+.cx-ath-lab{font-size:clamp(26px,8vw,40px);font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--ph,var(--b1))}
+.cx-live.ath{--ph:var(--b1)}.cx-live.ath.phase-work{--ph:#15803D}.cx-live.ath.phase-rest{--ph:#B45309}.cx-live.ath.phase-recovery{--ph:#1D4ED8}.cx-live.ath.phase-paused,.cx-live.ath.phase-wait{--ph:#64748B}
+.cx-ath-ex{font-size:clamp(28px,9vw,46px);line-height:1.05;margin:0;max-width:20ch}.cx-ath-ex small{display:block;font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.cx-ring{position:relative;width:min(78vw,320px);aspect-ratio:1}
+.cx-ring svg{width:100%;height:100%;transform:rotate(-90deg)}.cx-ring circle{fill:none;stroke-width:10}.cx-ring .trk{stroke:rgba(var(--b1rgb),.1)}
+.cx-ring .arc{stroke:var(--ph);stroke-linecap:round;stroke-dashoffset:calc(var(--c) * var(--p,0));transition:stroke-dashoffset .2s linear,stroke .4s}
+.cx-ring-t{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(64px,20vw,112px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cx-then{font-size:16px;margin:0}.cx-myteam{display:flex;flex-direction:column;align-items:center;gap:4px}.cx-myteam small{max-width:36ch}
+.cx-howto{width:100%;text-align:left}.cx-hero-img{margin:8px 0;border-radius:14px;overflow:hidden;background:rgba(var(--b1rgb),.06)}.cx-hero-img img{width:100%;max-height:300px;object-fit:contain;display:block}
+.cx-steps{padding-left:22px;display:grid;gap:6px;margin:6px 0}.cx-ul{padding-left:20px;display:grid;gap:4px;margin:6px 0}
+.cx-wait{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:24px 16px}.cx-wait>svg{width:30px;height:30px;color:var(--b2)}
+.cx-firstst{display:flex;flex-direction:column;gap:4px;align-items:center;padding:12px 16px;border-radius:14px;background:rgba(var(--b1rgb),.05)}.cx-firstst b{display:flex;align-items:center;gap:8px;font-size:20px}
+.cx-fin{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}.cx-fin-ic{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:rgba(22,163,74,.12);color:#15803D}.cx-fin.ended .cx-fin-ic{background:rgba(217,119,6,.14);color:#B45309}
+.cx-kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;width:100%;text-align:left}.cx-kv>div{padding:10px 12px;border-radius:12px;background:rgba(var(--b1rgb),.05)}.cx-kv b{display:block;margin-top:2px}
+.cx-res-team{display:flex;flex-direction:column;gap:6px;padding-top:6px}
+.cx-res{display:grid;grid-template-columns:auto minmax(80px,1fr) repeat(3,64px) minmax(90px,1.2fr) auto;gap:6px;align-items:center}
+.cx-res .input{min-height:38px;padding:0 8px;font-size:13.5px}.cx-res-n{font-weight:600;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:640px){.cx-res{grid-template-columns:auto 1fr 1fr 1fr;}.cx-res-n{grid-column:2 / -1}.cx-res .cx-res-note{grid-column:1 / 4}}
+.cx-banner{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-color:rgba(229,72,77,.4);margin-bottom:12px}.cx-banner small{display:block;color:var(--muted);font-size:12.5px}.cx-banner.lobby .cx-dot{background:var(--b2);animation:none}
+.cx-hd svg{width:20px;height:20px}
+/* library */
+.cx-libp-top{gap:8px;flex-wrap:wrap}.cx-libp-top .input-ic{flex:1 1 220px}
+.cx-moref .grid2{margin-top:8px}
+.cx-exlist{display:flex;flex-direction:column}
+.cx-exrow{display:flex;align-items:center;gap:4px;border-top:1px solid var(--line)}.cx-exrow:first-of-type{border-top:0}
+.cx-exrow-main{flex:1;min-width:0;display:flex;gap:12px;align-items:center;padding:10px 2px;border:0;background:none;text-align:left;color:inherit;min-height:60px}
+.cx-exrow-main .grow{min-width:0}.cx-exrow-main b{display:block}.cx-exrow-main small{display:block;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cx-fav svg{transition:.15s}.cx-fav.on svg,[data-act="cx-fav"][aria-pressed="true"] svg{fill:#F59E0B;stroke:#D97706}
+.cx-libcard{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}.cx-libcard small{display:block}.cx-libcard .grow{min-width:180px}
+.cx-libcard-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(var(--b2rgb),.14);color:var(--b1)}
+.cx-detail{display:flex;flex-direction:column;gap:12px}.cx-detail-acts{display:flex;flex-wrap:wrap;gap:8px}
+.cx-yt{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0F172A}.cx-yt.short{aspect-ratio:9/16;max-height:62vh;margin:0 auto}
+.cx-yt-go{position:absolute;inset:0;border:0;padding:0;background:#0F172A;display:grid;place-items:center;cursor:pointer}.cx-yt-go img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85}
+.cx-yt-ic{position:relative;width:68px;height:48px;border-radius:14px;background:#E11D48;color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(0,0,0,.6)}.cx-yt-ic svg{width:26px;height:26px;fill:#fff}
+.cx-yt-frame{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cx-yt-out{display:inline-flex;align-items:center;gap:6px;font-size:13px;margin-top:-4px}.cx-yt-out svg{width:14px;height:14px}
+.cx-yt-msg{display:block;font-size:12.5px;min-height:1em;margin-top:4px}.cx-yt-msg.ok{color:#15803D}.cx-yt-msg.bad{color:#B42318}
+.cx-yt-prev{margin-top:6px;width:160px;border-radius:10px;display:block}
+.cx-imgpick{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.cx-imgpick.busy{opacity:.5;pointer-events:none}.cx-imgprev{width:96px;height:96px;border-radius:12px;overflow:hidden;background:rgba(var(--b1rgb),.06)}.cx-imgprev img{width:100%;height:100%;object-fit:cover}
+.cx-form .req{font-size:11px;font-weight:600;color:var(--muted);text-transform:none}
+@media (prefers-reduced-motion:reduce){.cx-dot,.cx-ph,.cx-flash,.cx-pop{animation:none!important}.cx-bar i,.cx-ring .arc,.cx-hero{transition:none!important}.cx-undo,.cx-trash{transition:none}}
+body.theme-dark .cx-st-pill.good,html:root body:not(.theme-light) .cx-st-pill.good{color:#86EFAC}
+.cxb-bar{flex-wrap:nowrap;padding:8px}.cxb-bar .btn{min-height:44px;padding:0 14px;white-space:nowrap}
+.cxb-state{flex:1 1 auto;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cx-startbar{flex-wrap:wrap}.cx-startbar .seg{flex:1 1 100%;order:-1}
+@media (min-width:700px){.cx-startbar{flex-wrap:nowrap}.cx-startbar .seg{flex:0 1 auto;order:0}}
+@media (max-width:380px){.cxb-bar .btn{padding:0 10px;font-size:14px}.cxb-state span{display:none}}
+body.cx-dnd-on .cxb-bar,body.cx-dnd-on #nav,body.cx-dnd-on #toast,body.cx-dnd-on .cx-undo{pointer-events:none!important}
+body.cx-dnd-on .cxb-bar{opacity:.35;transition:opacity .15s}
+.cx-net[hidden]{display:none!important}
+body:has(.cxb-bar) .cx-undo{bottom:calc(150px + env(safe-area-inset-bottom))}
+body:has(.cx-startbar) .cx-undo{bottom:calc(205px + env(safe-area-inset-bottom))}
+@media (min-width:700px){body:has(.cx-startbar) .cx-undo,body:has(.cxb-bar) .cx-undo{bottom:calc(150px + env(safe-area-inset-bottom))}}
+@media (min-width:900px){body:has(.cxb-bar) .cx-undo,body:has(.cx-startbar) .cx-undo{bottom:96px}}
+.cx-ring{width:min(78vw,320px,44vh)}
 </style>
 </head>
 <body>
@@ -14019,7 +14217,7 @@ const Fold = {
   init() {
     const v = document.getElementById('view'); if (!v) return;
     let q = 0; const run = () => { q = 0; this.scan(v); };
-    new MutationObserver(() => { if (!q) q = requestAnimationFrame(run); }).observe(v, { childList: true, subtree: true });
+    new MutationObserver(ms => { if (ms.every(m => m.target.closest && m.target.closest('[data-nofold]'))) return; if (!q) q = requestAnimationFrame(run); }).observe(v, { childList: true, subtree: true, characterData: false });
     run();
     v.addEventListener('click', ev => {
       const e = ev.target.closest('.fold'); if (!e || !v.contains(e)) return;
@@ -14029,6 +14227,1177 @@ const Fold = {
   }
 };
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => Fold.init()); else Fold.init();
+
+</script>
+<script>
+/* icons the circuit screens use that weren't in the built-in set (so they draw even when the icon library can't load) */
+Object.assign(ICONS, {
+  'align-left': 'M15 12H3M17 18H3M21 6H3', 'arrow-right': 'M5 12h14M12 5l7 7-7 7', 'arrow-up-from-line': 'M18 9l-6-6-6 6M12 3v14M5 21h14',
+  'circle-dot': 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20zM12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2z', 'chevron-down': 'M6 9l6 6 6-6',
+  'ellipsis-vertical': 'M12 4.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM12 11.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM12 18.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1z',
+  'external-link': 'M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6',
+  'grip-vertical': 'M9 4.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM9 11.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM9 18.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM15 4.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM15 11.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM15 18.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1z',
+  'hand': 'M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15',
+  'infinity': 'M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z',
+  'leaf': 'M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10ZM2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12',
+  'library': 'M16 6l4 14M12 6v14M8 8v12M4 4v16', 'list-checks': 'M3 17l2 2 4-4M3 7l2 2 4-4M13 6h8M13 12h8M13 18h8',
+  'list-ordered': 'M10 12h11M10 18h11M10 6h11M4 10h2M4 6h1v4M6 18H4c0-1 2-2 2-3s-1-1.5-2-1',
+  'map-pin': 'M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0ZM12 7a3 3 0 1 0 0 6a3 3 0 1 0 0-6z', 'minus': 'M5 12h14',
+  'move': 'M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20',
+  'shuffle': 'M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22M18 2l4 4-4 4M2 6h1.9c1.5 0 2.9.9 3.6 2.2M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8M18 14l4 4-4 4',
+  'sliders-horizontal': 'M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4',
+  'star': 'M11.5 2.3a.53.53 0 0 1 .95 0l2.31 4.68a2.1 2.1 0 0 0 1.6 1.16l5.16.76a.53.53 0 0 1 .3.9l-3.74 3.64a2.1 2.1 0 0 0-.6 1.87l.88 5.14a.53.53 0 0 1-.77.56l-4.62-2.43a2.1 2.1 0 0 0-1.97 0L6.4 21.01a.53.53 0 0 1-.77-.56l.88-5.14a2.1 2.1 0 0 0-.6-1.87L2.16 9.8a.53.53 0 0 1 .3-.9l5.16-.76a2.1 2.1 0 0 0 1.6-1.16z',
+  'user-pen': 'M11.5 15H7a4 4 0 0 0-4 4v2M21.38 16.62a1 1 0 0 0-3-3l-4.01 4.02a2 2 0 0 0-.5.86l-.84 2.86a.5.5 0 0 0 .62.62l2.87-.84a2 2 0 0 0 .85-.5zM10 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8z',
+  'wifi-off': 'M12 20h.01M8.5 16.43a5 5 0 0 1 7 0M2 8.82a15 15 0 0 1 4.17-2.65M10.66 5c4.01-.36 8.14.9 11.34 3.76M16.85 11.25a10 10 0 0 1 2.22 1.68M5 13a10 10 0 0 1 5.24-2.76M2 2l20 20',
+  'timer-off': 'M10 2h4M4.6 11a8 8 0 0 0 1.7 8.7 8 8 0 0 0 8.7 1.7M7.4 7.4a8 8 0 0 1 10.3 1 8 8 0 0 1 .9 10.2M2 2l20 20M12 12v-2',
+  'arrow-right-circle': 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20zM8 12h8M12 16l4-4-4-4', 'fast-forward': 'M13 19l9-7-9-7zM2 19l9-7-9-7z'
+});
+
+</script>
+<script>
+/* ============ CIRCUITS (Coach HQ) — core: the shared timeline, the server clock, drag & drop, the exercise catalogue ============
+   One circuit clock for everyone. The database keeps "the circuit was at anchor_el seconds at anchor_at" (plus pause, a manual
+   hold point and the end). Every phone turns that into "now" with its measured offset to the server clock, then CxTime works out
+   — the same way on every phone — which interval it is, which station each team is at, and how long is left. */
+const CxTime = {
+  LEAD: 10,   // "get ready" seconds before the first interval
+  /* plan: {stations:[{w, r}], rounds (0 = keep going), round_rest}; starts: each team's starting station */
+  build(plan, starts) {
+    const S = (plan && plan.stations) || [], n = S.length; if (!n) return null;
+    const st = [...new Set((starts && starts.length ? starts : [0]).map(x => ((+x % n) + n) % n))];
+    const rounds = Math.max(0, +plan.rounds || 0), rr = Math.max(0, +plan.round_rest || 0);
+    // interval k: every team works its own station's time; everyone moves on together when the longest work + rest is over
+    const slots = Array.from({ length: n }, (_, k) => {
+      const occ = st.map(s => (s + k) % n);
+      return { k, maxW: Math.max(...occ.map(i => +S[i].w)), mid: Math.max(...occ.map(i => +S[i].w + +S[i].r)) };
+    });
+    const RL = slots.slice(0, n - 1).reduce((t, s) => t + s.mid, 0) + slots[n - 1].maxW + rr;   // one round (the last interval ends in the round recovery)
+    const FL = RL - rr;                                                                        // the final round has no recovery after it
+    return { S, n, st, rounds, rr, slots, RL, FL, total: rounds ? (rounds - 1) * RL + FL : null };
+  },
+  len(T, k, final) { return k < T.n - 1 ? T.slots[k].mid : T.slots[k].maxW + (final ? 0 : T.rr); },
+  /* where the whole circuit is at elapsed second e */
+  at(T, e) {
+    if (e < 0) return { phase: 'ready', e, left: -e, r: 0, k: 0, slotStart: 0, slotEnd: 0, workEnd: 0 };
+    if (T.total != null && e >= T.total - 1e-6) return { phase: 'done', e, r: T.rounds - 1, k: T.n - 1 };
+    let r = Math.floor(e / T.RL); if (T.rounds) r = Math.min(r, T.rounds - 1);
+    const final = !!T.rounds && r === T.rounds - 1; let t = e - r * T.RL, cum = 0, k = 0;
+    for (; k < T.n - 1; k++) { const L = this.len(T, k, final); if (t < cum + L) break; cum += L; }
+    const slotStart = r * T.RL + cum, slotEnd = slotStart + this.len(T, k, final), u = e - slotStart, maxW = T.slots[k].maxW, last = k === T.n - 1;
+    return { phase: u < maxW ? 'work' : (last && !final ? 'recovery' : 'rest'), e, r, k, final, last, u, slotStart, slotEnd, workEnd: slotStart + maxW, left: slotEnd - e };
+  },
+  /* one team's view of that moment */
+  team(T, g, start) {
+    const s0 = ((+start % T.n) + T.n) % T.n;
+    if (g.phase === 'ready') return { phase: 'ready', st: s0, left: g.left, dur: this.LEAD, next: s0 };
+    if (g.phase === 'done') return { phase: 'done' };
+    const st = (s0 + g.k) % T.n, w = +T.S[st].w, end = g.last && g.final;
+    if (g.u < w) return { phase: 'work', st, left: w - g.u, dur: w, next: end ? null : (st + 1) % T.n, restAfter: g.slotEnd - (g.slotStart + w) };
+    return { phase: g.last && !g.final ? 'recovery' : 'rest', st, left: g.slotEnd - g.e, dur: g.slotEnd - (g.slotStart + w), next: end ? null : (st + 1) % T.n };
+  },
+  /* the point a manual rotation waits at: the end of the interval that contains e */
+  holdFor(T, e) { const g = this.at(T, Math.max(0, e)); return g.phase === 'done' ? T.total : g.slotEnd; },
+  fmt(s) { s = Math.max(0, Math.ceil(s - 1e-6)); const m = Math.floor(s / 60), x = s % 60; return `${m}:${String(x).padStart(2, '0')}`; },
+  /* "45 s", "1 min 30 s", "2 min" */
+  words(s) { s = Math.round(+s || 0); if (s < 60) return `${s} s`; const m = Math.floor(s / 60), x = s % 60; return x ? `${m} min ${x} s` : `${m} min`; },
+  short(s) { s = Math.round(+s || 0); if (!s) return '0'; if (s < 60) return `${s}s`; const m = Math.floor(s / 60), x = s % 60; return x ? `${m}:${String(x).padStart(2, '0')}` : `${m} min`; },
+  /* "45", "1:30", "90s", "2m", "2 min" → seconds */
+  parse(v) {
+    const t = String(v == null ? '' : v).trim().toLowerCase().replace(',', '.'); if (!t) return null;
+    let m = t.match(/^(\d{1,3}):(\d{1,2})$/); if (m) return +m[1] * 60 + +m[2];
+    m = t.match(/^(\d+(?:\.\d+)?)\s*(m|min|mins|minutes?)$/); if (m) return Math.round(+m[1] * 60);
+    m = t.match(/^(\d+)\s*(s|sec|secs|seconds?)?$/); if (m) return +m[1];
+    return null;
+  }
+};
+
+/* the server clock: the offset between this phone and the database, measured on every poll (the fastest answer wins) */
+const CxClock = {
+  off: 0, best: Infinity, at: 0,
+  ts(s) { return Date.parse(String(s || '').replace(' ', 'T').replace(/(\.\d{3})\d+/, '$1').replace(/([+-]\d\d)$/, '$1:00')); },
+  sample(serverNow, t0, t1) {
+    const rtt = t1 - t0, srv = this.ts(serverNow); if (!isFinite(srv)) return;
+    if (rtt <= this.best * 1.5 || Date.now() - this.at > 30000) { this.off = srv - (t0 + t1) / 2; this.best = Math.min(this.best, rtt); this.at = Date.now(); }
+  },
+  now() { return Date.now() + this.off; },
+  el(G) {
+    if (!G) return null;
+    if (G.status !== 'running') return +G.anchor_el;
+    let e = +G.anchor_el + (this.now() - this.ts(G.anchor_at)) / 1000;
+    if (G.hold_el != null) e = Math.min(e, +G.hold_el);
+    if (G.total_s != null) e = Math.min(e, +G.total_s);
+    return e;
+  }
+};
+
+/* ---------- drag & drop: mouse, touch and pen; no library ----------
+   Items:  data-dnd="<type>" data-dnd-id="…"            (optional handle inside: [data-dnd-handle] starts at once on touch)
+   Zones:  data-drop="<zone>" data-drop-id="…" data-accept="type1 type2"   (a list zone also gets data-drop-list; its items are its [data-dnd] children)
+   Roots:  data-dnd-root="<name>" → CxDnd.H[name] = { drop(info), label(type,id) }
+   Touch: hold ~¼ s on the card (or touch the handle) and move — a quick swipe still scrolls the page. */
+const CxDnd = {
+  H: {}, s: null, justDropped: 0,
+  on(name, h) { this.H[name] = h; },
+  init() {
+    if (this.ready) return; this.ready = true;
+    document.addEventListener('pointerdown', e => this.down(e), true);
+    window.addEventListener('pointermove', e => this.move(e), { passive: false });
+    window.addEventListener('pointerup', e => this.up(e));
+    window.addEventListener('pointercancel', () => this.cancel());
+    document.addEventListener('touchmove', e => { if (this.s && (this.s.on || this.s.armed)) e.preventDefault(); }, { passive: false });
+    document.addEventListener('click', e => { if (Date.now() - this.justDropped < 350) { e.preventDefault(); e.stopPropagation(); } }, true);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && this.s && this.s.on) this.cancel(); });
+    document.addEventListener('contextmenu', e => { if (this.s) e.preventDefault(); });
+  },
+  down(e) {
+    if (e.button > 0 || this.s) return;
+    const it = e.target.closest('[data-dnd]'); if (!it) return;
+    const root = it.closest('[data-dnd-root]'); if (!root) return;
+    const handle = e.target.closest('[data-dnd-handle]');
+    if (!handle && e.target.closest('input,textarea,select,a,[data-nodrag]')) return;
+    const btn = e.target.closest('button'); if (!handle && btn && btn !== it && !btn.hasAttribute('data-dnd-grab')) return;   // a button inside a card stays a button
+    const touch = e.pointerType !== 'mouse';
+    this.s = { it, root, type: it.dataset.dnd, id: it.dataset.dndId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, touch, armed: !!(touch && handle), handle0: !!handle, on: false, pid: e.pointerId };
+    if (touch && !handle) this.s.timer = setTimeout(() => { if (this.s && !this.s.on) { this.s.armed = true; it.classList.add('cx-armed'); try { navigator.vibrate && navigator.vibrate(10); } catch (x) { } } }, 260);
+  },
+  move(e) {
+    const s = this.s; if (!s || e.pointerId !== s.pid) return;
+    s.x = e.clientX; s.y = e.clientY; const d = Math.hypot(s.x - s.x0, s.y - s.y0);
+    if (!s.on) {
+      if (s.touch && !s.armed) { if (d > 8) this.end(); return; }        // moved before the hold: it's a scroll
+      if (d < (s.touch ? 3 : 5)) return;
+      this.start();
+    }
+    e.preventDefault(); this.track();
+  },
+  start() {
+    const s = this.s;
+    if (!s.it.isConnected) {   // the screen was redrawn under the finger: carry on with the new copy of the card
+      const n = document.querySelector(`[data-dnd="${s.type}"][data-dnd-id="${CSS.escape(s.id)}"]`); if (!n) { this.end(); return; }
+      s.it = n; s.root = n.closest('[data-dnd-root]') || s.root;
+    }
+    const r = s.it.getBoundingClientRect(); s.on = true; clearTimeout(s.timer);
+    s.dx = s.x0 - r.left; s.dy = s.y0 - r.top;
+    const g = s.it.cloneNode(true); g.classList.add('cx-ghost'); g.removeAttribute('id'); $$('[id]', g).forEach(x => x.removeAttribute('id'));
+    g.style.width = r.width + 'px'; g.style.height = r.height + 'px'; document.body.appendChild(g); s.g = g;
+    s.it.classList.add('cx-dragging'); s.it.classList.remove('cx-armed'); document.body.classList.add('cx-dnd-on', 'cx-dnd-' + s.type);
+    s.from = s.it.closest('[data-drop]'); s.fromIdx = s.from ? this.items(s.from).indexOf(s.it) : -1;
+    this.say(`Picked up ${this.label(s)}.`);
+    try { navigator.vibrate && navigator.vibrate(8); } catch (x) { }
+    this.loop();
+  },
+  items(z) { return [...z.querySelectorAll(':scope > [data-dnd], :scope > .cx-list > [data-dnd]')]; },
+  label(s) { const h = this.H[s.root.dataset.dndRoot]; return (h && h.label && h.label(s.type, s.id)) || 'item'; },
+  zoneAt(x, y) {
+    const s = this.s; s.g.style.display = 'none'; const el = document.elementFromPoint(x, y); s.g.style.display = '';
+    let z = el && el.closest('[data-drop]');
+    while (z && !(` ${z.dataset.accept || ''} `).includes(` ${s.type} `)) z = z.parentElement && z.parentElement.closest('[data-drop]');
+    const R = z && z.closest('[data-dnd-root]'), name = s.root.dataset.dndRoot;
+    return z && ((R && R.dataset.dndRoot === name) || z.dataset.dndFor === name) ? z : null;
+  },
+  track() {
+    const s = this.s; s.g.style.transform = `translate(${s.x - s.dx}px, ${s.y - s.dy}px) rotate(${s.touch ? 0 : 1.2}deg) scale(1.03)`;
+    const z = this.zoneAt(s.x, s.y);
+    if (z !== s.z) { if (s.z) s.z.classList.remove('cx-over'); s.z = z; if (z) z.classList.add('cx-over'); }
+    if (s.ph) { s.ph.remove(); s.ph = null; } s.idx = null;
+    if (z && z.hasAttribute('data-drop-list')) {
+      const list = z.querySelector(':scope > .cx-list') || z, its = this.items(z).filter(i => i !== s.it), horiz = z.dataset.axis === 'x';
+      let idx = its.length;
+      for (let i = 0; i < its.length; i++) { const r = its[i].getBoundingClientRect(); if (horiz ? s.x < r.left + r.width / 2 : s.y < r.top + r.height / 2) { idx = i; break; } }
+      s.idx = idx; const ph = document.createElement('div'); ph.className = 'cx-ph' + (horiz ? ' x' : ''); ph.setAttribute('aria-hidden', 'true');
+      if (idx < its.length) its[idx].before(ph); else list.appendChild(ph); s.ph = ph;
+    }
+  },
+  /* scroll the page (or the shelf) when the finger is near an edge */
+  loop() {
+    const s = this.s; if (!s || !s.on) return;
+    const H = innerHeight, edge = 70; let dy = 0;
+    if (s.y < edge) dy = -Math.ceil((edge - s.y) / 5); else if (s.y > H - edge) dy = Math.ceil((s.y - (H - edge)) / 5);
+    if (dy) { scrollBy(0, dy); this.track(); }
+    const hz = s.z && s.z.dataset.axis === 'x' ? s.z : null;
+    if (hz) { const r = hz.getBoundingClientRect(); if (s.x < r.left + 40) hz.scrollLeft -= 8; else if (s.x > r.right - 40) hz.scrollLeft += 8; }
+    requestAnimationFrame(() => this.loop());
+  },
+  up(e) {
+    const s = this.s; if (!s || e.pointerId !== s.pid) return;
+    if (!s.on) { if (s.armed && !s.handle0) this.justDropped = Date.now(); this.end(); return; }   // a long press that never moved doesn't also count as a tap
+    const z = s.z, info = { type: s.type, id: s.id, zone: z && z.dataset.drop, zoneId: z && z.dataset.dropId, index: s.idx, from: s.from && s.from.dataset.drop, fromId: s.from && s.from.dataset.dropId, fromIdx: s.fromIdx };
+    const h = this.H[s.root.dataset.dndRoot]; this.justDropped = Date.now(); this.end();
+    if (!z) { this.say('Not moved. Drop it on a highlighted area.'); h && h.miss && h.miss(info); return; }
+    try { h && h.drop(info); } catch (x) { console.error(x); }
+  },
+  cancel() { if (this.s && this.s.on) this.say('Move cancelled.'); this.end(); },
+  end() {
+    const s = this.s; if (!s) return; clearTimeout(s.timer);
+    s.it.classList.remove('cx-dragging', 'cx-armed'); if (s.g) s.g.remove(); if (s.ph) s.ph.remove(); if (s.z) s.z.classList.remove('cx-over');
+    document.body.classList.remove('cx-dnd-on', 'cx-dnd-' + s.type); this.s = null;
+    if (this.pending) { const f = this.pending; this.pending = null; setTimeout(f, 0); }
+  },
+  busy() { return !!this.s; },   // a finger is down on something draggable: don't redraw under it
+  say(t) { let r = $('#cxLive'); if (!r) { r = document.createElement('div'); r.id = 'cxLive'; r.className = 'sr-only'; r.setAttribute('aria-live', 'polite'); document.body.appendChild(r); } r.textContent = ''; setTimeout(() => { r.textContent = t; }, 30); }
+};
+CxDnd.init();
+/* never redraw the screen under a finger that is dragging: wait for the drop */
+(() => { const rp = Social.repaint.bind(Social); Social.repaint = function () { if (CxDnd.busy()) { CxDnd.pending = () => Social.repaint(); return; } return rp(); }; })();
+
+/* ---------- YouTube links: only real YouTube video ids are kept, never pasted HTML ---------- */
+const CxYT = {
+  parse(raw) {
+    const t = String(raw || '').trim(); if (!t) return null;
+    if (/^[A-Za-z0-9_-]{11}$/.test(t)) return { id: t, short: false };
+    let u; try { u = new URL(/^https?:\/\//i.test(t) ? t : 'https://' + t); } catch (e) { return null; }
+    if (!/^https?:$/.test(u.protocol)) return null;
+    const h = u.hostname.toLowerCase().replace(/^(www|m|music)\./, ''), p = u.pathname.split('/').filter(Boolean); let id = null, short = false;
+    if (h === 'youtu.be') id = p[0];
+    else if (h === 'youtube.com' || h === 'youtube-nocookie.com') {
+      if (p[0] === 'watch') id = u.searchParams.get('v');
+      else if (['embed', 'shorts', 'live', 'v'].includes(p[0])) { id = p[1]; short = p[0] === 'shorts'; }
+    }
+    return id && /^[A-Za-z0-9_-]{11}$/.test(id) ? { id, short } : null;
+  },
+  watch(id, short) { return short ? `https://www.youtube.com/shorts/${id}` : `https://www.youtube.com/watch?v=${id}`; },
+  thumb(id) { return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; },
+  embed(id) { return `https://www.youtube-nocookie.com/embed/${id}?playsinline=1&rel=0&modestbranding=1&autoplay=1`; },
+  /* a tap-to-play player: nothing loads from YouTube until someone asks for the video */
+  player(id, short, title) {
+    return `<div class="cx-yt${short ? ' short' : ''}" data-yt="${esc(id)}"><button type="button" class="cx-yt-go" data-act="cx-yt-play" data-id="${esc(id)}" aria-label="Play the video: ${esc(title || 'exercise')}">
+        <img src="${this.thumb(id)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="cx-yt-ic">${icon('play')}</span></button></div>
+      <a class="cx-yt-out" href="${this.watch(id, short)}" target="_blank" rel="noopener">${icon('external-link')} Video not playing? Open it on YouTube</a>`;
+  }
+};
+
+/* ---------- the exercise catalogue: the app's library + coaches' own exercises ---------- */
+const CX_CATS = [['strength', 'Strength', 'dumbbell'], ['conditioning', 'Conditioning', 'wind'], ['core', 'Core', 'shield'], ['agility', 'Agility', 'footprints'], ['plyometric', 'Plyometric', 'arrow-up-from-line'],
+  ['mobility', 'Mobility', 'move'], ['cardio', 'Cardio', 'heart-pulse'], ['recovery', 'Recovery', 'leaf'], ['test', 'Testing', 'flag'], ['other', 'Other', 'circle-dot']];
+const CX_DIFF = [['beginner', 'Beginner'], ['intermediate', 'Intermediate'], ['advanced', 'Advanced']];
+const CxCat = {
+  data() { return Social.get('cxlib', () => Social.rpc('cx_list'), 60000); },
+  custom() { const d = this.data().v; return (d && d.items) || []; },
+  favs() { const d = this.data().v; return new Set((d && d.favs) || []); },
+  canCreate() { const d = this.data().v; return d ? !!d.can_create : Brand.isCoach(); },
+  catOf(c) { return CX_CATS.find(x => x[0] === c) || CX_CATS[CX_CATS.length - 1]; },
+  /* one shape for both kinds */
+  get(key) {
+    if (!key) return null;
+    if (key.startsWith('cx:')) { const c = this.custom().find(x => x.key === key); return c ? this.fromCustom(c) : null; }
+    const e = EXERCISES[key]; if (!e) return null;
+    const v = Video.for(key);
+    return { key, std: true, name: e.name, cat: e.cat, equip: e.equip && e.equip !== '—' ? e.equip : '', muscles: e.muscles || '', desc: e.notes && !/^Not described/.test(e.notes) ? e.notes : '', yt: v && v[0] ? v[0][0] : null, yt_short: !!(v && v[0] && v[0][1] === 's'), img: null };
+  },
+  fromCustom(c) { return { key: c.key, id: c.id, std: false, name: c.name, cat: c.category, equip: c.equip, muscles: (c.muscles || []).join(', '), muscles2: (c.muscles2 || []).join(', '), diff: c.difficulty, desc: c.description, steps: c.steps || [], tips: c.tips || [], mistakes: c.mistakes || [], img: c.image, yt: c.yt, yt_short: c.yt_short, by: c.by, created: c.created_at, mine: c.mine, fav: c.fav, src: c.source }; },
+  all() {
+    const std = Object.keys(EXERCISES).filter(k => EXERCISES[k].cat !== 'test').map(k => this.get(k));
+    return this.custom().map(c => this.fromCustom(c)).concat(std);
+  },
+  filter(list, f) {
+    const q = (f.q || '').trim().toLowerCase(), fav = this.favs();
+    return list.filter(x => {
+      if (f.cat && f.cat !== 'all' && x.cat !== f.cat) return false;
+      if (f.src === 'coach' && x.std) return false; if (f.src === 'std' && !x.std) return false; if (f.src === 'mine' && !x.mine) return false; if (f.src === 'fav' && !fav.has(x.key)) return false;
+      if (f.diff && f.diff !== 'all' && x.diff !== f.diff) return false;
+      if (f.muscle && f.muscle !== 'all' && !((x.muscles || '') + ', ' + (x.muscles2 || '')).toLowerCase().includes(f.muscle.toLowerCase())) return false;
+      if (f.equip && f.equip !== 'all' && !(x.equip || '').toLowerCase().includes(f.equip.toLowerCase())) return false;
+      if (q && !(x.name + ' ' + (x.muscles || '') + ' ' + (x.muscles2 || '') + ' ' + (x.equip || '') + ' ' + x.cat).toLowerCase().includes(q)) return false;
+      return true;
+    });
+  },
+  muscles(list) { const s = new Map(); list.forEach(x => String((x.muscles || '') + ',' + (x.muscles2 || '')).split(/[,/]|\band\b/).map(m => m.replace(/\(.*?\)/g, '').trim()).filter(m => m.length > 2 && m.length < 24).forEach(m => { const k = m.toLowerCase(); if (!s.has(k)) s.set(k, m.charAt(0).toUpperCase() + m.slice(1)); })); return [...s.values()].sort(); },
+  equips(list) { const s = new Map(); list.forEach(x => String(x.equip || '').split(/,\s*|\bor\b/).map(m => m.replace(/\(.*?\)/g, '').trim()).filter(m => m && m.length < 28 && m !== '—' && !/see description/i.test(m)).forEach(m => { const k = m.toLowerCase(); if (!s.has(k)) s.set(k, m.charAt(0).toUpperCase() + m.slice(1)); })); return [...s.values()].sort(); },
+  thumb(x, size = 44) {
+    if (x && x.img) return `<span class="cx-th" style="--s:${size}px">${Social.img(x.img, '')}</span>`;
+    return `<span class="cx-th ic" style="--s:${size}px">${icon(this.catOf(x && x.cat)[2])}</span>`;
+  },
+  defaults(x) { const c = x && x.cat; return { w: c === 'strength' ? 45 : c === 'recovery' || c === 'mobility' ? 60 : 40, r: 20 }; }
+};
+
+</script>
+<script>
+/* ============ CIRCUITS — the shared exercise library: browse, filter, details, create / edit / copy / favourite ============ */
+const CxLibUI = {
+  f: { q: '', cat: 'all', src: 'all', muscle: 'all', equip: 'all', diff: 'all' }, more: 60,
+  page(opts = {}) {
+    const D = CxCat.data(), f = this.f, all = CxCat.all(), list = CxCat.filter(all, f), coach = CxCat.canCreate();
+    const sel = (k, label, opts2) => `<div class="field"><label for="cxf-${k}">${label}</label><select class="input" id="cxf-${k}" data-cxf="${k}">${opts2.map(([v, l]) => `<option value="${esc(v)}" ${String(f[k]) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div>`;
+    const nf = ['muscle', 'equip', 'diff', 'src'].filter(k => f[k] !== 'all').length;
+    return `<div class="cx-libp stack">
+      <section class="panel stack" data-stg>
+        <div class="row cx-libp-top"><div class="input-ic grow">${icon('search')}<input class="input" id="cxLibQ" type="search" placeholder="Search exercises, muscles or equipment" value="${esc(f.q)}" autocomplete="off" aria-label="Search the exercise library"></div>
+          ${coach ? `<button class="btn primary" type="button" data-act="cx-ex-new">${icon('plus')} Create exercise</button>` : ''}</div>
+        <div class="chips cx-scroll" role="group" aria-label="Category"><button class="chip" type="button" data-act="cx-f" data-k="cat" data-v="all" aria-pressed="${f.cat === 'all'}">All</button>${CX_CATS.filter(c => c[0] !== 'test').map(([v, l]) => `<button class="chip" type="button" data-act="cx-f" data-k="cat" data-v="${v}" aria-pressed="${f.cat === v}">${l}</button>`).join('')}</div>
+        <div class="chips" role="group" aria-label="Show"><button class="chip" type="button" data-act="cx-f" data-k="src" data-v="all" aria-pressed="${f.src === 'all'}">Everything</button><button class="chip" type="button" data-act="cx-f" data-k="src" data-v="coach" aria-pressed="${f.src === 'coach'}">${icon('user-pen')} Coach-made</button>${coach ? `<button class="chip" type="button" data-act="cx-f" data-k="src" data-v="mine" aria-pressed="${f.src === 'mine'}">Mine</button>` : ''}<button class="chip" type="button" data-act="cx-f" data-k="src" data-v="fav" aria-pressed="${f.src === 'fav'}">${icon('star')} Favourites</button><button class="chip" type="button" data-act="cx-f" data-k="src" data-v="std" aria-pressed="${f.src === 'std'}">App library</button></div>
+        <details class="cx-moref"${nf ? ' open' : ''}><summary class="label">${icon('sliders-horizontal')} More filters${nf ? ` · ${nf} on` : ''}</summary><div class="grid2">
+          ${sel('muscle', 'Muscle group', [['all', 'Any muscle'], ...CxCat.muscles(all).map(m => [m, m])])}
+          ${sel('equip', 'Equipment', [['all', 'Any equipment'], ...CxCat.equips(all).map(m => [m, m])])}
+          ${sel('diff', 'Difficulty', [['all', 'Any level'], ...CX_DIFF])}
+        </div>${nf || f.q || f.cat !== 'all' ? `<button class="btn sm ghost" type="button" data-act="cx-f-clear">${icon('x')} Clear filters</button>` : ''}</details>
+      </section>
+      ${D.err && !D.v ? Social.errBox(D.err, 'cxlib') : ''}
+      <section class="panel cx-exlist" data-stg><div class="label">${list.length} exercise${list.length === 1 ? '' : 's'}${D.v ? '' : ' · loading coaches’ exercises…'}</div>
+        ${list.length ? list.slice(0, this.more).map(x => this.row(x, opts)).join('') + (list.length > this.more ? `<button class="btn block ghost" type="button" data-act="cx-more">Show more (${list.length - this.more})</button>` : '')
+          : `<div class="empty"><span class="display">No matches</span><span>Try another search or clear a filter.</span></div>`}</section></div>`;
+  },
+  row(x) {
+    const fav = CxCat.favs().has(x.key);
+    return `<div class="cx-exrow"><button type="button" class="cx-exrow-main" data-act="cx-info" data-k="${esc(x.key)}">${CxCat.thumb(x, 46)}<span class="grow"><b>${esc(x.name)}</b>
+        <small class="muted">${esc(CxCat.catOf(x.cat)[1])}${x.diff ? ' · ' + esc(CX_DIFF.find(d => d[0] === x.diff)[1]) : ''}${x.equip ? ' · ' + esc(x.equip) : ''}</small>
+        <span class="cx-tags">${x.std ? '<span class="cx-tag">App library</span>' : `<span class="cx-tag coach">${icon('user-pen')} ${x.mine ? 'Yours' : esc((x.by && x.by.name) || 'Coach')}</span>`}${x.yt ? `<span class="cx-tag vid">${icon('play')} Video</span>` : ''}</span></span></button>
+      <button type="button" class="btn icon ghost cx-fav ${fav ? 'on' : ''}" data-act="cx-fav" data-k="${esc(x.key)}" aria-pressed="${fav}" aria-label="${fav ? 'Remove from' : 'Add to'} favourites: ${esc(x.name)}">${icon('star')}</button></div>`;
+  },
+  /* ---------- details ---------- */
+  detail(key) {
+    const x = CxCat.get(key); if (!x) { UI.toast('That exercise is no longer in the library.', 'bad'); return; }
+    if (x.std && !CxB.open()) { Actions.exinfo && Actions.exinfo({ dataset: { id: key } }); return; }
+    const fav = CxCat.favs().has(key), coach = CxCat.canCreate(), li = a => a && a.length ? a.map(t => `<li>${esc(t)}</li>`).join('') : '';
+    Sheet.open({
+      title: x.name, html: `<div class="cx-detail">
+        ${x.img ? `<figure class="cx-hero-img">${Social.img(x.img, x.name + ' — reference photo')}</figure>` : ''}
+        ${x.yt ? CxYT.player(x.yt, x.yt_short, x.name) : ''}
+        <div class="cx-tags">${x.std ? '<span class="cx-tag">App library</span>' : `<span class="cx-tag coach">${icon('user-pen')} Made by ${esc(x.mine ? 'you' : (x.by && x.by.name) || 'a coach')} · ${fmtDate(String(x.created).slice(0, 10))}</span>`}
+          <span class="cx-tag">${esc(CxCat.catOf(x.cat)[1])}</span>${x.diff ? `<span class="cx-tag">${esc(CX_DIFF.find(d => d[0] === x.diff)[1])}</span>` : ''}</div>
+        ${x.desc ? `<p>${esc(x.desc)}</p>` : ''}
+        ${x.steps && x.steps.length ? `<section><h3 class="h3">How to do it</h3><ol class="cx-steps">${li(x.steps)}</ol></section>` : ''}
+        <div class="cx-kv">${x.muscles ? `<div><span class="label">Target muscles</span><b>${esc(x.muscles)}</b></div>` : ''}${x.muscles2 ? `<div><span class="label">Also works</span><b>${esc(x.muscles2)}</b></div>` : ''}${x.equip ? `<div><span class="label">Equipment</span><b>${esc(x.equip)}</b></div>` : ''}</div>
+        ${x.tips && x.tips.length ? `<section><h3 class="h3">${icon('lightbulb')} Coaching tips</h3><ul class="cx-ul">${li(x.tips)}</ul></section>` : ''}
+        ${x.mistakes && x.mistakes.length ? `<section><h3 class="h3">${icon('circle-alert')} Common mistakes</h3><ul class="cx-ul">${li(x.mistakes)}</ul></section>` : ''}
+        <div class="cx-detail-acts">
+          ${CxB.open() ? `<button class="btn primary" type="button" data-act="cx-add" data-k="${esc(key)}" data-close="1">${icon('plus')} Add to circuit</button>` : ''}
+          <button class="btn" type="button" data-act="cx-fav" data-k="${esc(key)}" aria-pressed="${fav}">${icon('star')} ${fav ? 'Favourite' : 'Add to favourites'}</button>
+          ${!x.std && x.mine ? `<button class="btn" type="button" data-act="cx-ex-edit" data-k="${esc(key)}">${icon('pencil')} Edit</button>` : ''}
+          ${!x.std && !x.mine && coach ? `<button class="btn" type="button" data-act="cx-ex-dup" data-k="${esc(key)}">${icon('copy')} Make my own copy</button>` : ''}
+          ${!x.std && x.mine ? `<button class="btn ghost danger" type="button" data-act="cx-ex-del" data-k="${esc(key)}">${icon('trash-2')} Delete</button>` : ''}
+        </div></div>`,
+      onMount: sh => Social.hydrate(sh)
+    });
+  },
+  play(btn) {
+    const box = btn.closest('.cx-yt'), id = box && box.dataset.yt; if (!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+    const f = document.createElement('iframe'); f.className = 'cx-yt-frame'; f.title = 'Exercise video'; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+    f.referrerPolicy = 'strict-origin-when-cross-origin'; f.src = CxYT.embed(id); box.innerHTML = ''; box.appendChild(f);
+  },
+  /* ---------- create / edit ---------- */
+  edit(key, after) {
+    const c = key ? CxCat.custom().find(x => x.key === key) : null;
+    if (key && !c) { UI.toast('That exercise is no longer in the library.', 'bad'); return; }
+    const v = c || { name: '', description: '', steps: [], tips: [], mistakes: [], muscles: [], muscles2: [], equip: '', difficulty: null, category: 'conditioning', image: null, yt: null, yt_short: false };
+    this.st = { key, img: v.image, after };
+    const lines = a => esc((a || []).join('\n'));
+    Sheet.open({
+      title: key ? 'Edit exercise' : 'Create exercise', html: `<form class="cx-form stack" id="cxForm" novalidate>
+        <div class="field"><label for="cxeName">Exercise name <span class="req">required</span></label><input class="input" id="cxeName" maxlength="60" value="${esc(v.name)}" autocomplete="off" placeholder="e.g. Med-ball slam"></div>
+        <div class="field"><span class="label" id="cxeCatL">Category</span><div class="chips" role="radiogroup" aria-labelledby="cxeCatL">${CX_CATS.filter(c2 => c2[0] !== 'test').map(([k, l]) => `<button type="button" class="chip" role="radio" data-cxe="cat" data-v="${k}" aria-checked="${v.category === k}" aria-pressed="${v.category === k}">${l}</button>`).join('')}</div></div>
+        <div class="field"><span class="label" id="cxeDifL">Difficulty <span class="muted">(optional)</span></span><div class="chips" role="radiogroup" aria-labelledby="cxeDifL">${CX_DIFF.map(([k, l]) => `<button type="button" class="chip" role="radio" data-cxe="diff" data-v="${k}" aria-checked="${v.difficulty === k}" aria-pressed="${v.difficulty === k}">${l}</button>`).join('')}</div></div>
+        <div class="field"><label for="cxeYt">YouTube video <span class="muted">(optional)</span></label><input class="input" id="cxeYt" inputmode="url" autocomplete="off" placeholder="https://www.youtube.com/watch?v=… or https://youtu.be/…" value="${v.yt ? esc(CxYT.watch(v.yt, v.yt_short)) : ''}"><small class="cx-yt-msg" id="cxeYtMsg" aria-live="polite"></small><div id="cxeYtPrev"></div></div>
+        <div class="field"><span class="label">Reference photo <span class="muted">(optional)</span></span><div class="cx-imgpick" id="cxeImgBox">${this.imgPick(v.image)}</div></div>
+        <div class="field"><label for="cxeDesc">Description <span class="muted">(optional)</span></label><textarea class="input" id="cxeDesc" rows="2" maxlength="1000" placeholder="What it is and why it's in the program">${esc(v.description)}</textarea></div>
+        <div class="field"><label for="cxeSteps">Step-by-step instructions <span class="muted">(one step per line)</span></label><textarea class="input" id="cxeSteps" rows="4" placeholder="Start standing tall&#10;Drop the ball hard&#10;Catch and repeat">${lines(v.steps)}</textarea></div>
+        <details class="cx-moref"${(v.muscles || []).length || v.equip || (v.tips || []).length ? ' open' : ''}><summary class="label">${icon('plus')} Muscles, equipment, tips and common mistakes</summary><div class="stack">
+          <div class="grid2"><div class="field"><label for="cxeMus">Target muscles <span class="muted">(comma-separated)</span></label><input class="input" id="cxeMus" value="${esc((v.muscles || []).join(', '))}" placeholder="Quads, glutes"></div>
+          <div class="field"><label for="cxeMus2">Secondary muscles</label><input class="input" id="cxeMus2" value="${esc((v.muscles2 || []).join(', '))}" placeholder="Core"></div></div>
+          <div class="field"><label for="cxeEq">Equipment</label><input class="input" id="cxeEq" maxlength="80" value="${esc(v.equip)}" placeholder="Medicine ball"></div>
+          <div class="field"><label for="cxeTips">Coaching tips <span class="muted">(one per line)</span></label><textarea class="input" id="cxeTips" rows="3">${lines(v.tips)}</textarea></div>
+          <div class="field"><label for="cxeMis">Common mistakes to avoid <span class="muted">(one per line)</span></label><textarea class="input" id="cxeMis" rows="3">${lines(v.mistakes)}</textarea></div></div></details>
+        <p class="err-msg" id="cxeErr" role="alert"></p>
+        <div class="grid2"><button type="button" class="btn" data-sheet-close>Cancel</button><button type="submit" class="btn primary" id="cxeSave">${icon('check')} ${key ? 'Save changes' : 'Create exercise'}</button></div>
+        ${key ? '' : '<p class="muted cx-note">Your exercise joins the shared library: every coach can use it in their circuits and make their own copy. Only you can change or delete the original.</p>'}
+      </form>`,
+      onMount: sh => {
+        const form = $('#cxForm', sh), yt = $('#cxeYt', sh);
+        const ytCheck = () => { const t = yt.value.trim(), p = CxYT.parse(t), m = $('#cxeYtMsg', sh), pv = $('#cxeYtPrev', sh);
+          m.className = 'cx-yt-msg ' + (t ? (p ? 'ok' : 'bad') : ''); m.textContent = t ? (p ? 'YouTube video found.' : 'That is not a YouTube video link. Use a youtube.com or youtu.be link.') : '';
+          pv.innerHTML = p ? `<img class="cx-yt-prev" src="${CxYT.thumb(p.id)}" alt="Video preview" referrerpolicy="no-referrer" onerror="this.remove()">` : ''; };
+        yt.addEventListener('input', ytCheck); ytCheck();
+        sh.addEventListener('click', e => { const b = e.target.closest('[data-cxe]'); if (!b) return; const k = b.dataset.cxe, on = b.getAttribute('aria-pressed') !== 'true' || k === 'cat';
+          $$(`[data-cxe="${k}"]`, sh).forEach(x => { x.setAttribute('aria-pressed', 'false'); x.setAttribute('aria-checked', 'false'); }); if (on) { b.setAttribute('aria-pressed', 'true'); b.setAttribute('aria-checked', 'true'); } });
+        sh.addEventListener('change', async e => {
+          if (e.target.id !== 'cxeImgFile' || !e.target.files[0]) return; const box = $('#cxeImgBox', sh); box.classList.add('busy');
+          try { const p = await Social.upload(e.target.files[0], 1400); this.st.img = p; box.innerHTML = this.imgPick(p); Social.hydrate(box); UI.icons(box); }
+          catch (x) { $('#cxeErr', sh).textContent = Social.msg(x); } finally { box.classList.remove('busy'); }
+        });
+        sh.addEventListener('click', e => { if (e.target.closest('[data-act="cx-img-x"]')) { this.st.img = null; const box = $('#cxeImgBox', sh); box.innerHTML = this.imgPick(null); UI.icons(box); } });
+        form.addEventListener('submit', e => { e.preventDefault(); this.save(sh); });
+        Social.hydrate(sh);
+      }
+    });
+  },
+  imgPick(path) {
+    return path ? `<span class="cx-imgprev">${Social.img(path, 'Reference photo')}</span><button type="button" class="btn sm ghost" data-act="cx-img-x">${icon('trash-2')} Remove photo</button>`
+      : `<label class="btn" for="cxeImgFile">${icon('image-plus')} Add a photo</label><input type="file" id="cxeImgFile" accept="image/jpeg,image/png,image/webp" class="sr-only"><small class="muted">JPEG, PNG or WebP. It is resized and stripped of location data.</small>`;
+  },
+  async save(sh, force) {
+    const g = id => ($('#' + id, sh) || {}).value || '', L = t => t.split('\n').map(s => s.trim()).filter(Boolean), C = t => t.split(',').map(s => s.trim()).filter(Boolean);
+    const err = $('#cxeErr', sh), name = g('cxeName').trim(), ytRaw = g('cxeYt').trim(), yt = ytRaw ? CxYT.parse(ytRaw) : null;
+    err.textContent = '';
+    if (name.length < 2) { err.textContent = 'Give the exercise a name.'; $('#cxeName', sh).focus(); return; }
+    if (ytRaw && !yt) { err.textContent = 'That is not a YouTube video link. Use a youtube.com or youtu.be link, or leave it empty.'; $('#cxeYt', sh).focus(); return; }
+    const pick = k => { const b = $(`[data-cxe="${k}"][aria-pressed="true"]`, sh); return b ? b.dataset.v : null; };
+    const std = !this.st.key && !force && Object.values(EXERCISES).find(e => e.name.toLowerCase() === name.toLowerCase());
+    if (std) { const ok = await this.confirmDup(sh, `The app library already has “${std.name}”.`); if (!ok) return; }
+    const p = { name, category: pick('cat') || 'conditioning', difficulty: pick('diff'), yt: yt ? yt.id : null, yt_short: yt ? yt.short : false, image: this.st.img, description: g('cxeDesc').trim(),
+      steps: L(g('cxeSteps')), muscles: C(g('cxeMus')), muscles2: C(g('cxeMus2')), equip: g('cxeEq').trim(), tips: L(g('cxeTips')), mistakes: L(g('cxeMis')) };
+    const btn = $('#cxeSave', sh); btn.disabled = true;
+    try {
+      const r = await Social.rpc('cx_save', { p_id: this.st.key ? this.st.key.slice(3) : null, p, p_force: !!(force || std) });
+      Social.drop('cxlib'); CxCat.data(); this.patch(r);
+      const after = this.st.after; await Sheet.close(); UI.toast(this.st.key ? 'Exercise saved.' : 'Exercise created and shared with every coach.');
+      if (after) after(r); else Social.repaint();
+    } catch (x) {
+      const m = Social.msg(x);
+      if (/^DUPLICATE:/.test(m)) { btn.disabled = false; if (await this.confirmDup(sh, m.replace(/^DUPLICATE:\s*/, '') + '.')) return this.save(sh, true); return; }
+      err.textContent = m; btn.disabled = false;
+    }
+  },
+  /* an inline "are you sure?" inside the form (a second sheet would close this one) */
+  confirmDup(sh, msg) {
+    return new Promise(res => {
+      const err = $('#cxeErr', sh); err.innerHTML = `${esc(msg)} You can favourite or copy it instead. <span class="row" style="margin-top:6px"><button type="button" class="btn sm" id="cxeDupNo">Change the name</button><button type="button" class="btn sm primary" id="cxeDupYes">Create mine anyway</button></span>`;
+      $('#cxeDupNo', sh).onclick = () => { err.textContent = ''; $('#cxeName', sh).focus(); res(false); };
+      $('#cxeDupYes', sh).onclick = () => { err.textContent = ''; res(true); };
+    });
+  },
+  /* keep the cached list fresh without waiting for the network */
+  patch(r) { const E = Social.c.cxlib; if (!E || !E.v || !r) return; const L = E.v.items, i = L.findIndex(x => x.id === r.id); if (i >= 0) L[i] = r; else L.unshift(r); },
+  async fav(key, btn) {
+    const on = !CxCat.favs().has(key), E = Social.c.cxlib;
+    if (E && E.v) { E.v.favs = on ? E.v.favs.concat(key) : E.v.favs.filter(k => k !== key); }
+    $$(`[data-act="cx-fav"][data-k="${CSS.escape(key)}"]`).forEach(b => { b.setAttribute('aria-pressed', String(on)); b.classList.toggle('on', on); });
+    try { await Social.rpc('cx_fav', { p_key: key, p_on: on }); UI.toast(on ? 'Added to your favourites.' : 'Removed from favourites.'); }
+    catch (x) { UI.toast(Social.msg(x), 'bad'); Social.drop('cxlib'); }
+    if (UI.route.name === 'hq' || UI.route.name === 'cxlib') Social.repaint();
+  }
+};
+Object.assign(Actions, {
+  'cx-info': el => CxLibUI.detail(el.dataset.k),
+  'cx-yt-play': el => CxLibUI.play(el),
+  'cx-fav': el => CxLibUI.fav(el.dataset.k, el),
+  'cx-ex-new': () => CxLibUI.edit(null),
+  'cx-ex-edit': async el => { await Sheet.close(); CxLibUI.edit(el.dataset.k); },
+  'cx-ex-dup': async el => { const r = await Social.act(el, () => Social.rpc('cx_dup', { p_id: el.dataset.k.slice(3) }), 'Copied. It’s yours to change.'); if (r) { Social.drop('cxlib'); CxLibUI.patch(r); await Sheet.close(); CxLibUI.edit(r.key); } },
+  'cx-ex-del': async el => {
+    const x = CxCat.get(el.dataset.k); await Sheet.close();
+    if (!(await Sheet.confirm({ title: `Delete “${x ? x.name : 'this exercise'}”?`, body: '<p>It leaves the library for every coach. Circuits that already ran keep their copy. Circuits you are still building keep the name.</p>', ok: 'Delete', danger: true }))) return;
+    if (await Social.act(null, () => Social.rpc('cx_delete', { p_id: el.dataset.k.slice(3) }), 'Deleted.') !== undefined) { Social.drop('cxlib'); Social.repaint(); }
+  },
+  'cx-f': el => { CxLibUI.f[el.dataset.k] = el.dataset.v; CxLibUI.more = 60; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'cx-f-clear': () => { CxLibUI.f = { q: '', cat: 'all', src: 'all', muscle: 'all', equip: 'all', diff: 'all' }; UI.render(); },
+  'cx-more': () => { CxLibUI.more += 60; const y = scrollY; UI.render(); scrollTo(0, y); }
+});
+document.addEventListener('change', e => { const k = e.target.dataset && e.target.dataset.cxf; if (!k) return; CxLibUI.f[k] = e.target.value; CxLibUI.more = 60; const y = scrollY; UI.render(); scrollTo(0, y); });
+document.addEventListener('input', e => {
+  if (e.target.id !== 'cxLibQ') return; CxLibUI.f.q = e.target.value; clearTimeout(CxLibUI._t);
+  CxLibUI._t = setTimeout(() => { const y = scrollY; UI.render(); scrollTo(0, y); const i = $('#cxLibQ'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 250);
+});
+/* athletes (and coaches outside Coach HQ) open the library on its own page */
+Screens.cxlib = function () { return `<div class="screen cx-libscreen">${backBar('Exercise library')}${CxLibUI.page()}</div>`; };
+TAB_OF.cxlib = 'training'; Social.live.add('cxlib');
+After.cxlib = view => Social.hydrate(view);
+/* Training → Library: a way in to the coaches' exercises */
+(() => {
+  const lib = Screens.library; Screens.library = function () {
+    const h = lib.call(Screens); if (!Cloud.on || !Social.on()) return h;
+    const n = CxCat.custom().length, coach = CxCat.canCreate();
+    return `<section class="panel cx-libcard" data-stg><span class="cx-libcard-ic">${icon('user-pen')}</span><div class="grow"><b>Coaches’ exercises</b><small class="muted">${n ? `${n} exercise${n === 1 ? '' : 's'} made by coaches, with photos, steps and videos` : 'Exercises coaches add, with photos, steps and videos'}</small></div>
+      <div class="row">${coach ? `<button class="btn sm" type="button" data-act="cx-ex-new">${icon('plus')} Create</button>` : ''}<button class="btn sm primary" type="button" data-act="go" data-r="cxlib">Open</button></div></section>` + h;
+  };
+})();
+
+</script>
+<script>
+/* ============ CIRCUITS — Coach HQ → Training → Circuits: the list and the drag-and-drop builder ============ */
+const CX_STARTERS = [
+  ['full', 'Full Body Circuit', 'Six stations that work everything, no equipment needed.', 3, 90, [['bodyweight_squat', 45, 15], ['push_ups', 40, 20], ['reverse_lunge', 45, 15], ['inverted_row', 40, 20], ['squat_jump', 30, 30], ['sit_ups', 45, 15]]],
+  ['upper', 'Upper Body Circuit', 'Push and pull, alternating.', 3, 90, [['push_ups', 40, 20], ['inverted_row', 40, 20], ['pike_push_ups', 30, 30], ['band_row', 40, 20], ['diamond_push_ups', 30, 30], ['bench_dips', 40, 20]]],
+  ['cond', 'Conditioning Circuit', 'Engine work: feet, jumps and sprints.', 4, 120, [['jump_rope', 60, 20], ['get_up_and_sprint', 30, 30], ['broad_jump_reps', 30, 30], ['squat_jump', 30, 30], ['sprint_40', 30, 45]]],
+  ['hiit', 'HIIT Circuit', 'Short, hard work with short rests.', 5, 60, [['squat_jump', 20, 10], ['push_ups', 20, 10], ['jump_rope', 20, 10], ['reverse_lunge', 20, 10], ['quick_crunches', 20, 10]]]
+];
+const CxApi = {
+  list(tid) { return Social.get('cxl:' + tid, () => Social.rpc('circuit_list', { p_team: tid }), 15000); }
+};
+let cxUid = 0;
+const cxSt = (key, name, w, r) => ({ u: 's' + (++cxUid), key, name, w, r });
+const CxUndo = {
+  show(msg, fn) {
+    let b = $('#cxUndo'); if (!b) { b = document.createElement('div'); b.id = 'cxUndo'; b.className = 'cx-undo'; b.setAttribute('role', 'status'); document.body.appendChild(b); }
+    b.innerHTML = `<span>${esc(msg)}</span>${fn ? `<button type="button" class="btn sm">${icon('undo-2')} Undo</button>` : ''}`; UI.icons(b);
+    if (fn) b.querySelector('button').onclick = () => { b.classList.remove('show'); fn(); };
+    requestAnimationFrame(() => b.classList.add('show')); clearTimeout(this.t); this.t = setTimeout(() => b.classList.remove('show'), 6000);
+  },
+  hide() { const b = $('#cxUndo'); if (b) b.classList.remove('show'); }
+};
+
+/* ---------- the Circuits tab ---------- */
+const CxHQ = {
+  list() {
+    const tid = HQ.tid(), E = CxApi.list(tid);
+    if (!E.v) return HQ.loading(E, 'cxl:' + tid);
+    const C = E.v.circuits, S = E.v.sessions, live = S.filter(s => ['lobby', 'running', 'paused'].includes(s.status)), past = S.filter(s => ['done', 'ended'].includes(s.status));
+    const card = c => { const T = CxTime.build(c, c.stations.map((_, i) => i)), est = T ? (T.total != null ? T.total : T.RL) : 0;
+      return `<article class="panel cx-card" data-stg><div class="spread"><h3 class="h3">${esc(c.name)}</h3><button class="btn icon ghost" type="button" data-act="cx-cmenu" data-id="${c.id}" aria-label="More for ${esc(c.name)}">${icon('ellipsis')}</button></div>
+        ${c.description ? `<p class="muted cx-card-d">${esc(c.description)}</p>` : ''}
+        <div class="cx-tags"><span class="cx-tag">${icon('layers')} ${c.stations.length} station${c.stations.length === 1 ? '' : 's'}</span><span class="cx-tag">${icon('repeat')} ${c.rounds ? c.rounds + ' round' + (c.rounds === 1 ? '' : 's') : 'Until you stop'}</span><span class="cx-tag">${icon('timer')} ${c.rounds ? '≈ ' + Math.round(est / 60) + ' min' : Math.round(est / 60) + ' min a round'}</span></div>
+        <ol class="cx-mini">${c.stations.slice(0, 6).map(s => `<li><span>${esc(s.name)}</span><small>${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}</small></li>`).join('')}${c.stations.length > 6 ? `<li class="muted">+ ${c.stations.length - 6} more</li>` : ''}</ol>
+        <div class="row"><button class="btn primary grow" type="button" data-act="cx-run" data-id="${c.id}" ${live.some(s => s.status !== 'lobby') ? 'disabled title="A circuit is already running"' : ''}>${icon('play')} Set up teams & run</button><button class="btn" type="button" data-act="cx-open" data-id="${c.id}">${icon('pencil')} Edit</button></div></article>`; };
+    const stLab = s => ({ done: ['Completed', 'good'], ended: ['Stopped early', 'warn'], running: ['Live', 'live'], paused: ['Paused', 'warn'], lobby: ['Setting up', ''] }[s.status] || [s.status, '']);
+    const dur = s => s.el != null && s.status !== 'lobby' ? CxTime.words(Math.max(0, Math.min(+s.el, s.total_s != null ? +s.total_s : +s.el))) : '—';
+    return `${live.length ? live.map(s => `<button type="button" class="panel cx-livebar ${s.status}" data-act="cx-sess" data-id="${s.id}" data-stg><span class="cx-dot" aria-hidden="true"></span><span class="grow"><b>${esc(s.name)}</b><small>${stLab(s)[0]} · ${s.athletes} athlete${s.athletes === 1 ? '' : 's'}</small></span><span class="btn sm primary">${s.status === 'lobby' ? 'Continue setup' : 'Open live'} ${icon('chevron-right')}</span></button>`).join('') : ''}
+      <section class="cx-new" data-stg><button class="btn primary big" type="button" data-act="cx-open" data-id="new">${icon('plus')} New circuit</button>
+        <div class="cx-starters"><span class="label">Or start from</span>${CX_STARTERS.map(t => `<button class="chip" type="button" data-act="cx-open" data-id="new~${t[0]}">${esc(t[1].replace(' Circuit', ''))}</button>`).join('')}</div></section>
+      ${C.length ? `<div class="cx-cards">${C.map(card).join('')}</div>` : `<section class="panel sempty" data-stg>${icon('timer')}<b>No circuits yet</b><p class="muted">Build one with drag and drop: pick exercises, set each one's time and rest, then put your athletes in teams.</p></section>`}
+      <section class="panel hq-card" data-stg><h2 class="h3">${icon('history')} Sessions</h2>${past.length ? `<div class="cx-hist">${past.map(s => `<button type="button" class="cx-hrow" data-act="cx-sess" data-id="${s.id}"><span class="d"><b>${fmtDate(String(s.started_at || s.created_at).slice(0, 10)).replace(/,.*$/, '')}</b></span><span class="grow"><b>${esc(s.name)}</b><small class="muted">${dur(s)} · ${s.athletes} athlete${s.athletes === 1 ? '' : 's'}</small></span><span class="cx-st-pill ${stLab(s)[1]}">${stLab(s)[0]}</span></button>`).join('')}</div>` : '<p class="muted">Circuits you run show up here, with who took part.</p>'}</section>`;
+  },
+  circuit(id) { const E = Social.c['cxl:' + HQ.tid()]; return E && E.v ? E.v.circuits.find(c => c.id === id) : null; }
+};
+
+/* ---------- the builder ---------- */
+const CxB = {
+  d: null, id: null, base: null, dirty: false, edit: null, undo: [], q: '', cat: 'all', src: 'all', shelf: true,
+  open() { return UI.route.name === 'hq' && String(UI.route.param || '').startsWith('circuit:'); },
+  key(id) { return `bbp.${Cloud.ns || 'x'}.cx.draft.${id}`; },
+  init(id) {
+    this.id = id; this.edit = null; this.undo = []; this.dirty = false;
+    const [kind, tpl] = id.split('~');
+    if (kind === 'new') {
+      const dr = LSX.get(this.key('new'), null), T = tpl && CX_STARTERS.find(t => t[0] === tpl);
+      if (T) this.d = { id: null, name: T[1], description: T[2], rounds: T[3], round_rest: T[4], stations: T[5].filter(([k]) => EXERCISES[k]).map(([k, w, r]) => cxSt(k, EXERCISES[k].name, w, r)) };
+      else if (dr && dr.d) { this.d = dr.d; this.dirty = true; setTimeout(() => UI.toast('Your unsaved circuit is back.'), 300); }
+      else this.d = { id: null, name: '', description: '', rounds: 3, round_rest: 60, stations: [] };
+      if (T) this.dirty = true;
+      return true;
+    }
+    const c = CxHQ.circuit(id); if (!c) return false;
+    this.base = c.updated_at; const dr = LSX.get(this.key(id), null);
+    if (dr && dr.base === c.updated_at && dr.d) { this.d = dr.d; this.dirty = true; }
+    else this.d = { id: c.id, name: c.name, description: c.description, rounds: c.rounds, round_rest: c.round_rest, stations: c.stations.map(s => cxSt(s.key, s.name, s.w, s.r)) };
+    return true;
+  },
+  keep() { this.dirty = true; LSX.set(this.key(this.d.id || 'new'), { base: this.base, d: this.d }); },
+  snap() { this.undo.push(JSON.stringify(this.d)); if (this.undo.length > 30) this.undo.shift(); },
+  back() { if (!this.undo.length) return; this.d = JSON.parse(this.undo.pop()); this.keep(); this.redraw(); CxDnd.say('Undone.'); },
+  redraw(flash) { const y = scrollY; UI.render(); scrollTo(0, y); if (flash) { const c = $(`[data-dnd-id="${flash}"]`); if (c) { c.classList.add('cx-flash'); setTimeout(() => c.classList.remove('cx-flash'), 900); } } },
+  st(u) { return this.d.stations.find(s => s.u === u); },
+  ex(key, s) { return CxCat.get(key) || { key, name: (s && s.name) || key, cat: 'other', std: !key.startsWith('cx:') }; },
+  /* ---------- actions ---------- */
+  add(key, at) {
+    const x = CxCat.get(key); if (!x) { UI.toast('That exercise is no longer in the library.', 'bad'); return; }
+    this.snap(); const D = CxCat.defaults(x), prev = this.d.stations[this.d.stations.length - 1], s = cxSt(key, x.name, prev ? prev.w : D.w, prev ? prev.r : D.r);
+    if (at == null || at > this.d.stations.length) this.d.stations.push(s); else this.d.stations.splice(at, 0, s);
+    this.keep(); this.redraw(s.u); CxDnd.say(`${x.name} added as station ${this.d.stations.indexOf(s) + 1}.`);
+  },
+  move(u, to) {
+    const L = this.d.stations, i = L.findIndex(s => s.u === u); if (i < 0) return; to = Math.max(0, Math.min(L.length - 1, to)); if (to === i) return;
+    this.snap(); const [s] = L.splice(i, 1); L.splice(to, 0, s); this.keep(); this.redraw(u);
+    CxDnd.say(`${s.name} is now station ${to + 1} of ${L.length}.`);
+  },
+  remove(u) {
+    const i = this.d.stations.findIndex(s => s.u === u); if (i < 0) return; this.snap(); const [s] = this.d.stations.splice(i, 1);
+    if (this.edit && this.edit.u === u) this.edit = null; this.keep(); this.redraw(); CxUndo.show(`Removed ${s.name}`, () => this.back());
+  },
+  dup(u) { const i = this.d.stations.findIndex(s => s.u === u); if (i < 0) return; this.snap(); const s = this.d.stations[i], c = cxSt(s.key, s.name, s.w, s.r); this.d.stations.splice(i + 1, 0, c); this.keep(); this.redraw(c.u); CxUndo.show(`Copied ${s.name}`, () => this.back()); },
+  set(u, f, v) {
+    v = Math.round(+v); if (!isFinite(v)) return;
+    const lo = f === 'w' ? 5 : 0, hi = 1800; v = Math.max(lo, Math.min(hi, v));
+    if (u === '__rr') this.d.round_rest = v; else { const s = this.st(u); if (!s) return; s[f] = v; }
+    this.keep();
+  },
+  /* ---------- screen ---------- */
+  screen(param) {
+    const id = param || 'new';
+    if (this.id !== id || !this.d) {
+      if (!id.startsWith('new')) { const E = CxApi.list(HQ.tid()); if (!E.v) return HQ.frame('Circuit', HQ.loading(E, 'cxl:' + HQ.tid())); }
+      if (!this.init(id)) return HQ.frame('Circuit', Social.empty('timer-off', 'Circuit not found', 'It may have been deleted.', `<button class="btn sm" type="button" data-act="cx-back">${icon('arrow-left')} Circuits</button>`));
+    }
+    CxCat.data(); this.trash();
+    const d = this.d, n = d.stations.length, T = n ? CxTime.build(d, d.stations.map((_, i) => i)) : null;
+    const presetsR = [1, 2, 3, 4, 5];
+    const sum = T ? `<b>${n}</b> station${n === 1 ? '' : 's'} · <b>${CxTime.fmt(T.RL)}</b> a round${d.rounds ? ` · <b>≈ ${Math.round(T.total / 60)} min</b> total` : ' · keeps going until you stop'}` : 'Add exercises to see the timing';
+    const body = `<div class="cxb" data-dnd-root="cxb">
+      <section class="panel cxb-meta" data-stg>
+        <label class="sr-only" for="cxName">Circuit name</label><input class="input cxb-name" id="cxName" maxlength="60" placeholder="Name it — e.g. Full Body Circuit" value="${esc(d.name)}" autocomplete="off">
+        <details class="cxb-desc"${d.description ? ' open' : ''}><summary class="label">${icon('align-left')} Description <span class="muted">(optional)</span></summary><label class="sr-only" for="cxDesc">Description</label><textarea class="input" id="cxDesc" rows="2" maxlength="500" placeholder="What this circuit is for">${esc(d.description)}</textarea></details>
+        <div class="cxb-set">
+          <div class="cxb-field"><span class="label" id="cxRoundsL">Rounds</span><div class="chips" role="group" aria-labelledby="cxRoundsL">${presetsR.map(r => `<button class="chip" type="button" data-act="cx-rounds" data-v="${r}" aria-pressed="${d.rounds === r}">${r}</button>`).join('')}
+            <span class="cx-stepper${d.rounds > 5 ? ' on' : ''}"><button type="button" class="btn icon sm" data-act="cx-rounds" data-v="${Math.max(1, (d.rounds || 3) - 1)}" aria-label="One round less">${icon('minus')}</button><b aria-live="polite">${d.rounds || '∞'}</b><button type="button" class="btn icon sm" data-act="cx-rounds" data-v="${Math.min(50, (d.rounds || 3) + 1)}" aria-label="One round more">${icon('plus')}</button></span>
+            <button class="chip" type="button" data-act="cx-rounds" data-v="0" aria-pressed="${d.rounds === 0}">${icon('infinity')} Until I stop</button></div></div>
+          <div class="cxb-field"><span class="label">Rest between rounds</span>${this.timeBtn('__rr', 'r', d.round_rest, 'Rest between rounds')}</div>
+        </div>
+        ${this.edit && this.edit.u === '__rr' ? this.pop('__rr', 'r', d.round_rest, 'rest between rounds') : ''}
+        <p class="cxb-sum" aria-live="polite">${icon('timer')} ${sum}</p>
+      </section>
+      <div class="cxb-grid">
+        <section class="panel cxb-shelf ${this.shelf ? '' : 'shut'}" data-stg aria-label="Exercise library">${this.shelfHtml()}</section>
+        <section class="panel cxb-lane" data-drop="lane" data-drop-list data-accept="ex st" aria-label="Circuit stations" data-stg>
+          <div class="spread"><h2 class="h3">${icon('list-ordered')} Stations</h2>${this.undo.length ? `<button class="btn sm ghost" type="button" data-act="cx-undo">${icon('undo-2')} Undo</button>` : ''}</div>
+          <div class="cx-list">${d.stations.map((s, i) => this.card(s, i)).join('')}</div>
+          ${n ? `<div class="cx-rr-row">${icon('repeat')} After the last station: <b>${d.rounds === 1 ? 'done' : `rest ${CxTime.words(d.round_rest)}, then the next round`}</b></div>`
+            : `<div class="cx-empty">${icon('hand')}<b>Drag exercises here</b><span>or tap one in the library to add it. Then set each exercise's time and rest right on its card.</span></div>`}
+        </section>
+      </div>
+      <div class="cxb-bar"><span class="cxb-state">${this.dirty ? `${icon('circle-dot')} Not saved yet` : `${icon('check')} Saved`}</span>
+        <button class="btn" type="button" data-act="cx-save">${icon('save')} Save</button><button class="btn primary" type="button" data-act="cx-next" ${n ? '' : 'disabled'}>Teams & start ${icon('arrow-right')}</button></div>
+    </div>`;
+    return HQ.frame(d.id ? esc(d.name || 'Circuit') : 'New circuit', body, { sub: 'Drag exercises in, set each time and rest, then make teams', actions: `<button class="btn sm ghost" type="button" data-act="cx-back">${icon('arrow-left')} Circuits</button>` });
+  },
+  /* the remove target lives on <body>: fixed positioning inside the animated screen would put it off-screen */
+  trash() { if ($('#cxTrash')) return; document.body.insertAdjacentHTML('beforeend', `<div class="cx-trash" id="cxTrash" data-drop="trash" data-accept="st" data-dnd-for="cxb" aria-hidden="true">${icon('trash-2')} Drop here to remove</div>`); },
+  timeBtn(u, f, v, aria) { return `<button type="button" class="cx-time ${f === 'w' ? 'work' : 'rest'}${this.edit && this.edit.u === u && this.edit.f === f ? ' on' : ''}" data-act="cx-edit" data-u="${u}" data-f="${f}" aria-expanded="${!!(this.edit && this.edit.u === u && this.edit.f === f)}" aria-label="${esc(aria)}: ${CxTime.words(v)}. Change">${icon(f === 'w' ? 'timer' : 'pause')}<b>${f === 'w' ? CxTime.fmt(v) : (v ? 'Rest ' + CxTime.fmt(v) : 'No rest')}</b></button>`; },
+  pop(u, f, v, what) {
+    const P = f === 'w' ? [20, 30, 45, 60, 90, 120, 180] : [0, 10, 15, 20, 30, 45, 60, 90, 120];
+    return `<div class="cx-pop" role="group" aria-label="Set the ${esc(what)}"><div class="chips">${P.map(p => `<button class="chip" type="button" data-act="cx-set" data-u="${u}" data-f="${f}" data-v="${p}" aria-pressed="${+v === p}">${p === 0 ? 'None' : CxTime.short(p)}</button>`).join('')}</div>
+      <div class="cx-pop-row"><button type="button" class="btn icon sm" data-act="cx-bump" data-u="${u}" data-f="${f}" data-v="-5" aria-label="5 seconds less">−5</button>
+        <input class="input cx-time-in" id="cxTimeIn" data-u="${u}" data-f="${f}" value="${CxTime.fmt(v)}" inputmode="numeric" autocomplete="off" aria-label="Time in minutes:seconds or seconds">
+        <button type="button" class="btn icon sm" data-act="cx-bump" data-u="${u}" data-f="${f}" data-v="5" aria-label="5 seconds more">+5</button>
+        <button type="button" class="btn sm primary" data-act="cx-edit-done">Done</button></div></div>`;
+  },
+  card(s, i) {
+    const x = this.ex(s.key, s), n = this.d.stations.length, missing = !CxCat.get(s.key) && s.key.startsWith('cx:') && CxCat.data().v;
+    const ed = this.edit && this.edit.u === s.u ? this.edit.f : null;
+    return `<article class="cx-st" data-dnd="st" data-dnd-id="${s.u}" aria-label="Station ${i + 1}: ${esc(s.name)}">
+      <button type="button" class="cx-grip" data-dnd-handle data-u="${s.u}" aria-label="Move ${esc(s.name)} (station ${i + 1} of ${n}). Drag, or use the arrow keys">${icon('grip-vertical')}</button>
+      <span class="cx-no" aria-hidden="true">${i + 1}</span>
+      <button type="button" class="cx-st-ex" data-act="cx-info" data-k="${esc(s.key)}" data-dnd-grab>${CxCat.thumb(x, 44)}<span class="grow"><b>${esc(s.name)}</b><small class="muted">${missing ? 'Deleted from the library' : esc(CxCat.catOf(x.cat)[1])}${x.yt ? ` · ${icon('play')} video` : ''}</small></span></button>
+      <div class="cx-st-times">${this.timeBtn(s.u, 'w', s.w, `Exercise time for ${s.name}`)}${this.timeBtn(s.u, 'r', s.r, `Rest after ${s.name}`)}</div>
+      <div class="cx-st-acts"><button type="button" class="btn icon sm ghost" data-act="cx-dup" data-u="${s.u}" aria-label="Duplicate ${esc(s.name)}">${icon('copy')}</button><button type="button" class="btn icon sm ghost" data-act="cx-smenu" data-u="${s.u}" aria-label="More for ${esc(s.name)}">${icon('ellipsis-vertical')}</button><button type="button" class="btn icon sm ghost danger" data-act="cx-del" data-u="${s.u}" aria-label="Remove ${esc(s.name)}">${icon('x')}</button></div>
+      ${ed ? this.pop(s.u, ed, s[ed], ed === 'w' ? `exercise time for ${s.name}` : `rest after ${s.name}`) : ''}
+    </article>`;
+  },
+  shelfHtml() {
+    const list = CxCat.filter(CxCat.all(), { q: this.q, cat: this.cat, src: this.src }), coach = CxCat.canCreate();
+    return `<div class="spread cxb-shelf-h"><h2 class="h3">${icon('library')} Exercises</h2><span class="row">${coach ? `<button class="btn sm" type="button" data-act="cx-ex-new2">${icon('plus')} New</button>` : ''}<button class="btn icon sm ghost" type="button" data-act="cx-shelf" aria-expanded="${this.shelf}" aria-label="${this.shelf ? 'Hide' : 'Show'} the exercise library">${icon(this.shelf ? 'chevron-up' : 'chevron-down')}</button></span></div>
+      <div class="cxb-shelf-b"><div class="input-ic">${icon('search')}<input class="input" id="cxShelfQ" type="search" placeholder="Search exercises" value="${esc(this.q)}" autocomplete="off" aria-label="Search exercises to add"></div>
+      <div class="chips cx-scroll" role="group" aria-label="Filter"><button class="chip" type="button" data-act="cx-shelf-f" data-k="src" data-v="${this.src === 'fav' ? 'all' : 'fav'}" aria-pressed="${this.src === 'fav'}">${icon('star')} Favourites</button><button class="chip" type="button" data-act="cx-shelf-f" data-k="src" data-v="${this.src === 'coach' ? 'all' : 'coach'}" aria-pressed="${this.src === 'coach'}">Coach-made</button>
+        ${CX_CATS.filter(c => !['test', 'other'].includes(c[0])).map(([v, l]) => `<button class="chip" type="button" data-act="cx-shelf-f" data-k="cat" data-v="${this.cat === v ? 'all' : v}" aria-pressed="${this.cat === v}">${l}</button>`).join('')}</div>
+      <div class="cx-tiles" data-axis="x">${list.length ? list.slice(0, 80).map(x => `<div class="cx-tile" data-dnd="ex" data-dnd-id="${esc(x.key)}"><button type="button" class="cx-tile-main" data-act="cx-add" data-k="${esc(x.key)}" data-dnd-grab aria-label="Add ${esc(x.name)} to the circuit">${CxCat.thumb(x, 40)}<span><b>${esc(x.name)}</b><small>${x.std ? esc(CxCat.catOf(x.cat)[1]) : `${icon('user-pen')} Coach`}${x.yt ? ` · ${icon('play')}` : ''}</small></span><i class="cx-plus" aria-hidden="true">${icon('plus')}</i></button><button type="button" class="cx-tile-i" data-act="cx-info" data-k="${esc(x.key)}" aria-label="About ${esc(x.name)}">${icon('info')}</button></div>`).join('') : '<p class="muted">No matches.</p>'}</div>
+      <p class="muted cx-hint">${matchMedia('(pointer: coarse)').matches ? 'Tap to add · hold and drag into place' : 'Click to add · drag onto the list to put it exactly where you want'}</p></div>`;
+  },
+  valid() {
+    const d = this.d; if (!d.name.trim()) { UI.toast('Give the circuit a name first.', 'bad'); const i = $('#cxName'); i && i.focus(); return false; }
+    if (!d.stations.length) { UI.toast('Add at least one exercise.', 'bad'); return false; }
+    return true;
+  },
+  async save(btn) {
+    if (!this.valid()) return null; const d = this.d, tid = HQ.tid();
+    const r = await Social.act(btn, () => Social.rpc('circuit_save', { p_id: d.id, p_team: tid, p_name: d.name.trim(), p_description: d.description.trim(), p_rounds: d.rounds, p_round_rest: d.round_rest, p_stations: d.stations.map(s => ({ key: s.key, name: s.name, w: s.w, r: s.r })) }));
+    if (!r) return null;
+    LSX.del(this.key(d.id || 'new')); d.id = r.id; this.base = r.updated_at; this.dirty = false;
+    const E = Social.c['cxl:' + tid]; if (E && E.v) { const L = E.v.circuits, i = L.findIndex(c => c.id === r.id), row = Object.assign({ mine: true }, r); if (i >= 0) L[i] = row; else L.unshift(row); }
+    Social.drop('cxl:' + tid); this.id = r.id; UI.route.param = 'circuit:' + r.id;
+    return r;
+  }
+};
+/* drag & drop in the builder */
+CxDnd.on('cxb', {
+  label: (t, id) => t === 'st' ? ((CxB.st(id) || {}).name || 'station') : ((CxCat.get(id) || {}).name || 'exercise'),
+  drop(i) {
+    if (i.type === 'ex' && i.zone === 'lane') CxB.add(i.id, i.index);
+    else if (i.type === 'st' && i.zone === 'lane') { const from = CxB.d.stations.findIndex(s => s.u === i.id); CxB.move(i.id, i.index == null ? from : i.index); }
+    else if (i.type === 'st' && i.zone === 'trash') CxB.remove(i.id);
+  },
+  miss(i) { if (i.type === 'ex') UI.toast('Drop it on the stations list — or just tap it to add.'); }
+});
+/* arrow keys move a station when its grip has focus */
+document.addEventListener('keydown', e => {
+  const g = e.target.closest && e.target.closest('.cx-grip'); if (!g || !['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) return;
+  e.preventDefault(); const u = g.dataset.u, i = CxB.d.stations.findIndex(s => s.u === u);
+  CxB.move(u, e.key === 'Home' ? 0 : e.key === 'End' ? 1e9 : i + (e.key === 'ArrowUp' ? -1 : 1));
+  setTimeout(() => { const n = $(`.cx-grip[data-u="${u}"]`); n && n.focus(); }, 30);
+});
+document.addEventListener('input', e => {
+  if (!CxB.d) return;
+  if (e.target.id === 'cxName') { CxB.d.name = e.target.value; CxB.keep(); const s = $('.cxb-state'); if (s) { s.innerHTML = `${icon('circle-dot')} Not saved yet`; UI.icons(s); } }
+  if (e.target.id === 'cxDesc') { CxB.d.description = e.target.value; CxB.keep(); }
+  if (e.target.id === 'cxShelfQ') { CxB.q = e.target.value; clearTimeout(CxB._qt); CxB._qt = setTimeout(() => { const sh = $('.cxb-shelf'); if (sh) { sh.innerHTML = CxB.shelfHtml(); UI.icons(sh); Social.hydrate(sh); const i = $('#cxShelfQ'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 200); }
+});
+document.addEventListener('change', e => {
+  if (!e.target.classList || !e.target.classList.contains('cx-time-in')) return;
+  const v = CxTime.parse(e.target.value); if (v == null) { UI.toast('Type a time like 45 or 1:30.', 'bad'); return; }
+  CxB.set(e.target.dataset.u, e.target.dataset.f, v); CxB.redraw();
+});
+document.addEventListener('keydown', e => { if (e.target.classList && e.target.classList.contains('cx-time-in') && e.key === 'Enter') { e.preventDefault(); e.target.blur(); const v = CxTime.parse(e.target.value); if (v != null) { CxB.set(e.target.dataset.u, e.target.dataset.f, v); CxB.edit = null; CxB.redraw(); } } });
+Object.assign(Actions, {
+  'cx-back': () => { CxUndo.hide(); HQ.go('training'); },
+  'cx-open': el => { CxB.id = null; HQ.go('circuit:' + el.dataset.id, true); },
+  'cx-add': async el => { if (el.dataset.close) await Sheet.close(); if (!CxB.open()) return; CxB.add(el.dataset.k); },
+  'cx-undo': () => CxB.back(),
+  'cx-del': el => CxB.remove(el.dataset.u),
+  'cx-dup': el => CxB.dup(el.dataset.u),
+  'cx-edit': el => { const u = el.dataset.u, f = el.dataset.f; CxB.edit = CxB.edit && CxB.edit.u === u && CxB.edit.f === f ? null : { u, f }; CxB.redraw(); if (CxB.edit) setTimeout(() => { const i = $('#cxTimeIn'); i && i.focus({ preventScroll: true }); i && i.select(); }, 30); },
+  'cx-edit-done': () => { const i = $('#cxTimeIn'); if (i) { const v = CxTime.parse(i.value); if (v != null) CxB.set(i.dataset.u, i.dataset.f, v); } CxB.edit = null; CxB.redraw(); },
+  'cx-set': el => { CxB.set(el.dataset.u, el.dataset.f, +el.dataset.v); CxB.edit = null; CxB.redraw(); },
+  'cx-bump': el => { const u = el.dataset.u, f = el.dataset.f, cur = u === '__rr' ? CxB.d.round_rest : (CxB.st(u) || {})[f]; CxB.set(u, f, (+cur || 0) + +el.dataset.v); CxB.redraw(); },
+  'cx-rounds': el => { CxB.d.rounds = Math.max(0, Math.min(50, +el.dataset.v)); CxB.keep(); CxB.redraw(); },
+  'cx-shelf': () => { CxB.shelf = !CxB.shelf; CxB.redraw(); },
+  'cx-shelf-f': el => { CxB[el.dataset.k] = el.dataset.v; const sh = $('.cxb-shelf'); if (sh) { sh.innerHTML = CxB.shelfHtml(); UI.icons(sh); Social.hydrate(sh); } },
+  'cx-ex-new2': () => CxLibUI.edit(null, r => { CxB.add(r.key); }),
+  'cx-smenu': async el => {
+    const u = el.dataset.u, s = CxB.st(u), L = CxB.d.stations, i = L.indexOf(s); if (!s) return;
+    const k = await Sheet.choose({ title: s.name, body: `<p class="muted">Station ${i + 1} of ${L.length} · ${CxTime.words(s.w)} work · ${s.r ? CxTime.words(s.r) + ' rest' : 'no rest'}</p>`, options: [
+      ...(i > 0 ? [{ id: 'up', label: 'Move up' }, { id: 'top', label: 'Move to the start' }] : []), ...(i < L.length - 1 ? [{ id: 'down', label: 'Move down' }, { id: 'end', label: 'Move to the end' }] : []),
+      { id: 'all', label: `Use ${CxTime.short(s.w)} work / ${s.r ? CxTime.short(s.r) + ' rest' : 'no rest'} for every station` }, { id: 'info', label: 'Exercise details' }, { id: 'del', label: 'Remove from the circuit', cls: 'danger' }] });
+    if (k === 'up') CxB.move(u, i - 1); else if (k === 'down') CxB.move(u, i + 1); else if (k === 'top') CxB.move(u, 0); else if (k === 'end') CxB.move(u, L.length - 1);
+    else if (k === 'del') CxB.remove(u); else if (k === 'info') CxLibUI.detail(s.key);
+    else if (k === 'all') { CxB.snap(); L.forEach(x => { x.w = s.w; x.r = s.r; }); CxB.keep(); CxB.redraw(); CxUndo.show('Same time for every station', () => CxB.back()); }
+  },
+  'cx-save': async el => { const r = await CxB.save(el); if (r) { UI.toast('Circuit saved.'); CxB.redraw(); } },
+  'cx-next': async el => {
+    const r = CxB.dirty || !CxB.d.id ? await CxB.save(el) : CxB.d; if (!r) return;
+    const sid = await Social.act(el, () => Social.rpc('circuit_session_new', { p_circuit: r.id, p_team: HQ.tid() })); if (!sid) return;
+    Social.drop('cxl:' + HQ.tid()); HQ.go('cxs:' + sid);
+  },
+  'cx-run': async el => { const sid = await Social.act(el, () => Social.rpc('circuit_session_new', { p_circuit: el.dataset.id, p_team: HQ.tid() })); if (sid) { Social.drop('cxl:' + HQ.tid()); HQ.go('cxs:' + sid, true); } },
+  'cx-sess': el => HQ.go('cxs:' + el.dataset.id, true),
+  'cx-cmenu': async el => {
+    const c = CxHQ.circuit(el.dataset.id); if (!c) return;
+    const k = await Sheet.choose({ title: c.name, body: '', options: [{ id: 'edit', label: 'Edit' }, { id: 'dup', label: 'Duplicate' }, { id: 'del', label: 'Delete', cls: 'danger' }] });
+    if (k === 'edit') { CxB.id = null; HQ.go('circuit:' + c.id, true); }
+    else if (k === 'dup') { const r = await Social.act(null, () => Social.rpc('circuit_save', { p_id: null, p_team: HQ.tid(), p_name: (c.name.slice(0, 52) + ' (copy)'), p_description: c.description, p_rounds: c.rounds, p_round_rest: c.round_rest, p_stations: c.stations }), 'Duplicated.'); if (r) { Social.drop('cxl:' + HQ.tid()); Social.repaint(); } }
+    else if (k === 'del') { if (!(await Sheet.confirm({ title: `Delete “${c.name}”?`, body: '<p>Sessions you already ran stay in your history.</p>', ok: 'Delete', danger: true }))) return; if (await Social.act(null, () => Social.rpc('circuit_delete', { p_id: c.id }), 'Deleted.') !== undefined) { Social.drop('cxl:' + HQ.tid()); Social.repaint(); } }
+  }
+});
+
+/* ---------- Coach HQ wiring: Training gets Plans · Circuits · Exercises; the builder and sessions live under Training ---------- */
+Object.assign(HQ.st, { ttab: 'plans' });
+(() => {
+  const tr = HQ.training.bind(HQ);
+  HQ.training = function () {
+    const tabs = this.subtabs('ttab', [['plans', 'Plans'], ['circuits', 'Circuits'], ['exercises', 'Exercises']]);
+    if (this.st.ttab === 'circuits') return this.frame('Training', tabs + CxHQ.list(), { sub: 'Circuits for your team' });
+    if (this.st.ttab === 'exercises') return this.frame('Training', tabs + CxLibUI.page(), { sub: 'The shared exercise library' });
+    const h = tr(), i = h.indexOf('</header>'); return i < 0 ? h : h.slice(0, i + 9) + tabs + h.slice(i + 9);
+  };
+  const scr = HQ.screen.bind(HQ);
+  HQ.screen = function (param) {
+    const p = String(param || ''), s = p.split(':')[0];
+    if (s === 'circuit' || s === 'cxs') { const g = this.gate(); if (g) return `<div class="screen hq">${g}</div>`; return s === 'circuit' ? CxB.screen(p.slice(8)) : CxS.coachScreen(p.slice(4)); }
+    return scr(param);
+  };
+  const sec = HQ.section.bind(HQ); HQ.section = function () { const s = String(UI.route.param || '').split(':')[0]; return s === 'circuit' || s === 'cxs' ? 'training' : sec(); };
+  const go = HQ.go.bind(HQ); HQ.go = function (p, push) { if (String(p).startsWith('training') && !String(p).includes(':')) { if (CxB.open() || String(UI.route.param || '').startsWith('cxs:')) this.st.ttab = 'circuits'; } return go(p, push); };
+})();
+
+</script>
+<script>
+/* ============ CIRCUITS — a session: teams before the start, the live clock for coach and athletes, the summary ============ */
+const CxRT = {   // a nudge over Supabase Realtime so phones refresh at once; the 1.5 s poll is the guarantee if it can't connect
+  ch: null, sid: null,
+  join(sid, onPing) {
+    if (this.sid === sid || !Cloud.sb || !Cloud.sb.channel) return; this.leave(); this.sid = sid;
+    try { this.ch = Cloud.sb.channel('cx-' + sid, { config: { broadcast: { self: false } } }).on('broadcast', { event: 'v' }, () => onPing()).subscribe(); } catch (e) { this.ch = null; }
+  },
+  ping(v) { try { this.ch && this.ch.send({ type: 'broadcast', event: 'v', payload: { v } }); } catch (e) { } },
+  leave() { try { if (this.ch) Cloud.sb.removeChannel(this.ch); } catch (e) { } this.ch = null; this.sid = null; }
+};
+const CxS = {
+  sid: null, G: null, err: '', role: 'ath', timer: null, iv: null, lastKey: '', lastSec: null, busy: false, wake: null, deferred: false, online: true,
+  want(sid, role) { if (this.sid !== sid) { this.stop(); this.sid = sid; this.G = null; this.err = ''; CxT.reset(sid); } this.role = role; },
+  mount() { if (!$('#cxs') || !this.sid) return; if (!this.timer && !this.inflight) this.poll(); if (!this.iv) this.iv = setInterval(() => this.tick(), 200); CxRT.join(this.sid, () => this.poll()); this.tick(); },
+  stop() { clearTimeout(this.timer); this.timer = null; clearInterval(this.iv); this.iv = null; this.release(); CxRT.leave(); },
+  async poll() {
+    clearTimeout(this.timer); this.timer = null;
+    if (!$('#cxs') || !this.sid) { this.stop(); return; }
+    const sid = this.sid, t0 = Date.now(); this.inflight = true;
+    try { const G = await Social.rpc('circuit_get', { p_id: sid }); if (sid !== this.sid) return; CxClock.sample(G.now, t0, Date.now()); this.err = ''; this.net(true); this.apply(G); }
+    catch (e) { if (sid !== this.sid) return; this.err = Social.msg(e); if (!this.G) this.paint(true); else this.net(false); }
+    finally { this.inflight = false; }
+    if (sid !== this.sid || !$('#cxs')) return;
+    const st = this.G && this.G.status, ms = document.hidden ? 4000 : st === 'running' ? 1500 : st === 'paused' || st === 'lobby' ? 2500 : 20000;
+    this.timer = setTimeout(() => this.poll(), ms);
+  },
+  apply(G) {
+    const o = this.G; if (o && o.id === G.id && +G.version < +o.version) return;   // an older answer that arrived late never wins
+    this.G = G;
+    if (this.role === 'coach') CxT.adopt(G);
+    if (!o || o.version !== G.version || o.status !== G.status) this.paint(true); else this.tick();
+    if (o && o.status !== G.status && ['done', 'ended'].includes(G.status)) { this.cue('done'); if (this.role === 'ath') CxMine.sync(); Social.drop('cxl:'); }
+  },
+  net(ok) { if (ok === this.online) return; this.online = ok; const b = $('#cxNet'); if (b) b.hidden = ok; },
+  typing() { const a = document.activeElement; return !!(a && a.closest && a.closest('#cxs') && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)); },
+  paint(full) {
+    const box = $('#cxs'); if (!box) return;
+    if (full && (this.typing() || CxDnd.busy())) { this.deferred = true; return; }
+    this.deferred = false; box.innerHTML = this.body(); UI.icons(box); Social.hydrate(box); this.lastKey = this.liveKey(); this.numbers(); this.awake();
+  },
+  T() { const G = this.G; return G && G.plan && G.plan.stations && G.plan.stations.length ? CxTime.build(G.plan, G.teams.map(t => t.start)) : null; },
+  e() { return CxClock.el(this.G); },
+  waiting(G, e) { return G.mode === 'manual' && G.status === 'running' && G.hold_el != null && e >= +G.hold_el - .05 && (G.total_s == null || +G.hold_el < +G.total_s - .05); },
+  myStart() { const G = this.G, t = G && G.my_team != null ? G.teams.find(x => x.idx === G.my_team) : null; return t ? t.start : null; },
+  liveKey() {
+    const G = this.G; if (!G || !['running', 'paused'].includes(G.status)) return G ? G.status : '';
+    const T = this.T(); if (!T) return 'x'; const e = this.e(), g = CxTime.at(T, e), my = this.myStart();
+    return [G.status, g.phase, g.r, g.k, this.waiting(G, e), my != null ? CxTime.team(T, g, my).phase : ''].join('|');
+  },
+  tick() {
+    const box = $('#cxs'); if (!box) { this.stop(); return; }
+    if (this.deferred && !this.typing() && !CxDnd.busy()) { this.paint(true); return; }
+    const k = this.liveKey();
+    if (k !== this.lastKey) { const prev = this.lastKey; this.paint(true); if (prev && this.G && this.G.status === 'running') this.cue(k.split('|')[this.role === 'ath' && this.myStart() != null ? 5 : 1]); return; }
+    this.numbers();
+  },
+  /* every countdown on screen carries the elapsed second it reaches zero (data-end) and its length (data-dur) */
+  numbers() {
+    const box = $('#cxs'); if (!box || !this.G) return; const e = this.e();
+    $$('[data-end]', box).forEach(el => { const left = +el.dataset.end - e; if (el.dataset.dur) el.style.setProperty('--p', Math.max(0, Math.min(1, 1 - left / +el.dataset.dur)).toFixed(4)); else el.textContent = CxTime.fmt(left); });
+    const main = $('[data-main]', box);
+    if (main && this.G.status === 'running') { const left = Math.ceil(+main.dataset.end - e); if (left !== this.lastSec && left >= 1 && left <= 3) this.cue('count'); this.lastSec = left; }
+  },
+  cue(what) {
+    try {
+      if (what === 'count') { Haptics.beep([880], .1); return; }
+      if (what === 'work') { Haptics.beep([660, 990]); navigator.vibrate && navigator.vibrate([60, 40, 60]); }
+      else if (what === 'rest' || what === 'recovery') { Haptics.beep([880, 587]); navigator.vibrate && navigator.vibrate(120); }
+      else if (what === 'done') Haptics.beep([523, 659, 784], .14);
+    } catch (e) { }
+  },
+  async awake() { const run = this.G && this.G.status === 'running'; try { if (run && !this.wake && navigator.wakeLock) this.wake = await navigator.wakeLock.request('screen'); else if (!run) this.release(); } catch (e) { } },
+  release() { try { this.wake && this.wake.release(); } catch (e) { } this.wake = null; },
+  /* ---------- screens ---------- */
+  coachScreen(sid) {
+    this.want(sid, 'coach'); const G = this.G;
+    return HQ.frame(G ? esc(G.name) : 'Circuit', `<div id="cxs" class="cxs" data-role="coach" data-nofold>${this.body()}</div>`, { sub: G ? ({ lobby: 'Put athletes in teams, then start', running: 'Live', paused: 'Paused', done: 'Completed', ended: 'Stopped early' }[G.status] || '') : '', actions: `<button class="btn sm ghost" type="button" data-act="cx-back">${icon('arrow-left')} Circuits</button>` });
+  },
+  body() {
+    const G = this.G;
+    if (!G) return this.err ? `<section class="panel serr"><p class="err-msg">${esc(this.err)}</p><button class="btn sm" type="button" data-act="cx-retry">${icon('refresh-cw')} Try again</button></section>` : Social.skel(2);
+    const net = `<p class="cx-net" id="cxNet" role="status" ${this.online ? 'hidden' : ''}>${icon('wifi-off')} Reconnecting… the timer keeps running from the last update.</p>`;
+    if (this.role === 'coach') return net + (G.status === 'lobby' ? CxT.board(G, false) : ['running', 'paused'].includes(G.status) ? this.coachLive(G) : this.summary(G));
+    return net + this.athlete(G);
+  },
+  hero(G, T, e, g, wait) {
+    const paused = G.status === 'paused';
+    const lab = paused ? 'Paused' : wait ? 'Waiting for the coach' : { ready: 'Get ready', work: 'Work', rest: 'Rest', recovery: 'Round recovery', done: 'Finishing' }[g.phase];
+    const end = g.phase === 'ready' ? 0 : g.phase === 'work' ? g.workEnd : g.slotEnd, dur = g.phase === 'ready' ? CxTime.LEAD : g.phase === 'work' ? g.workEnd - g.slotStart : Math.max(1, g.slotEnd - g.workEnd);
+    const where = g.phase === 'ready' ? `Starts in a moment · ${T.n} stations` : `${T.rounds ? `Round ${g.r + 1} of ${T.rounds}` : `Round ${g.r + 1}`} · Interval ${g.k + 1} of ${T.n}`;
+    const next = wait ? 'Tap “Next station” when the teams are ready' : g.phase === 'ready' ? 'Teams go to their starting stations' : g.phase === 'work' ? (g.slotEnd - g.workEnd > .5 ? `Then rest · everyone rotates after` : 'Then everyone rotates')
+      : g.last && g.final ? 'Last interval — almost done' : g.last ? `Then round ${g.r + 2}` : 'Then everyone moves to the next station';
+    return `<section class="cx-hero phase-${paused ? 'paused' : wait ? 'wait' : g.phase}" aria-live="off">
+      <div class="cx-hero-top"><span class="cx-pill">${paused ? icon('pause') : `<span class="cx-dot"></span>`} ${paused ? 'Paused' : 'Live'}</span><span>${where}</span>${G.mode === 'manual' ? `<span class="cx-pill">${icon('hand')} Coach moves teams</span>` : ''}</div>
+      <div class="cx-hero-lab">${lab}</div>
+      <div class="cx-big" ${wait ? '' : `data-end="${end}" data-main`}>${wait ? '—' : CxTime.fmt(end - e)}</div>
+      <div class="cx-bar"><i ${wait ? '' : `data-end="${end}" data-dur="${dur}"`} style="--p:${wait ? 1 : 0}"></i></div>
+      <div class="cx-hero-next">${next}</div></section>`;
+  },
+  coachLive(G) {
+    const T = this.T(); if (!T) return Social.empty('timer-off', 'This circuit has no stations', '');
+    const e = this.e(), g = CxTime.at(T, e), wait = this.waiting(G, e), paused = G.status === 'paused';
+    const B = (op, ic, label, cls = '', dis = false) => `<button type="button" class="btn ${cls}" data-act="cx-ctl" data-op="${op}" ${dis ? 'disabled' : ''}>${icon(ic)} ${label}</button>`;
+    const ctrls = `<div class="cx-ctrls">
+        ${paused ? B('resume', 'play', 'Resume', 'primary big') : B('pause', 'pause', 'Pause', 'big')}
+        ${g.phase === 'ready' ? B('go', 'skip-forward', 'Start now', wait ? '' : '') : ''}
+        ${g.phase === 'work' && !wait ? B('skip-work', 'fast-forward', 'Skip exercise') : ''}
+        ${['rest', 'recovery'].includes(g.phase) && !wait ? B('skip-rest', 'fast-forward', g.phase === 'recovery' ? 'Skip recovery' : 'Skip rest') : ''}
+        ${g.phase !== 'ready' ? B('next', 'arrow-right-circle', 'Next station', wait ? 'primary big' : '') : ''}
+        ${g.phase !== 'ready' ? B('restart', 'rotate-ccw', 'Restart interval') : ''}
+      </div>
+      <div class="cx-ctrls2"><div class="seg" role="group" aria-label="Rotation"><button type="button" data-act="cx-mode" data-v="auto" aria-pressed="${G.mode === 'auto'}">Automatic</button><button type="button" data-act="cx-mode" data-v="manual" aria-pressed="${G.mode === 'manual'}">Coach moves teams</button></div>
+        <button type="button" class="btn ghost danger" data-act="cx-ctl" data-op="end">${icon('square')} End circuit</button></div>`;
+    const teams = G.teams.map(t => {
+      const ts = CxTime.team(T, g, t.start), s = T.S[ts.st] || {}, nx = ts.next != null ? T.S[ts.next] : null;
+      const end = ts.phase === 'ready' ? 0 : ts.phase === 'work' ? g.slotStart + +s.w : g.slotEnd;
+      const lab = ts.phase === 'ready' ? 'Starts at' : ts.phase === 'work' ? 'Working' : ts.phase === 'recovery' ? 'Round recovery' : 'Resting';
+      return `<article class="cx-tl phase-${paused ? 'paused' : wait ? 'wait' : ts.phase}"><header><b>${esc(t.name)}</b><span class="badge">${t.count}</span></header>
+        <div class="cx-tl-st"><span class="cx-no">${ts.st + 1}</span><b>${esc(s.name || '')}</b></div>
+        <div class="cx-tl-ph"><span>${wait ? 'Waiting' : lab}</span>${wait ? '' : `<b data-end="${end}">${CxTime.fmt(end - e)}</b>`}</div>
+        ${nx && ts.phase !== 'ready' ? `<small class="muted">Next: ${ts.next + 1} · ${esc(nx.name)}</small>` : ts.phase === 'ready' ? '' : '<small class="muted">Last station</small>'}
+        <div class="cx-faces">${(t.members || []).slice(0, 8).map(m => Social.avatar(m, 26)).join('')}${(t.members || []).length > 8 ? `<span class="cx-more">+${t.members.length - 8}</span>` : ''}</div></article>`;
+    }).join('');
+    const dots = T.rounds && T.rounds <= 12 ? `<div class="cx-rounds-prog" aria-label="Progress">${Array.from({ length: T.rounds }, (_, r) => `<span class="${r < g.r || g.phase === 'done' ? 'done' : r === g.r && g.phase !== 'ready' ? 'on' : ''}">${Array.from({ length: T.n }, (_, k) => `<i class="${r < g.r || (r === g.r && k < g.k) ? 'done' : r === g.r && k === g.k && g.phase !== 'ready' ? 'on' : ''}"></i>`).join('')}</span>`).join('')}</div>` : '';
+    return `<div class="cx-live coach">${this.hero(G, T, e, g, wait)}${ctrls}${dots}<section class="cx-tls">${teams}</section>
+      <details class="panel cx-movebox" id="cxMoveBox"${CxS.moveOpen ? ' open' : ''}><summary class="label">${icon('users')} Move athletes between teams</summary>${CxT.board(G, true)}</details></div>`;
+  },
+  info(s) {
+    const x = s && s.key && s.key.startsWith('cx:') ? { yt: s.yt, yt_short: s.yt_short, img: s.img, steps: s.steps || [], desc: s.desc || '', tips: s.tips || [] } : (CxCat.get(s && s.key) || {});
+    return { yt: x.yt, short: x.yt_short, img: x.img, steps: x.steps || [], desc: x.desc || '', tips: x.tips || [] };
+  },
+  media(s) {
+    const x = this.info(s); if (!x.img && !x.yt && !x.steps.length && !x.desc) return '';
+    return `<details class="panel cx-howto"><summary class="label">${icon('book-open')} How to do it</summary>
+      ${x.img ? `<figure class="cx-hero-img">${Social.img(x.img, s.name)}</figure>` : ''}${x.yt ? CxYT.player(x.yt, x.short, s.name) : ''}
+      ${x.desc ? `<p>${esc(x.desc)}</p>` : ''}${x.steps.length ? `<ol class="cx-steps">${x.steps.map(t => `<li>${esc(t)}</li>`).join('')}</ol>` : ''}</details>`;
+  },
+  athlete(G) {
+    const T = this.T(), mine = G.my_team != null ? G.teams.find(t => t.idx === G.my_team) : null;
+    const team = mine ? `<div class="cx-myteam"><b>${esc(mine.name)}</b><span class="cx-faces">${(mine.members || []).slice(0, 8).map(m => Social.avatar(m, 24)).join('')}</span><small class="muted">${(mine.members || []).map(m => esc(m.name.split(' ')[0])).join(', ')}</small></div>` : '';
+    if (G.status === 'done' || G.status === 'ended') {
+      const sec = Math.max(0, Math.min(+G.el || 0, G.total_s != null ? +G.total_s : +G.el || 0));
+      return `<section class="panel cx-fin ${G.status}" data-stg><span class="cx-fin-ic">${icon(G.status === 'done' ? 'trophy' : 'flag')}</span><h2 class="h2">${G.status === 'done' ? 'Circuit complete!' : 'Your coach ended the circuit'}</h2>
+        <p class="muted">${esc(G.name)} · ${CxTime.words(sec)}${mine ? ' · ' + esc(mine.name) : ''}</p>
+        ${mine && (G.status === 'done' || sec >= 60) ? `<p>${icon('check')} Saved to your training history${G.status === 'done' ? '' : ' as stopped early'}.</p>` : ''}
+        <button class="btn primary" type="button" data-act="go" data-r="home">${icon('house')} Done</button></section>`;
+    }
+    if (!mine) return `<section class="panel cx-wait" data-stg>${icon('users')}<h2 class="h2">${esc(G.name)}</h2><p>You’re not in a team for this circuit yet. Your coach can add you — this screen updates by itself.</p></section>`;
+    if (G.status === 'lobby' || !T) {
+      const s = T ? T.S[mine.start] : (G.plan && G.plan.stations || [])[mine.start];
+      return `<section class="panel cx-wait" data-stg><span class="cx-dot"></span><h2 class="h2">${esc(G.name)}</h2><p>Your coach is getting the teams ready. Stay on this screen — it starts by itself.</p>${team}
+        ${s ? `<div class="cx-firstst"><span class="label">You start at</span><b><span class="cx-no">${mine.start + 1}</span> ${esc(s.name)}</b><small class="muted">${CxTime.words(s.w)} work${s.r ? ` · ${CxTime.words(s.r)} rest` : ''}</small></div>${this.media(s)}` : ''}</section>`;
+    }
+    const e = this.e(), g = CxTime.at(T, e), wait = this.waiting(G, e), paused = G.status === 'paused', ts = CxTime.team(T, g, mine.start);
+    if (ts.phase === 'done') return `<section class="panel cx-wait">${icon('flag')}<p>Finishing…</p></section>`;
+    const s = T.S[ts.st], nx = ts.next != null ? T.S[ts.next] : null;
+    const end = ts.phase === 'ready' ? 0 : ts.phase === 'work' ? g.slotStart + +s.w : g.slotEnd, dur = ts.dur || 1;
+    const lab = paused ? 'Paused by your coach' : wait ? 'Waiting for your coach' : { ready: 'Get ready', work: 'Go!', rest: 'Rest', recovery: 'Round recovery' }[ts.phase];
+    const showEx = ts.phase === 'work' || ts.phase === 'ready' ? s : nx, R = 54, C = 2 * Math.PI * R;
+    const then = ts.phase === 'work' ? (nx ? `Then ${ts.restAfter > .5 ? `rest ${CxTime.fmt(ts.restAfter)} · ` : ''}next: <b>${esc(nx.name)}</b>` : '<b>Last one — finish strong</b>')
+      : ts.phase === 'ready' ? `Go to station ${ts.st + 1}` : nx ? `Next: station ${ts.next + 1} · <b>${esc(nx.name)}</b>` : '';
+    return `<div class="cx-live ath phase-${paused ? 'paused' : wait ? 'wait' : ts.phase}">
+      <div class="cx-ath-top"><span>${esc(mine.name)}</span><span>${T.rounds ? `Round ${g.phase === 'ready' ? 1 : g.r + 1}/${T.rounds}` : `Round ${g.r + 1}`}</span><span>Station ${(ts.phase === 'work' || ts.phase === 'ready' ? ts.st : ts.next != null ? ts.next : ts.st) + 1}/${T.n}</span></div>
+      <div class="cx-ath-lab">${lab}</div>
+      <h2 class="cx-ath-ex">${ts.phase === 'work' || ts.phase === 'ready' ? '' : '<small>Up next</small>'}${esc(showEx ? showEx.name : '')}</h2>
+      <div class="cx-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="${R}" class="trk"/><circle cx="60" cy="60" r="${R}" class="arc" style="stroke-dasharray:${C.toFixed(1)};--c:${C.toFixed(1)}" ${wait ? '' : `data-end="${end}" data-dur="${dur}"`}/></svg>
+        <b class="cx-ring-t" ${wait ? '' : `data-end="${end}" data-main`} aria-live="off">${wait ? '—' : CxTime.fmt(end - e)}</b></div>
+      <p class="cx-then">${then}</p>
+      ${team}
+      ${showEx ? this.media(showEx) : ''}</div>`;
+  },
+  summary(G) {
+    const st = G.plan && G.plan.stations || [], sec = Math.max(0, Math.min(+G.el || 0, G.total_s != null ? +G.total_s : +G.el || 0));
+    const wall = G.started_at && G.ended_at ? (CxClock.ts(G.ended_at) - CxClock.ts(G.started_at)) / 1000 : null, R = G.results || {};
+    const done = G.status === 'done';
+    return `<section class="panel cx-fin ${G.status}" data-stg><span class="cx-fin-ic">${icon(done ? 'trophy' : 'flag')}</span><h2 class="h2">${done ? 'Completed' : 'Stopped early'}</h2>
+        <p class="muted">${fmtDate(String(G.started_at || G.created_at).slice(0, 10))} · ${G.teams.reduce((t, x) => t + x.count, 0)} athletes in ${G.teams.length} team${G.teams.length === 1 ? '' : 's'}</p>
+        <div class="cx-kv"><div><span class="label">Planned</span><b>${G.total_s != null ? CxTime.words(G.total_s) : 'Until stopped'}</b></div><div><span class="label">Circuit time done</span><b>${CxTime.words(sec)}</b></div>${wall != null ? `<div><span class="label">Start to finish (with pauses)</span><b>${CxTime.words(wall)}</b></div>` : ''}<div><span class="label">Rounds</span><b>${G.plan.rounds || '∞'}</b></div></div></section>
+      <section class="panel" data-stg><h3 class="h3">${icon('list-ordered')} Stations (as planned)</h3><ol class="cx-mini">${st.map(s => `<li><span>${esc(s.name)}</span><small>${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}</small></li>`).join('')}</ol><p class="muted cx-note">Rest between rounds: ${CxTime.words(G.plan.round_rest)}</p></section>
+      <section class="panel stack" data-stg><h3 class="h3">${icon('clipboard-check')} Results <span class="muted">(optional)</span></h3><p class="muted cx-note">Record reps, weight, distance or a note for anyone. Athletes see their own.</p>
+        ${G.teams.map(t => `<div class="cx-res-team"><b>${esc(t.name)}</b>${(t.members || []).map(m => { const r = R[m.id] || {}; return `<div class="cx-res">${Social.avatar(m, 28)}<span class="cx-res-n">${esc(m.name)}</span>
+          <input class="input" inputmode="numeric" id="cxr-reps-${m.id}" value="${r.reps != null ? r.reps : ''}" placeholder="Reps" aria-label="Reps for ${esc(m.name)}">
+          <input class="input" inputmode="decimal" id="cxr-kg-${m.id}" value="${r.kg != null ? r.kg : ''}" placeholder="kg" aria-label="Weight in kg for ${esc(m.name)}">
+          <input class="input" inputmode="decimal" id="cxr-m-${m.id}" value="${r.m != null ? r.m : ''}" placeholder="m" aria-label="Distance in metres for ${esc(m.name)}">
+          <input class="input cx-res-note" id="cxr-note-${m.id}" value="${esc(r.note || '')}" placeholder="Note" maxlength="300" aria-label="Note for ${esc(m.name)}">
+          <button class="btn sm" type="button" data-act="cx-res" data-u="${m.id}">${icon('check')} Save</button></div>`; }).join('') || '<p class="muted">No athletes.</p>'}</div>`).join('')}</section>`;
+  },
+  /* ---------- the coach's controls: every change quotes the version it saw, so double taps can't move the circuit twice ---------- */
+  async ctl(op, el) {
+    const G = this.G; if (!G || this.busy) return;
+    const T = this.T(), e = this.e(), g = T ? CxTime.at(T, e) : null; let a = { p_id: G.id, p_op: op, p_version: G.version };
+    if (op === 'end') { if (!(await Sheet.confirm({ title: G.status === 'lobby' ? 'Cancel this session?' : 'End the circuit now?', body: G.status === 'lobby' ? '<p>The teams you made for it are cleared.</p>' : '<p>Everyone’s timer stops. It is saved as stopped early (not as a completed workout).</p>', ok: G.status === 'lobby' ? 'Cancel session' : 'End circuit', danger: true }))) return; }
+    const seek = (to) => { a.p_op = 'seek'; a.p_el = Math.round(to * 1000) / 1000; a.p_hold = CxTime.holdFor(T, to); };
+    if (op === 'start') { const T0 = CxTime.build(G.plan, CxT.teams.map(t => t.start)); a.p_el = -CxTime.LEAD; a.p_total = T0.total; a.p_hold = CxTime.holdFor(T0, 0); }
+    else if (op === 'go') seek(0);
+    else if (op === 'skip-work') seek(g.workEnd);
+    else if (op === 'skip-rest' || op === 'next') seek(this.waiting(G, e) ? +G.hold_el : g.slotEnd);
+    else if (op === 'restart') seek(g.phase === 'ready' ? -CxTime.LEAD : g.slotStart);
+    else if (op === 'mode') { a.p_mode = el.dataset.v; a.p_hold = T && el.dataset.v === 'manual' ? CxTime.holdFor(T, Math.max(0, e)) : null; }
+    this.busy = true; $$('#cxs [data-act="cx-ctl"], #cxs [data-act="cx-mode"], #cxs [data-act="cx-start"]').forEach(b => b.disabled = true);
+    try {
+      const t0 = Date.now(), r = await Social.rpc('circuit_ctl', a);
+      if (r && r.deleted) { this.G = null; Social.drop('cxl:'); HQ.go('training'); return; }
+      CxClock.sample(r.now, t0, Date.now()); CxRT.ping(r.version); this.lastKey = ''; this.apply(r); clearTimeout(this.timer); this.timer = setTimeout(() => this.poll(), 700);
+      if (op === 'start') { UI.toast('Circuit started. Athletes in teams were notified.'); try { Cloud.sb.functions.invoke('push-send', { body: {} }).catch(() => { }); } catch (e) { } }   // deliver the pushes now
+    } catch (x) {
+      const m = Social.msg(x);
+      if (/^STALE/.test(m)) { UI.toast('It changed on another screen — refreshed. Check, then tap again.'); this.poll(); }
+      else { UI.toast(m, 'bad'); Haptics.buzz(); }
+    } finally { this.busy = false; $$('#cxs [data-act="cx-ctl"], #cxs [data-act="cx-mode"], #cxs [data-act="cx-start"]').forEach(b => b.disabled = false); }
+  }
+};
+
+/* ---------- teams: drag athletes in, drag teams onto stations ---------- */
+const CxT = {
+  sid: null, teams: [], ppl: {}, pend: false, saving: false, undo: [], sel: new Set(), selMode: false, q: '', n: null, msg: '',
+  reset(sid) { this.sid = sid; this.teams = []; this.undo = []; this.sel = new Set(); this.selMode = false; this.q = ''; this.n = null; this.pend = false; this.loaded = false; },
+  adopt(G) {
+    G.teams.forEach(t => (t.members || []).forEach(m => { this.ppl[m.id] = m; }));
+    if (this.pend || this.saving) return;
+    this.teams = G.teams.map(t => ({ name: t.name, start: t.start, members: (t.members || []).map(m => m.id) })); this.loaded = true;
+  },
+  roster(G) { const R = Social.get('roster:' + G.team_id, () => Social.rpc('team_roster', { p_id: G.team_id }), 10000);   // new joiners show up within seconds
+    ((R.v && R.v.athletes) || []).forEach(a => { this.ppl[a.id] = a; }); return R; },
+  inTeam(id) { return this.teams.findIndex(t => t.members.includes(id)); },
+  snap() { this.undo.push(JSON.stringify(this.teams)); if (this.undo.length > 40) this.undo.shift(); },
+  back() { if (!this.undo.length) return; this.teams = JSON.parse(this.undo.pop()); this.commit(); CxDnd.say('Undone.'); },
+  commit() { this.pend = true; CxS.paint(true); clearTimeout(this._t); this._t = setTimeout(() => this.save(), 450); this.state('Saving…'); },
+  state(t) { this.msg = t; const s = $('#cxtState'); if (s) s.textContent = t; },
+  async save() {
+    if (this.saving) { this._t = setTimeout(() => this.save(), 300); return; }
+    this.pend = false; this.saving = true; const body = this.teams.map(t => ({ name: (t.name || '').trim() || 'Team', start: t.start, members: t.members }));
+    try { const G = await Social.rpc('circuit_teams_save', { p_id: this.sid, p_teams: body }); this.saving = false; if (!this.pend) { CxS.G = G; this.adopt(G); CxRT.ping(G.version); } this.state('Saved'); }
+    catch (x) { this.saving = false; UI.toast(Social.msg(x), 'bad'); this.state(''); this.pend = false; CxS.poll(); }
+  },
+  /* move athletes (the dragged one, or everyone selected with it) */
+  put(ids, to) {
+    ids = ids.filter(Boolean); if (!ids.length) return;
+    const same = to >= 0 && ids.every(id => this.teams[to] && this.teams[to].members.includes(id)); if (same) return;
+    this.snap(); this.teams.forEach(t => { t.members = t.members.filter(m => !ids.includes(m)); });
+    if (to >= 0) this.teams[to].members.push(...ids);
+    this.sel.clear(); this.commit();
+    const who = ids.length === 1 ? (this.ppl[ids[0]] || {}).name || 'Athlete' : `${ids.length} athletes`;
+    CxUndo.show(to >= 0 ? `${who} → ${this.teams[to].name}` : `${who} back to available`, () => this.back());
+    CxDnd.say(to >= 0 ? `${who} moved to ${this.teams[to].name}. It now has ${this.teams[to].members.length}.` : `${who} removed from their team.`);
+  },
+  board(G, live) {
+    const R = this.roster(G), T = G.plan && G.plan.stations || [], n = T.length, total = this.teams.reduce((t, x) => t + x.members.length, 0);
+    const all = ((R.v && R.v.athletes) || []).filter(a => a && a.id), q = this.q.trim().toLowerCase();
+    const pool = all.filter(a => this.inTeam(a.id) < 0).filter(a => !q || (a.name + ' ' + a.username).toLowerCase().includes(q));
+    const chip = id => { const a = this.ppl[id] || { id, name: 'Athlete' }; return `<button type="button" class="cx-ath${this.sel.has(id) ? ' sel' : ''}" data-dnd="ath" data-dnd-id="${id}" data-act="cx-ath" data-id="${id}" aria-pressed="${this.selMode ? this.sel.has(id) : 'false'}" aria-label="${esc(a.name)}${this.selMode ? (this.sel.has(id) ? ', selected' : '') : '. Drag to a team, or tap for options'}">${Social.avatar(a, 28)}<span>${esc(a.name)}</span></button>`; };
+    const T2 = n ? CxTime.build(G.plan, this.teams.map(t => t.start)) : null;
+    const strip = live ? '' : `<section class="panel cx-strip-p" data-stg><div class="spread"><h3 class="h3">${icon('map-pin')} Starting stations</h3><small class="muted">Drag a team onto a station</small></div>
+      <div class="cx-strip" data-axis="x">${T.map((s, i) => { const here = this.teams.map((t, ti) => [t, ti]).filter(([t]) => t.start === i); return `<div class="cx-slot${here.length ? ' has' : ''}" data-drop="slot" data-drop-id="${i}" data-accept="team"><span class="cx-no">${i + 1}</span><b>${esc(s.name)}</b><small>${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}</small><span class="cx-slot-t">${here.map(([t]) => `<span class="cx-tpill">${esc(t.name)}</span>`).join('') || '<em>No team</em>'}</span></div>`; }).join('')}</div></section>`;
+    const teamCard = (t, i) => `<article class="cx-team" ${live ? '' : `data-dnd="team" data-dnd-id="${i}"`} data-drop="team" data-drop-id="${i}" data-accept="ath" aria-label="${esc(t.name)}, ${t.members.length} athlete${t.members.length === 1 ? '' : 's'}">
+        <header>${live ? '' : `<button type="button" class="cx-grip" data-dnd-handle aria-label="Move ${esc(t.name)} — drag onto a starting station">${icon('grip-vertical')}</button>`}
+          <label class="sr-only" for="cxTn${i}">Team name</label><input class="input cx-tname" id="cxTn${i}" data-i="${i}" value="${esc(t.name)}" maxlength="30" ${live ? 'readonly' : ''}>
+          <span class="badge cx-count" aria-hidden="true">${t.members.length}</span>${live ? '' : `<button type="button" class="btn icon sm ghost" data-act="cx-tdel" data-i="${i}" aria-label="Delete ${esc(t.name)}">${icon('x')}</button>`}</header>
+        ${live ? `<small class="muted">Started at station ${t.start + 1}</small>` : `<button type="button" class="cx-start" data-act="cx-tstart" data-i="${i}">${icon('map-pin')} Starts at <b>${t.start + 1} · ${esc((T[t.start] || {}).name || '?')}</b></button>`}
+        <div class="cx-chips">${t.members.map(chip).join('') || `<span class="cx-dropme">${icon('hand')} Drag athletes here</span>`}</div></article>`;
+    return `<div class="cx-lobby" data-dnd-root="cxt">
+      ${live ? '' : `<section class="panel cx-lobby-h" data-stg><div class="grow"><b>${esc(G.plan ? G.plan.name : G.name)}</b><small class="muted">${n} station${n === 1 ? '' : 's'} · ${G.plan.rounds ? G.plan.rounds + ' round' + (G.plan.rounds === 1 ? '' : 's') : 'until you stop'} · ${T2 && T2.total != null ? '≈ ' + Math.round(T2.total / 60) + ' min with these teams' : ''}</small></div>
+        <button class="btn sm" type="button" data-act="cx-open" data-id="${G.circuit_id}">${icon('pencil')} Edit circuit</button></section>`}
+      ${strip}
+      <div class="cx-tbar">${live ? '' : `<button class="btn sm" type="button" data-act="cx-tadd">${icon('plus')} Team</button>
+          <span class="cx-split"><button class="btn icon sm ghost" type="button" data-act="cx-split-n" data-v="-1" aria-label="Fewer teams">${icon('minus')}</button><button class="btn sm" type="button" data-act="cx-split">${icon('shuffle')} Auto-split into ${this.splitN(G, all.length)}</button><button class="btn icon sm ghost" type="button" data-act="cx-split-n" data-v="1" aria-label="More teams">${icon('plus')}</button></span>`}
+        <button class="btn sm ${this.selMode ? 'primary' : 'ghost'}" type="button" data-act="cx-selmode" aria-pressed="${this.selMode}">${icon('list-checks')} ${this.selMode ? `${this.sel.size} selected` : 'Select several'}</button>
+        ${this.selMode && this.sel.size ? `<button class="btn sm primary" type="button" data-act="cx-selmove">${icon('arrow-right')} Move to…</button>` : ''}
+        ${this.undo.length ? `<button class="btn sm ghost" type="button" data-act="cx-tundo">${icon('undo-2')} Undo</button>` : ''}<span class="cx-tstate" id="cxtState" role="status">${esc(this.msg)}</span></div>
+      <div class="cx-board">
+        <section class="panel cx-pool" data-drop="pool" data-accept="ath" aria-label="Available athletes"><div class="spread"><h3 class="h3">Available <span class="badge">${all.filter(a => this.inTeam(a.id) < 0).length}</span></h3></div>
+          ${all.length > 8 ? `<div class="input-ic">${icon('search')}<input class="input" id="cxPoolQ" type="search" placeholder="Find an athlete" value="${esc(this.q)}" autocomplete="off" aria-label="Find an athlete"></div>` : ''}
+          <div class="cx-chips">${R.v ? (pool.map(a => chip(a.id)).join('') || `<span class="muted cx-dropme">${all.length ? (q ? 'No one matches.' : `${icon('check')} Everyone is in a team`) : 'No athletes on this team yet.'}</span>`) : Social.skel(1)}</div>
+          <p class="muted cx-hint">${matchMedia('(pointer: coarse)').matches ? 'Hold an athlete, then drag. Or tap for options.' : 'Drag athletes into teams, or click one for options.'}</p></section>
+        <div class="cx-teams" data-drop="teams" data-drop-list data-accept="team">${this.teams.map(teamCard).join('')}</div>
+      </div>
+      ${live ? '' : `<div class="cxb-bar cx-startbar"><span class="grow"><b>${total}</b> athlete${total === 1 ? '' : 's'} in <b>${this.teams.length}</b> team${this.teams.length === 1 ? '' : 's'}</span>
+        <div class="seg" role="group" aria-label="Rotation"><button type="button" data-act="cx-mode" data-v="auto" aria-pressed="${G.mode === 'auto'}">Auto-rotate</button><button type="button" data-act="cx-mode" data-v="manual" aria-pressed="${G.mode === 'manual'}">I'll move them</button></div>
+        <button class="btn ghost danger" type="button" data-act="cx-ctl" data-op="end">Cancel</button><button class="btn primary big" type="button" data-act="cx-start" ${total ? '' : 'disabled'}>${icon('play')} Start circuit</button></div>`}
+    </div>`;
+  },
+  splitN(G, people) { const n = (G.plan && G.plan.stations || []).length || 1; if (this.n == null) this.n = Math.max(1, Math.min(n, people || n)); return `${this.n} team${this.n === 1 ? '' : 's'}`; }
+};
+CxDnd.on('cxt', {
+  label: (t, id) => t === 'ath' ? ((CxT.ppl[id] || {}).name || 'athlete') : ((CxT.teams[+id] || {}).name || 'team'),
+  drop(i) {
+    if (i.type === 'ath') { const ids = CxT.sel.has(i.id) ? [...CxT.sel] : [i.id]; if (i.zone === 'team') CxT.put(ids, +i.zoneId); else if (i.zone === 'pool') CxT.put(ids, -1); }
+    else if (i.type === 'team' && i.zone === 'slot') { const t = CxT.teams[+i.id]; if (!t || t.start === +i.zoneId) return; CxT.snap(); t.start = +i.zoneId; CxT.commit(); CxUndo.show(`${t.name} starts at station ${t.start + 1}`, () => CxT.back()); }
+    else if (i.type === 'team' && i.zone === 'teams' && i.index != null && i.index !== +i.id) { CxT.snap(); const [t] = CxT.teams.splice(+i.id, 1); CxT.teams.splice(i.index, 0, t); CxT.commit(); }
+  },
+  miss(i) { if (i.type === 'ath') UI.toast('Drop the athlete on a team, or back on Available.'); else if (i.type === 'team') UI.toast('Drop the team on a station to change where it starts.'); }
+});
+document.addEventListener('change', e => {
+  if (e.target.classList && e.target.classList.contains('cx-tname')) { const t = CxT.teams[+e.target.dataset.i], v = e.target.value.trim().slice(0, 30); if (t && v && v !== t.name) { CxT.snap(); t.name = v; CxT.commit(); } }
+});
+document.addEventListener('input', e => {
+  if (e.target.id !== 'cxPoolQ') return; CxT.q = e.target.value; clearTimeout(CxT._q);
+  CxT._q = setTimeout(() => { CxS.deferred = false; const box = $('#cxs'); if (!box) return; box.innerHTML = CxS.body(); UI.icons(box); Social.hydrate(box); const i = $('#cxPoolQ'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 200);
+});
+Object.assign(Actions, {
+  'cx-retry': () => { CxS.err = ''; CxS.paint(true); CxS.poll(); },
+  'cx-ctl': el => CxS.ctl(el.dataset.op, el),
+  'cx-mode': el => { if (CxS.G && CxS.G.mode !== el.dataset.v) CxS.ctl('mode', el); },
+  'cx-start': async el => { if (CxT.pend || CxT.saving) { clearTimeout(CxT._t); await CxT.save(); } CxS.ctl('start', el); },
+  'cx-tundo': () => CxT.back(),
+  'cx-tadd': () => { const G = CxS.G, n = (G.plan.stations || []).length || 1; if (CxT.teams.length >= 40) { UI.toast('Up to 40 teams.', 'bad'); return; } CxT.snap(); const used = new Set(CxT.teams.map(t => t.start)); let st = 0; while (used.has(st) && st < n - 1) st++; CxT.teams.push({ name: `Team ${CxT.teams.length + 1}`, start: st, members: [] }); CxT.commit(); },
+  'cx-tdel': async el => {
+    const i = +el.dataset.i, t = CxT.teams[i]; if (!t) return; if (CxT.teams.length === 1) { UI.toast('Keep at least one team.', 'bad'); return; }
+    CxT.snap(); CxT.teams.splice(i, 1); CxT.commit(); CxUndo.show(`${t.name} deleted${t.members.length ? ` — ${t.members.length} back to available` : ''}`, () => CxT.back());
+  },
+  'cx-tstart': async el => {
+    const i = +el.dataset.i, t = CxT.teams[i], S = CxS.G.plan.stations || []; if (!t) return;
+    const k = await Sheet.choose({ title: `Where does ${t.name} start?`, body: '', options: S.map((s, j) => ({ id: String(j), label: `${j + 1} · ${s.name}${CxT.teams.some((x, xi) => xi !== i && x.start === j) ? ' (another team starts here)' : ''}`, cls: j === t.start ? 'primary' : '' })) });
+    if (k == null || +k === t.start) return; CxT.snap(); t.start = +k; CxT.commit();
+  },
+  'cx-split-n': el => { const G = CxS.G, people = ((HQ.roster(G.team_id).v || {}).athletes || []).length; CxT.n = Math.max(1, Math.min(40, (CxT.n || 1) + +el.dataset.v, Math.max(1, people))); CxS.paint(true); },
+  'cx-split': () => {
+    const G = CxS.G, n = (G.plan.stations || []).length || 1, all = (((HQ.roster(G.team_id).v || {}).athletes) || []).slice().sort((a, b) => a.name.localeCompare(b.name)), N = Math.max(1, CxT.n || 1);
+    if (!all.length) { UI.toast('No athletes on this team yet.', 'bad'); return; }
+    CxT.snap(); CxT.teams = Array.from({ length: N }, (_, i) => ({ name: (CxT.teams[i] && CxT.teams[i].name) || `Team ${i + 1}`, start: i % n, members: [] }));
+    all.forEach((a, i) => CxT.teams[i % N].members.push(a.id)); CxT.commit(); CxUndo.show(`${all.length} athletes split into ${N} teams`, () => CxT.back());
+  },
+  'cx-selmode': () => { CxT.selMode = !CxT.selMode; CxT.sel.clear(); CxS.paint(true); },
+  'cx-selmove': async () => {
+    const ids = [...CxT.sel]; if (!ids.length) return;
+    const k = await Sheet.choose({ title: `Move ${ids.length} athlete${ids.length === 1 ? '' : 's'} to…`, body: '', options: CxT.teams.map((t, i) => ({ id: String(i), label: `${t.name} (${t.members.length})` })).concat([{ id: 'pool', label: 'Back to available' }]) });
+    if (k == null) return; CxT.put(ids, k === 'pool' ? -1 : +k); CxT.selMode = false; CxS.paint(true);
+  },
+  'cx-ath': async el => {
+    const id = el.dataset.id;
+    if (CxT.selMode) { if (CxT.sel.has(id)) CxT.sel.delete(id); else CxT.sel.add(id); CxS.paint(true); return; }
+    const a = CxT.ppl[id] || { name: 'Athlete' }, cur = CxT.inTeam(id), G = CxS.G;
+    const k = await Sheet.choose({ title: a.name, body: `<p class="muted">${cur >= 0 ? `In ${esc(CxT.teams[cur].name)}` : 'Not in a team'}</p>`, options: [
+      ...CxT.teams.map((t, i) => ({ id: String(i), label: i === cur ? `${t.name} (now)` : `Move to ${t.name} (${t.members.length})` })),
+      ...(cur >= 0 ? [{ id: 'pool', label: 'Remove from team' }] : []), { id: 'kick', label: 'Remove from training group…', cls: 'danger' }] });
+    if (k == null) return;
+    if (k === 'pool') CxT.put([id], -1);
+    else if (k === 'kick') {
+      if (!(await Sheet.confirm({ title: `Remove ${a.name} from ${esc(G.team_name || 'the training group')}?`, body: '<p>They leave this circuit and your training group, and you stop seeing their training. Their account and workout history are kept. You can invite them back with the team code.</p>', ok: 'Remove from group', danger: true }))) return;
+      if (await Social.act(null, () => Social.rpc('squad_remove', { p_id: G.team_id, p_user: id }), `${a.name} removed from the training group.`) === undefined) return;
+      CxT.teams.forEach(t => { t.members = t.members.filter(m => m !== id); }); Social.drop('roster:', 'myteams', 'hq:', 'tath:'); CxS.paint(true); CxS.poll();
+    } else if (+k !== cur) CxT.put([id], +k);
+  },
+  'cx-res': async el => {
+    const u = el.dataset.u, g = k => ($(`#cxr-${k}-${u}`) || {}).value || '';
+    const d = { reps: g('reps').trim(), kg: g('kg').trim().replace(',', '.'), m: g('m').trim().replace(',', '.'), note: g('note').trim() };
+    if (await Social.act(el, () => Social.rpc('circuit_result_set', { p_id: CxS.sid, p_user: u, p_data: d }), 'Result saved.') !== undefined) CxS.poll();
+  }
+});
+
+/* ---------- athletes: the live screen, the home banner, and finished circuits into their history ---------- */
+Screens.cxlive = function (sid) { CxS.want(sid, 'ath'); return `<div class="screen cxl">${backBar(CxS.G ? esc(CxS.G.name) : 'Circuit')}<div id="cxs" class="cxs" data-role="ath" data-nofold>${CxS.body()}</div></div>`; };
+TAB_OF.cxlive = 'home';
+After.cxlive = view => { Social.hydrate(view); CxS.mount(); };
+(f => { After.hq = (view, o) => { if (f) f(view, o); if ($('#cxs', view)) CxS.mount(); }; })(After.hq);
+const CxMine = {
+  at: 0, data: null,
+  async load(force) {
+    if (!Cloud.on || !Social.on() || (typeof Role !== 'undefined' && Role.parent && Role.parent())) return null;
+    if (!force && this.data && Date.now() - this.at < 15000) return this.data;
+    if (this.loading) return this.data; this.loading = true; this.at = Date.now();
+    try { this.data = await Social.rpc('circuit_mine'); this.importPast(this.data.past || []); } catch (e) { } finally { this.loading = false; }
+    return this.data;
+  },
+  sync() { this.load(true); },
+  banner(view) {
+    const top = $('.topbar', view), old = $('.cx-banner', view); if (old) old.remove();
+    const L = (this.data && this.data.live) || []; if (!top || !L.length) return;
+    const s = L[0], live = s.status !== 'lobby';
+    top.insertAdjacentHTML('afterend', `<button type="button" class="panel cx-banner ${s.status}" data-act="go" data-r="cxlive" data-p="${s.id}"><span class="cx-dot" aria-hidden="true"></span><span class="grow"><b>${live ? 'Circuit live: ' : 'Circuit coming up: '}${esc(s.name)}</b><small>${esc(s.team)}${s.coach ? ' · ' + esc(s.coach.name) : ''}${s.status === 'paused' ? ' · paused' : ''}</small></span><span class="btn sm primary">${live ? 'Join' : 'Open'} ${icon('chevron-right')}</span></button>`);
+    UI.icons(view);
+  },
+  /* a finished circuit becomes a session in the athlete's own history (synced like any workout). Stopped early = marked so. */
+  importPast(L) {
+    if (!State.program || !Array.isArray(State.sessions)) return;
+    const seenK = `bbp.${Cloud.ns || 'x'}.cx.imported`, seen = new Set(LSX.get(seenK, [])); let added = 0;
+    L.forEach(p => {
+      const id = 'cx_' + p.id; if (seen.has(p.id) || State.sessions.some(s => s.id === id)) { seen.add(p.id); return; }
+      const sec = Math.max(0, Math.min(+p.el || 0, p.total_s != null ? +p.total_s : +p.el || 0)), done = p.status === 'done';
+      if (!done && sec < 60) { seen.add(p.id); return; }
+      try {
+        const date = (p.started_at ? new Date(CxClock.ts(p.started_at)) : new Date()), d = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        const wk = AR.weekOf(d), wd = ((date.getDay() + 6) % 7) + 1, min = Math.max(1, Math.round(sec / 60));
+        const rec = { id, kind: 'active', category: 'circuit', tid: `cx-${p.id}`, title: `Circuit · ${p.name}`, week: wk, day: wd, cycle: Program.cycleOf(wk).id, date: d, status: 'rest',
+          activities: [{ name: `Circuit: ${p.name}${done ? '' : ' (stopped early)'}`, min }], minutes: min, notes: '', ex: [], startedAt: CxClock.ts(p.started_at) || null, endedAt: CxClock.ts(p.ended_at) || null,
+          circuit: { sid: p.id, name: p.name, team: p.team, complete: done, planned_s: p.total_s != null ? +p.total_s : null, actual_s: Math.round(sec), rounds: p.rounds, round_rest: p.round_rest, stations: p.stations || [], result: p.result || null },
+          createdAt: Date.now(), updatedAt: Date.now() };
+        Store.save('sessions', rec); seen.add(p.id); added++;
+      } catch (e) { }
+    });
+    LSX.set(seenK, [...seen].slice(-300));
+    if (added && UI.route.name === 'history') UI.render();
+  }
+};
+(() => {
+  const ah = After.home; After.home = function (view, o) {
+    if (ah) ah.call(After, view, o);
+    if (CxMine.data) CxMine.banner(view);
+    CxMine.load().then(() => { if (UI.route.name === 'home') CxMine.banner($('#view')); });
+    clearInterval(CxMine.iv); CxMine.iv = setInterval(() => { if (UI.route.name !== 'home' || document.hidden) return; CxMine.load().then(() => { if (UI.route.name === 'home') CxMine.banner($('#view')); }); }, 20000);
+  };
+  /* history: a circuit shows as a circuit */
+  const hr = AR.histRow.bind(AR); AR.histRow = function (s) {
+    if (s.category !== 'circuit') return hr(s); const c = s.circuit || {};
+    return `<button class="wk-item" type="button" data-act="go" data-r="session" data-p="${s.id}"><span class="wk-day cx-hd">${icon('timer')}</span><span class="grow"><b style="display:block">${esc(c.name || s.title)}</b><span class="muted" style="font-size:12.5px">${fmtDate(s.date)} · Circuit${c.team ? ' · ' + esc(c.team) : ''}${c.complete ? '' : ' · stopped early'}</span></span><span class="st completed">${s.minutes} min</span></button>`;
+  };
+  const vw = AR.view.bind(AR); AR.view = function (s) {
+    if (s.category !== 'circuit') return vw(s); const c = s.circuit || {}, r = c.result || {};
+    return `<div class="screen">${backBar('Circuit')}
+      <section class="panel stack" data-stg><span class="label">${fmtDate(s.date)}${c.team ? ' · ' + esc(c.team) : ''}</span><h2 class="h1" style="font-size:34px">${esc(c.name || s.title)}</h2>
+        <div class="cx-kv"><div><span class="label">Status</span><b>${c.complete ? 'Completed' : 'Stopped early'}</b></div><div><span class="label">Time done</span><b>${CxTime.words(c.actual_s || s.minutes * 60)}</b></div>${c.planned_s != null ? `<div><span class="label">Planned</span><b>${CxTime.words(c.planned_s)}</b></div>` : ''}<div><span class="label">Rounds</span><b>${c.rounds || '∞'}</b></div></div></section>
+      ${(c.stations || []).length ? `<section class="panel" data-stg><h3 class="h3">Stations</h3><ol class="cx-mini">${c.stations.map(x => `<li><span>${esc(x.name)}</span><small>${CxTime.short(x.w)} · rest ${CxTime.short(x.r)}</small></li>`).join('')}</ol></section>` : ''}
+      ${r && (r.reps != null || r.kg != null || r.m != null || r.note) ? `<section class="panel stack" data-stg><h3 class="h3">From your coach</h3><div class="cx-kv">${r.reps != null ? `<div><span class="label">Reps</span><b>${r.reps}</b></div>` : ''}${r.kg != null ? `<div><span class="label">Weight</span><b>${r.kg} kg</b></div>` : ''}${r.m != null ? `<div><span class="label">Distance</span><b>${r.m} m</b></div>` : ''}</div>${r.note ? `<p>${esc(r.note)}</p>` : ''}</section>` : ''}
+      <div data-stg><button class="btn danger" type="button" data-act="ar-del" data-id="${s.id}">${icon('trash-2')} Delete from my history</button></div></div>`;
+  };
+  /* a "circuit starting" notification opens the live screen */
+  const sn = Actions['soc-notif']; Actions['soc-notif'] = el => { if (el.dataset.k === 'circuit') { Social.rpc('notif_read', { p_ids: [+el.dataset.id] }).then(() => { Social.drop('notifs', 'me'); }, () => { }); Nav.go('cxlive', String(el.dataset.ref)); return; } return sn(el); };
+  document.addEventListener('click', e => {   // opening "Move athletes" refreshes the roster once, so late joiners appear
+    const sm = e.target.closest('#cxMoveBox > summary'); if (!sm) return; CxS.moveOpen = !sm.parentElement.open;
+    if (CxS.moveOpen && CxS.G) { const E = Social.c['roster:' + CxS.G.team_id]; if (E) E.at = 0; CxT.roster(CxS.G); }
+  }, true);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && $('#cxs') && CxS.sid) CxS.poll(); });
+})();
 
 </script>
 </body>
