@@ -3182,6 +3182,13 @@ html:root body.theme-light #gate.kiosk{background:#0B1220;color:#F8FAFC;--fg:#F8
 #gate.kiosk .btn{color:#F8FAFC;border-color:rgba(255,255,255,.3)}#gate.kiosk .btn.primary{background:#16A34A;border-color:#16A34A}
 #gate.kiosk .seg button[aria-pressed="true"]{background:#F8FAFC;color:#0B1220}
 @media (prefers-reduced-motion:reduce){.k-toast{transition:none}}
+/* station tablets sheet: open a station right here */
+.cx-qpick{display:grid;gap:6px;margin-bottom:10px}.cx-qpick .chips{flex-wrap:wrap}
+.cx-code-ex{font-size:13px;color:var(--muted);min-height:2.6em}
+.cx-code-b{display:grid;grid-template-columns:1fr auto;gap:8px}.cx-code-b .btn{min-height:48px}
+.cx-code-c{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.cx-code-c .cx-code-v{font-size:16px;letter-spacing:.06em;color:var(--fg)}
+.cx-code>.label{font-size:15px;font-weight:900;color:var(--fg);letter-spacing:.02em;text-transform:none}
+.cx-code-b .btn{white-space:nowrap;padding-inline:12px}
 </style>
 </head>
 <body>
@@ -15013,8 +15020,8 @@ const CxB = {
             <span class="cx-stepper${d.rounds > 5 ? ' on' : ''}"><button type="button" class="btn icon sm" data-act="cx-rounds" data-v="${Math.max(1, (d.rounds || 3) - 1)}" aria-label="One round less">${icon('minus')}</button><b aria-live="polite">${d.rounds || '∞'}</b><button type="button" class="btn icon sm" data-act="cx-rounds" data-v="${Math.min(50, (d.rounds || 3) + 1)}" aria-label="One round more">${icon('plus')}</button></span>
             <button class="chip" type="button" data-act="cx-rounds" data-v="0" aria-pressed="${d.rounds === 0}">${icon('infinity')} Until I stop</button></div></div>
           <div class="cxb-field"><span class="label">Rest between rounds</span>${this.timeBtn('__rr', 'r', d.round_rest, 'Rest between rounds')}</div>
-          <div class="cxb-field"><span class="label" id="cxQL">${icon('tablet')} Station tablets <span class="muted">(no phones in the weight room)</span></span><div class="chips" role="group" aria-labelledby="cxQL">
-            <button class="chip" type="button" data-act="cx-quad" data-v="0" aria-pressed="${!qn}">Off</button>${[2, 3, 4, 5, 6].map(k => `<button class="chip" type="button" data-act="cx-quad" data-v="${k}" aria-pressed="${qn === k}">${k} per tablet</button>`).join('')}</div></div>
+          <div class="cxb-field"><span class="label" id="cxQL">${icon('tablet')} How many tablets? <span class="muted">(one per station, for phone-free weight rooms)</span></span><div class="chips" role="group" aria-labelledby="cxQL">
+            ${CxCodes.splits(Math.max(n, 1)).map(([k, t]) => `<button class="chip" type="button" data-act="cx-quad" data-v="${k}" aria-pressed="${k === qn}">${!k ? `${n > 1 ? n + ' tablets · ' : ''}1 exercise each` : `${t} tablets · ${k} exercises each`}</button>`).join('')}</div></div>
         </div>
         ${this.edit && this.edit.u === '__rr' ? this.pop('__rr', 'r', d.round_rest, 'rest between rounds') : ''}
         <p class="cxb-sum" aria-live="polite">${icon('timer')} ${sum}</p>
@@ -15132,7 +15139,7 @@ Object.assign(Actions, {
   'cx-edit-done': () => { const i = $('#cxTimeIn'); if (i) { const v = CxTime.parse(i.value); if (v != null) CxB.set(i.dataset.u, i.dataset.f, v); } CxB.edit = null; CxB.redraw(); },
   'cx-set': el => { CxB.set(el.dataset.u, el.dataset.f, +el.dataset.v); CxB.edit = null; CxB.redraw(); },
   'cx-quad': el => { const v = +el.dataset.v; if (v === CxTime.qn(CxB.d)) return; CxB.snap(); CxB.d.quad = v; CxB.d.quads = []; CxB.keep(); CxB.redraw();
-    if (v) UI.toast(`Grouped ${v} per tablet. Set each tablet's time on its header.`); },
+    if (v) UI.toast(`${Math.ceil(CxB.d.stations.length / v)} tablets, ${v} exercises each. Set each tablet's time on its header.`); },
   'cx-bump': el => { const u = el.dataset.u, f = el.dataset.f, cur = u === '__rr' ? CxB.d.round_rest : u.startsWith('__q') ? CxTime.units(CxB.d).stations[+u.slice(3)][f] : (CxB.st(u) || {})[f]; CxB.set(u, f, (+cur || 0) + +el.dataset.v); CxB.redraw(); },
   'cx-rounds': el => { CxB.d.rounds = Math.max(0, Math.min(50, +el.dataset.v)); CxB.keep(); CxB.redraw(); },
   'cx-shelf': () => { CxB.shelf = !CxB.shelf; CxB.redraw(); },
@@ -15299,7 +15306,7 @@ const CxS = {
         ${g.phase !== 'ready' ? B('restart', 'rotate-ccw', 'Restart interval') : ''}
       </div>
       <div class="cx-ctrls2"><div class="seg" role="group" aria-label="Rotation"><button type="button" data-act="cx-mode" data-v="auto" aria-pressed="${G.mode === 'auto'}">Automatic</button><button type="button" data-act="cx-mode" data-v="manual" aria-pressed="${G.mode === 'manual'}">Coach moves teams</button></div>
-        <button type="button" class="btn ghost" data-act="cx-codes">${icon('tablet')} Station tablets</button><button type="button" class="btn ghost" data-act="cx-sets">${icon('clipboard-list')} Logged sets${Object.keys(G.logs || {}).length ? ` (${Object.keys(G.logs).length})` : ''}</button>
+        <button type="button" class="btn" data-act="cx-codes">${icon('tablet')} Open station tablets</button><button type="button" class="btn ghost" data-act="cx-sets">${icon('clipboard-list')} Logged sets${Object.keys(G.logs || {}).length ? ` (${Object.keys(G.logs).length})` : ''}</button>
         <button type="button" class="btn ghost danger" data-act="cx-ctl" data-op="end">${icon('square')} End circuit</button></div>`;
     const teams = G.teams.map(t => {
       const ts = CxTime.team(T, g, t.start), s = T.S[ts.st] || {}, nx = ts.next != null ? T.S[ts.next] : null;
@@ -15454,7 +15461,7 @@ const CxT = {
         <div class="cx-chips">${t.members.map(chip).join('') || `<span class="cx-dropme">${icon('hand')} Drag athletes here</span>`}</div></article>`;
     return `<div class="cx-lobby" data-dnd-root="cxt">
       ${live ? '' : `<section class="panel cx-lobby-h" data-stg><div class="grow"><b>${esc(G.plan ? G.plan.name : G.name)}</b><small class="muted">${G.plan.tabs ? `${(G.plan.src || []).length} exercises on ${n} tablet${n === 1 ? '' : 's'}` : `${n} station${n === 1 ? '' : 's'}`} · ${G.plan.rounds ? G.plan.rounds + ' round' + (G.plan.rounds === 1 ? '' : 's') : 'until you stop'} · ${T2 && T2.total != null ? '≈ ' + Math.round(T2.total / 60) + ' min with these teams' : ''}</small></div>
-        <span class="row"><button class="btn sm" type="button" data-act="cx-codes">${icon('tablet')} Station tablets</button><button class="btn sm" type="button" data-act="cx-open" data-id="${G.circuit_id}">${icon('pencil')} Edit circuit</button></span></section>`}
+        <span class="row"><button class="btn sm primary" type="button" data-act="cx-codes">${icon('tablet')} Open station tablets</button><button class="btn sm" type="button" data-act="cx-open" data-id="${G.circuit_id}">${icon('pencil')} Edit circuit</button></span></section>`}
       ${strip}
       <div class="cx-tbar">${live ? '' : `<button class="btn sm" type="button" data-act="cx-tadd">${icon('plus')} Team</button>
           <span class="cx-split"><button class="btn icon sm ghost" type="button" data-act="cx-split-n" data-v="-1" aria-label="Fewer teams">${icon('minus')}</button><button class="btn sm" type="button" data-act="cx-split">${icon('shuffle')} Auto-split into ${this.splitN(G, all.length)}</button><button class="btn icon sm ghost" type="button" data-act="cx-split-n" data-v="1" aria-label="More teams">${icon('plus')}</button></span>`}
@@ -15814,15 +15821,41 @@ Object.assign(Actions, {
 const CxCodes = {
   url(code) { return `${location.origin}${location.pathname}?station=${code}`; },
   fmt(c) { return c.slice(0, 4) + ' ' + c.slice(4); },
+  /* the ways to split n exercises over tablets: [per tablet (0 = one each), tablets] — one entry per tablet count */
+  splits(n) { const out = [], seen = new Set(); [0, 2, 3, 4, 5, 6, 8].forEach(k => { if (k && k >= n) return; const t = k ? Math.ceil(n / k) : n; if (seen.has(t)) return; seen.add(t); out.push([k, t]); }); return out; },
+  /* open a station right here: this tab becomes the station screen (the coach stays signed in for when they leave it) */
+  open(code, win) {
+    const url = this.url(code);
+    if (win) { const w = window.open(url, '_blank'); if (!w) UI.toast('Your browser blocked the new window. Use “Open here” instead.', 'bad'); return; }
+    location.href = url;
+  },
+  html(G, K) {
+    const P = G.plan, U = P.stations || [], n = (P.src || P.stations || []).length, q = CxTime.qn(P), lobby = G.status === 'lobby';
+    const pick = lobby && n > 2 ? `<div class="cx-qpick"><span class="label" id="cxQP">How many tablets?</span><div class="chips" role="group" aria-labelledby="cxQP">${this.splits(n).map(([k, t]) =>
+        `<button type="button" class="chip" data-q="${k}" aria-pressed="${k === q}">${t} tablet${t === 1 ? '' : 's'} · ${k ? `${k} exercises each` : '1 exercise each'}</button>`).join('')}</div></div>` : '';
+    return `${pick}<p class="muted cx-note">On the tablet that stands at a station, tap <b>Open here</b> — that screen becomes the station's timer and sign-in. On a laptop or big screen, <b>New window</b> opens another station next to it. A tablet that isn't signed in can type the code on the login screen.</p>
+      <div class="cx-codes">${K.map(k => { const s = U[k.unit] || {}; return `<article class="cx-code"><span class="label">${esc(CxTime.unitName(s, k.unit))}</span>
+        <small class="cx-code-ex">${esc(s.ex ? s.ex.map(x => x.name).join(' · ') : s.name || '')}</small>
+        <div class="cx-code-b"><button type="button" class="btn primary" data-open="${k.code}">${icon('tablet')} Open here</button><button type="button" class="btn" data-win="${k.code}">${icon('external-link')} New window</button></div>
+        <span class="cx-code-c">Code <b class="cx-code-v" aria-label="${k.code.split('').join(' ')}">${this.fmt(k.code)}</b> <button type="button" class="btn sm ghost" data-copy="${esc(this.url(k.code))}" aria-label="Copy the link for ${esc(CxTime.unitName(s, k.unit))}">${icon('link')}</button></span></article>`; }).join('')}</div>`;
+  },
+  wire(sh) {
+    $$('[data-open]', sh).forEach(b => b.onclick = () => this.open(b.dataset.open));
+    $$('[data-win]', sh).forEach(b => b.onclick = () => this.open(b.dataset.win, true));
+    $$('[data-copy]', sh).forEach(b => b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); UI.toast('Link copied.'); } catch (e) { UI.toast(b.dataset.copy); } });
+    $$('[data-q]', sh).forEach(b => b.onclick = async () => {
+      const G = CxS.G; if (!G || +b.dataset.q === CxTime.qn(G.plan)) return;
+      $$('[data-q]', sh).forEach(x => x.disabled = true);
+      try { const R = await Social.rpc('circuit_session_group', { p_id: G.id, p_quad: +b.dataset.q }); CxS.apply(R); if (typeof CxT !== 'undefined' && CxT.adopt) try { CxT.adopt(CxS.G); } catch (e) { }
+        const K = await Social.rpc('circuit_kiosk_codes', { p_id: G.id });         const host = sh.querySelector('[data-cxcodes]'); host.innerHTML = this.html(CxS.G, K); UI.icons(host); this.wire(sh);
+        UI.toast(`${K.length} tablets. Each tablet's time now comes from its exercises — change it in Edit circuit.`); }
+      catch (e) { UI.toast(Social.msg(e), 'bad'); $$('[data-q]', sh).forEach(x => x.disabled = false); }
+    });
+  },
   async show(el) {
     const G = CxS.G; if (!G) return;
     const K = await Social.act(el, () => Social.rpc('circuit_kiosk_codes', { p_id: G.id })); if (!K) return;
-    const P = G.plan, U = P.stations || [];
-    Sheet.open({ title: 'Station tablets', wide: true, html: `<p class="muted cx-note">On each tablet, open the app and tap <b>Station tablet</b> on the login screen, then type its code — or open the link. No password goes on the tablets. Codes stop working a few hours after the circuit ends.</p>
-      <div class="cx-codes">${K.map(k => { const s = U[k.unit] || {}; return `<article class="cx-code"><span class="label">${esc(CxTime.unitName(s, k.unit))}</span><b class="cx-code-v" aria-label="Code ${k.code.split('').join(' ')}">${this.fmt(k.code)}</b>
-        <small class="muted">${esc(s.ex ? s.ex.map(x => x.name).join(', ') : s.name || '')}</small>
-        <div class="row"><button type="button" class="btn sm" data-copy="${esc(this.url(k.code))}">${icon('link')} Copy link</button></div></article>`; }).join('')}</div>`,
-      onMount: sh => $$('[data-copy]', sh).forEach(b => b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); UI.toast('Link copied.'); } catch (e) { UI.toast(b.dataset.copy); } }) });
+    Sheet.open({ title: 'Station tablets', wide: true, html: `<div data-cxcodes>${this.html(G, K)}</div>`, onMount: sh => this.wire(sh) });
   },
   async sets(el) {
     const G = CxS.G; if (!G) return;
@@ -15912,9 +15945,17 @@ Object.assign(Actions, { 'cx-from': () => CxFrom.fresh(), 'cx-from-add': () => C
 /* ---------- the station tablet: no account, opened with a code ---------- */
 const Kiosk = {
   KEY: 'vi.kiosk', sb: null, code: '', K: null, err: '', who: null, timer: null, iv: null, ok: true, unit: 'lb', msg: '', showAll: false, idle: null,
-  param() { try { const q = new URLSearchParams(location.search).get('station'); if (q) return q.replace(/[^A-Za-z0-9]/g, '').toUpperCase(); } catch (e) { } try { return localStorage.getItem(this.KEY) || ''; } catch (e) { return ''; } },
+  param() {
+    try { const q = new URLSearchParams(location.search).get('station'); if (q) return q.replace(/[^A-Za-z0-9]/g, '').toUpperCase(); } catch (e) { }
+    try { return sessionStorage.getItem(this.KEY) || localStorage.getItem(this.KEY) || ''; } catch (e) { return ''; }
+  },
+  /* someone is signed in on this device (a coach opening a station from their own tablet): keep the station to this tab only,
+     so their app opens normally next time. A device nobody signs in on stays a station tablet. */
+  signedIn() { try { return Object.keys(localStorage).some(k => (k === 'bbp.auth' || /^sb-.*auth-token$/.test(k)) && /access_token/.test(localStorage.getItem(k) || '')); } catch (e) { return false; } },
+  keep(c) { try { sessionStorage.setItem(this.KEY, c); if (this.signedIn()) localStorage.removeItem(this.KEY); else localStorage.setItem(this.KEY, c); } catch (e) { } },
+  forget() { try { sessionStorage.removeItem(this.KEY); localStorage.removeItem(this.KEY); } catch (e) { } },
   async run(code) {
-    this.code = code; try { localStorage.setItem(this.KEY, code); this.unit = localStorage.getItem(this.KEY + '.u') || 'lb'; } catch (e) { }
+    this.code = code; this.keep(code); try { this.unit = localStorage.getItem(this.KEY + '.u') || 'lb'; } catch (e) { }
     try { history.replaceState(null, '', location.pathname); } catch (e) { }
     try { await Cloud.load(); } catch (e) { this.err = 'No connection. Check the Wi-Fi and reload.'; }
     if (window.supabase) { this.sb = window.supabase.createClient(CLOUD_CFG.url, CLOUD_CFG.anonKey, { auth: { persistSession: false, autoRefreshToken: false, storageKey: 'vi.kiosk.auth' } }); try { await Brand.pre(this.sb); } catch (e) { } }
@@ -16028,18 +16069,18 @@ const Kiosk = {
     }
     else if (k === 'menu') {
       const g = $('#gate'); g.insertAdjacentHTML('beforeend', `<div class="k-menu" role="dialog" aria-label="Station settings"><div class="k-menu-b"><h2>Station settings</h2><p class="muted">Code ${esc(CxCodes.fmt(this.code))}</p>
-        <button type="button" class="btn big" data-k="reload">${icon('refresh-cw')} Refresh</button><button type="button" class="btn big" data-k="other">${icon('hash')} Use another code</button><button type="button" class="btn big danger" data-k="leave">${icon('log-out')} Leave station mode</button><button type="button" class="btn ghost" data-k="close">Close</button></div></div>`); UI.icons(g);
+        <button type="button" class="btn big" data-k="reload">${icon('refresh-cw')} Refresh</button><button type="button" class="btn big" data-k="other">${icon('hash')} Use another code</button><button type="button" class="btn big danger" data-k="leave">${icon('log-out')} ${this.signedIn() ? 'Back to the app' : 'Leave station mode'}</button><button type="button" class="btn ghost" data-k="close">Close</button></div></div>`); UI.icons(g);
     }
     else if (k === 'close') { const m = $('.k-menu'); m && m.remove(); }
     else if (k === 'reload') location.reload();
     else if (k === 'other') { this.err = 'Type the code for this station'; this.K = null; const m = $('.k-menu'); m && m.remove(); this.paint(); }
-    else if (k === 'leave') { try { localStorage.removeItem(this.KEY); } catch (x) { } location.replace(location.pathname); }
+    else if (k === 'leave') { this.forget(); location.replace(location.pathname); }
   }
 };
 document.addEventListener('submit', e => {
   if (!e.target.matches || !e.target.matches('[data-k-form]')) return; e.preventDefault();
   const c = ($('#kCode').value || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase(); if (c.length !== 8) { $('#kCode').classList.add('bad'); return; }
-  Kiosk.code = c; Kiosk.err = ''; try { localStorage.setItem(Kiosk.KEY, c); } catch (x) { } Kiosk.key = null; Kiosk.paint(); Kiosk.poll();
+  Kiosk.code = c; Kiosk.err = ''; Kiosk.keep(c); Kiosk.key = null; Kiosk.paint(); Kiosk.poll();
 });
 /* boot: a station tablet never shows the login — it opens the station */
 (() => {
