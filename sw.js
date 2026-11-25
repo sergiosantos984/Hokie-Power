@@ -3,8 +3,8 @@
      so a new upload shows the next time the app is opened (and everything works offline).
    • Account data (supabase.co) is never cached.
    • Push: shows the reminder; tapping it opens or focuses the app on the right screen. */
-const V = 'vi-20261125-1400';   // station tablets: new cache so phones and tablets pick up the new page
-const CORE = ['./', './index.html', './config.js', './manifest.webmanifest', './icon-192.png', './icon-180.png'];
+const V = 'vi-20261125-1500';   // new logo + home-screen icon: new cache so phones pick it up
+const CORE = ['./', './index.html', './config.js', './manifest.webmanifest', './icon-192.png?v=2', './icon-180.png?v=2', './icon-512.png?v=2', './icon-maskable-512.png?v=2'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => Promise.all(CORE.map(u => c.add(new Request(u, { cache: 'reload' })).catch(() => null)))));
   self.skipWaiting();
