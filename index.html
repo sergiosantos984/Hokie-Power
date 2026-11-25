@@ -3021,6 +3021,79 @@ body:has(.cx-startbar) .cx-undo{bottom:calc(205px + env(safe-area-inset-bottom))
 @media (min-width:700px){body:has(.cx-startbar) .cx-undo,body:has(.cxb-bar) .cx-undo{bottom:calc(150px + env(safe-area-inset-bottom))}}
 @media (min-width:900px){body:has(.cxb-bar) .cx-undo,body:has(.cx-startbar) .cx-undo{bottom:96px}}
 .cx-ring{width:min(78vw,320px,44vh)}
+
+/* ---- Sleep & Recovery — Nov 25 ---- */
+.rc{--good:#16A34A;--mid:#D97706;--low:#DC2626;--none:#94A3B8}
+.rc-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;background:rgba(148,163,184,.16);color:#475569}
+.rc-pill.good{background:rgba(22,163,74,.13);color:#166534}.rc-pill.mid{background:rgba(217,119,6,.15);color:#92400E}.rc-pill.low{background:rgba(220,38,38,.12);color:#991B1B}
+.rc-ring{position:relative;width:var(--s);height:var(--s);flex:none}.rc-ring svg{width:100%;height:100%}.rc-ring .trk{fill:none;stroke:rgba(var(--b1rgb),.1);stroke-width:10}
+.rc-ring-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.rc-ring-in b{font-size:calc(var(--s) * .3);font-weight:800;font-variant-numeric:tabular-nums}.rc-ring-in small{font-size:max(10px,calc(var(--s) * .09));color:var(--muted);margin-top:3px}
+.rc-hero{display:flex;align-items:center;gap:16px}.rc-hero .h2{margin:2px 0 4px}.rc-sub{display:flex;gap:6px;align-items:center;font-size:13px;margin:0 0 4px}.rc-sub svg{width:14px;height:14px}
+.rc-cta{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:1.5px solid rgba(var(--b2rgb),.45);background:linear-gradient(135deg,rgba(var(--b2rgb),.12),transparent)}
+.rc-cta small{display:block;color:var(--muted);font-size:13px}.rc-cta-ic{width:44px;height:44px;border-radius:14px;flex:none;display:grid;place-items:center;background:var(--b1);color:#fff}
+.rc-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,140px),1fr));gap:10px}
+.rc-tile{position:relative;display:flex;flex-direction:column;gap:2px;padding:12px;border-radius:16px;background:var(--panel);border:1px solid var(--line);border-left:4px solid #94A3B8}
+.rc-tile.good{border-left-color:#16A34A}.rc-tile.mid{border-left-color:#D97706}.rc-tile.low{border-left-color:#DC2626}
+.rc-tile b{font-size:22px;font-variant-numeric:tabular-nums}.rc-tile b small{font-size:13px;color:var(--muted);font-weight:600}.rc-tile>small{font-size:12px;color:var(--muted);min-height:1em}
+.rc-tile-ic{position:absolute;right:10px;top:10px;color:var(--muted);opacity:.7}.rc-tile-ic svg{width:16px;height:16px}
+.rc-ins{gap:8px}.rc-in{display:flex;gap:10px;align-items:flex-start;margin:0;padding:10px 12px;border-radius:12px;background:rgba(var(--b1rgb),.05);font-size:14px}
+.rc-in svg{flex:none;width:18px;height:18px;margin-top:1px}.rc-in.low{background:rgba(220,38,38,.08)}.rc-in.low svg{color:#B91C1C}.rc-in.mid{background:rgba(217,119,6,.1)}.rc-in.mid svg{color:#B45309}.rc-in.good{background:rgba(22,163,74,.09)}.rc-in.good svg{color:#15803D}
+.rc-chart{width:100%;height:auto;display:block;overflow:visible}.rc-ax{font-size:10px;fill:var(--muted)}.rc-grid{stroke:rgba(var(--b1rgb),.08);stroke-width:1}
+.rc-target{stroke:#16A34A;stroke-dasharray:4 4;stroke-width:1.2;opacity:.7}
+.rc-ch{display:flex;flex-direction:column;gap:4px;min-width:0}.rc-ch2{gap:14px}.rc-range{min-width:180px}
+.rc-hist,.rc-days{display:flex;flex-direction:column}
+.rc-hrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 2px;border:0;border-top:1px solid var(--line);background:none;color:inherit;min-height:56px}
+.rc-hrow:first-child{border-top:0}.rc-hrow .d{width:56px;flex:none;display:flex;flex-direction:column;font-size:13px}.rc-hrow .grow{min-width:0;display:flex;flex-direction:column;font-size:14px}.rc-hrow .grow svg{width:14px;height:14px;vertical-align:-2px}
+.rc-n{min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+.rc-priv{display:flex;gap:10px;align-items:flex-start}.rc-priv p{margin:0;font-size:13.5px}.rc-priv>svg{flex:none;margin-top:2px}
+.rc-home{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-bottom:12px}.rc-home small{display:block}.rc-home .grow{min-width:0}
+/* check-in sheet */
+.rc-steps{margin-bottom:4px}.rc-steps button{display:inline-flex;gap:6px;align-items:center;justify-content:center}.rc-steps svg{width:15px;height:15px}
+.rc-times{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rc-time{font-size:22px;font-weight:700;min-height:56px;text-align:center;font-variant-numeric:tabular-nums}
+.rc-times label{display:flex;gap:6px;align-items:center}.rc-times label svg{width:15px;height:15px}
+.rc-dur{margin:0;padding:10px 12px;border-radius:12px;background:rgba(22,163,74,.08);font-size:15px}.rc-dur.bad{background:rgba(220,38,38,.09);color:#991B1B}
+.rc-q{display:flex;flex-direction:column;gap:6px;padding:6px 0}.rc-q-h b{font-size:15px}
+.rc-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.rc-opt{min-height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--panel);color:var(--fg);font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;transition:transform .12s,background .12s}
+.rc-opt[aria-checked="true"]{background:var(--b1);border-color:var(--b1);color:#fff;transform:scale(1.04)}.rc-opt:focus-visible{outline:2px solid var(--b2);outline-offset:2px}
+.rc-q-ends{display:flex;justify-content:space-between;gap:8px}.rc-q-ends small{font-size:12px;color:var(--muted)}.rc-q-ends small:last-child{text-align:right}
+.rc-more summary{cursor:pointer;min-height:44px;display:flex;align-items:center;gap:6px}.rc-more .stack{margin-top:6px}
+.rc-step{display:inline-flex;align-items:center;gap:10px}.rc-step b{min-width:80px;text-align:center}
+.rc-hint,.rc-note{font-size:13px;margin:0;display:flex;gap:6px;align-items:center}.rc-note svg{width:14px;height:14px}
+/* coach */
+.rc-attn{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}.rc-attn:first-of-type{border-top:0}.rc-attn .grow{min-width:0}
+.rc-flags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.rc-flag{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:rgba(217,119,6,.13);color:#92400E}.rc-flag.low{background:rgba(220,38,38,.11);color:#991B1B}
+.rc-fchips{flex-wrap:wrap}.rc-legend{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.rc-list{display:flex;flex-direction:column;gap:8px}
+.rc-row{display:grid;grid-template-columns:minmax(150px,1.6fr) 104px 92px repeat(4,62px) 80px;align-items:center;gap:8px;width:100%;text-align:left;padding:10px 12px;border-radius:14px;border:1px solid var(--line);border-left:5px solid #94A3B8;background:var(--panel);color:inherit}
+.rc-row.t-good{border-left-color:#16A34A}.rc-row.t-mid{border-left-color:#D97706}.rc-row.t-low{border-left-color:#DC2626}
+.rc-row:hover{box-shadow:var(--sh-2)}.rc-who{display:flex;align-items:center;gap:10px;min-width:0}.rc-who>span{display:flex;flex-direction:column;min-width:0}.rc-who>span:not(.sav) b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc-score{display:flex;align-items:center;gap:6px}.rc-score b{font-size:20px;min-width:28px;font-variant-numeric:tabular-nums}
+.rc-cell{display:flex;flex-direction:column;align-items:flex-start;gap:1px;font-size:14px}.rc-cell .label{font-size:10px}.rc-cell small:not(.label){font-size:11.5px;color:var(--muted)}.rc-cell b.warn{color:#B45309}
+.rc-v{display:inline-grid;place-items:center;min-width:28px;height:26px;border-radius:8px;font-weight:800;font-size:13.5px;background:rgba(148,163,184,.16)}
+.rc-v.good{background:rgba(22,163,74,.14);color:#166534}.rc-v.mid{background:rgba(217,119,6,.15);color:#92400E}.rc-v.low{background:rgba(220,38,38,.13);color:#991B1B}.rc-v.none{color:var(--muted)}
+.rc-spark{stroke:#64748B}.rc-spark.up{stroke:#16A34A}.rc-spark.down{stroke:#DC2626}.rc-spark.none{font-size:13px;color:var(--muted)}
+@media (max-width:860px){.rc-row{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"who who who score" "sl en so fa" "re tr tr tr"}
+  .rc-row>.rc-cell{display:flex}.rc-row>.rc-cell:nth-of-type(3){grid-area:sl}.rc-row>.rc-cell:nth-of-type(4){grid-area:en}.rc-row>.rc-cell:nth-of-type(5){grid-area:so}.rc-row>.rc-cell:nth-of-type(6){grid-area:fa}.rc-row>.rc-cell:nth-of-type(7){grid-area:re}.rc-row>.rc-cell:nth-of-type(8){grid-area:tr}
+  .rc-who{grid-area:who}.rc-score{grid-area:score;justify-self:end}}
+.rc-foot{font-size:12.5px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.rc-foot svg{width:14px;height:14px}
+.rc-ahead{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.rc-ahead .grow{min-width:180px}
+.rc-day{border-top:1px solid var(--line)}.rc-day:first-child{border-top:0}
+.rc-day summary{display:flex;align-items:center;gap:10px;padding:10px 2px;cursor:pointer;min-height:52px;list-style:none}.rc-day summary::-webkit-details-marker{display:none}
+.rc-day summary .d{width:56px;flex:none;display:flex;flex-direction:column;font-size:13px}.rc-day summary .grow{min-width:0;font-size:14px}.rc-day summary svg{width:14px;height:14px;vertical-align:-2px}
+.rc-day-b{padding:0 4px 12px 66px;display:flex;flex-direction:column;gap:8px;font-size:14px}.rc-day-b p{margin:0}
+.rc-ans{display:flex;flex-wrap:wrap;gap:6px}.rc-ans span{display:flex;flex-direction:column;padding:6px 10px;border-radius:10px;background:rgba(var(--b1rgb),.05)}.rc-ans small{font-size:11px;color:var(--muted)}
+.rc-q-note{margin:0;padding:8px 12px;border-left:3px solid var(--b2);background:rgba(var(--b2rgb),.07);border-radius:0 10px 10px 0;font-style:italic}
+.rc-edits{font-size:12.5px;display:flex;gap:6px;align-items:flex-start}.rc-edits svg{flex:none;width:14px;height:14px;margin-top:2px}
+@media (max-width:640px){.rc-day-b{padding-left:4px}}
+.rc-ovw{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-bottom:12px}.rc-ovw small{display:block}
+.rc-kpis .hq-kpi{min-width:0}
+.rc-explain table.rc-tbl{width:100%;border-collapse:collapse;font-size:13.5px}.rc-tbl th,.rc-tbl td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line);vertical-align:top}.rc-tbl td:nth-child(2){font-weight:700;text-align:center}.rc-tbl small{color:var(--muted)}
+.rc-cats{list-style:none;padding:0;margin:0;display:grid;gap:6px}.rc-cats li{display:flex;gap:10px;align-items:center}
+@media (prefers-reduced-motion:reduce){.rc-opt{transition:none}}
+
+.rc-chart{max-width:620px}
 </style>
 </head>
 <body>
@@ -14250,6 +14323,9 @@ Object.assign(ICONS, {
   'user-pen': 'M11.5 15H7a4 4 0 0 0-4 4v2M21.38 16.62a1 1 0 0 0-3-3l-4.01 4.02a2 2 0 0 0-.5.86l-.84 2.86a.5.5 0 0 0 .62.62l2.87-.84a2 2 0 0 0 .85-.5zM10 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8z',
   'wifi-off': 'M12 20h.01M8.5 16.43a5 5 0 0 1 7 0M2 8.82a15 15 0 0 1 4.17-2.65M10.66 5c4.01-.36 8.14.9 11.34 3.76M16.85 11.25a10 10 0 0 1 2.22 1.68M5 13a10 10 0 0 1 5.24-2.76M2 2l20 20',
   'timer-off': 'M10 2h4M4.6 11a8 8 0 0 0 1.7 8.7 8 8 0 0 0 8.7 1.7M7.4 7.4a8 8 0 0 1 10.3 1 8 8 0 0 1 .9 10.2M2 2l20 20M12 12v-2',
+  'moon': 'M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z', 'sun': 'M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41',
+  'battery-low': 'M16 7h1a2 2 0 0 1 2 2v.5a.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5v.5a2 2 0 0 1-2 2h-1M7 17H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3M6 11v2M10 7h2M10 17h2',
+  'trending-down': 'M22 17l-8.5-8.5-5 5L2 7M16 17h6v-6',
   'arrow-right-circle': 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20zM8 12h8M12 16l4-4-4-4', 'fast-forward': 'M13 19l9-7-9-7zM2 19l9-7-9-7z'
 });
 
@@ -14898,7 +14974,7 @@ document.addEventListener('keydown', e => {
   const g = e.target.closest && e.target.closest('.cx-grip'); if (!g || !['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) return;
   e.preventDefault(); const u = g.dataset.u, i = CxB.d.stations.findIndex(s => s.u === u);
   CxB.move(u, e.key === 'Home' ? 0 : e.key === 'End' ? 1e9 : i + (e.key === 'ArrowUp' ? -1 : 1));
-  setTimeout(() => { const n = $(`.cx-grip[data-u="${u}"]`); n && n.focus(); }, 30);
+  const n = $(`.cx-grip[data-u="${u}"]`); if (n) n.focus({ preventScroll: true });   // straight back on the same grip, so fast key presses keep working
 });
 document.addEventListener('input', e => {
   if (!CxB.d) return;
@@ -15397,6 +15473,519 @@ const CxMine = {
     if (CxS.moveOpen && CxS.G) { const E = Social.c['roster:' + CxS.G.team_id]; if (E) E.at = 0; CxT.roster(CxS.G); }
   }, true);
   document.addEventListener('visibilitychange', () => { if (!document.hidden && $('#cxs') && CxS.sid) CxS.poll(); });
+})();
+
+</script>
+<script>
+/* ============ SLEEP & RECOVERY — data, the Recovery Score, insights, small charts ============
+   Everything here comes from what the athlete types in. No wearables, no outside services.
+   One record per day ("w-YYYY-MM-DD", the morning the athlete woke up): last night's sleep + that morning's check-in.
+   Records are saved with the rest of the athlete's training data (and synced like readiness), so they work offline,
+   follow the athlete across phones and stay theirs if they leave a team. Each edit keeps the previous version (up to 5). */
+const REC_DEFAULT = {
+  /* weights: how much each answer counts (they don't need to add up to 100; the score is a weighted average of what was answered) */
+  w: { dur: 20, q: 15, rested: 10, energy: 10, soreness: 10, fatigue: 10, mfatigue: 5, stress: 10, readiness: 10, rhr: 5, hrv: 5 },
+  t: { excellent: 85, good: 70, moderate: 50 },          // 85–100 excellent · 70–84 good · 50–69 moderate · 0–49 low
+  sleepMin: 4, sleepTarget: 8, shortSleep: 7,            // hours: 0 points at 4 h, full points from 8 h; under 7 h is flagged as short
+  rhrRange: 10, hrvFloor: .7, minCoverage: .35, stale: 2  // RHR: −10 points a beat over your usual; HRV: 0 points at 70 % of usual; days before data counts as old
+};
+const REC_Q = [   // the morning check-in: [key, label, 1 =, 5 =, good when high?]
+  ['energy', 'Energy', 'Exhausted', 'Full of energy', true],
+  ['soreness', 'Muscle soreness', 'No soreness', 'Extremely sore', false],
+  ['fatigue', 'Physical fatigue', 'Fully recovered', 'Extremely fatigued', false],
+  ['mfatigue', 'Mental fatigue', 'Fresh and sharp', 'Mentally drained', false],
+  ['stress', 'Stress', 'Very relaxed', 'Extremely stressed', false],
+  ['motivation', 'Motivation to train', 'Not motivated', 'Highly motivated', true],
+  ['readiness', 'Ready to train', 'Not ready to train', 'Fully ready to train', true]
+];
+const REC_SLEEP_Q = [['q', 'Sleep quality', 'Very poor', 'Excellent'], ['rested', 'How rested you feel', 'Not rested at all', 'Fully rested']];
+const REC_PART = { dur: 'Sleep duration', q: 'Sleep quality', rested: 'Feeling rested', energy: 'Energy', soreness: 'Muscle soreness', fatigue: 'Physical fatigue', mfatigue: 'Mental fatigue', stress: 'Stress', readiness: 'Readiness', rhr: 'Resting heart rate', hrv: 'HRV' };
+const Rec = Object.assign(syncList('wellness'), {
+  cfgE() { return Cloud.on && Social.on() ? Social.get('reccfg', () => Social.rpc('rec_cfg'), 600000) : {}; },
+  cfg() { const s = (this.cfgE().v) || {}; return Object.assign({}, REC_DEFAULT, s, { w: Object.assign({}, REC_DEFAULT.w, s.w || {}), t: Object.assign({}, REC_DEFAULT.t, s.t || {}) }); },
+  id(date) { return 'w-' + date; },
+  get(date) { return this.all().find(e => e.id === this.id(date)) || null; },
+  /* minutes between two HH:MM clock times; crossing midnight is fine (23:30 → 07:00 = 7 h 30) */
+  span(bed, wake) {
+    const m = s => { const x = /^(\d{1,2}):(\d{2})$/.exec(String(s || '')); return x && +x[1] < 24 && +x[2] < 60 ? +x[1] * 60 + +x[2] : null; };
+    const a = m(bed), b = m(wake); if (a == null || b == null) return null; const d = (b - a + 1440) % 1440; return d === 0 ? null : d;
+  },
+  hm(min) { if (min == null || !isFinite(min)) return '—'; min = Math.round(min); const h = Math.floor(min / 60), m = min % 60; return `${h} h${m ? ' ' + String(m).padStart(2, '0') : ''}`; },
+  /* save part of a day ('sleep' or 'rec' or 'body'); the old version goes into the record's history */
+  setDay(date, part, val) {
+    const old = this.get(date), e = old ? JSON.parse(JSON.stringify(old)) : { id: this.id(date), date, createdAt: Date.now() };
+    if (old && (old.sleep || old.rec || old.rhr != null || old.hrv != null)) { const prev = { at: old.updatedAt || old.createdAt, sleep: old.sleep || null, rec: old.rec || null, rhr: old.rhr == null ? null : old.rhr, hrv: old.hrv == null ? null : old.hrv }; e.hist = (old.hist || []).concat([prev]).slice(-5); }
+    if (part === 'body') { e.rhr = val.rhr; e.hrv = val.hrv; } else e[part] = Object.assign({}, val, { at: Date.now() });
+    this.save(e); this.mirror(e);
+    try { Cloud.on && Social.flush().then(() => Social.rpc('rec_checked', { p_date: date })).catch(() => { }); } catch (x) { }
+    return e;
+  },
+  /* answers also count as today's readiness, so the gym check-in doesn't ask again and the old coach views keep working */
+  mirror(e) {
+    try {
+      if (!e.rec && !(e.sleep && e.sleep.q)) return; const r = e.rec || {}, inv = v => v ? 6 - v : null;
+      const old = Ready.all().find(x => x.date === e.date), row = { id: (old && old.id) || 'rdy-w-' + e.date, date: e.date, src: 'wellness' };
+      const v = { sleep: e.sleep && e.sleep.q, soreness: inv(r.soreness), energy: r.energy, stress: inv(r.stress), mood: r.motivation };
+      Object.entries(v).forEach(([k, x]) => { if (x) row[k] = x; }); Ready.save(Object.assign({}, old || {}, row));
+    } catch (x) { }
+  },
+  /* one shape for every day: a full record, or the quick 5-tap check-in from the gym (counted as partial) */
+  norm(e) {
+    if (!e) return null;
+    if (e.id && String(e.id).startsWith('w-')) return { date: e.date, src: 'full', sleep: e.sleep || null, rec: e.rec || null, rhr: e.rhr == null ? null : +e.rhr, hrv: e.hrv == null ? null : +e.hrv, at: e.updatedAt, edits: (e.hist || []).length, hist: e.hist || [] };
+    const inv = v => v >= 1 && v <= 5 ? 6 - v : null;   // old scale: 5 = fresh / relaxed
+    return { date: e.date, src: 'quick', sleep: e.sleep ? { q: +e.sleep } : null, rec: { energy: +e.energy || null, soreness: inv(+e.soreness), stress: inv(+e.stress) }, rhr: null, hrv: null, at: e.updatedAt, edits: 0 };
+  },
+  /* the athlete's days, newest last: full records win over quick ones on the same date */
+  days(list) {
+    const by = {};
+    (list || []).forEach(x => { const n = x && x.src ? x : this.norm(x); if (!n || !/^\d{4}-\d\d-\d\d$/.test(n.date || '')) return; if (!by[n.date] || (n.src === 'full' && by[n.date].src !== 'full')) by[n.date] = n; });
+    return Object.values(by).sort((a, b) => a.date.localeCompare(b.date));
+  },
+  mine() { return this.days(this.all().concat(Ready.all().filter(r => r.src !== 'wellness'))); },
+  /* a person's usual value: the median of up to 14 earlier readings (needs 3) */
+  base(days, date, k) { const v = days.filter(d => d.date < date && d[k] != null && d[k] > 0).slice(-14).map(d => d[k]).sort((a, b) => a - b); if (v.length < 3) return null; const m = v.length >> 1; return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2; },
+  /* ---------- the Recovery Score (0–100): a weighted average of what was answered ---------- */
+  score(d, days, cfg) {
+    cfg = cfg || this.cfg(); if (!d) return null;
+    const W = cfg.w, S = d.sleep || {}, R = d.rec || {}, parts = [], one = v => v >= 1 && v <= 5 ? Math.round(v) : null;
+    const add = (k, s, kind) => { if (s != null && isFinite(s) && W[k] > 0) parts.push({ k, s: Math.max(0, Math.min(100, s)), w: W[k], kind }); };
+    const mins = S.min > 0 ? S.min : this.span(S.bed, S.wake);
+    if (mins) add('dur', (mins / 60 - cfg.sleepMin) / (cfg.sleepTarget - cfg.sleepMin) * 100, 'reported');
+    const up = v => v == null ? null : (v - 1) / 4 * 100, dn = v => v == null ? null : (5 - v) / 4 * 100;
+    add('q', up(one(S.q)), 'feel'); add('rested', up(one(S.rested)), 'feel');
+    add('energy', up(one(R.energy)), 'feel'); add('readiness', up(one(R.readiness)), 'feel');
+    add('soreness', dn(one(R.soreness)), 'feel'); add('fatigue', dn(one(R.fatigue)), 'feel'); add('mfatigue', dn(one(R.mfatigue)), 'feel'); add('stress', dn(one(R.stress)), 'feel');
+    if (d.rhr > 0) { const b = this.base(days || [], d.date, 'rhr'); if (b) add('rhr', (1 - Math.max(0, d.rhr - b) / cfg.rhrRange) * 100, 'measured'); }
+    if (d.hrv > 0) { const b = this.base(days || [], d.date, 'hrv'); if (b) add('hrv', (d.hrv / b - cfg.hrvFloor) / (1 - cfg.hrvFloor) * 100, 'measured'); }
+    const core = ['dur', 'q', 'rested', 'energy', 'soreness', 'fatigue', 'mfatigue', 'stress', 'readiness'], coreW = core.reduce((t, k) => t + (W[k] || 0), 0);
+    const have = parts.filter(p => core.includes(p.k)).reduce((t, p) => t + p.w, 0), cov = coreW ? have / coreW : 0;
+    if (!parts.length || cov < cfg.minCoverage) return { score: null, cov, parts, partial: true, cat: 'none' };
+    const sc = Math.round(parts.reduce((t, p) => t + p.s * p.w, 0) / parts.reduce((t, p) => t + p.w, 0));
+    return { score: sc, cov, parts, partial: cov < .999, cat: this.cat(sc, cfg) };
+  },
+  cat(s, cfg) { const t = (cfg || this.cfg()).t; return s == null ? 'none' : s >= t.excellent ? 'excellent' : s >= t.good ? 'good' : s >= t.moderate ? 'moderate' : 'low'; },
+  catLabel: { excellent: 'Excellent recovery', good: 'Good recovery', moderate: 'Moderate recovery', low: 'Low recovery', none: 'No recent data' },
+  tone(cat) { return { excellent: 'good', good: 'good', moderate: 'mid', low: 'low' }[cat] || 'none'; },
+  /* every day with its score, for charts and insights */
+  scored(days, cfg) { cfg = cfg || this.cfg(); return days.map(d => Object.assign({}, d, { R: this.score(d, days, cfg) })); },
+  mins(d) { const S = d && d.sleep; return S ? (S.min > 0 ? S.min : this.span(S.bed, S.wake)) : null; },
+  avg(a) { a = a.filter(x => x != null && isFinite(x)); return a.length ? a.reduce((s, x) => s + x, 0) / a.length : null; },
+  /* ---------- patterns worth a look (descriptive only: nothing here says one thing caused another) ---------- */
+  insights(days, sessions, who) {
+    const cfg = this.cfg(), D = this.scored(days, cfg), out = [], last = D.slice(-14), you = who ? who : 'You', yr = who ? 'their' : 'your', has = who ? 'has' : 'have';
+    const sc = last.filter(d => d.R && d.R.score != null);
+    if (sc.length >= 3) { const [a, b, c] = sc.slice(-3); if (b.R.score < a.R.score && c.R.score < b.R.score && a.R.score - c.R.score >= 10 && daysBetween(a.date, c.date) <= 5) out.push(['trending-down', 'low', `Recovery has declined over the last three check-ins (${a.R.score} → ${c.R.score}).`]); }
+    const sl = D.filter(d => this.mins(d)); if (sl.length >= 6) { const recent = sl.slice(-3), prior = sl.slice(-17, -3); const r = this.avg(recent.map(d => this.mins(d))), p = this.avg(prior.map(d => this.mins(d))); if (prior.length >= 3 && p - r >= 45) out.push(['moon', 'mid', `Sleep over the last 3 nights (${this.hm(r)} on average) is below ${yr} recent average of ${this.hm(p)}.`]); }
+    const so = D.filter(d => d.rec && d.rec.soreness); if (so.length >= 2) { const [x, y] = so.slice(-2); if (y.rec.soreness - x.rec.soreness >= 2 || (y.rec.soreness >= 4 && y.rec.soreness > x.rec.soreness)) out.push(['flame', 'mid', `Muscle soreness has increased since the previous check-in (${x.rec.soreness} → ${y.rec.soreness} of 5).`]); }
+    const fa = D.filter(d => d.rec && d.rec.fatigue).slice(-3); if (fa.length === 3 && fa.every(d => d.rec.fatigue >= 4)) out.push(['battery-low', 'low', `${you} ${has} reported high physical fatigue on the last 3 check-ins.`]);
+    const sr = D.filter(d => d.rec && d.rec.soreness).slice(-4); if (sr.length >= 3 && sr.filter(d => d.rec.soreness >= 4).length >= 3 && !out.some(o => o[0] === 'flame')) out.push(['flame', 'mid', `Muscle soreness has stayed high (4+ of 5) on ${sr.filter(d => d.rec.soreness >= 4).length} of the last ${sr.length} check-ins.`]);
+    const wk = (from, to) => this.avg(D.filter(d => d.date >= from && d.date <= to && d.R && d.R.score != null).map(d => d.R.score));
+    const t = todayISO(), a7 = wk(addDays(t, -6), t), b7 = wk(addDays(t, -13), addDays(t, -7)), n7 = D.filter(d => d.date >= addDays(t, -6) && d.R && d.R.score != null).length, m7 = D.filter(d => d.date >= addDays(t, -13) && d.date <= addDays(t, -7) && d.R && d.R.score != null).length;
+    if (a7 != null && b7 != null && n7 >= 3 && m7 >= 3) { if (a7 - b7 >= 8) out.push(['trending-up', 'good', `Recovery has improved compared with last week (average ${Math.round(b7)} → ${Math.round(a7)}).`]); else if (b7 - a7 >= 8) out.push(['trending-down', 'mid', `Recovery is lower than last week (average ${Math.round(b7)} → ${Math.round(a7)}).`]); }
+    if (sessions && sessions.length && a7 != null && b7 != null && n7 >= 3 && m7 >= 3) {
+      const mm = (from, to) => sessions.filter(s => s.d >= from && s.d <= to).reduce((x, s) => x + (+s.min || 0), 0), tw = mm(addDays(t, -6), t), lw = mm(addDays(t, -13), addDays(t, -7));
+      if (lw > 0 && tw >= lw * 1.3 && b7 - a7 >= 8) out.push(['activity', 'mid', `Training time is up ${Math.round((tw / lw - 1) * 100)}% on last week while average recovery is down. Worth keeping an eye on — this alone doesn't show one caused the other.`]);
+    }
+    return out;
+  },
+  /* ---------- charts (plain SVG, readable at a glance) ---------- */
+  dayRange(n) { return Array.from({ length: n }, (_, i) => addDays(todayISO(), i - n + 1)); },
+  colors: { good: '#16A34A', mid: '#D97706', low: '#DC2626', none: '#94A3B8' },
+  scoreBars(D, n, opt = {}) {
+    const by = {}; D.forEach(d => { by[d.date] = d; }); const days = this.dayRange(n), W = 340, H = opt.h || 130, T = 14, B = 20, bw = (W - 8) / n;
+    const lab = (d, i) => n <= 7 ? new Date(d + 'T12:00').toLocaleDateString(undefined, { weekday: 'narrow' }) : (i % 7 === 0 || i === n - 1 ? String(+d.slice(8)) : '');
+    const bars = days.map((d, i) => { const x = by[d], s = x && x.R ? x.R.score : null, h = s == null ? 0 : (s / 100) * (H - T - B), col = this.colors[this.tone(x && x.R ? x.R.cat : 'none')];
+      const tip = `${fmtDate(d)}: ${s == null ? 'no score' : `${s} · ${this.catLabel[x.R.cat]}${x.R.partial ? ' (partial answers)' : ''}`}`;
+      return `<g><title>${esc(tip)}</title>${s == null ? `<rect x="${(4 + i * bw + bw * .2).toFixed(1)}" y="${H - B - 3}" width="${(bw * .6).toFixed(1)}" height="3" rx="1.5" fill="rgba(148,163,184,.35)"/>` : `<rect x="${(4 + i * bw + bw * .2).toFixed(1)}" y="${(H - B - h).toFixed(1)}" width="${(bw * .6).toFixed(1)}" height="${h.toFixed(1)}" rx="${Math.min(4, bw * .25).toFixed(1)}" fill="${col}" ${x.R.partial ? 'fill-opacity=".55"' : ''}/>`}
+        <text x="${(4 + i * bw + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle" class="rc-ax">${lab(d, i)}</text></g>`; }).join('');
+    const vals = days.map(d => by[d] && by[d].R ? by[d].R.score : null).filter(v => v != null);
+    return `<svg class="rc-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.title || 'Recovery score')}: ${vals.length ? `${vals.length} days with a score, average ${Math.round(this.avg(vals))}` : 'no scores yet'}">${[50, 70, 85].map(v => `<line x1="4" x2="${W - 4}" y1="${(H - B - v / 100 * (H - T - B)).toFixed(1)}" y2="${(H - B - v / 100 * (H - T - B)).toFixed(1)}" class="rc-grid"/>`).join('')}${bars}</svg>`;
+  },
+  sleepBars(D, n, opt = {}) {
+    const cfg = this.cfg(), by = {}; D.forEach(d => { by[d.date] = d; }); const days = this.dayRange(n), W = 340, H = opt.h || 130, T = 14, B = 20, bw = (W - 8) / n, mx = 11 * 60, Y = m => H - B - Math.min(m, mx) / mx * (H - T - B);
+    const lab = (d, i) => n <= 7 ? new Date(d + 'T12:00').toLocaleDateString(undefined, { weekday: 'narrow' }) : (i % 7 === 0 || i === n - 1 ? String(+d.slice(8)) : '');
+    const bars = days.map((d, i) => { const m = this.mins(by[d]), short = m != null && m < cfg.shortSleep * 60;
+      return `<g><title>${esc(`${fmtDate(d)}: ${m == null ? 'not logged' : this.hm(m) + (short ? ' (short)' : '')}`)}</title>${m == null ? '' : `<rect x="${(4 + i * bw + bw * .2).toFixed(1)}" y="${Y(m).toFixed(1)}" width="${(bw * .6).toFixed(1)}" height="${(H - B - Y(m)).toFixed(1)}" rx="${Math.min(4, bw * .25).toFixed(1)}" fill="${short ? '#D97706' : 'var(--b1)'}"/>`}<text x="${(4 + i * bw + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle" class="rc-ax">${lab(d, i)}</text></g>`; }).join('');
+    const ty = Y(cfg.sleepTarget * 60), vals = days.map(d => this.mins(by[d])).filter(v => v != null);
+    return `<svg class="rc-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.title || 'Sleep')}: ${vals.length ? `${vals.length} nights logged, average ${this.hm(this.avg(vals))}` : 'no nights logged'}"><line x1="4" x2="${W - 4}" y1="${ty.toFixed(1)}" y2="${ty.toFixed(1)}" class="rc-target"/><text x="${W - 6}" y="${(ty - 4).toFixed(1)}" text-anchor="end" class="rc-ax">${cfg.sleepTarget} h</text>${bars}</svg>`;
+  },
+  /* small line for 1–5 answers (or any series): [{date, v}] */
+  line(pts, n, opt = {}) {
+    const days = this.dayRange(n), W = 340, H = opt.h || 90, T = 10, B = 16, lo = opt.min != null ? opt.min : 1, hi = opt.max != null ? opt.max : 5, by = {}; pts.forEach(p => { if (p.v != null) by[p.date] = p.v; });
+    const X = i => 6 + i * (W - 12) / Math.max(1, n - 1), Y = v => T + (1 - (v - lo) / (hi - lo || 1)) * (H - T - B), seg = []; let cur = [];
+    days.forEach((d, i) => { if (by[d] != null) cur.push([X(i), Y(by[d]), d, by[d]]); else if (cur.length) { seg.push(cur); cur = []; } }); if (cur.length) seg.push(cur);
+    const vals = Object.values(by);
+    return `<svg class="rc-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.title || 'Trend')}: ${vals.length ? `latest ${fmtNum(vals[vals.length - 1], opt.dec || 0)}` : 'no data'}"><line x1="6" x2="${W - 6}" y1="${Y(hi)}" y2="${Y(hi)}" class="rc-grid"/><line x1="6" x2="${W - 6}" y1="${Y(lo)}" y2="${Y(lo)}" class="rc-grid"/>
+      ${seg.map(s => `<path d="${s.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ')}" fill="none" stroke="${opt.color || 'var(--b1)'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`).join('')}
+      ${seg.flat().map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="${opt.color || 'var(--b1)'}"><title>${esc(`${fmtDate(p[2])}: ${fmtNum(p[3], opt.dec || 0)}${opt.unit || ''}`)}</title></circle>`).join('')}
+      <text x="6" y="${H - 3}" class="rc-ax">${esc(opt.loLab || String(lo))}</text><text x="6" y="${T - 2}" class="rc-ax">${esc(opt.hiLab || String(hi))}</text></svg>`;
+  },
+  spark(D, n = 7) {
+    const by = {}; D.forEach(d => { if (d.R && d.R.score != null) by[d.date] = d.R.score; }); const days = this.dayRange(n), W = 70, H = 22;
+    const pts = days.map((d, i) => by[d] == null ? null : [2 + i * (W - 4) / (n - 1), H - 2 - by[d] / 100 * (H - 4)]).filter(Boolean);
+    if (pts.length < 2) return `<span class="rc-spark none" aria-label="Not enough check-ins for a trend">—</span>`;
+    const first = by[days.find(d => by[d] != null)], last = by[[...days].reverse().find(d => by[d] != null)], dir = last - first >= 8 ? 'up' : first - last >= 8 ? 'down' : 'flat';
+    return `<svg class="rc-spark ${dir}" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Recovery trend, last ${n} days: ${dir === 'up' ? 'rising' : dir === 'down' ? 'falling' : 'steady'}"><path d="${pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ')}" fill="none" stroke-width="2" stroke-linecap="round"/></svg>`;
+  },
+  ring(R, size = 132) {
+    const s = R && R.score != null ? R.score : null, r = size / 2 - 9, C = 2 * Math.PI * r, col = this.colors[this.tone(R ? R.cat : 'none')];
+    return `<div class="rc-ring" style="--s:${size}px"><svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${size / 2}" cy="${size / 2}" r="${r}" class="trk"/>${s == null ? '' : `<circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${(C * s / 100).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 ${size / 2} ${size / 2})"/>`}</svg>
+      <div class="rc-ring-in"><b>${s == null ? '—' : s}</b><small>${s == null ? 'no score' : 'of 100'}</small></div></div>`;
+  },
+  pill(R) { const cat = R ? R.cat : 'none'; return `<span class="rc-pill ${this.tone(cat)}">${cat === 'none' ? 'No score' : this.catLabel[cat].replace(' recovery', '')}${R && R.partial && R.score != null ? ' · partial' : ''}</span>`; },
+  /* how the score works, written from the live settings */
+  explain() {
+    const c = this.cfg(), W = c.w, tot = Object.entries(W).filter(([k]) => !['rhr', 'hrv'].includes(k)).reduce((t, [, v]) => t + v, 0);
+    return `<div class="rc-explain stack"><p>The Recovery Score (0–100) is a simple summary of what you told the app this morning. It is <b>not a medical assessment</b> and can't measure your body — it only reflects your own answers and numbers you typed in.</p>
+      <h3 class="h3">What counts, and how much</h3><table class="rc-tbl"><thead><tr><th>Answer</th><th>Weight</th><th>Full points when…</th></tr></thead><tbody>
+        <tr><td>Sleep duration <small>(from your bed and wake times)</small></td><td>${W.dur}</td><td>${c.sleepTarget} h or more (none at ${c.sleepMin} h)</td></tr>
+        <tr><td>Sleep quality</td><td>${W.q}</td><td>5 · Excellent</td></tr><tr><td>Feeling rested</td><td>${W.rested}</td><td>5 · Fully rested</td></tr>
+        ${REC_Q.filter(q => q[0] !== 'motivation').map(([k, l, a, b, up]) => `<tr><td>${l}</td><td>${W[k]}</td><td>${up ? `5 · ${b}` : `1 · ${a}`}</td></tr>`).join('')}
+        <tr><td>Resting heart rate <small>(optional, measured)</small></td><td>${W.rhr}</td><td>At or below your usual; −10 points a beat above (needs 3 earlier readings)</td></tr>
+        <tr><td>HRV <small>(optional, measured)</small></td><td>${W.hrv}</td><td>At or above your usual; none at ${Math.round(c.hrvFloor * 100)} % of it (needs 3 earlier readings)</td></tr></tbody></table>
+      <p>Each answer becomes 0–100 points. The score is the weighted average of the answers you gave — skipped questions are left out, never guessed. If you answered less than everything, the score is marked <b>partial</b>; below ${Math.round(c.minCoverage * 100)} % of the weight (${Math.round(c.minCoverage * tot)} of ${tot}) there is no score. Motivation is shown but not scored.</p>
+      <h3 class="h3">What the number means</h3><ul class="rc-cats"><li><span class="rc-pill good">Excellent</span> ${c.t.excellent}–100</li><li><span class="rc-pill good">Good</span> ${c.t.good}–${c.t.excellent - 1}</li><li><span class="rc-pill mid">Moderate</span> ${c.t.moderate}–${c.t.good - 1}</li><li><span class="rc-pill low">Low</span> 0–${c.t.moderate - 1}</li></ul>
+      <p class="muted">Feeling unwell, in pain or worried about your health? Talk to your coach, a parent or a doctor — don't rely on this number.</p></div>`;
+  }
+});
+
+</script>
+<script>
+/* ============ SLEEP & RECOVERY — athlete screens: dashboard, the 1-minute morning check-in, Home card, reminders ============ */
+const RecUI = {
+  d: null,
+  range() { return +(UI.ui.recRange || 7); },
+  sessions() { return (State.sessions || []).filter(s => s.date && (s.status === 'completed' || s.kind === 'active')).map(s => ({ d: s.date, min: s.kind === 'active' ? +s.minutes || 0 : Math.max(0, Math.round(((+s.endedAt || 0) - (+s.startedAt || 0) - (+s.pausedMs || 0)) / 60000)) || 0 })); },
+  word(k, v) { const q = REC_Q.find(x => x[0] === k); if (!q || !v) return ''; return v === 1 ? q[2] : v === 5 ? q[3] : ''; },
+  tone(k, v) { const q = REC_Q.find(x => x[0] === k); if (!v) return 'none'; const good = q ? q[4] : true, g = good ? v : 6 - v; return g >= 4 ? 'good' : g === 3 ? 'mid' : 'low'; },
+  screen() {
+    const cfg = Rec.cfg(), days = Rec.mine(), D = Rec.scored(days, cfg), t = todayISO(), today = D.find(d => d.date === t), last = D[D.length - 1], n = this.range();
+    const show = today || (last && daysBetween(last.date, t) <= 1 ? last : null), R = show && show.R, full = today && today.src === 'full' ? today : null;
+    const step = !full || !full.sleep ? 'sleep' : !full.rec ? 'feel' : null;
+    const hero = `<section class="panel rc-hero" data-stg>${Rec.ring(R)}<div class="grow"><span class="label">${show ? (show.date === t ? 'Today' : 'Yesterday') : 'Today'}</span>
+        <h2 class="h2">${R && R.score != null ? Rec.catLabel[R.cat] : show ? 'Not enough answers for a score' : 'No check-in yet'}</h2>
+        ${R && R.partial && R.score != null ? `<p class="muted rc-sub">${icon('circle-alert')} Based on part of your answers (${Math.round(R.cov * 100)} %).</p>` : ''}
+        ${show && show.src === 'quick' ? '<p class="muted rc-sub">From your quick check-in at the gym.</p>' : ''}
+        <button type="button" class="linkish" data-act="rec-how">How is this worked out?</button></div></section>`;
+    const cta = step ? `<button type="button" class="panel rc-cta" data-act="rec-checkin" data-step="${step}" data-stg><span class="rc-cta-ic">${icon(step === 'sleep' ? 'moon' : 'heart-pulse')}</span><span class="grow"><b>${step === 'sleep' ? 'Morning check-in' : 'Add how you feel today'}</b><small>${step === 'sleep' ? 'Last night’s sleep and how you feel · under a minute' : 'Seven quick taps · sleep is saved'}</small></span>${icon('chevron-right')}</button>` : '';
+    const s = show && show.sleep, r = (show && show.rec) || {}, mins = Rec.mins(show);
+    const tile = (label, val, sub, tone, ic) => `<div class="rc-tile ${tone || ''}"><span class="rc-tile-ic">${icon(ic)}</span><span class="label">${label}</span><b>${val}</b><small>${sub || ''}</small></div>`;
+    const recent = k => { const x = [...D].reverse().find(d => d[k] > 0 && daysBetween(d.date, t) <= 3); return x ? x[k] : null; };
+    const rhr = recent('rhr'), hrv = recent('hrv');
+    const tiles = show ? `<div class="rc-tiles" data-stg>
+        ${tile('Sleep', mins ? Rec.hm(mins) : '—', s && s.q ? `Quality ${s.q} of 5` : s && s.bed ? '' : 'not logged', mins ? (mins < cfg.shortSleep * 60 ? 'mid' : 'good') : 'none', 'moon')}
+        ${tile('Readiness', r.readiness ? `${r.readiness}<small>/5</small>` : '—', r.readiness ? this.word('readiness', r.readiness) : '', this.tone('readiness', r.readiness), 'gauge')}
+        ${tile('Energy', r.energy ? `${r.energy}<small>/5</small>` : '—', r.energy ? this.word('energy', r.energy) : '', this.tone('energy', r.energy), 'zap')}
+        ${tile('Soreness', r.soreness ? `${r.soreness}<small>/5</small>` : '—', r.soreness ? this.word('soreness', r.soreness) : '', this.tone('soreness', r.soreness), 'flame')}
+        ${tile('Fatigue', r.fatigue ? `${r.fatigue}<small>/5</small>` : '—', r.fatigue ? this.word('fatigue', r.fatigue) : '', this.tone('fatigue', r.fatigue), 'battery-low')}
+        ${tile('Stress', r.stress ? `${r.stress}<small>/5</small>` : '—', r.stress ? this.word('stress', r.stress) : '', this.tone('stress', r.stress), 'wind')}
+        ${rhr ? tile('Resting HR', `${rhr}<small> bpm</small>`, 'you measured', '', 'heart') : ''}${hrv ? tile('HRV', `${hrv}<small> ms</small>`, 'you measured', '', 'activity') : ''}
+      </div>` : '';
+    const ins = Rec.insights(days, this.sessions());
+    const insH = ins.length ? `<section class="panel stack rc-ins" data-stg data-nofold><h3 class="h3">${icon('lightbulb')} Patterns</h3>${ins.map(([ic, tone, txt]) => `<p class="rc-in ${tone}">${icon(ic)}<span>${esc(txt)}</span></p>`).join('')}<small class="muted">From your own check-ins. Patterns, not diagnoses.</small></section>` : '';
+    const has = k => D.some(d => d[k] > 0 && daysBetween(d.date, t) < n);
+    const charts = `<section class="panel stack" data-stg><div class="spread"><h3 class="h3">Your trends</h3><div class="seg rc-range" role="group" aria-label="Period"><button type="button" data-act="rec-range" data-v="7" aria-pressed="${n === 7}">Week</button><button type="button" data-act="rec-range" data-v="30" aria-pressed="${n === 30}">Month</button></div></div>
+        <div class="rc-ch"><span class="label">Recovery score</span>${Rec.scoreBars(D, n)}<small class="muted">Paler bars are partial check-ins.</small></div>
+        <div class="rc-ch"><span class="label">Sleep</span>${Rec.sleepBars(D, n)}</div>
+        <div class="grid2 rc-ch2"><div class="rc-ch"><span class="label">Energy</span>${Rec.line(D.map(d => ({ date: d.date, v: d.rec && d.rec.energy })), n, { title: 'Energy, 1 to 5', color: '#16A34A', hiLab: 'Full', loLab: 'Exhausted' })}</div>
+          <div class="rc-ch"><span class="label">Physical fatigue</span>${Rec.line(D.map(d => ({ date: d.date, v: d.rec && d.rec.fatigue })), n, { title: 'Physical fatigue, 1 to 5', color: '#D97706', hiLab: 'Very', loLab: 'Fresh' })}</div>
+          <div class="rc-ch"><span class="label">Muscle soreness</span>${Rec.line(D.map(d => ({ date: d.date, v: d.rec && d.rec.soreness })), n, { title: 'Muscle soreness, 1 to 5', color: '#DC2626', hiLab: 'Very', loLab: 'None' })}</div>
+          <div class="rc-ch"><span class="label">Sleep quality</span>${Rec.line(D.map(d => ({ date: d.date, v: d.sleep && d.sleep.q })), n, { title: 'Sleep quality, 1 to 5', hiLab: 'Great', loLab: 'Poor' })}</div>
+          ${has('rhr') ? `<div class="rc-ch"><span class="label">Resting heart rate (bpm)</span>${Rec.line(D.map(d => ({ date: d.date, v: d.rhr })), n, { title: 'Resting heart rate', min: Math.min(...D.filter(d => d.rhr).map(d => d.rhr)) - 3, max: Math.max(...D.filter(d => d.rhr).map(d => d.rhr)) + 3, unit: ' bpm', hiLab: ' ', loLab: ' ' })}</div>` : ''}
+          ${has('hrv') ? `<div class="rc-ch"><span class="label">HRV (ms)</span>${Rec.line(D.map(d => ({ date: d.date, v: d.hrv })), n, { title: 'HRV', min: Math.min(...D.filter(d => d.hrv).map(d => d.hrv)) - 5, max: Math.max(...D.filter(d => d.hrv).map(d => d.hrv)) + 5, unit: ' ms', hiLab: ' ', loLab: ' ' })}</div>` : ''}</div></section>`;
+    const hist = D.slice(-30).reverse();
+    const histH = `<section class="panel stack" data-stg><h3 class="h3">${icon('history')} Check-ins</h3>${hist.length ? `<div class="rc-hist">${hist.map(d => `<button type="button" class="rc-hrow" data-act="rec-checkin" data-date="${d.date}" aria-label="Edit ${fmtDate(d.date)}"><span class="d"><b>${fmtDate(d.date).replace(/,.*$/, '')}</b><small>${new Date(d.date + 'T12:00').toLocaleDateString(undefined, { weekday: 'short' })}</small></span>
+        <span class="grow"><span>${Rec.mins(d) ? `${icon('moon')} ${Rec.hm(Rec.mins(d))}` : 'Sleep not logged'}${d.rec && d.rec.readiness ? ` · ready ${d.rec.readiness}/5` : ''}</span><small class="muted">${d.src === 'quick' ? 'Quick check-in at the gym' : [d.rec && d.rec.note ? 'Note added' : '', d.edits ? `Edited ${d.edits}×` : ''].filter(Boolean).join(' · ') || 'Tap to edit'}</small></span>${Rec.pill(d.R)}${d.R && d.R.score != null ? `<b class="rc-n">${d.R.score}</b>` : ''}</button>`).join('')}</div>` : '<p class="muted">Your check-ins will appear here.</p>'}
+        <button type="button" class="btn sm ghost" data-act="rec-checkin" data-pick="1">${icon('plus')} Add or fix an earlier day</button></section>`;
+    const priv = `<section class="panel flat rc-priv" data-stg>${icon('lock')}<p>${Cloud.on ? '<b>Who sees this:</b> you, and the coaches of teams you’re on — including your notes. Not other athletes, not your profile, never the feed. If you leave a team, its coaches stop seeing it.' : '<b>Only you see this.</b> It’s saved on this phone.'} ${Cloud.on ? 'It’s saved with your account.' : ''}</p></section>`;
+    return `<div class="screen rc">${backBar('Sleep & Recovery')}${hero}${cta}${tiles}${insH}${charts}${histH}${priv}</div>`;
+  },
+  /* ---------- the morning check-in (sheet): 1 · sleep, 2 · how you feel. Each part saves on its own. ---------- */
+  open(o = {}) {
+    const date = o.date || todayISO(), ex = Rec.get(date), q = !ex ? Ready.all().find(r => r.date === date && r.src !== 'wellness') : null, last = [...Rec.all()].reverse().find(e => e.sleep && e.sleep.bed);
+    const inv = v => v ? 6 - v : null;
+    this.d = { date, step: o.step || (ex && ex.sleep && !ex.rec ? 'feel' : 'sleep'), pick: !!o.pick,
+      sleep: Object.assign({ bed: (last && last.sleep.bed) || '23:00', wake: (last && last.sleep.wake) || '07:00', q: q && q.sleep ? +q.sleep : null, rested: null, lat: null, wakes: null }, (ex && ex.sleep) || {}),
+      rec: Object.assign({ energy: q && +q.energy || null, soreness: q ? inv(+q.soreness) : null, stress: q ? inv(+q.stress) : null }, (ex && ex.rec) || {}),
+      rhr: ex && ex.rhr != null ? ex.rhr : '', hrv: ex && ex.hrv != null ? ex.hrv : '', more: !!(ex && (ex.rhr || ex.hrv || (ex.sleep && (ex.sleep.lat != null || ex.sleep.wakes != null)))) };
+    Sheet.open({ title: date === todayISO() ? 'Morning check-in' : `Check-in · ${fmtDate(date)}`, html: `<div id="recSheet">${this.sheet()}</div>`, onMount: sh => this.bind(sh) });
+  },
+  scale(part, k, label, lo, hi) {
+    const v = this.d[part][k];
+    return `<div class="rc-q"><div class="rc-q-h"><b id="rq-${k}">${label}</b></div><div class="rc-opts" role="radiogroup" aria-labelledby="rq-${k}">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" class="rc-opt" data-p="${part}" data-k="${k}" data-v="${n}" aria-checked="${v === n}" aria-label="${n} of 5${n === 1 ? ': ' + lo : n === 5 ? ': ' + hi : ''}">${n}</button>`).join('')}</div><div class="rc-q-ends"><small>1 · ${esc(lo)}</small><small>5 · ${esc(hi)}</small></div></div>`;
+  },
+  sheet() {
+    const d = this.d, s = d.sleep, inBed = Rec.span(s.bed, s.wake), asleep = inBed != null ? inBed - (+s.lat || 0) : null, bad = inBed != null && (inBed < 60 || inBed > 16 * 60);
+    const tabs = `<div class="seg rc-steps" role="tablist"><button type="button" role="tab" data-rs="sleep" aria-selected="${d.step === 'sleep'}">${icon('moon')} 1 · Sleep</button><button type="button" role="tab" data-rs="feel" aria-selected="${d.step === 'feel'}">${icon('heart-pulse')} 2 · How you feel</button></div>`;
+    const pick = d.pick ? `<div class="field"><label for="rcDate">Morning of</label><input class="input" type="date" id="rcDate" value="${d.date}" max="${todayISO()}" min="${addDays(todayISO(), -30)}"></div>` : '';
+    if (d.step === 'sleep') return `${tabs}${pick}<div class="rc-times"><div class="field"><label for="rcBed">${icon('moon')} Went to bed</label><input class="input rc-time" type="time" id="rcBed" value="${esc(s.bed || '')}"></div>
+        <div class="field"><label for="rcWake">${icon('sun')} Woke up</label><input class="input rc-time" type="time" id="rcWake" value="${esc(s.wake || '')}"></div></div>
+      <p class="rc-dur ${bad ? 'bad' : ''}" id="rcDur" aria-live="polite">${inBed == null ? 'Set both times' : bad ? 'Check the times — that’s ' + Rec.hm(inBed) + ' in bed.' : `<b>${Rec.hm(asleep)}</b> asleep${s.lat ? ` (${Rec.hm(inBed)} in bed, ${s.lat} min to fall asleep)` : ''}`}</p>
+      ${REC_SLEEP_Q.map(([k, l, lo, hi]) => this.scale('sleep', k, l, lo, hi)).join('')}
+      <details class="rc-more"${d.more ? ' open' : ''}><summary class="label">${icon('plus')} More (optional): falling asleep, waking up, heart rate, HRV</summary><div class="stack">
+        <div class="field"><span class="label" id="rcLatL">Time to fall asleep</span><div class="chips" role="radiogroup" aria-labelledby="rcLatL">${[[5, 'Under 10 min'], [15, '10–20'], [25, '20–30'], [45, '30–60'], [75, 'Over an hour']].map(([v, l]) => `<button type="button" class="chip" role="radio" data-lat="${v}" aria-checked="${+s.lat === v}" aria-pressed="${+s.lat === v}">${l}</button>`).join('')}</div></div>
+        <div class="field"><span class="label" id="rcWkL">Woke up during the night</span><div class="rc-step" role="group" aria-labelledby="rcWkL"><button type="button" class="btn icon sm" data-wk="-1" aria-label="Fewer">${icon('minus')}</button><b id="rcWk">${s.wakes == null ? '—' : s.wakes + (s.wakes === 1 ? ' time' : ' times')}</b><button type="button" class="btn icon sm" data-wk="1" aria-label="More">${icon('plus')}</button></div></div>
+        <div class="grid2"><div class="field"><label for="rcRhr">Resting heart rate</label><div class="input-unit"><input class="input num" id="rcRhr" inputmode="numeric" value="${esc(d.rhr)}" placeholder="e.g. 58"><span>bpm</span></div></div>
+          <div class="field"><label for="rcHrv">HRV</label><div class="input-unit"><input class="input num" id="rcHrv" inputmode="numeric" value="${esc(d.hrv)}" placeholder="e.g. 65"><span>ms</span></div></div></div>
+        <small class="muted">Only if you measured them yourself (for example with a watch you already own). They’re never required.</small></div></details>
+      <p class="err-msg" id="rcErr" role="alert"></p>
+      <div class="grid2"><button type="button" class="btn" data-rs="feel">Skip sleep</button><button type="button" class="btn primary" id="rcSaveSleep">${icon('check')} Save sleep</button></div>`;
+    return `${tabs}${pick}<p class="muted rc-hint">Tap one number for each. 1 and 5 are described.</p>${REC_Q.map(([k, l, lo, hi]) => this.scale('rec', k, l, lo, hi)).join('')}
+      <div class="field"><label for="rcNote">Anything else? <span class="muted">(optional)</span></label><textarea class="input" id="rcNote" rows="2" maxlength="500" placeholder="e.g. Tight hamstrings, big exam this week">${esc(d.rec.note || '')}</textarea></div>
+      <p class="muted rc-note">${Cloud.on ? `${icon('eye')} Your team coaches see your answers and note.` : `${icon('lock')} Only you see this.`}</p>
+      <p class="err-msg" id="rcErr" role="alert"></p>
+      <div class="grid2"><button type="button" class="btn" data-rs="sleep">${icon('chevron-left')} Sleep</button><button type="button" class="btn primary" id="rcSaveFeel">${icon('check')} Save</button></div>`;
+  },
+  redraw(sh) { const box = $('#recSheet', sh); const y = box.closest('.sheet-body') ? box.closest('.sheet-body').scrollTop : 0; box.innerHTML = this.sheet(); UI.icons(box); if (box.closest('.sheet-body')) box.closest('.sheet-body').scrollTop = y; },
+  bind(sh) {
+    sh.addEventListener('click', e => {
+      const o = e.target.closest('.rc-opt'); if (o) { this.d[o.dataset.p][o.dataset.k] = +o.dataset.v; $$(`.rc-opt[data-k="${o.dataset.k}"]`, sh).forEach(b => b.setAttribute('aria-checked', String(b === o))); Haptics.tap && Haptics.tap(); return; }
+      const st = e.target.closest('[data-rs]'); if (st) { this.keep(sh); this.d.step = st.dataset.rs; this.redraw(sh); return; }
+      const la = e.target.closest('[data-lat]'); if (la) { this.keep(sh); this.d.sleep.lat = +la.dataset.lat === +this.d.sleep.lat ? null : +la.dataset.lat; this.d.more = true; this.redraw(sh); return; }
+      const wk = e.target.closest('[data-wk]'); if (wk) { this.keep(sh); const c = this.d.sleep.wakes == null ? 0 : this.d.sleep.wakes; this.d.sleep.wakes = Math.max(0, Math.min(20, c + +wk.dataset.wk)); this.d.more = true; this.redraw(sh); return; }
+      if (e.target.closest('#rcSaveSleep')) this.saveSleep(sh);
+      if (e.target.closest('#rcSaveFeel')) this.saveFeel(sh);
+    });
+    sh.addEventListener('input', e => {
+      if (e.target.id === 'rcBed' || e.target.id === 'rcWake') { this.keep(sh); const s = this.d.sleep, inBed = Rec.span(s.bed, s.wake), p = $('#rcDur', sh), bad = inBed != null && (inBed < 60 || inBed > 960); p.className = 'rc-dur' + (bad ? ' bad' : ''); p.innerHTML = inBed == null ? 'Set both times' : bad ? 'Check the times — that’s ' + Rec.hm(inBed) + ' in bed.' : `<b>${Rec.hm(inBed - (+s.lat || 0))}</b> asleep`; }
+    });
+    sh.addEventListener('change', e => { if (e.target.id === 'rcDate') { const v = e.target.value; if (v && v <= todayISO()) { Sheet.close().then(() => this.open({ date: v, pick: true, step: this.d.step })); } } });
+    sh.addEventListener('toggle', e => { if (e.target.classList && e.target.classList.contains('rc-more')) this.d.more = e.target.open; }, true);
+  },
+  keep(sh) { const g = id => $('#' + id, sh); if (g('rcBed')) this.d.sleep.bed = g('rcBed').value; if (g('rcWake')) this.d.sleep.wake = g('rcWake').value; if (g('rcRhr')) this.d.rhr = g('rcRhr').value.trim(); if (g('rcHrv')) this.d.hrv = g('rcHrv').value.trim(); if (g('rcNote')) this.d.rec.note = g('rcNote').value; },
+  saveSleep(sh) {
+    this.keep(sh); const d = this.d, s = d.sleep, err = $('#rcErr', sh), inBed = Rec.span(s.bed, s.wake);
+    if (inBed == null) { err.textContent = 'Set when you went to bed and when you woke up.'; return; }
+    if (inBed < 60 || inBed > 16 * 60) { err.textContent = `That’s ${Rec.hm(inBed)} in bed — check the times (AM/PM).`; return; }
+    const num = (v, lo, hi, name) => { if (v === '' || v == null) return null; const n = +String(v).replace(',', '.'); if (!isFinite(n) || n < lo || n > hi) { throw new Error(`${name} looks wrong (${lo}–${hi}).`); } return Math.round(n); };
+    let rhr, hrv; try { rhr = num(d.rhr, 25, 220, 'Resting heart rate'); hrv = num(d.hrv, 1, 400, 'HRV'); } catch (x) { err.textContent = x.message; return; }
+    const lat = s.lat != null ? +s.lat : null, val = { bed: s.bed, wake: s.wake, min: Math.max(30, inBed - (lat || 0)), lat, wakes: s.wakes, q: s.q || null, rested: s.rested || null };
+    Rec.setDay(d.date, 'sleep', val); if (rhr != null || hrv != null || Rec.get(d.date).rhr != null || Rec.get(d.date).hrv != null) Rec.setDay(d.date, 'body', { rhr, hrv });
+    UI.toast('Sleep saved.'); d.step = 'feel'; this.redraw(sh); this.refresh();
+  },
+  saveFeel(sh) {
+    this.keep(sh); const d = this.d, r = d.rec, n = REC_Q.filter(([k]) => r[k]).length, err = $('#rcErr', sh);
+    if (!n && !(r.note || '').trim()) { err.textContent = 'Tap at least one answer — or close this to skip for today.'; return; }
+    const val = {}; REC_Q.forEach(([k]) => { if (r[k]) val[k] = r[k]; }); if ((r.note || '').trim()) val.note = r.note.trim().slice(0, 500);
+    Rec.setDay(d.date, 'rec', val); Sheet.close(); const R = Rec.score(Rec.mine().find(x => x.date === d.date), Rec.mine());
+    UI.toast(R && R.score != null ? `Saved · Recovery ${R.score} (${Rec.catLabel[R.cat].replace(' recovery', '').toLowerCase()})` : 'Saved.'); this.refresh();
+  },
+  refresh() { if (['recovery', 'home'].includes(UI.route.name)) { const y = scrollY; UI.render(); scrollTo(0, y); } },
+  /* Home: one small card — check in, or today's score */
+  homeCard() {
+    if (Role && Role.parent && Role.parent()) return '';
+    const t = todayISO(), D = Rec.scored(Rec.mine()), d = D.find(x => x.date === t), full = d && d.src === 'full' ? d : null, R = d && d.R;
+    if (!full || !full.sleep || !full.rec) {
+      if (State.settings.recHome === false) return '';
+      return `<section class="panel rc-home" data-stg><span class="rc-cta-ic">${icon('moon')}</span><div class="grow"><b>${full ? 'Finish your check-in' : 'How did you sleep?'}</b><small class="muted">${full ? 'Add how you feel today' : 'Morning check-in · under a minute'}</small></div>
+        <div class="row"><button class="btn sm primary" type="button" data-act="rec-checkin" data-step="${full && full.sleep ? 'feel' : 'sleep'}">Check in</button><button class="btn sm icon ghost" type="button" data-act="go" data-r="recovery" aria-label="Open Sleep & Recovery">${icon('chevron-right')}</button></div></section>`;
+    }
+    return `<button type="button" class="panel rc-home done" data-act="go" data-r="recovery" data-stg>${Rec.ring(R, 56)}<span class="grow"><b>${R && R.score != null ? Rec.catLabel[R.cat] : 'Checked in'}</b><small class="muted">${Rec.mins(d) ? `Slept ${Rec.hm(Rec.mins(d))}` : ''}${d.rec && d.rec.readiness ? ` · ready ${d.rec.readiness}/5` : ''}</small></span>${icon('chevron-right')}</button>`;
+  }
+};
+Screens.recovery = () => RecUI.screen();
+TAB_OF.recovery = 'progress';
+After.recovery = view => { if (Cloud.on && Social.on()) Rec.cfgE(); };
+if (typeof Kinetic !== 'undefined' && Kinetic.NAMES) Kinetic.NAMES.recovery = 'RECOVERY';
+Object.assign(Actions, {
+  'rec-checkin': el => RecUI.open({ date: el.dataset.date, step: el.dataset.step, pick: !!el.dataset.pick }),
+  'rec-range': el => { UI.ui.recRange = +el.dataset.v; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'rec-how': () => Sheet.open({ title: 'How the Recovery Score works', html: Rec.explain() })
+});
+(() => {
+  /* Home card, More item, sync, reminders, links from notifications */
+  const ah = After.home; After.home = function (view, o) {
+    if (ah) ah.call(After, view, o);
+    if (!$('.rc-home', view)) { const anchor = $('.cx-banner', view) || $('.topbar', view); const h = RecUI.homeCard(); if (anchor && h) { anchor.insertAdjacentHTML('afterend', h); UI.icons(view); } }
+  };
+  const more = Screens.more; Screens.more = function () { const h = more.call(Screens); if (h.includes('data-r="recovery"') || (Role && Role.parent && Role.parent())) return h;
+    return h.replace('<button class="list-item" type="button" data-act="go" data-r="history"', `<button class="list-item" type="button" data-act="go" data-r="recovery">${icon('moon')}<div class="grow"><b>Sleep & Recovery</b><div class="muted" style="font-size:12.5px">Your daily check-in, Recovery Score and trends</div></div>${icon('chevron-right')}</button><button class="list-item" type="button" data-act="go" data-r="history"`); };
+  const snap = Cloud.snapshot.bind(Cloud); Cloud.snapshot = function () { const o = snap(); o.wellness = Rec.raw(); return o; };
+  const mg = Cloud.merge.bind(Cloud); Cloud.merge = async function (r) { const a = r && r.app === APP_ID ? Rec.merge(r.wellness) : false; const ch = await mg(r); if (a) State.version++; return ch || a; };
+  const pg = Push.go.bind(Push); Push.go = function (g) { if (String(g || '').split(':')[0] === 'recovery') { Nav.go('recovery'); return; } return pg(g); };
+  const show = App.show.bind(App); App.show = function (first) {
+    show(first);
+    try { const g = new URLSearchParams(location.search).get('go'); if (g === 'recovery') { history.replaceState(null, '', location.pathname); setTimeout(() => Nav.go('recovery'), Motion.off ? 0 : 700); } } catch (e) { }
+  };
+  /* Settings → Reminders: the sleep & recovery reminders (only where phone reminders already work) */
+  const ps = Push.section.bind(Push); Push.section = function () {
+    let h = ps(); const p = (this.st && this.st.prefs) || null; if (!p || !this.on()) return h;
+    const i = h.indexOf('data-k="on_recap"'); if (i < 0) return h; const j = h.indexOf('</div>', i) + 6;
+    const sw = (k, l, d) => `<div class="toggle"><span><b style="font-weight:600">${l}</b><br><span class="muted" style="font-size:12.5px">${d}</span></span><button class="switch" type="button" role="switch" aria-checked="${p[k] !== false}" data-act="push-pref" data-k="${k}" aria-label="${esc(l)}"></button></div>`;
+    const hr = x => `${String(x).padStart(2, '0')}:00`, at = p.checkin_at || 8;
+    const extra = `${sw('on_checkin', 'Morning check-in', 'How you slept and how you feel. One follow-up later that morning only if you usually check in.')}
+      <div class="field"><label for="pp-checkin_at">Check-in reminder at</label><select class="input" id="pp-checkin_at" data-act="push-hour" data-k="checkin_at">${[5, 6, 7, 8, 9, 10, 11, 12].map(x => `<option value="${x}" ${at === x ? 'selected' : ''}>${hr(x)}</option>`).join('')}</select></div>
+      ${sw('on_rsummary', 'Weekly recovery summary', 'Sunday at 18:00: your average sleep and Recovery Score.')}
+      ${Brand.isCoach() ? sw('on_ralert', 'Athlete recovery alerts', 'When an athlete’s recovery keeps dropping or fatigue stays high (at most every 3 days per athlete).') : ''}`;
+    return h.slice(0, j) + extra + h.slice(j);
+  };
+  const sg = Screens.settings; Screens.settings = function () {
+    const h = sg.call(Screens), on = State.settings.recHome !== false;
+    const row = `<div class="toggle"><span><b style="font-weight:600">Morning check-in on Home</b><br><span class="muted" style="font-size:12.5px">A small card until you’ve checked in for the day.</span></span><button class="switch" type="button" role="switch" aria-checked="${on}" data-act="rec-home" aria-label="Morning check-in on Home"></button></div>`;
+    const k = h.indexOf('<h2 class="h3">Starting a workout</h2>'); if (k < 0) return h; const j = h.indexOf('</section>', k); return h.slice(0, j) + row + h.slice(j);
+  };
+  Actions['rec-home'] = el => { State.settings.recHome = State.settings.recHome === false; Store.saveSettings(); el.setAttribute('aria-checked', String(State.settings.recHome !== false)); };
+  /* coach alert notifications open the athlete's Recovery tab */
+  const sn = Actions['soc-notif']; Actions['soc-notif'] = el => {
+    if (el.dataset.k === 'recovery') { Social.rpc('notif_read', { p_ids: [+el.dataset.id] }).then(() => Social.drop('notifs', 'me'), () => { }); HQ.st.atab = 'recovery'; HQ.go('athlete:' + String(el.dataset.ref)); return; }
+    return sn(el);
+  };
+})();
+
+</script>
+<script>
+/* ============ SLEEP & RECOVERY — Coach HQ: the team dashboard, each athlete's Recovery tab, score settings (admin) ============ */
+const RecHQ = {
+  st: { f: 'all', sort: 'score', days: 14, n: 7 },
+  team(tid = HQ.tid()) { const d = this.st.days; return Social.get(`rect:${tid}:${d}`, () => Social.rpc('rec_team', { p_team: tid, p_days: d }), 60000); },
+  /* the latest check-in that still counts (today or yesterday), with its score */
+  now(a, cfg) {
+    const D = Rec.scored(Rec.days(a.days || []), cfg), t = todayISO(), last = D[D.length - 1] || null;
+    const cur = last && daysBetween(last.date, t) <= 1 ? last : null, tone = cur && cur.R ? Rec.tone(cur.R.cat) : 'none';
+    const flags = [];
+    if (cur && cur.R && cur.R.cat === 'low') flags.push(['low', 'Low recovery']);
+    const m = Rec.mins(cur); if (m != null && m < cfg.shortSleep * 60) flags.push(['mid', `Short sleep (${Rec.hm(m)})`]);
+    if (cur && cur.rec && cur.rec.fatigue >= 4) flags.push(['mid', `High fatigue (${cur.rec.fatigue}/5)`]);
+    if (cur && cur.rec && cur.rec.soreness >= 4) flags.push(['mid', `Very sore (${cur.rec.soreness}/5)`]);
+    const ins = Rec.insights(Rec.days(a.days || []), a.train || [], (a.name || 'Athlete').split(' ')[0]).filter(i => i[1] !== 'good');
+    ins.filter(i => /declined|several|last 3 check-ins|stayed high/.test(i[2])).forEach(i => flags.push([i[1], i[2].replace(/\.$/, '')]));
+    const usual = D.filter(d => daysBetween(d.date, t) <= 14).length >= 5;
+    if (!cur && usual) flags.push(['mid', `No check-in since ${fmtDate(last.date)}`]);
+    return { D, cur, last, tone, flags, today: !!(last && last.date === t) };
+  },
+  avg(a) { return Rec.avg(a); },
+  /* ---------- the team dashboard ---------- */
+  screen() {
+    const tid = HQ.tid(), E = this.team(tid), cfg = Rec.cfg(); Rec.cfgE();
+    if (!E.v) return HQ.frame('Recovery', HQ.loading(E, `rect:${tid}:${this.st.days}`), { sub: 'Sleep and how your athletes feel, from their own check-ins' });
+    const A = E.v.athletes.map(a => Object.assign({}, a, { S: this.now(a, cfg) })), n = A.length;
+    if (!n) return HQ.frame('Recovery', Social.empty('users', 'No athletes yet', 'When athletes join this team and check in each morning, their sleep and recovery show up here.'), { sub: 'Sleep and how your athletes feel' });
+    const withScore = A.filter(a => a.S.cur && a.S.cur.R && a.S.cur.R.score != null), withSleep = A.filter(a => Rec.mins(a.S.cur) != null);
+    const good = withScore.filter(a => ['excellent', 'good'].includes(a.S.cur.R.cat)).length, modlow = withScore.filter(a => ['moderate', 'low'].includes(a.S.cur.R.cat)).length;
+    const notToday = A.filter(a => !a.S.today).length, avgS = this.avg(withScore.map(a => a.S.cur.R.score)), avgSl = this.avg(withSleep.map(a => Rec.mins(a.S.cur)));
+    const kpis = `<div class="hq-kpis rc-kpis" data-stg>
+      ${HQ.kpi('Team recovery', avgS == null ? '—' : Math.round(avgS), withScore.length ? `average of ${withScore.length} athlete${withScore.length === 1 ? '' : 's'} with a score` : 'no scores today or yesterday', 'heart-pulse', avgS == null ? '' : avgS >= cfg.t.good ? 'good' : avgS < cfg.t.moderate ? 'bad' : '')}
+      ${HQ.kpi('Average sleep', avgSl == null ? '—' : Rec.hm(avgSl), withSleep.length ? `${withSleep.length} logged their sleep` : 'no sleep logged recently', 'moon', avgSl != null && avgSl < cfg.shortSleep * 60 ? 'bad' : '')}
+      ${HQ.kpi('Good recovery', withScore.length ? Math.round(good / withScore.length * 100) + '%' : '—', withScore.length ? `${good} of ${withScore.length} with a score` : '', 'check-check', withScore.length && good / withScore.length >= .7 ? 'good' : '')}
+      ${HQ.kpi('Moderate or low', modlow, 'athletes with a score', 'triangle-alert', modlow ? 'bad' : '')}
+      ${HQ.kpi('Not checked in today', `${notToday}<small>/${n}</small>`, 'no sleep or check-in today', 'clock', notToday / n > .5 ? 'bad' : '')}</div>`;
+    const attn = A.filter(a => a.S.flags.length).sort((x, y) => (x.S.cur && x.S.cur.R && x.S.cur.R.score != null ? x.S.cur.R.score : 101) - (y.S.cur && y.S.cur.R && y.S.cur.R.score != null ? y.S.cur.R.score : 101));
+    const attnH = `<section class="panel hq-card stack" data-stg data-nofold><div class="spread"><h2 class="h3">${icon('message-circle')} Worth a conversation</h2><span class="badge">${attn.length}</span></div>
+      ${attn.length ? attn.slice(0, 8).map(a => `<div class="rc-attn">${Social.avatar(a, 36)}<div class="grow"><button type="button" class="linkish" data-act="rec-ath" data-id="${a.id}"><b>${esc(a.name)}</b></button><div class="rc-flags">${a.S.flags.slice(0, 3).map(([t, l]) => `<span class="rc-flag ${t}">${esc(l)}</span>`).join('')}</div></div>
+        <button class="btn sm ghost" type="button" data-act="soc-chat" data-id="${a.id}" aria-label="Message ${esc(a.name)}">${icon('message-circle')}</button></div>`).join('') : `<p class="muted">${icon('check-check')} Nobody stands out today.</p>`}
+      <small class="muted">Based only on what athletes reported. These are prompts to talk, not diagnoses — any change to training is your call.</small></section>`;
+    const F = [['all', 'All'], ['low', 'Low'], ['moderate', 'Moderate'], ['good', 'Good'], ['none', 'No recent data'], ['short', 'Short sleep'], ['tired', 'High fatigue or soreness'], ['missing', 'Not checked in today']];
+    const match = a => { const c = a.S.cur, f = this.st.f; if (f === 'all') return true; if (f === 'none') return a.S.tone === 'none';
+      if (f === 'low') return c && c.R && c.R.cat === 'low'; if (f === 'moderate') return c && c.R && c.R.cat === 'moderate'; if (f === 'good') return c && c.R && ['good', 'excellent'].includes(c.R.cat);
+      if (f === 'short') return Rec.mins(c) != null && Rec.mins(c) < cfg.shortSleep * 60; if (f === 'tired') return !!(c && c.rec && (c.rec.fatigue >= 4 || c.rec.soreness >= 4)); if (f === 'missing') return !a.S.today; return true; };
+    const sc = a => a.S.cur && a.S.cur.R && a.S.cur.R.score != null ? a.S.cur.R.score : null;
+    const sorters = { score: (x, y) => (sc(x) == null ? 999 : sc(x)) - (sc(y) == null ? 999 : sc(y)), high: (x, y) => (sc(y) == null ? -1 : sc(y)) - (sc(x) == null ? -1 : sc(x)), name: (x, y) => x.name.localeCompare(y.name),
+      last: (x, y) => ((x.S.last && x.S.last.date) || '').localeCompare((y.S.last && y.S.last.date) || ''), sleep: (x, y) => (Rec.mins(x.S.cur) == null ? 1e9 : Rec.mins(x.S.cur)) - (Rec.mins(y.S.cur) == null ? 1e9 : Rec.mins(y.S.cur)) };
+    const L = A.filter(match).sort(sorters[this.st.sort] || sorters.score);
+    const v15 = (k, v) => v ? `<span class="rc-v ${RecUI.tone(k, v)}" title="${esc(REC_Q.find(q => q[0] === k)[1])}: ${v} of 5">${v}</span>` : '<span class="rc-v none">—</span>';
+    const lastTxt = a => { const l = a.S.last; if (!l) return 'Never checked in'; const d = daysBetween(l.date, todayISO()); return d === 0 ? 'Today' : d === 1 ? 'Yesterday' : `${d} days ago`; };
+    const row = a => { const c = a.S.cur, r = (c && c.rec) || {}, m = Rec.mins(c);
+      return `<button type="button" class="rc-row t-${a.S.tone}" data-act="rec-ath" data-id="${a.id}" aria-label="${esc(a.name)}: ${c && c.R && c.R.score != null ? `recovery ${c.R.score}, ${Rec.catLabel[c.R.cat]}` : 'no recent data'}">
+        <span class="rc-who">${Social.avatar(a, 36)}<span><b>${esc(a.name)}</b><small class="muted">${lastTxt(a)}</small></span></span>
+        <span class="rc-score">${c && c.R && c.R.score != null ? `<b>${c.R.score}</b>` : '<b class="muted">—</b>'}${Rec.pill(c ? c.R : null)}</span>
+        <span class="rc-cell"><small class="label">Sleep</small><b class="${m != null && m < cfg.shortSleep * 60 ? 'warn' : ''}">${m != null ? Rec.hm(m) : '—'}</b>${c && c.sleep && c.sleep.q ? `<small>quality ${c.sleep.q}/5</small>` : ''}</span>
+        <span class="rc-cell rc-15"><small class="label">Energy</small>${v15('energy', r.energy)}</span><span class="rc-cell rc-15"><small class="label">Soreness</small>${v15('soreness', r.soreness)}</span>
+        <span class="rc-cell rc-15"><small class="label">Fatigue</small>${v15('fatigue', r.fatigue)}</span><span class="rc-cell rc-15"><small class="label">Ready</small>${v15('readiness', r.readiness)}</span>
+        <span class="rc-cell rc-tr"><small class="label">7 days</small>${Rec.spark(a.S.D, 7)}</span></button>`; };
+    const trendDays = Rec.dayRange(this.st.n), byDay = d => this.avg(A.map(a => { const x = a.S.D.find(y => y.date === d); return x && x.R ? x.R.score : null; }));
+    const trend = HQ.line(trendDays.map(d => ({ y: byDay(d) })), { min: 0, max: 100, hiLab: '100', loLab: '0', aria: 'Team average Recovery Score per day', empty: 'Not enough check-ins yet for a team trend.' });
+    const sleepT = HQ.bars(trendDays.map(d => { const v = this.avg(A.map(a => Rec.mins(a.S.D.find(y => y.date === d)))); return v == null ? 0 : Math.round(v / 6) / 10; }), trendDays.map((d, i) => this.st.n <= 7 ? new Date(d + 'T12:00').toLocaleDateString(undefined, { weekday: 'short' }) : (i % 4 === 0 ? String(+d.slice(8)) : '')), { aria: 'Team average sleep in hours per night', fmt: v => fmtNum(v, 1), h: 140 });
+    const body = `${kpis}<div class="hq-grid">${attnH}
+        <section class="panel hq-card" data-stg><div class="spread"><h2 class="h3">Team trend</h2><div class="chips" role="group" aria-label="Period">${[[7, '7 days'], [14, '14 days']].map(([v, l]) => `<button type="button" class="chip" data-act="rec-n" data-v="${v}" aria-pressed="${this.st.n === v}">${l}</button>`).join('')}</div></div>
+          <span class="label">Average Recovery Score</span>${trend}<span class="label">Average sleep (hours)</span>${sleepT}</section></div>
+      <section class="panel hq-card" data-stg><div class="hq-tools"><div class="chips rc-fchips" role="group" aria-label="Show">${F.map(([k, l]) => `<button type="button" class="chip" data-act="rec-f" data-v="${k}" aria-pressed="${this.st.f === k}">${l}${k === 'missing' ? ` · ${notToday}` : ''}</button>`).join('')}</div>
+        <label class="hq-sort"><span class="muted">Sort</span><select class="input" id="recSort" aria-label="Sort athletes">${[['score', 'Lowest recovery first'], ['high', 'Highest recovery first'], ['sleep', 'Least sleep first'], ['last', 'Oldest check-in first'], ['name', 'Name']].map(([v, l]) => `<option value="${v}" ${this.st.sort === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>
+        <div class="rc-legend" aria-hidden="true"><span class="rc-pill good">Good</span><span class="rc-pill mid">Moderate</span><span class="rc-pill low">Low</span><span class="rc-pill none">No recent data</span></div>
+        <div class="rc-list">${L.length ? L.map(row).join('') : '<p class="muted" style="padding:12px 4px">No athletes match.</p>'}</div></section>
+      <p class="muted rc-foot" data-stg>${icon('info')} Everything here is self-reported by athletes each morning (no wearables). Grey means no check-in today or yesterday. <button type="button" class="linkish" data-act="rec-how">How the score works</button>${Cloud.isAdmin() ? ` · <button type="button" class="linkish" data-act="rec-cfg">Score settings</button>` : ''}</p>`;
+    return HQ.frame('Recovery', body, { sub: 'Sleep and how your athletes feel, from their own check-ins' });
+  },
+  /* ---------- one athlete: the Recovery tab ---------- */
+  athTab(aid) {
+    const tid = HQ.tid(), key = `reca:${tid}:${aid}`, E = Social.get(key, () => Social.rpc('rec_athlete', { p_team: tid, p_user: aid, p_days: 90 }), 60000), cfg = Rec.cfg();
+    if (!E.v) return E.err ? Social.errBox(E.err, key) : Social.skel(2);
+    const a = E.v, days = Rec.days(a.days || []), D = Rec.scored(days, cfg), n = this.st.n === 14 ? 30 : this.st.n, t = todayISO(), last = D[D.length - 1], first = (a.name || '').split(' ')[0];
+    if (!D.length) return `<section class="panel hq-card sempty" data-stg>${icon('moon')}<b>No check-ins yet</b><p class="muted">When ${esc(first)} logs sleep or does the morning check-in, the trends show up here.</p></section>`;
+    const ins = Rec.insights(days, a.train || [], first);
+    const has = k => D.some(d => d[k] > 0 && daysBetween(d.date, t) < n);
+    const tr = Rec.dayRange(n), mins = tr.map(d => (a.train || []).filter(s => s.d === d).reduce((x, s) => x + (+s.min || 0), 0));
+    const trainBars = HQ.bars(mins, tr.map((d, i) => n <= 7 ? new Date(d + 'T12:00').toLocaleDateString(undefined, { weekday: 'short' }) : (i % 7 === 0 ? String(+d.slice(8)) : '')), { aria: 'Training minutes per day', h: 120 });
+    const head = `<section class="panel hq-card rc-ahead" data-stg>${Rec.ring(last.R, 96)}<div class="grow"><span class="label">Latest check-in · ${fmtDate(last.date)}${daysBetween(last.date, t) > 1 ? ` (${daysBetween(last.date, t)} days ago)` : ''}</span><h2 class="h3">${last.R && last.R.score != null ? Rec.catLabel[last.R.cat] : 'No score'}${last.R && last.R.partial && last.R.score != null ? ' · partial' : ''}</h2>
+        <small class="muted">${Rec.mins(last) ? `Slept ${Rec.hm(Rec.mins(last))}` : 'Sleep not logged'}${last.rec && last.rec.readiness ? ` · ready ${last.rec.readiness}/5` : ''}${last.src === 'quick' ? ' · quick gym check-in' : ''}</small></div>
+        <div class="chips" role="group" aria-label="Period">${[[7, '7 days'], [14, '30 days']].map(([v, l]) => `<button type="button" class="chip" data-act="rec-n" data-v="${v}" aria-pressed="${this.st.n === v}">${l}</button>`).join('')}</div></section>`;
+    const insH = `<section class="panel hq-card stack" data-stg data-nofold><h2 class="h3">${icon('lightbulb')} What stands out</h2>${ins.length ? ins.map(([ic, tone, txt]) => `<p class="rc-in ${tone}">${icon(ic)}<span>${esc(txt)}</span></p>`).join('') : '<p class="muted">Nothing unusual in the recent check-ins.</p>'}
+      <small class="muted">Descriptive only: these compare ${esc(first)}’s own reports over time and don’t say what caused what. Any training change is up to you.</small></section>`;
+    const ch = (l, c) => `<div class="rc-ch"><span class="label">${l}</span>${c}</div>`;
+    const charts = `<section class="panel hq-card stack" data-stg><h2 class="h3">Trends</h2>
+        ${ch('Recovery score', Rec.scoreBars(D, n))}${ch('Sleep', Rec.sleepBars(D, n))}
+        <div class="grid2 rc-ch2">${ch('Sleep quality', Rec.line(D.map(d => ({ date: d.date, v: d.sleep && d.sleep.q })), n, { title: 'Sleep quality', hiLab: 'Great', loLab: 'Poor' }))}
+          ${ch('Energy', Rec.line(D.map(d => ({ date: d.date, v: d.rec && d.rec.energy })), n, { title: 'Energy', color: '#16A34A', hiLab: 'Full', loLab: 'Low' }))}
+          ${ch('Physical fatigue', Rec.line(D.map(d => ({ date: d.date, v: d.rec && d.rec.fatigue })), n, { title: 'Physical fatigue', color: '#D97706', hiLab: 'Very', loLab: 'Fresh' }))}
+          ${ch('Muscle soreness', Rec.line(D.map(d => ({ date: d.date, v: d.rec && d.rec.soreness })), n, { title: 'Muscle soreness', color: '#DC2626', hiLab: 'Very', loLab: 'None' }))}
+          ${has('rhr') ? ch('Resting heart rate (bpm, measured)', Rec.line(D.map(d => ({ date: d.date, v: d.rhr })), n, { title: 'Resting heart rate', min: Math.min(...D.filter(d => d.rhr).map(d => d.rhr)) - 3, max: Math.max(...D.filter(d => d.rhr).map(d => d.rhr)) + 3, unit: ' bpm', hiLab: ' ', loLab: ' ' })) : ''}
+          ${has('hrv') ? ch('HRV (ms, measured)', Rec.line(D.map(d => ({ date: d.date, v: d.hrv })), n, { title: 'HRV', min: Math.min(...D.filter(d => d.hrv).map(d => d.hrv)) - 5, max: Math.max(...D.filter(d => d.hrv).map(d => d.hrv)) + 5, unit: ' ms', hiLab: ' ', loLab: ' ' })) : ''}</div></section>
+      <section class="panel hq-card stack" data-stg><h2 class="h3">${icon('activity')} Training and recovery</h2><span class="label">Training minutes per day</span>${trainBars}<span class="label">Recovery score, same days</span>${Rec.scoreBars(D, n, { h: 110 })}
+        <small class="muted">Shown together so you can compare them. A link between the two isn’t proven by the chart alone.</small></section>`;
+    const det = D.slice().reverse().slice(0, 40).map(d => { const s = d.sleep || {}, r = d.rec || {};
+      return `<details class="rc-day"><summary><span class="d"><b>${fmtDate(d.date).replace(/,.*$/, '')}</b><small>${new Date(d.date + 'T12:00').toLocaleDateString(undefined, { weekday: 'short' })}</small></span><span class="grow">${Rec.mins(d) ? Rec.hm(Rec.mins(d)) + ' sleep' : 'No sleep logged'}${r.note ? ` · ${icon('message-square-heart')} note` : ''}${d.edits ? ` · edited ${d.edits}×` : ''}${d.src === 'quick' ? ' · quick' : ''}</span>${Rec.pill(d.R)}${d.R && d.R.score != null ? `<b class="rc-n">${d.R.score}</b>` : ''}</summary>
+        <div class="rc-day-b">${s.bed ? `<p>${icon('moon')} Bed ${esc(s.bed)} → up ${esc(s.wake)}${s.lat != null ? ` · ${s.lat} min to fall asleep` : ''}${s.wakes != null ? ` · woke ${s.wakes}×` : ''}</p>` : ''}
+          <div class="rc-ans">${[...REC_SLEEP_Q.map(([k, l]) => [l, s[k], k]), ...REC_Q.map(([k, l]) => [l, r[k], k])].filter(x => x[1]).map(([l, v, k]) => `<span><small>${esc(l)}</small><b>${v}/5</b></span>`).join('')}${d.rhr ? `<span><small>Resting HR</small><b>${d.rhr} bpm</b></span>` : ''}${d.hrv ? `<span><small>HRV</small><b>${d.hrv} ms</b></span>` : ''}</div>
+          ${r.note ? `<blockquote class="rc-q-note">“${esc(r.note)}”</blockquote>` : ''}
+          ${(d.hist || []).length ? `<p class="muted rc-edits">${icon('history')} Changed by ${esc(first)} after first saving. Earlier version${d.hist.length > 1 ? 's' : ''}: ${d.hist.slice().reverse().map(h => `${new Date(+h.at).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}${h.sleep && (h.sleep.min || h.sleep.bed) ? ` — ${Rec.hm(h.sleep.min || Rec.span(h.sleep.bed, h.sleep.wake))} sleep` : ''}${h.rec && h.rec.readiness ? `, ready ${h.rec.readiness}/5` : ''}`).join('; ')}</p>` : ''}</div></details>`; }).join('');
+    return `${head}<div class="hq-grid">${insH}${charts.split('</section>')[0]}</section></div>${charts.split('</section>').slice(1).join('</section>')}
+      <section class="panel hq-card stack" data-stg data-nofold><h2 class="h3">${icon('history')} Daily check-ins</h2><div class="rc-days">${det}</div></section>`;
+  },
+  /* ---------- admin: weights and thresholds ---------- */
+  settings() {
+    if (!Cloud.isAdmin()) return; const c = Rec.cfg(), W = c.w;
+    const num = (id, v, lab, min, max, step = 1) => `<div class="field"><label for="${id}">${lab}</label><input class="input num" id="${id}" type="number" inputmode="decimal" value="${v}" min="${min}" max="${max}" step="${step}"></div>`;
+    Sheet.open({ title: 'Recovery Score settings', html: `<form id="rcCfg" class="stack" novalidate><p class="muted">Changes apply to everyone’s score straight away (it’s recalculated from their answers). Weights are relative: a weight of 0 leaves that answer out.</p>
+      <h3 class="h3">Weights</h3><div class="grid2">${Object.keys(REC_DEFAULT.w).map(k => num('rw-' + k, W[k], REC_PART[k], 0, 100)).join('')}</div>
+      <h3 class="h3">Categories (lowest score in each)</h3><div class="grid2">${num('rt-excellent', c.t.excellent, 'Excellent from', 2, 100)}${num('rt-good', c.t.good, 'Good from', 2, 99)}${num('rt-moderate', c.t.moderate, 'Moderate from', 1, 98)}</div>
+      <h3 class="h3">Sleep</h3><div class="grid2">${num('rs-target', c.sleepTarget, 'Full points from (hours)', 5, 12, .5)}${num('rs-min', c.sleepMin, 'No points at (hours)', 0, 7, .5)}${num('rs-short', c.shortSleep, 'Flag as short under (hours)', 4, 12, .5)}${num('rs-cov', Math.round(c.minCoverage * 100), 'Minimum answered for a score (%)', 10, 100)}</div>
+      <p class="err-msg" id="rcCfgErr" role="alert"></p><div class="grid2"><button type="button" class="btn" id="rcCfgReset">Back to defaults</button><button type="submit" class="btn primary">${icon('check')} Save</button></div></form>`,
+      onMount: sh => {
+        const send = async p => { try { await Social.rpc('rec_cfg_save', { p }); Social.drop('reccfg', 'rect:'); await Sheet.close(); UI.toast('Score settings saved.'); Rec.cfgE(); setTimeout(() => Social.repaint(), 400); } catch (e) { $('#rcCfgErr', sh).textContent = Social.msg(e); } };
+        $('#rcCfg', sh).onsubmit = e => { e.preventDefault(); const g = id => +$('#' + id, sh).value; const w = {}; Object.keys(REC_DEFAULT.w).forEach(k => { w[k] = g('rw-' + k); });
+          send({ w, t: { excellent: g('rt-excellent'), good: g('rt-good'), moderate: g('rt-moderate') }, sleepTarget: g('rs-target'), sleepMin: g('rs-min'), shortSleep: g('rs-short'), minCoverage: g('rs-cov') / 100 }); };
+        $('#rcCfgReset', sh).onclick = () => send({});
+      } });
+  }
+};
+Object.assign(Actions, {
+  'rec-f': el => { RecHQ.st.f = el.dataset.v; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'rec-n': el => { RecHQ.st.n = +el.dataset.v; const y = scrollY; UI.render(); scrollTo(0, y); },
+  'rec-ath': el => { HQ.st.atab = 'recovery'; HQ.go('athlete:' + el.dataset.id, true); },
+  'rec-cfg': () => RecHQ.settings()
+});
+document.addEventListener('change', e => { if (e.target.id === 'recSort') { RecHQ.st.sort = e.target.value; const y = scrollY; UI.render(); scrollTo(0, y); } });
+/* Coach HQ: a Recovery section in the menu, a Recovery tab on each athlete, a small card on the Overview */
+(() => {
+  if (!HQ.SECTIONS.some(s => s[0] === 'recovery')) HQ.SECTIONS.splice(HQ.SECTIONS.findIndex(s => s[0] === 'reports'), 0, ['recovery', 'Recovery', 'heart-pulse']);
+  const scr = HQ.screen.bind(HQ);
+  HQ.screen = function (param) { const s = String(param || '').split(':')[0]; if (s === 'recovery') { const g = this.gate(); if (g) return `<div class="screen hq">${g}</div>`; return RecHQ.screen(); } return scr(param); };
+  const ath = HQ.athlete.bind(HQ);
+  HQ.athlete = function (aid) {
+    const want = this.st.atab === 'recovery'; if (want) this.st.atab = 'overview';
+    let h = ath(aid); if (want) this.st.atab = 'recovery';
+    const tab = `<button type="button" role="tab" data-act="hq-st" data-k="atab" data-v="recovery" aria-selected="${want}">Recovery</button>`;
+    h = h.replace(/(<button type="button" role="tab" data-act="hq-st" data-k="atab" data-v="overview"[^>]*>Overview<\/button>)/, '$1' + tab);
+    if (want) { h = h.replace(/(data-k="atab" data-v="overview") aria-selected="true"/, '$1 aria-selected="false"'); const k = h.indexOf('class="seg hq-tabs"'); if (k < 0) return h; const i = h.indexOf('</div>', k) + 6; h = h.slice(0, i) + RecHQ.athTab(aid) + '</div>'; }
+    return h;
+  };
+  const ov = HQ.overview.bind(HQ);
+  HQ.overview = function () {
+    const h = ov(), tid = this.tid(); if (!tid) return h; const E = RecHQ.team(tid); if (!E.v || !E.v.athletes.length) return h;
+    const cfg = Rec.cfg(), A = E.v.athletes.map(a => RecHQ.now(a, cfg)), sc = A.filter(s => s.cur && s.cur.R && s.cur.R.score != null), low = sc.filter(s => s.cur.R.cat === 'low').length, miss = A.filter(s => !s.today).length, av = Rec.avg(sc.map(s => s.cur.R.score));
+    const card = `<button type="button" class="panel hq-card rc-ovw" data-act="hq-go" data-p="recovery" data-stg><span class="rc-cta-ic">${icon('heart-pulse')}</span><span class="grow"><b>Recovery today</b><small class="muted">${av == null ? 'No scores yet today' : `Team average ${Math.round(av)}`} · ${low} low · ${miss} not checked in</small></span>${icon('chevron-right')}</button>`;
+    const i = h.indexOf('<div class="hq-kpis"'); return i < 0 ? h : h.slice(0, i) + card + h.slice(i);
+  };
 })();
 
 </script>
