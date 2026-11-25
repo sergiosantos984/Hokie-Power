@@ -1,13 +1,13 @@
 {
-  "name": "RepIQ",
-  "short_name": "RepIQ",
-  "description": "Cliff's VT Summer 2005 strength & conditioning program",
+  "name": "VarsityIron",
+  "short_name": "VarsityIron",
+  "description": "Strength and conditioning for athletes, coaches and schools.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#141518",
-  "theme_color": "#861F41",
+  "theme_color": "#2F4156",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
