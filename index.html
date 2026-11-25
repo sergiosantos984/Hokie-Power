@@ -3021,6 +3021,11 @@ body:has(.cx-startbar) .cx-undo{bottom:calc(205px + env(safe-area-inset-bottom))
 @media (min-width:700px){body:has(.cx-startbar) .cx-undo,body:has(.cxb-bar) .cx-undo{bottom:calc(150px + env(safe-area-inset-bottom))}}
 @media (min-width:900px){body:has(.cxb-bar) .cx-undo,body:has(.cx-startbar) .cx-undo{bottom:96px}}
 .cx-ring{width:min(78vw,320px,44vh)}
+/* the exercise strip scrolls like a normal phone list (Nov 25: "a little wonky to scroll") */
+.cx-tiles{scroll-snap-type:x proximity;overscroll-behavior-x:contain;scroll-padding:0 8px;touch-action:pan-x pan-y}
+.cx-tile{scroll-snap-align:start;touch-action:pan-x pan-y}
+.cx-scroll{overscroll-behavior-x:contain}
+@media (max-width:979px){.cxb-shelf .cx-tiles{padding-bottom:4px}.cxb-shelf .cx-hint{display:none}}
 
 /* ---- Sleep & Recovery — Nov 25 ---- */
 .rc{--good:#16A34A;--mid:#D97706;--low:#DC2626;--none:#94A3B8}
@@ -3097,6 +3102,82 @@ body:has(.cx-startbar) .cx-undo{bottom:calc(205px + env(safe-area-inset-bottom))
 /* ---- VarsityIron: the school leads, "powered by VarsityIron" stays small — Nov 25 ---- */
 #intro .t-sub .vi-powered{display:inline-block;margin-top:8px;font-family:var(--f-body,inherit);font-size:clamp(11px,2.8vw,13px)!important;font-weight:700;letter-spacing:.22em;line-height:1.3;opacity:.85}
 #boot .b-sub{letter-spacing:.2em}
+/* long school names: the loading screen sizes the words to fit; the header stays on one line */
+#boot .b-word{font-size:min(clamp(84px,27vw,230px), calc(88vw / (var(--bw, 7) * .68)))!important;max-width:94vw;text-align:center}
+#boot .b-word span{white-space:nowrap}
+.brandmark{min-width:0;flex:0 1 auto}.brandmark>div{min-width:0}
+.brandmark b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brandmark b.long{font-size:clamp(14px,4.3vw,18px);letter-spacing:.02em}
+.brandmark small{overflow:hidden;text-overflow:ellipsis}
+/* ---- station tablets, logged sets, solo circuits ---- */
+.cx-qhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 2px;padding:8px 10px;border-radius:14px;background:rgba(var(--b1rgb),.08);border:1px dashed rgba(var(--b1rgb),.35)}
+.cx-qhead:first-child{margin-top:0}.cx-qhead .cx-pop{flex-basis:100%}
+.cx-qno{display:inline-flex;align-items:center;gap:6px;font-weight:800;margin-right:auto}.cx-qno svg{width:16px;height:16px}
+.cx-note-in{min-height:38px;max-width:240px;font-size:14px}
+.cx-codes{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.cx-code{display:flex;flex-direction:column;gap:6px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--panel-solid,var(--panel))}
+.cx-code-v{font:800 30px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em}
+.cx-lgp{padding:10px 0;border-top:1px solid var(--line)}.cx-lgp:first-child{border-top:0}.cx-lgp header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cx-lgr{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:14px}.cx-lgr small{text-align:right;font-variant-numeric:tabular-nums}
+.cx-logbtn{margin:6px auto 0;display:flex}
+.cx-qlist{margin-top:10px;text-align:left}
+.cxlg{display:grid;gap:10px}
+.cxlg-ex{padding:10px;border:1px solid var(--line);border-radius:16px;background:var(--panel-solid,var(--panel))}
+.cxlg-ex header{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px}.cxlg-ex header b{margin-right:auto;font-size:16px}
+.cxlg-ok{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:#15803D}.cxlg-ok svg{width:13px;height:13px}
+.cxlg-sets{display:grid;gap:6px}
+.cxlg-set{display:grid;grid-template-columns:24px minmax(0,1fr) auto minmax(0,1fr) auto;align-items:center;gap:6px}
+.cxlg-set .input{min-height:46px;font-size:18px;text-align:center;font-variant-numeric:tabular-nums;padding:0 6px}
+.cxlg-n{font-weight:800;opacity:.6;text-align:center}.cxlg-x{font-weight:800;opacity:.6}.cxlg-u{font-size:12px;opacity:.7}
+.cx-solo-c{display:grid;justify-items:center;gap:6px;padding:14px;border-radius:18px;background:var(--ph,var(--navy,#2F4156));color:#fff;text-align:center}
+.cx-solo-c.phase-work{--ph:#15803D}.cx-solo-c.phase-rest{--ph:#B45309}.cx-solo-c.phase-recovery{--ph:#1D4ED8}.cx-solo-c.phase-paused{--ph:#475569}
+.cx-solo-c .cx-big{margin:0;font-size:clamp(64px,18vw,120px)}.cx-solo-c .btn{color:#fff;border-color:rgba(255,255,255,.5)}
+.cx-missed .cx-hd{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(var(--b1rgb),.1)}
+.gstation{margin-top:10px}.k-entry{margin-top:8px}.k-entry .row{gap:8px}.k-entry .input{text-transform:uppercase;letter-spacing:.12em;font-weight:700}
+
+/* the station tablet (full screen, no account) */
+body.kiosk-on{overflow:hidden}
+#gate.kiosk{background:#0B1220;color:#F8FAFC;--fg:#F8FAFC;--muted:#94A3B8;--line:rgba(255,255,255,.14);--panel:#111A2E;--panel-solid:#111A2E;color-scheme:dark}
+html:root body.theme-light #gate.kiosk{background:#0B1220;color:#F8FAFC;--fg:#F8FAFC;--muted:#94A3B8}
+.k-wrap{min-height:100%;padding:max(16px,env(safe-area-inset-top)) 18px 24px;max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.k-head{display:flex;align-items:flex-start;gap:12px}.k-head>div{flex:1;min-width:0}
+.k-head h1{font-size:clamp(30px,5vw,52px);line-height:1;margin:2px 0;font-weight:900;letter-spacing:-.01em}.k-head small{color:var(--muted);font-size:15px}
+.k-head .label,.k-wrap .label{color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-size:12px;font-weight:700}
+.k-net{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#7C2D12;font-size:13px;margin:0}.k-net[hidden]{display:none}
+.k-grid{display:grid;gap:14px;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);grid-template-areas:"clock ex" "people people"}
+@media (max-width:760px){.k-grid{grid-template-columns:1fr;grid-template-areas:"clock" "ex" "people"}}
+.k-clock{grid-area:clock;display:flex;flex-direction:column;gap:8px;padding:18px 20px;border-radius:22px;background:var(--ph,#1E293B);font-size:17px}
+.k-clock.phase-work{--ph:#15803D}.k-clock.phase-rest{--ph:#B45309}.k-clock.phase-recovery{--ph:#1D4ED8}.k-clock.phase-ready{--ph:#2F4156}.k-clock.phase-paused,.k-clock.phase-wait{--ph:#334155}.k-clock.phase-done{--ph:#1E293B}
+.k-lab{font-size:clamp(20px,3vw,30px);font-weight:800}
+.k-big{font-size:clamp(84px,14vw,190px);line-height:1;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em}.k-big svg{width:80px;height:80px}
+.k-ex{grid-area:ex;padding:16px 18px;border-radius:22px;background:#111A2E;border:1px solid var(--line)}
+.k-ex ol{list-style:none;margin:8px 0 0;padding:0;counter-reset:k;display:grid;gap:10px}
+.k-ex li{counter-increment:k;display:grid;grid-template-columns:40px 1fr;column-gap:10px;align-items:center}
+.k-ex li::before{content:counter(k);grid-row:span 2;display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.1);font-weight:900;font-size:18px}
+.k-ex li b{font-size:clamp(19px,2.4vw,26px)}.k-ex li span{color:#CBD5E1;font-size:16px}
+.k-people{grid-area:people}
+.k-names{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-top:8px}
+.k-name{display:flex;align-items:center;justify-content:center;gap:8px;min-height:64px;padding:8px 14px;border-radius:18px;border:2px solid rgba(255,255,255,.2);background:#16223B;color:#F8FAFC;font-size:20px;cursor:pointer;touch-action:manipulation}
+.k-name.big{min-height:84px;font-size:24px}
+.k-name:active{transform:scale(.98)}.k-name:focus-visible{outline:3px solid #FBBF24;outline-offset:2px}
+.k-name.done{border-color:#22C55E;background:#14321F}.k-name.done svg{color:#4ADE80;width:22px;height:22px}
+.k-name.part{border-color:#F59E0B}.k-name small{font-size:13px;color:#FCD34D}
+.k-all{margin-top:14px}.k-all summary{cursor:pointer;color:#CBD5E1;font-size:16px;min-height:44px;display:flex;align-items:center}
+.k-log{display:flex;flex-direction:column;gap:12px;max-width:820px;width:100%;margin:0 auto}
+.k-log header{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}.k-log header>div{flex:1}.k-log h2{font-size:clamp(30px,5vw,46px);margin:0;font-weight:900}
+.k-log .cxlg-ex{background:#111A2E}.k-log .cxlg-set .input{min-height:58px;font-size:24px;background:#0B1220;color:#F8FAFC;border-color:rgba(255,255,255,.25)}
+.k-log .cxlg-ex header b{font-size:20px}
+.k-log-b{display:grid;grid-template-columns:1fr 2fr;gap:12px;position:sticky;bottom:0;padding:10px 0;background:linear-gradient(transparent,#0B1220 30%)}
+.k-log-b .btn{min-height:64px;font-size:20px}
+.k-msg{display:grid;place-items:center;gap:16px;min-height:80vh;text-align:center}.k-msg h1{font-size:clamp(22px,3.4vw,34px);max-width:640px}.k-msg>svg{width:56px;height:56px;opacity:.7}
+.k-code{display:grid;gap:8px;justify-items:center}.k-code .input{font:800 32px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-align:center;text-transform:uppercase;max-width:340px;min-height:64px}.k-code .input.bad{border-color:#EF4444}
+.k-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,160%);padding:14px 22px;border-radius:999px;background:#15803D;color:#fff;font-weight:800;font-size:20px;transition:transform .25s;z-index:5;pointer-events:none}.k-toast.show{transform:translate(-50%,0)}
+.k-toast:empty{display:none}
+.k-menu{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:6}
+.k-menu-b{display:grid;gap:10px;width:min(420px,92vw);padding:20px;border-radius:22px;background:#111A2E;border:1px solid var(--line)}.k-menu-b h2{margin:0}
+#gate.kiosk .btn{color:#F8FAFC;border-color:rgba(255,255,255,.3)}#gate.kiosk .btn.primary{background:#16A34A;border-color:#16A34A}
+#gate.kiosk .seg button[aria-pressed="true"]{background:#F8FAFC;color:#0B1220}
+@media (prefers-reduced-motion:reduce){.k-toast{transition:none}}
 </style>
 </head>
 <body>
@@ -3112,7 +3193,7 @@ body:has(.cx-startbar) .cx-undo{bottom:calc(205px + env(safe-area-inset-bottom))
   <div class="b-sub">TRAIN LIKE IT COUNTS</div>
   <script>(function(){try{var o=JSON.parse(localStorage.getItem('bbp.brand')||'null');if(!o||o.default||!(o.member||o.link)||o.slug==='parents')return;var n=String(o.name||o.app_name||'').trim();if(!n)return;
     var w=n.toUpperCase().split(/\s+/),a=w.length>1?w.slice(0,-1).join(' '):w[0],b=w.length>1?w[w.length-1]:'',q=function(s){return document.querySelectorAll(s)};
-    q('#boot .w1').forEach(function(e){e.textContent=a});q('#boot .w2').forEach(function(e){e.textContent=b});q('#boot .b-sub').forEach(function(e){e.textContent='POWERED BY VARSITYIRON'});document.title=n;}catch(e){}})();</script>
+    q('#boot .w1').forEach(function(e){e.textContent=a});q('#boot .w2').forEach(function(e){e.textContent=b});q('#boot .b-sub').forEach(function(e){e.textContent='POWERED BY VARSITYIRON'});q('#boot .b-word').forEach(function(e){e.style.setProperty('--bw',Math.max(a.length,b.length,4))});document.title=n;}catch(e){}})();</script>
   <div class="b-load"><span class="b-bar"><i></i></span><b id="bootPct">00</b></div>
   <div class="b-flash"></div>
   <div class="b-half top"></div><div class="b-half bot"></div>
@@ -3287,6 +3368,7 @@ const Brand = {
     const [w1, w2] = this.words();
     document.querySelectorAll('#boot .w1').forEach(e => e.textContent = w1);
     document.querySelectorAll('#boot .w2').forEach(e => e.textContent = w2);
+    document.querySelectorAll('#boot .b-word').forEach(e => e.style.setProperty('--bw', Math.max(w1.length, w2.length, 4)));   // long school names get a smaller size so they fit
     document.querySelectorAll('.t-sub').forEach(e => { if (e.firstChild && e.firstChild.nodeType === 3) e.firstChild.textContent = this.up(); });
     document.querySelectorAll('#boot .b-sub').forEach(e => { e.textContent = this.sub(); });
     document.title = this.name();
@@ -4570,7 +4652,7 @@ const DAYN = d => (State.program.dayNames || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
 const restItem = r => r.ar ? AR.item(r) : `<div class="wk-item rest" data-stg><span class="wk-day" style="font-size:13px">${DAYN(r.day)}</span><span class="grow"><b style="display:block">${esc(r.title)}</b><span class="muted" style="font-size:12.5px">${esc(r.note)}</span></span><span class="st upcoming">Rest</span></div>`;
 const stBadge = st => `<span class="st ${st}">${ST_LABEL[st] || st}</span>`;
 const shield = (s = 30) => (typeof Brand !== 'undefined' && Brand.logo(s)) || `<svg class="shield" width="${s}" height="${s}" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="11" fill="var(--b1)"/><path d="M9 20h22" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M12.5 13.5v13M28 13.5v13" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M9 16v8M31.5 16v8" stroke="var(--b2)" stroke-width="3" stroke-linecap="round"/></svg>`;
-const brand = () => `<div class="brandmark">${shield()}<div><b>${esc(Brand.up())}</b><small>${Brand.school() ? 'POWERED BY VARSITYIRON · ' : ''}${esc(String(State.settings.name || 'Cliff').toUpperCase())}</small></div></div>`;
+const brand = () => `<div class="brandmark">${shield()}<div><b class="${Brand.up().length > 11 ? 'long' : ''}" title="${esc(Brand.name())}">${esc(Brand.up())}</b><small>${Brand.school() ? 'POWERED BY VARSITYIRON' : esc(String(State.settings.name || 'Cliff').toUpperCase())}</small></div></div>`;
 const sampleTag = () => State.program.coachPlan ? `<span class="badge ok" title="Your coach's plan">${icon('clipboard-list')} ${esc(State.program.coachPlan.name)}</span>` : State.program.source === 'vt2005' ? `<span class="badge blue">${esc(TRACKS[State.program.track])}${State.profile && State.profile.position ? ' · ' + esc(State.profile.position) : ''}</span>` : `<span class="badge ok">${esc(State.program.name || 'Imported program')}</span>`;
 /* log-out shortcut shown wherever the athlete is signed in */
 const logoutBtn = (label = true) => Cloud.on && Cloud.profile ? `<button class="btn sm logout-btn" type="button" data-act="cloud-logout" aria-label="Log out of ${esc(Cloud.profile.username)}">${icon('log-out')}${label ? ' Log out' : ''}</button>` : '';
@@ -14316,6 +14398,8 @@ if (document.readyState === 'loading') document.addEventListener('DOMContentLoad
 <script>
 /* icons the circuit screens use that weren't in the built-in set (so they draw even when the icon library can't load) */
 Object.assign(ICONS, {
+  'tablet': 'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM12 18h.01', 'hash': 'M4 9h16M4 15h16M10 3L8 21M16 3l-2 18',
+  'clipboard-pen': 'M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zM16 4h2a2 2 0 0 1 2 2v4M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4M21.4 15.6a1.9 1.9 0 0 0-2.7-2.7l-5 5V21h3.1z',
   'align-left': 'M15 12H3M17 18H3M21 6H3', 'arrow-right': 'M5 12h14M12 5l7 7-7 7', 'arrow-up-from-line': 'M18 9l-6-6-6 6M12 3v14M5 21h14',
   'circle-dot': 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20zM12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2z', 'chevron-down': 'M6 9l6 6 6-6',
   'ellipsis-vertical': 'M12 4.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM12 11.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1zM12 18.5a.5.5 0 1 0 0 1a.5.5 0 1 0 0-1z',
@@ -14350,6 +14434,7 @@ const CxTime = {
   LEAD: 10,   // "get ready" seconds before the first interval
   /* plan: {stations:[{w, r}], rounds (0 = keep going), round_rest}; starts: each team's starting station */
   build(plan, starts) {
+    plan = this.units(plan);
     const S = (plan && plan.stations) || [], n = S.length; if (!n) return null;
     const st = [...new Set((starts && starts.length ? starts : [0]).map(x => ((+x % n) + n) % n))];
     const rounds = Math.max(0, +plan.rounds || 0), rr = Math.max(0, +plan.round_rest || 0);
@@ -14363,6 +14448,22 @@ const CxTime = {
     return { S, n, st, rounds, rr, slots, RL, FL, total: rounds ? (rounds - 1) * RL + FL : null };
   },
   len(T, k, final) { return k < T.n - 1 ? T.slots[k].mid : T.slots[k].maxW + (final ? 0 : T.rr); },
+  /* station tablets: a circuit can group its exercises per tablet ("quads" of 2–8). The shared clock then runs per group:
+     every group of athletes works through its tablet's exercises in the group's time, then everyone moves to the next tablet.
+     Returns the plan as the clock sees it — one "station" per tablet, each carrying its exercises (ex) and first index (i0). */
+  QMOVE: 60,
+  qn(plan) { const q = +(plan && plan.quad) || 0; return q >= 2 ? q : 0; },
+  qDefault(ex) { return Math.max(30, Math.min(3600, Math.round(ex.reduce((t, s) => t + (+s.w || 0) + (+s.r || 0), 0) / 30) * 30 || 30)); },
+  units(plan) {
+    const q = this.qn(plan); if (!plan || !q || plan.tabs) return plan;
+    const S = plan.stations || [], Q = plan.quads || [], out = [];
+    for (let i = 0, j = 0; i < S.length; i += q, j++) {
+      const ex = S.slice(i, i + q).map((s, k) => Object.assign({ i: i + k }, s)), g = Q[j] || {};
+      out.push({ key: 'tab', tab: j + 1, i0: i, ex, name: ex.map(x => x.name).join(' · '), w: g.w != null ? +g.w : this.qDefault(ex), r: g.r != null ? +g.r : this.QMOVE });
+    }
+    return Object.assign({}, plan, { stations: out, src: S, tabs: true });
+  },
+  unitName(s, i) { return s && s.tab ? `Tablet ${s.tab}` : `Station ${i + 1}`; },
   /* where the whole circuit is at elapsed second e */
   at(T, e) {
     if (e < 0) return { phase: 'ready', e, left: -e, r: 0, k: 0, slotStart: 0, slotEnd: 0, workEnd: 0 };
@@ -14445,13 +14546,13 @@ const CxDnd = {
     const btn = e.target.closest('button'); if (!handle && btn && btn !== it && !btn.hasAttribute('data-dnd-grab')) return;   // a button inside a card stays a button
     const touch = e.pointerType !== 'mouse';
     this.s = { it, root, type: it.dataset.dnd, id: it.dataset.dndId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, touch, armed: !!(touch && handle), handle0: !!handle, on: false, pid: e.pointerId };
-    if (touch && !handle) this.s.timer = setTimeout(() => { if (this.s && !this.s.on) { this.s.armed = true; it.classList.add('cx-armed'); try { navigator.vibrate && navigator.vibrate(10); } catch (x) { } } }, 260);
+    if (touch && !handle) this.s.timer = setTimeout(() => { if (this.s && !this.s.on) { this.s.armed = true; it.classList.add('cx-armed'); try { navigator.vibrate && navigator.vibrate(10); } catch (x) { } } }, 450);   // a deliberate hold, so a resting finger that then swipes still scrolls
   },
   move(e) {
     const s = this.s; if (!s || e.pointerId !== s.pid) return;
     s.x = e.clientX; s.y = e.clientY; const d = Math.hypot(s.x - s.x0, s.y - s.y0);
     if (!s.on) {
-      if (s.touch && !s.armed) { if (d > 8) this.end(); return; }        // moved before the hold: it's a scroll
+      if (s.touch && !s.armed) { if (d > 6) this.end(); return; }        // moved before the hold: it's a scroll
       if (d < (s.touch ? 3 : 5)) return;
       this.start();
     }
@@ -14800,7 +14901,7 @@ const CxApi = {
   list(tid) { return Social.get('cxl:' + tid, () => Social.rpc('circuit_list', { p_team: tid }), 15000); }
 };
 let cxUid = 0;
-const cxSt = (key, name, w, r) => ({ u: 's' + (++cxUid), key, name, w, r });
+const cxSt = (key, name, w, r, note) => Object.assign({ u: 's' + (++cxUid), key, name, w, r }, note ? { note: String(note).slice(0, 80) } : {});
 const CxUndo = {
   show(msg, fn) {
     let b = $('#cxUndo'); if (!b) { b = document.createElement('div'); b.id = 'cxUndo'; b.className = 'cx-undo'; b.setAttribute('role', 'status'); document.body.appendChild(b); }
@@ -14820,14 +14921,14 @@ const CxHQ = {
     const card = c => { const T = CxTime.build(c, c.stations.map((_, i) => i)), est = T ? (T.total != null ? T.total : T.RL) : 0;
       return `<article class="panel cx-card" data-stg><div class="spread"><h3 class="h3">${esc(c.name)}</h3><button class="btn icon ghost" type="button" data-act="cx-cmenu" data-id="${c.id}" aria-label="More for ${esc(c.name)}">${icon('ellipsis')}</button></div>
         ${c.description ? `<p class="muted cx-card-d">${esc(c.description)}</p>` : ''}
-        <div class="cx-tags"><span class="cx-tag">${icon('layers')} ${c.stations.length} station${c.stations.length === 1 ? '' : 's'}</span><span class="cx-tag">${icon('repeat')} ${c.rounds ? c.rounds + ' round' + (c.rounds === 1 ? '' : 's') : 'Until you stop'}</span><span class="cx-tag">${icon('timer')} ${c.rounds ? '≈ ' + Math.round(est / 60) + ' min' : Math.round(est / 60) + ' min a round'}</span></div>
+        <div class="cx-tags"><span class="cx-tag">${icon('layers')} ${c.stations.length} ${CxTime.qn(c) ? 'exercise' : 'station'}${c.stations.length === 1 ? '' : 's'}</span>${CxTime.qn(c) ? `<span class="cx-tag">${icon('tablet')} ${Math.ceil(c.stations.length / CxTime.qn(c))} tablets</span>` : ''}<span class="cx-tag">${icon('repeat')} ${c.rounds ? c.rounds + ' round' + (c.rounds === 1 ? '' : 's') : 'Until you stop'}</span><span class="cx-tag">${icon('timer')} ${c.rounds ? '≈ ' + Math.round(est / 60) + ' min' : Math.round(est / 60) + ' min a round'}</span></div>
         <ol class="cx-mini">${c.stations.slice(0, 6).map(s => `<li><span>${esc(s.name)}</span><small>${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}</small></li>`).join('')}${c.stations.length > 6 ? `<li class="muted">+ ${c.stations.length - 6} more</li>` : ''}</ol>
         <div class="row"><button class="btn primary grow" type="button" data-act="cx-run" data-id="${c.id}" ${live.some(s => s.status !== 'lobby') ? 'disabled title="A circuit is already running"' : ''}>${icon('play')} Set up teams & run</button><button class="btn" type="button" data-act="cx-open" data-id="${c.id}">${icon('pencil')} Edit</button></div></article>`; };
     const stLab = s => ({ done: ['Completed', 'good'], ended: ['Stopped early', 'warn'], running: ['Live', 'live'], paused: ['Paused', 'warn'], lobby: ['Setting up', ''] }[s.status] || [s.status, '']);
     const dur = s => s.el != null && s.status !== 'lobby' ? CxTime.words(Math.max(0, Math.min(+s.el, s.total_s != null ? +s.total_s : +s.el))) : '—';
     return `${live.length ? live.map(s => `<button type="button" class="panel cx-livebar ${s.status}" data-act="cx-sess" data-id="${s.id}" data-stg><span class="cx-dot" aria-hidden="true"></span><span class="grow"><b>${esc(s.name)}</b><small>${stLab(s)[0]} · ${s.athletes} athlete${s.athletes === 1 ? '' : 's'}</small></span><span class="btn sm primary">${s.status === 'lobby' ? 'Continue setup' : 'Open live'} ${icon('chevron-right')}</span></button>`).join('') : ''}
       <section class="cx-new" data-stg><button class="btn primary big" type="button" data-act="cx-open" data-id="new">${icon('plus')} New circuit</button>
-        <div class="cx-starters"><span class="label">Or start from</span>${CX_STARTERS.map(t => `<button class="chip" type="button" data-act="cx-open" data-id="new~${t[0]}">${esc(t[1].replace(' Circuit', ''))}</button>`).join('')}</div></section>
+        <div class="cx-starters"><span class="label">Or start from</span><button class="chip" type="button" data-act="cx-from">${icon('dumbbell')} A workout or plan day</button>${CX_STARTERS.map(t => `<button class="chip" type="button" data-act="cx-open" data-id="new~${t[0]}">${esc(t[1].replace(' Circuit', ''))}</button>`).join('')}</div></section>
       ${C.length ? `<div class="cx-cards">${C.map(card).join('')}</div>` : `<section class="panel sempty" data-stg>${icon('timer')}<b>No circuits yet</b><p class="muted">Build one with drag and drop: pick exercises, set each one's time and rest, then put your athletes in teams.</p></section>`}
       <section class="panel hq-card" data-stg><h2 class="h3">${icon('history')} Sessions</h2>${past.length ? `<div class="cx-hist">${past.map(s => `<button type="button" class="cx-hrow" data-act="cx-sess" data-id="${s.id}"><span class="d"><b>${fmtDate(String(s.started_at || s.created_at).slice(0, 10)).replace(/,.*$/, '')}</b></span><span class="grow"><b>${esc(s.name)}</b><small class="muted">${dur(s)} · ${s.athletes} athlete${s.athletes === 1 ? '' : 's'}</small></span><span class="cx-st-pill ${stLab(s)[1]}">${stLab(s)[0]}</span></button>`).join('')}</div>` : '<p class="muted">Circuits you run show up here, with who took part.</p>'}</section>`;
   },
@@ -14844,16 +14945,16 @@ const CxB = {
     const [kind, tpl] = id.split('~');
     if (kind === 'new') {
       const dr = LSX.get(this.key('new'), null), T = tpl && CX_STARTERS.find(t => t[0] === tpl);
-      if (T) this.d = { id: null, name: T[1], description: T[2], rounds: T[3], round_rest: T[4], stations: T[5].filter(([k]) => EXERCISES[k]).map(([k, w, r]) => cxSt(k, EXERCISES[k].name, w, r)) };
+      if (T) this.d = { id: null, name: T[1], description: T[2], rounds: T[3], round_rest: T[4], stations: T[5].filter(([k]) => EXERCISES[k]).map(([k, w, r]) => cxSt(k, EXERCISES[k].name, w, r)), quad: 0, quads: [] };
       else if (dr && dr.d) { this.d = dr.d; this.dirty = true; setTimeout(() => UI.toast('Your unsaved circuit is back.'), 300); }
-      else this.d = { id: null, name: '', description: '', rounds: 3, round_rest: 60, stations: [] };
+      else this.d = { id: null, name: '', description: '', rounds: 3, round_rest: 60, stations: [], quad: 0, quads: [] };
       if (T) this.dirty = true;
       return true;
     }
     const c = CxHQ.circuit(id); if (!c) return false;
     this.base = c.updated_at; const dr = LSX.get(this.key(id), null);
     if (dr && dr.base === c.updated_at && dr.d) { this.d = dr.d; this.dirty = true; }
-    else this.d = { id: c.id, name: c.name, description: c.description, rounds: c.rounds, round_rest: c.round_rest, stations: c.stations.map(s => cxSt(s.key, s.name, s.w, s.r)) };
+    else this.d = { id: c.id, name: c.name, description: c.description, rounds: c.rounds, round_rest: c.round_rest, stations: c.stations.map(s => cxSt(s.key, s.name, s.w, s.r, s.note)), quad: c.quad || 0, quads: (c.quads || []).map(q => Object.assign({}, q)) };
     return true;
   },
   keep() { this.dirty = true; LSX.set(this.key(this.d.id || 'new'), { base: this.base, d: this.d }); },
@@ -14881,8 +14982,10 @@ const CxB = {
   dup(u) { const i = this.d.stations.findIndex(s => s.u === u); if (i < 0) return; this.snap(); const s = this.d.stations[i], c = cxSt(s.key, s.name, s.w, s.r); this.d.stations.splice(i + 1, 0, c); this.keep(); this.redraw(c.u); CxUndo.show(`Copied ${s.name}`, () => this.back()); },
   set(u, f, v) {
     v = Math.round(+v); if (!isFinite(v)) return;
-    const lo = f === 'w' ? 5 : 0, hi = 1800; v = Math.max(lo, Math.min(hi, v));
-    if (u === '__rr') this.d.round_rest = v; else { const s = this.st(u); if (!s) return; s[f] = v; }
+    const lo = f === 'w' ? 5 : 0, hi = String(u).startsWith('__q') ? 3600 : 1800; v = Math.max(lo, Math.min(hi, v));
+    if (u === '__rr') this.d.round_rest = v;
+    else if (u.startsWith('__q')) { const j = +u.slice(3), q = this.d.quads || (this.d.quads = []); while (q.length <= j) q.push({}); q[j][f] = f === 'w' ? Math.max(30, Math.min(3600, v)) : Math.max(0, Math.min(600, v)); }
+    else { const s = this.st(u); if (!s) return; s[f] = v; }
     this.keep();
   },
   /* ---------- screen ---------- */
@@ -14895,7 +14998,8 @@ const CxB = {
     CxCat.data(); this.trash();
     const d = this.d, n = d.stations.length, T = n ? CxTime.build(d, d.stations.map((_, i) => i)) : null;
     const presetsR = [1, 2, 3, 4, 5];
-    const sum = T ? `<b>${n}</b> station${n === 1 ? '' : 's'} · <b>${CxTime.fmt(T.RL)}</b> a round${d.rounds ? ` · <b>≈ ${Math.round(T.total / 60)} min</b> total` : ' · keeps going until you stop'}` : 'Add exercises to see the timing';
+    const qn = CxTime.qn(d), U = qn ? CxTime.units(d).stations : null;
+    const sum = T ? `<b>${n}</b> ${qn ? 'exercise' : 'station'}${n === 1 ? '' : 's'}${qn ? ` on <b>${U.length}</b> tablet${U.length === 1 ? '' : 's'}` : ''} · <b>${CxTime.fmt(T.RL)}</b> a round${d.rounds ? ` · <b>≈ ${Math.round(T.total / 60)} min</b> total` : ' · keeps going until you stop'}` : 'Add exercises to see the timing';
     const body = `<div class="cxb" data-dnd-root="cxb">
       <section class="panel cxb-meta" data-stg>
         <label class="sr-only" for="cxName">Circuit name</label><input class="input cxb-name" id="cxName" maxlength="60" placeholder="Name it — e.g. Full Body Circuit" value="${esc(d.name)}" autocomplete="off">
@@ -14905,6 +15009,8 @@ const CxB = {
             <span class="cx-stepper${d.rounds > 5 ? ' on' : ''}"><button type="button" class="btn icon sm" data-act="cx-rounds" data-v="${Math.max(1, (d.rounds || 3) - 1)}" aria-label="One round less">${icon('minus')}</button><b aria-live="polite">${d.rounds || '∞'}</b><button type="button" class="btn icon sm" data-act="cx-rounds" data-v="${Math.min(50, (d.rounds || 3) + 1)}" aria-label="One round more">${icon('plus')}</button></span>
             <button class="chip" type="button" data-act="cx-rounds" data-v="0" aria-pressed="${d.rounds === 0}">${icon('infinity')} Until I stop</button></div></div>
           <div class="cxb-field"><span class="label">Rest between rounds</span>${this.timeBtn('__rr', 'r', d.round_rest, 'Rest between rounds')}</div>
+          <div class="cxb-field"><span class="label" id="cxQL">${icon('tablet')} Station tablets <span class="muted">(no phones in the weight room)</span></span><div class="chips" role="group" aria-labelledby="cxQL">
+            <button class="chip" type="button" data-act="cx-quad" data-v="0" aria-pressed="${!qn}">Off</button>${[2, 3, 4, 5, 6].map(k => `<button class="chip" type="button" data-act="cx-quad" data-v="${k}" aria-pressed="${qn === k}">${k} per tablet</button>`).join('')}</div></div>
         </div>
         ${this.edit && this.edit.u === '__rr' ? this.pop('__rr', 'r', d.round_rest, 'rest between rounds') : ''}
         <p class="cxb-sum" aria-live="polite">${icon('timer')} ${sum}</p>
@@ -14912,8 +15018,9 @@ const CxB = {
       <div class="cxb-grid">
         <section class="panel cxb-shelf ${this.shelf ? '' : 'shut'}" data-stg aria-label="Exercise library">${this.shelfHtml()}</section>
         <section class="panel cxb-lane" data-drop="lane" data-drop-list data-accept="ex st" aria-label="Circuit stations" data-stg>
-          <div class="spread"><h2 class="h3">${icon('list-ordered')} Stations</h2>${this.undo.length ? `<button class="btn sm ghost" type="button" data-act="cx-undo">${icon('undo-2')} Undo</button>` : ''}</div>
-          <div class="cx-list">${d.stations.map((s, i) => this.card(s, i)).join('')}</div>
+          <div class="spread"><h2 class="h3">${icon('list-ordered')} ${qn ? 'Exercises by tablet' : 'Stations'}</h2><span class="row"><button class="btn sm ghost" type="button" data-act="cx-from-add">${icon('dumbbell')} Add a workout</button>${this.undo.length ? `<button class="btn sm ghost" type="button" data-act="cx-undo">${icon('undo-2')} Undo</button>` : ''}</span></div>
+          ${qn ? `<p class="muted cx-note">Each tablet's group works through its exercises in the tablet's time, then everyone moves to the next tablet. Drag exercises to change groups.</p>` : ''}
+          <div class="cx-list">${d.stations.map((s, i) => (qn && i % qn === 0 ? this.qhead(i / qn, U[i / qn]) : '') + this.card(s, i)).join('')}</div>
           ${n ? `<div class="cx-rr-row">${icon('repeat')} After the last station: <b>${d.rounds === 1 ? 'done' : `rest ${CxTime.words(d.round_rest)}, then the next round`}</b></div>`
             : `<div class="cx-empty">${icon('hand')}<b>Drag exercises here</b><span>or tap one in the library to add it. Then set each exercise's time and rest right on its card.</span></div>`}
         </section>
@@ -14927,12 +15034,20 @@ const CxB = {
   trash() { if ($('#cxTrash')) return; document.body.insertAdjacentHTML('beforeend', `<div class="cx-trash" id="cxTrash" data-drop="trash" data-accept="st" data-dnd-for="cxb" aria-hidden="true">${icon('trash-2')} Drop here to remove</div>`); },
   timeBtn(u, f, v, aria) { return `<button type="button" class="cx-time ${f === 'w' ? 'work' : 'rest'}${this.edit && this.edit.u === u && this.edit.f === f ? ' on' : ''}" data-act="cx-edit" data-u="${u}" data-f="${f}" aria-expanded="${!!(this.edit && this.edit.u === u && this.edit.f === f)}" aria-label="${esc(aria)}: ${CxTime.words(v)}. Change">${icon(f === 'w' ? 'timer' : 'pause')}<b>${f === 'w' ? CxTime.fmt(v) : (v ? 'Rest ' + CxTime.fmt(v) : 'No rest')}</b></button>`; },
   pop(u, f, v, what) {
-    const P = f === 'w' ? [20, 30, 45, 60, 90, 120, 180] : [0, 10, 15, 20, 30, 45, 60, 90, 120];
+    const tq = String(u).startsWith('__q'), st = tq ? 30 : 5;
+    const P = tq ? (f === 'w' ? [180, 300, 420, 600, 720, 900, 1200] : [0, 30, 45, 60, 90, 120]) : f === 'w' ? [20, 30, 45, 60, 90, 120, 180] : [0, 10, 15, 20, 30, 45, 60, 90, 120];
     return `<div class="cx-pop" role="group" aria-label="Set the ${esc(what)}"><div class="chips">${P.map(p => `<button class="chip" type="button" data-act="cx-set" data-u="${u}" data-f="${f}" data-v="${p}" aria-pressed="${+v === p}">${p === 0 ? 'None' : CxTime.short(p)}</button>`).join('')}</div>
-      <div class="cx-pop-row"><button type="button" class="btn icon sm" data-act="cx-bump" data-u="${u}" data-f="${f}" data-v="-5" aria-label="5 seconds less">−5</button>
+      <div class="cx-pop-row"><button type="button" class="btn icon sm" data-act="cx-bump" data-u="${u}" data-f="${f}" data-v="-${st}" aria-label="${st} seconds less">−${st}</button>
         <input class="input cx-time-in" id="cxTimeIn" data-u="${u}" data-f="${f}" value="${CxTime.fmt(v)}" inputmode="numeric" autocomplete="off" aria-label="Time in minutes:seconds or seconds">
-        <button type="button" class="btn icon sm" data-act="cx-bump" data-u="${u}" data-f="${f}" data-v="5" aria-label="5 seconds more">+5</button>
+        <button type="button" class="btn icon sm" data-act="cx-bump" data-u="${u}" data-f="${f}" data-v="${st}" aria-label="${st} seconds more">+${st}</button>
         <button type="button" class="btn sm primary" data-act="cx-edit-done">Done</button></div></div>`;
+  },
+  /* a tablet's header in the list: its time for the group, and the time to move on */
+  qhead(j, U) {
+    const u = '__q' + j, ed = this.edit && this.edit.u === u ? this.edit.f : null;
+    return `<div class="cx-qhead" role="group" aria-label="Tablet ${j + 1}"><span class="cx-qno">${icon('tablet')} Tablet ${j + 1}</span>
+      ${this.timeBtn(u, 'w', U.w, `Time at tablet ${j + 1}`)}${this.timeBtn(u, 'r', U.r, `Time to move on from tablet ${j + 1}`).replace(/Rest /, 'Move ')}
+      ${ed ? this.pop(u, ed, U[ed], ed === 'w' ? `time at tablet ${j + 1}` : `time to move on from tablet ${j + 1}`) : ''}</div>`;
   },
   card(s, i) {
     const x = this.ex(s.key, s), n = this.d.stations.length, missing = !CxCat.get(s.key) && s.key.startsWith('cx:') && CxCat.data().v;
@@ -14941,7 +15056,8 @@ const CxB = {
       <button type="button" class="cx-grip" data-dnd-handle data-u="${s.u}" aria-label="Move ${esc(s.name)} (station ${i + 1} of ${n}). Drag, or use the arrow keys">${icon('grip-vertical')}</button>
       <span class="cx-no" aria-hidden="true">${i + 1}</span>
       <button type="button" class="cx-st-ex" data-act="cx-info" data-k="${esc(s.key)}" data-dnd-grab>${CxCat.thumb(x, 44)}<span class="grow"><b>${esc(s.name)}</b><small class="muted">${missing ? 'Deleted from the library' : esc(CxCat.catOf(x.cat)[1])}${x.yt ? ` · ${icon('play')} video` : ''}</small></span></button>
-      <div class="cx-st-times">${this.timeBtn(s.u, 'w', s.w, `Exercise time for ${s.name}`)}${this.timeBtn(s.u, 'r', s.r, `Rest after ${s.name}`)}</div>
+      ${CxTime.qn(this.d) ? `<div class="cx-st-times"><label class="sr-only" for="cxN-${s.u}">Sets × reps for ${esc(s.name)}</label><input class="input cx-note-in" id="cxN-${s.u}" data-u="${s.u}" maxlength="80" placeholder="Sets × reps, e.g. 3 × 8" value="${esc(s.note || '')}" autocomplete="off"></div>`
+        : `<div class="cx-st-times">${this.timeBtn(s.u, 'w', s.w, `Exercise time for ${s.name}`)}${this.timeBtn(s.u, 'r', s.r, `Rest after ${s.name}`)}</div>`}
       <div class="cx-st-acts"><button type="button" class="btn icon sm ghost" data-act="cx-dup" data-u="${s.u}" aria-label="Duplicate ${esc(s.name)}">${icon('copy')}</button><button type="button" class="btn icon sm ghost" data-act="cx-smenu" data-u="${s.u}" aria-label="More for ${esc(s.name)}">${icon('ellipsis-vertical')}</button><button type="button" class="btn icon sm ghost danger" data-act="cx-del" data-u="${s.u}" aria-label="Remove ${esc(s.name)}">${icon('x')}</button></div>
       ${ed ? this.pop(s.u, ed, s[ed], ed === 'w' ? `exercise time for ${s.name}` : `rest after ${s.name}`) : ''}
     </article>`;
@@ -14962,7 +15078,8 @@ const CxB = {
   },
   async save(btn) {
     if (!this.valid()) return null; const d = this.d, tid = HQ.tid();
-    const r = await Social.act(btn, () => Social.rpc('circuit_save', { p_id: d.id, p_team: tid, p_name: d.name.trim(), p_description: d.description.trim(), p_rounds: d.rounds, p_round_rest: d.round_rest, p_stations: d.stations.map(s => ({ key: s.key, name: s.name, w: s.w, r: s.r })) }));
+    const r = await Social.act(btn, () => Social.rpc('circuit_save', { p_id: d.id, p_team: tid, p_name: d.name.trim(), p_description: d.description.trim(), p_rounds: d.rounds, p_round_rest: d.round_rest, p_stations: d.stations.map(s => Object.assign({ key: s.key, name: s.name, w: s.w, r: s.r }, s.note ? { note: s.note } : {})),
+      p_quad: CxTime.qn(d), p_quads: CxTime.qn(d) ? CxTime.units(d).stations.map(u => ({ w: u.w, r: u.r })) : [] }));
     if (!r) return null;
     LSX.del(this.key(d.id || 'new')); d.id = r.id; this.base = r.updated_at; this.dirty = false;
     const E = Social.c['cxl:' + tid]; if (E && E.v) { const L = E.v.circuits, i = L.findIndex(c => c.id === r.id), row = Object.assign({ mine: true }, r); if (i >= 0) L[i] = row; else L.unshift(row); }
@@ -14991,6 +15108,7 @@ document.addEventListener('input', e => {
   if (!CxB.d) return;
   if (e.target.id === 'cxName') { CxB.d.name = e.target.value; CxB.keep(); const s = $('.cxb-state'); if (s) { s.innerHTML = `${icon('circle-dot')} Not saved yet`; UI.icons(s); } }
   if (e.target.id === 'cxDesc') { CxB.d.description = e.target.value; CxB.keep(); }
+  if (e.target.classList && e.target.classList.contains('cx-note-in')) { const s = CxB.st(e.target.dataset.u); if (s) { s.note = e.target.value.slice(0, 80); if (!s.note) delete s.note; CxB.keep(); } }
   if (e.target.id === 'cxShelfQ') { CxB.q = e.target.value; clearTimeout(CxB._qt); CxB._qt = setTimeout(() => { const sh = $('.cxb-shelf'); if (sh) { sh.innerHTML = CxB.shelfHtml(); UI.icons(sh); Social.hydrate(sh); const i = $('#cxShelfQ'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 200); }
 });
 document.addEventListener('change', e => {
@@ -15009,7 +15127,9 @@ Object.assign(Actions, {
   'cx-edit': el => { const u = el.dataset.u, f = el.dataset.f; CxB.edit = CxB.edit && CxB.edit.u === u && CxB.edit.f === f ? null : { u, f }; CxB.redraw(); if (CxB.edit) setTimeout(() => { const i = $('#cxTimeIn'); i && i.focus({ preventScroll: true }); i && i.select(); }, 30); },
   'cx-edit-done': () => { const i = $('#cxTimeIn'); if (i) { const v = CxTime.parse(i.value); if (v != null) CxB.set(i.dataset.u, i.dataset.f, v); } CxB.edit = null; CxB.redraw(); },
   'cx-set': el => { CxB.set(el.dataset.u, el.dataset.f, +el.dataset.v); CxB.edit = null; CxB.redraw(); },
-  'cx-bump': el => { const u = el.dataset.u, f = el.dataset.f, cur = u === '__rr' ? CxB.d.round_rest : (CxB.st(u) || {})[f]; CxB.set(u, f, (+cur || 0) + +el.dataset.v); CxB.redraw(); },
+  'cx-quad': el => { const v = +el.dataset.v; if (v === CxTime.qn(CxB.d)) return; CxB.snap(); CxB.d.quad = v; CxB.d.quads = []; CxB.keep(); CxB.redraw();
+    if (v) UI.toast(`Grouped ${v} per tablet. Set each tablet's time on its header.`); },
+  'cx-bump': el => { const u = el.dataset.u, f = el.dataset.f, cur = u === '__rr' ? CxB.d.round_rest : u.startsWith('__q') ? CxTime.units(CxB.d).stations[+u.slice(3)][f] : (CxB.st(u) || {})[f]; CxB.set(u, f, (+cur || 0) + +el.dataset.v); CxB.redraw(); },
   'cx-rounds': el => { CxB.d.rounds = Math.max(0, Math.min(50, +el.dataset.v)); CxB.keep(); CxB.redraw(); },
   'cx-shelf': () => { CxB.shelf = !CxB.shelf; CxB.redraw(); },
   'cx-shelf-f': el => { CxB[el.dataset.k] = el.dataset.v; const sh = $('.cxb-shelf'); if (sh) { sh.innerHTML = CxB.shelfHtml(); UI.icons(sh); Social.hydrate(sh); } },
@@ -15035,7 +15155,7 @@ Object.assign(Actions, {
     const c = CxHQ.circuit(el.dataset.id); if (!c) return;
     const k = await Sheet.choose({ title: c.name, body: '', options: [{ id: 'edit', label: 'Edit' }, { id: 'dup', label: 'Duplicate' }, { id: 'del', label: 'Delete', cls: 'danger' }] });
     if (k === 'edit') { CxB.id = null; HQ.go('circuit:' + c.id, true); }
-    else if (k === 'dup') { const r = await Social.act(null, () => Social.rpc('circuit_save', { p_id: null, p_team: HQ.tid(), p_name: (c.name.slice(0, 52) + ' (copy)'), p_description: c.description, p_rounds: c.rounds, p_round_rest: c.round_rest, p_stations: c.stations }), 'Duplicated.'); if (r) { Social.drop('cxl:' + HQ.tid()); Social.repaint(); } }
+    else if (k === 'dup') { const r = await Social.act(null, () => Social.rpc('circuit_save', { p_id: null, p_team: HQ.tid(), p_name: (c.name.slice(0, 52) + ' (copy)'), p_description: c.description, p_rounds: c.rounds, p_round_rest: c.round_rest, p_stations: c.stations, p_quad: c.quad || 0, p_quads: c.quads || [] }), 'Duplicated.'); if (r) { Social.drop('cxl:' + HQ.tid()); Social.repaint(); } }
     else if (k === 'del') { if (!(await Sheet.confirm({ title: `Delete “${c.name}”?`, body: '<p>Sessions you already ran stay in your history.</p>', ok: 'Delete', danger: true }))) return; if (await Social.act(null, () => Social.rpc('circuit_delete', { p_id: c.id }), 'Deleted.') !== undefined) { Social.drop('cxl:' + HQ.tid()); Social.repaint(); } }
   }
 });
@@ -15090,11 +15210,12 @@ const CxS = {
   },
   apply(G) {
     const o = this.G; if (o && o.id === G.id && +G.version < +o.version) return;   // an older answer that arrived late never wins
-    this.G = G;
+    this.G = CxS.norm(G);
     if (this.role === 'coach') CxT.adopt(G);
     if (!o || o.version !== G.version || o.status !== G.status) this.paint(true); else this.tick();
     if (o && o.status !== G.status && ['done', 'ended'].includes(G.status)) { this.cue('done'); if (this.role === 'ath') CxMine.sync(); Social.drop('cxl:'); }
   },
+  norm(G) { if (G && G.plan) G.plan = CxTime.units(G.plan); return G; },
   net(ok) { if (ok === this.online) return; this.online = ok; const b = $('#cxNet'); if (b) b.hidden = ok; },
   typing() { const a = document.activeElement; return !!(a && a.closest && a.closest('#cxs') && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)); },
   paint(full) {
@@ -15148,12 +15269,12 @@ const CxS = {
     return net + this.athlete(G);
   },
   hero(G, T, e, g, wait) {
-    const paused = G.status === 'paused';
+    const paused = G.status === 'paused', W = G.plan.tabs ? 'tablet' : 'station';
     const lab = paused ? 'Paused' : wait ? 'Waiting for the coach' : { ready: 'Get ready', work: 'Work', rest: 'Rest', recovery: 'Round recovery', done: 'Finishing' }[g.phase];
     const end = g.phase === 'ready' ? 0 : g.phase === 'work' ? g.workEnd : g.slotEnd, dur = g.phase === 'ready' ? CxTime.LEAD : g.phase === 'work' ? g.workEnd - g.slotStart : Math.max(1, g.slotEnd - g.workEnd);
-    const where = g.phase === 'ready' ? `Starts in a moment · ${T.n} stations` : `${T.rounds ? `Round ${g.r + 1} of ${T.rounds}` : `Round ${g.r + 1}`} · Interval ${g.k + 1} of ${T.n}`;
-    const next = wait ? 'Tap “Next station” when the teams are ready' : g.phase === 'ready' ? 'Teams go to their starting stations' : g.phase === 'work' ? (g.slotEnd - g.workEnd > .5 ? `Then rest · everyone rotates after` : 'Then everyone rotates')
-      : g.last && g.final ? 'Last interval — almost done' : g.last ? `Then round ${g.r + 2}` : 'Then everyone moves to the next station';
+    const where = g.phase === 'ready' ? `Starts in a moment · ${T.n} ${W}s` : `${T.rounds ? `Round ${g.r + 1} of ${T.rounds}` : `Round ${g.r + 1}`} · Interval ${g.k + 1} of ${T.n}`;
+    const next = wait ? `Tap “Next ${W}” when the teams are ready` : g.phase === 'ready' ? `Teams go to their starting ${W}s` : g.phase === 'work' ? (g.slotEnd - g.workEnd > .5 ? `Then rest · everyone rotates after` : 'Then everyone rotates')
+      : g.last && g.final ? 'Last interval — almost done' : g.last ? `Then round ${g.r + 2}` : `Then everyone moves to the next ${W}`;
     return `<section class="cx-hero phase-${paused ? 'paused' : wait ? 'wait' : g.phase}" aria-live="off">
       <div class="cx-hero-top"><span class="cx-pill">${paused ? icon('pause') : `<span class="cx-dot"></span>`} ${paused ? 'Paused' : 'Live'}</span><span>${where}</span>${G.mode === 'manual' ? `<span class="cx-pill">${icon('hand')} Coach moves teams</span>` : ''}</div>
       <div class="cx-hero-lab">${lab}</div>
@@ -15163,17 +15284,18 @@ const CxS = {
   },
   coachLive(G) {
     const T = this.T(); if (!T) return Social.empty('timer-off', 'This circuit has no stations', '');
-    const e = this.e(), g = CxTime.at(T, e), wait = this.waiting(G, e), paused = G.status === 'paused';
+    const e = this.e(), g = CxTime.at(T, e), wait = this.waiting(G, e), paused = G.status === 'paused', W = G.plan.tabs ? 'tablet' : 'station';
     const B = (op, ic, label, cls = '', dis = false) => `<button type="button" class="btn ${cls}" data-act="cx-ctl" data-op="${op}" ${dis ? 'disabled' : ''}>${icon(ic)} ${label}</button>`;
     const ctrls = `<div class="cx-ctrls">
         ${paused ? B('resume', 'play', 'Resume', 'primary big') : B('pause', 'pause', 'Pause', 'big')}
         ${g.phase === 'ready' ? B('go', 'skip-forward', 'Start now', wait ? '' : '') : ''}
         ${g.phase === 'work' && !wait ? B('skip-work', 'fast-forward', 'Skip exercise') : ''}
         ${['rest', 'recovery'].includes(g.phase) && !wait ? B('skip-rest', 'fast-forward', g.phase === 'recovery' ? 'Skip recovery' : 'Skip rest') : ''}
-        ${g.phase !== 'ready' ? B('next', 'arrow-right-circle', 'Next station', wait ? 'primary big' : '') : ''}
+        ${g.phase !== 'ready' ? B('next', 'arrow-right-circle', `Next ${W}`, wait ? 'primary big' : '') : ''}
         ${g.phase !== 'ready' ? B('restart', 'rotate-ccw', 'Restart interval') : ''}
       </div>
       <div class="cx-ctrls2"><div class="seg" role="group" aria-label="Rotation"><button type="button" data-act="cx-mode" data-v="auto" aria-pressed="${G.mode === 'auto'}">Automatic</button><button type="button" data-act="cx-mode" data-v="manual" aria-pressed="${G.mode === 'manual'}">Coach moves teams</button></div>
+        <button type="button" class="btn ghost" data-act="cx-codes">${icon('tablet')} Station tablets</button><button type="button" class="btn ghost" data-act="cx-sets">${icon('clipboard-list')} Logged sets${Object.keys(G.logs || {}).length ? ` (${Object.keys(G.logs).length})` : ''}</button>
         <button type="button" class="btn ghost danger" data-act="cx-ctl" data-op="end">${icon('square')} End circuit</button></div>`;
     const teams = G.teams.map(t => {
       const ts = CxTime.team(T, g, t.start), s = T.S[ts.st] || {}, nx = ts.next != null ? T.S[ts.next] : null;
@@ -15194,6 +15316,7 @@ const CxS = {
     return { yt: x.yt, short: x.yt_short, img: x.img, steps: x.steps || [], desc: x.desc || '', tips: x.tips || [] };
   },
   media(s) {
+    if (s && s.ex) return `<section class="panel cx-qlist"><h3 class="label">${icon('tablet')} Tablet ${s.tab}</h3><ol class="cx-mini">${s.ex.map(x => `<li><span>${esc(x.name)}</span><small>${esc(x.note || '')}</small></li>`).join('')}</ol>${s.ex.map(x => this.media(x)).join('')}</section>`;
     const x = this.info(s); if (!x.img && !x.yt && !x.steps.length && !x.desc) return '';
     return `<details class="panel cx-howto"><summary class="label">${icon('book-open')} How to do it</summary>
       ${x.img ? `<figure class="cx-hero-img">${Social.img(x.img, s.name)}</figure>` : ''}${x.yt ? CxYT.player(x.yt, x.short, s.name) : ''}
@@ -15207,6 +15330,7 @@ const CxS = {
       return `<section class="panel cx-fin ${G.status}" data-stg><span class="cx-fin-ic">${icon(G.status === 'done' ? 'trophy' : 'flag')}</span><h2 class="h2">${G.status === 'done' ? 'Circuit complete!' : 'Your coach ended the circuit'}</h2>
         <p class="muted">${esc(G.name)} · ${CxTime.words(sec)}${mine ? ' · ' + esc(mine.name) : ''}</p>
         ${mine && (G.status === 'done' || sec >= 60) ? `<p>${icon('check')} Saved to your training history${G.status === 'done' ? '' : ' as stopped early'}.</p>` : ''}
+        ${mine ? `<button class="btn big" type="button" data-act="cx-log">${icon('clipboard-pen')} ${(G.logs || []).length ? 'Change my logged sets' : 'Log my sets (weight × reps)'}</button>` : ''}
         <button class="btn primary" type="button" data-act="go" data-r="home">${icon('house')} Done</button></section>`;
     }
     if (!mine) return `<section class="panel cx-wait" data-stg>${icon('users')}<h2 class="h2">${esc(G.name)}</h2><p>You’re not in a team for this circuit yet. Your coach can add you — this screen updates by itself.</p></section>`;
@@ -15224,25 +15348,27 @@ const CxS = {
     const then = ts.phase === 'work' ? (nx ? `Then ${ts.restAfter > .5 ? `rest ${CxTime.fmt(ts.restAfter)} · ` : ''}next: <b>${esc(nx.name)}</b>` : '<b>Last one — finish strong</b>')
       : ts.phase === 'ready' ? `Go to station ${ts.st + 1}` : nx ? `Next: station ${ts.next + 1} · <b>${esc(nx.name)}</b>` : '';
     return `<div class="cx-live ath phase-${paused ? 'paused' : wait ? 'wait' : ts.phase}">
-      <div class="cx-ath-top"><span>${esc(mine.name)}</span><span>${T.rounds ? `Round ${g.phase === 'ready' ? 1 : g.r + 1}/${T.rounds}` : `Round ${g.r + 1}`}</span><span>Station ${(ts.phase === 'work' || ts.phase === 'ready' ? ts.st : ts.next != null ? ts.next : ts.st) + 1}/${T.n}</span></div>
+      <div class="cx-ath-top"><span>${esc(mine.name)}</span><span>${T.rounds ? `Round ${g.phase === 'ready' ? 1 : g.r + 1}/${T.rounds}` : `Round ${g.r + 1}`}</span><span>${G.plan.tabs ? 'Tablet' : 'Station'} ${(ts.phase === 'work' || ts.phase === 'ready' ? ts.st : ts.next != null ? ts.next : ts.st) + 1}/${T.n}</span></div>
       <div class="cx-ath-lab">${lab}</div>
       <h2 class="cx-ath-ex">${ts.phase === 'work' || ts.phase === 'ready' ? '' : '<small>Up next</small>'}${esc(showEx ? showEx.name : '')}</h2>
       <div class="cx-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="${R}" class="trk"/><circle cx="60" cy="60" r="${R}" class="arc" style="stroke-dasharray:${C.toFixed(1)};--c:${C.toFixed(1)}" ${wait ? '' : `data-end="${end}" data-dur="${dur}"`}/></svg>
         <b class="cx-ring-t" ${wait ? '' : `data-end="${end}" data-main`} aria-live="off">${wait ? '—' : CxTime.fmt(end - e)}</b></div>
       <p class="cx-then">${then}</p>
+      <button type="button" class="btn cx-logbtn" data-act="cx-log">${icon('clipboard-pen')} Log my sets${(G.logs || []).length ? ` · ${(G.logs || []).length} done` : ''}</button>
       ${team}
       ${showEx ? this.media(showEx) : ''}</div>`;
   },
   summary(G) {
-    const st = G.plan && G.plan.stations || [], sec = Math.max(0, Math.min(+G.el || 0, G.total_s != null ? +G.total_s : +G.el || 0));
+    const st = G.plan && (G.plan.src || G.plan.stations) || [], sec = Math.max(0, Math.min(+G.el || 0, G.total_s != null ? +G.total_s : +G.el || 0));
     const wall = G.started_at && G.ended_at ? (CxClock.ts(G.ended_at) - CxClock.ts(G.started_at)) / 1000 : null, R = G.results || {};
     const done = G.status === 'done';
     return `<section class="panel cx-fin ${G.status}" data-stg><span class="cx-fin-ic">${icon(done ? 'trophy' : 'flag')}</span><h2 class="h2">${done ? 'Completed' : 'Stopped early'}</h2>
         <p class="muted">${fmtDate(String(G.started_at || G.created_at).slice(0, 10))} · ${G.teams.reduce((t, x) => t + x.count, 0)} athletes in ${G.teams.length} team${G.teams.length === 1 ? '' : 's'}</p>
         <div class="cx-kv"><div><span class="label">Planned</span><b>${G.total_s != null ? CxTime.words(G.total_s) : 'Until stopped'}</b></div><div><span class="label">Circuit time done</span><b>${CxTime.words(sec)}</b></div>${wall != null ? `<div><span class="label">Start to finish (with pauses)</span><b>${CxTime.words(wall)}</b></div>` : ''}<div><span class="label">Rounds</span><b>${G.plan.rounds || '∞'}</b></div></div></section>
-      <section class="panel" data-stg><h3 class="h3">${icon('list-ordered')} Stations (as planned)</h3><ol class="cx-mini">${st.map(s => `<li><span>${esc(s.name)}</span><small>${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}</small></li>`).join('')}</ol><p class="muted cx-note">Rest between rounds: ${CxTime.words(G.plan.round_rest)}</p></section>
+      <section class="panel" data-stg><h3 class="h3">${icon('list-ordered')} Stations (as planned)</h3><ol class="cx-mini">${st.map(s => `<li><span>${esc(s.name)}</span><small>${G.plan.tabs ? esc(s.note || '') : `${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}`}</small></li>`).join('')}</ol>${G.plan.tabs ? `<p class="muted cx-note">${G.plan.stations.length} tablets: ${G.plan.stations.map(u => `${CxTime.short(u.w)} + ${CxTime.short(u.r)} to move`).join(' · ')}</p>` : ''}<p class="muted cx-note">Rest between rounds: ${CxTime.words(G.plan.round_rest)}</p></section>
+      <section class="panel" data-stg><div class="spread"><h3 class="h3">${icon('clipboard-list')} Logged sets</h3><button class="btn sm" type="button" data-act="cx-sets">See all</button></div><p class="muted cx-note">${Object.keys(G.logs || {}).length} athlete${Object.keys(G.logs || {}).length === 1 ? '' : 's'} logged weight × reps on the tablets or their phones. It's in their workout history.</p></section>
       <section class="panel stack" data-stg><h3 class="h3">${icon('clipboard-check')} Results <span class="muted">(optional)</span></h3><p class="muted cx-note">Record reps, weight, distance or a note for anyone. Athletes see their own.</p>
-        ${G.teams.map(t => `<div class="cx-res-team"><b>${esc(t.name)}</b>${(t.members || []).map(m => { const r = R[m.id] || {}; return `<div class="cx-res">${Social.avatar(m, 28)}<span class="cx-res-n">${esc(m.name)}</span>
+        ${G.teams.map(t => `<div class="cx-res-team"><b>${esc(t.name)}</b>${(t.members || []).map(m => { const r = R[m.id] || {}; return `<div class="cx-res">${Social.avatar(m, 28)}<span class="cx-res-n">${esc(m.name)}${(G.logs || {})[m.id] ? ` <small class="cx-tag">${icon('check')} ${G.logs[m.id]} logged</small>` : ''}</span>
           <input class="input" inputmode="numeric" id="cxr-reps-${m.id}" value="${r.reps != null ? r.reps : ''}" placeholder="Reps" aria-label="Reps for ${esc(m.name)}">
           <input class="input" inputmode="decimal" id="cxr-kg-${m.id}" value="${r.kg != null ? r.kg : ''}" placeholder="kg" aria-label="Weight in kg for ${esc(m.name)}">
           <input class="input" inputmode="decimal" id="cxr-m-${m.id}" value="${r.m != null ? r.m : ''}" placeholder="m" aria-label="Distance in metres for ${esc(m.name)}">
@@ -15294,7 +15420,7 @@ const CxT = {
   async save() {
     if (this.saving) { this._t = setTimeout(() => this.save(), 300); return; }
     this.pend = false; this.saving = true; const body = this.teams.map(t => ({ name: (t.name || '').trim() || 'Team', start: t.start, members: t.members }));
-    try { const G = await Social.rpc('circuit_teams_save', { p_id: this.sid, p_teams: body }); this.saving = false; if (!this.pend) { CxS.G = G; this.adopt(G); CxRT.ping(G.version); } this.state('Saved'); }
+    try { const G = await Social.rpc('circuit_teams_save', { p_id: this.sid, p_teams: body }); this.saving = false; if (!this.pend) { CxS.G = CxS.norm(G); this.adopt(G); CxRT.ping(G.version); } this.state('Saved'); }
     catch (x) { this.saving = false; UI.toast(Social.msg(x), 'bad'); this.state(''); this.pend = false; CxS.poll(); }
   },
   /* move athletes (the dragged one, or everyone selected with it) */
@@ -15314,8 +15440,8 @@ const CxT = {
     const pool = all.filter(a => this.inTeam(a.id) < 0).filter(a => !q || (a.name + ' ' + a.username).toLowerCase().includes(q));
     const chip = id => { const a = this.ppl[id] || { id, name: 'Athlete' }; return `<button type="button" class="cx-ath${this.sel.has(id) ? ' sel' : ''}" data-dnd="ath" data-dnd-id="${id}" data-act="cx-ath" data-id="${id}" aria-pressed="${this.selMode ? this.sel.has(id) : 'false'}" aria-label="${esc(a.name)}${this.selMode ? (this.sel.has(id) ? ', selected' : '') : '. Drag to a team, or tap for options'}">${Social.avatar(a, 28)}<span>${esc(a.name)}</span></button>`; };
     const T2 = n ? CxTime.build(G.plan, this.teams.map(t => t.start)) : null;
-    const strip = live ? '' : `<section class="panel cx-strip-p" data-stg><div class="spread"><h3 class="h3">${icon('map-pin')} Starting stations</h3><small class="muted">Drag a team onto a station</small></div>
-      <div class="cx-strip" data-axis="x">${T.map((s, i) => { const here = this.teams.map((t, ti) => [t, ti]).filter(([t]) => t.start === i); return `<div class="cx-slot${here.length ? ' has' : ''}" data-drop="slot" data-drop-id="${i}" data-accept="team"><span class="cx-no">${i + 1}</span><b>${esc(s.name)}</b><small>${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}</small><span class="cx-slot-t">${here.map(([t]) => `<span class="cx-tpill">${esc(t.name)}</span>`).join('') || '<em>No team</em>'}</span></div>`; }).join('')}</div></section>`;
+    const strip = live ? '' : `<section class="panel cx-strip-p" data-stg><div class="spread"><h3 class="h3">${icon('map-pin')} Starting ${G.plan.tabs ? 'tablets' : 'stations'}</h3><small class="muted">Drag a team onto a ${G.plan.tabs ? 'tablet' : 'station'}</small></div>
+      <div class="cx-strip" data-axis="x">${T.map((s, i) => { const here = this.teams.map((t, ti) => [t, ti]).filter(([t]) => t.start === i); return `<div class="cx-slot${here.length ? ' has' : ''}" data-drop="slot" data-drop-id="${i}" data-accept="team"><span class="cx-no">${i + 1}</span><b>${esc(s.tab ? 'Tablet ' + s.tab : s.name)}</b><small>${s.tab ? esc(s.ex.map(x => x.name).join(', ')) + ' · ' + CxTime.short(s.w) : `${CxTime.short(s.w)} · rest ${CxTime.short(s.r)}`}</small><span class="cx-slot-t">${here.map(([t]) => `<span class="cx-tpill">${esc(t.name)}</span>`).join('') || '<em>No team</em>'}</span></div>`; }).join('')}</div></section>`;
     const teamCard = (t, i) => `<article class="cx-team" ${live ? '' : `data-dnd="team" data-dnd-id="${i}"`} data-drop="team" data-drop-id="${i}" data-accept="ath" aria-label="${esc(t.name)}, ${t.members.length} athlete${t.members.length === 1 ? '' : 's'}">
         <header>${live ? '' : `<button type="button" class="cx-grip" data-dnd-handle aria-label="Move ${esc(t.name)} — drag onto a starting station">${icon('grip-vertical')}</button>`}
           <label class="sr-only" for="cxTn${i}">Team name</label><input class="input cx-tname" id="cxTn${i}" data-i="${i}" value="${esc(t.name)}" maxlength="30" ${live ? 'readonly' : ''}>
@@ -15323,8 +15449,8 @@ const CxT = {
         ${live ? `<small class="muted">Started at station ${t.start + 1}</small>` : `<button type="button" class="cx-start" data-act="cx-tstart" data-i="${i}">${icon('map-pin')} Starts at <b>${t.start + 1} · ${esc((T[t.start] || {}).name || '?')}</b></button>`}
         <div class="cx-chips">${t.members.map(chip).join('') || `<span class="cx-dropme">${icon('hand')} Drag athletes here</span>`}</div></article>`;
     return `<div class="cx-lobby" data-dnd-root="cxt">
-      ${live ? '' : `<section class="panel cx-lobby-h" data-stg><div class="grow"><b>${esc(G.plan ? G.plan.name : G.name)}</b><small class="muted">${n} station${n === 1 ? '' : 's'} · ${G.plan.rounds ? G.plan.rounds + ' round' + (G.plan.rounds === 1 ? '' : 's') : 'until you stop'} · ${T2 && T2.total != null ? '≈ ' + Math.round(T2.total / 60) + ' min with these teams' : ''}</small></div>
-        <button class="btn sm" type="button" data-act="cx-open" data-id="${G.circuit_id}">${icon('pencil')} Edit circuit</button></section>`}
+      ${live ? '' : `<section class="panel cx-lobby-h" data-stg><div class="grow"><b>${esc(G.plan ? G.plan.name : G.name)}</b><small class="muted">${G.plan.tabs ? `${(G.plan.src || []).length} exercises on ${n} tablet${n === 1 ? '' : 's'}` : `${n} station${n === 1 ? '' : 's'}`} · ${G.plan.rounds ? G.plan.rounds + ' round' + (G.plan.rounds === 1 ? '' : 's') : 'until you stop'} · ${T2 && T2.total != null ? '≈ ' + Math.round(T2.total / 60) + ' min with these teams' : ''}</small></div>
+        <span class="row"><button class="btn sm" type="button" data-act="cx-codes">${icon('tablet')} Station tablets</button><button class="btn sm" type="button" data-act="cx-open" data-id="${G.circuit_id}">${icon('pencil')} Edit circuit</button></span></section>`}
       ${strip}
       <div class="cx-tbar">${live ? '' : `<button class="btn sm" type="button" data-act="cx-tadd">${icon('plus')} Team</button>
           <span class="cx-split"><button class="btn icon sm ghost" type="button" data-act="cx-split-n" data-v="-1" aria-label="Fewer teams">${icon('minus')}</button><button class="btn sm" type="button" data-act="cx-split">${icon('shuffle')} Auto-split into ${this.splitN(G, all.length)}</button><button class="btn icon sm ghost" type="button" data-act="cx-split-n" data-v="1" aria-label="More teams">${icon('plus')}</button></span>`}
@@ -15484,6 +15610,449 @@ const CxMine = {
     if (CxS.moveOpen && CxS.G) { const E = Social.c['roster:' + CxS.G.team_id]; if (E) E.at = 0; CxT.roster(CxS.G); }
   }, true);
   document.addEventListener('visibilitychange', () => { if (!document.hidden && $('#cxs') && CxS.sid) CxS.poll(); });
+})();
+
+</script>
+<script>
+/* ============ CIRCUITS — station tablets, logged sets, solo circuits, "start from a workout" ============
+   Phones aren't allowed in many weight rooms. The coach groups the exercises per tablet (a "quad"), opens each tablet with a short
+   station code, and the shared circuit clock runs on every tablet. When a group's time is up, each athlete taps their name on the
+   tablet and logs weight × reps. Those sets land in the athlete's own history as a workout, so PRs, volume and progress count them.
+   Athletes who missed the session can do the same circuit on their own and log it from their phone. */
+
+/* ---------- the sets editor (used on phones and on the tablets) ---------- */
+const CxLog = {
+  /* "3 × 8", "4x6", "3 sets of 10" → { sets: 3, reps: 8 } */
+  guess(note) { const m = String(note || '').match(/(\d{1,2})\s*(?:[x×]|sets? of)\s*(\d{1,3})/i); return m ? { sets: Math.min(10, +m[1]), reps: +m[2] } : null; },
+  shown(t, u) { if (!t) return ''; if (t.v != null && t.u === u) return t.v; if (t.kg == null) return ''; const v = u === 'lb' ? t.kg * 2.20462262 : +t.kg; return Math.round(v * 10) / 10; },
+  row(i, k, t, u, ph) {
+    return `<div class="cxlg-set" data-set><span class="cxlg-n" aria-hidden="true">${k + 1}</span>
+      <label class="sr-only" for="cxw-${i}-${k}">Set ${k + 1} weight (${u})</label><input class="input" id="cxw-${i}-${k}" data-k="v" inputmode="decimal" autocomplete="off" placeholder="${u}" value="${esc(String(this.shown(t, u)))}">
+      <span class="cxlg-x" aria-hidden="true">×</span>
+      <label class="sr-only" for="cxr-${i}-${k}">Set ${k + 1} reps</label><input class="input" id="cxr-${i}-${k}" data-k="reps" inputmode="numeric" autocomplete="off" placeholder="${ph ? esc(String(ph)) : 'reps'}" value="${t && t.reps != null ? t.reps : ''}">
+      <span class="cxlg-u" aria-hidden="true">reps</span></div>`;
+  },
+  /* ex: [{i, name, note}] · prev: {i: sets} · u: 'lb' | 'kg' */
+  html(ex, prev, u, base) {
+    return `<div class="cxlg" data-u="${u}">${ex.map(x => {
+      const had = (prev && prev[x.i]) || [], g = this.guess(x.note), n = Math.max(1, had.length || (g ? g.sets : 3));
+      const real = ((base ? base[x.i] : had) || []).filter(t => t && (t.kg != null || t.v != null || t.reps != null)), orig = JSON.stringify(real.map(t => [String(this.shown(t, u)), t.reps == null ? '' : String(t.reps)]));
+      return `<section class="cxlg-ex" data-i="${x.i}"${real.length ? ' data-had="1"' : ''} data-orig="${esc(orig)}"><header><b>${esc(x.name)}</b>${x.note ? `<span class="cx-tag">${esc(x.note)}</span>` : ''}${real.length ? `<span class="cxlg-ok">${icon('check')} logged</span>` : ''}</header>
+        <div class="cxlg-sets">${Array.from({ length: n }, (_, k) => this.row(x.i, k, had[k], u, g && g.reps)).join('')}</div>
+        <div class="row"><button type="button" class="btn sm ghost" data-cxlg="add">${icon('plus')} Set</button><button type="button" class="btn sm ghost" data-cxlg="del">${icon('minus')} Set</button></div></section>`;
+    }).join('')}</div>`;
+  },
+  /* wire the + / − set buttons inside root (adds copy the last set, so typing 4 equal sets is one entry) */
+  wire(root) {
+    root.addEventListener('click', e => {
+      const b = e.target.closest('[data-cxlg]'); if (!b || !root.contains(b)) return; const ex = b.closest('.cxlg-ex'), box = $('.cxlg-sets', ex), rows = $$('[data-set]', box), u = b.closest('.cxlg').dataset.u, i = +ex.dataset.i;
+      if (b.dataset.cxlg === 'add') {
+        if (rows.length >= 10) { UI.toast('Up to 10 sets.', 'bad'); return; }
+        const last = rows[rows.length - 1], v = last ? $('[data-k="v"]', last).value : '', r = last ? $('[data-k="reps"]', last).value : '';
+        box.insertAdjacentHTML('beforeend', this.row(i, rows.length, { v: v === '' ? null : +v, u, reps: r === '' ? null : +r }, u)); const n = $$('[data-set]', box).pop(); $('[data-k="v"]', n).focus();
+      } else if (rows.length > 1) rows[rows.length - 1].remove();
+    });
+  },
+  /* → [{i, sets:[{v, u, reps}]}]; null and a message when something can't be right */
+  read(root) {
+    const out = []; let bad = '';
+    $$('.cxlg', root).forEach(L => { const u = L.dataset.u; $$('.cxlg-ex', L).forEach(ex => {
+      const now = JSON.stringify($$('[data-set]', ex).map(r => [$('[data-k="v"]', r).value.trim().replace(',', '.'), $('[data-k="reps"]', r).value.trim()]).filter(x => x[0] !== '' || x[1] !== ''));
+      if (now === ex.dataset.orig) return;   // unchanged: leave what's saved as it is
+      const sets = $$('[data-set]', ex).map(r => { const v = $('[data-k="v"]', r).value.trim().replace(',', '.'), p = $('[data-k="reps"]', r).value.trim();
+        if (v === '' && p === '') return null; const vn = v === '' ? null : +v, pn = p === '' ? null : +p;
+        if (vn != null && (!isFinite(vn) || vn < 0 || vn > (u === 'lb' ? 1300 : 600))) bad = 'Check the weights — one looks wrong.';
+        if (pn != null && (!Number.isInteger(pn) || pn < 0 || pn > 300)) bad = 'Reps must be a whole number.';
+        return { v: vn, u, reps: pn }; }).filter(Boolean);
+      if (sets.length || ex.dataset.had) out.push({ i: +ex.dataset.i, sets });   // untouched exercises aren't sent; emptying a logged one clears it
+    }); });
+    return bad ? { err: bad } : { logs: out, any: $$('.cxlg-ex[data-had]', root).length > 0 };
+  },
+  filled(logs) { return logs.filter(l => l.sets.length).length; }
+};
+
+/* ---------- the athlete's phone: log the sets of a team circuit (live, finished, or done alone) ---------- */
+const CxPhone = {
+  unit() { return (State.settings && State.settings.unit) === 'kg' ? 'kg' : 'lb'; },
+  /* the exercises of a plan, grouped per tablet when it has tablets */
+  groups(plan) {
+    const raw = plan.src || plan.stations || [], q = CxTime.qn(plan), ex = raw.map((s, i) => ({ i, name: s.name, note: s.note || '', key: s.key }));
+    if (!q) return [{ title: '', ex }];
+    const g = []; for (let i = 0; i < ex.length; i += q) g.push({ title: `Tablet ${g.length + 1}`, ex: ex.slice(i, i + q) }); return g;
+  },
+  /* open the sheet; focus = index of the group to put first */
+  open({ sid, plan, logs, solo, focus, name, meta }) {
+    const u = this.unit(), prev = {}; (logs || []).forEach(l => { prev[l.i] = l.sets; });
+    let G = this.groups(plan); if (focus != null && G[focus]) G = [G[focus]].concat(G.filter((_, k) => k !== focus));
+    Sheet.open({ title: `Log my sets${name ? ' · ' + name : ''}`, wide: true, html: `<p class="muted cx-note">Weight × reps for each set. Leave anything you didn't do empty. It goes into your workout history.</p>
+      ${G.map(g => `${g.title ? `<h3 class="label">${esc(g.title)}</h3>` : ''}${CxLog.html(g.ex, prev, u)}`).join('')}
+      <p class="err-msg" id="cxlgErr" role="alert"></p><button type="button" class="btn primary big block" id="cxlgGo">${icon('check')} Save my sets</button>`,
+      onMount: sh => {
+        CxLog.wire(sh);
+        $('#cxlgGo', sh).onclick = async () => {
+          const r = CxLog.read(sh), er = $('#cxlgErr', sh); if (r.err) { er.textContent = r.err; return; }
+          if (!r.logs.length) { if (r.any) { await Sheet.close(); UI.toast('Nothing changed.'); } else er.textContent = 'Type at least one set.'; return; }
+          const b = $('#cxlgGo', sh); b.disabled = true;
+          try {
+            const res = await Social.rpc('circuit_log_mine', { p_id: sid, p_logs: r.logs, p_solo: !!solo });
+            await Sheet.close(); UI.toast('Saved to your workout history.');
+            const ch = r.logs.map(l => ({ i: l.i, sets: l.sets.map(t => ({ kg: t.v == null ? null : (t.u === 'lb' ? t.v / 2.20462262 : t.v), v: t.v, u: t.u, reps: t.reps })) }));
+            const L = (logs || []).filter(l => !ch.some(c => c.i === l.i)).concat(ch).filter(l => l.sets.length).sort((a, b) => a.i - b.i);
+            if (meta) CxMine.logSession(Object.assign({}, meta, { stations: plan.src || plan.stations }), L);
+            if (CxS.G && CxS.G.id === sid) { CxS.G.logs = L; CxS.paint(true); }
+            if (CxSolo.d && CxSolo.d.id === sid) { CxSolo.d.logs = L; CxMine.sync(); }
+            if (UI.route.name === 'cxsolo') UI.render();
+            return res;
+          } catch (e) { b.disabled = false; er.textContent = Social.msg(e); }
+        };
+      } });
+  }
+};
+
+/* ---------- workout history: logged circuit sets become a completed workout (PRs, volume, progress) ---------- */
+Object.assign(CxMine, {
+  sigK() { return `bbp.${Cloud.ns || 'x'}.cx.logsig`; },
+  /* meta: {sid, name, team, date} · stations: the plan's exercises · logs: [{i, sets:[{kg, v, u, reps}]}] */
+  logSession(meta, stations, logs) {
+    if (!State.program || !Array.isArray(State.sessions) || !logs || !logs.length) return false;
+    stations = stations || meta.stations || [];
+    const sigs = LSX.get(this.sigK(), {}), sig = JSON.stringify(logs.map(l => [l.i, l.sets.map(t => [t.kg == null ? null : Math.round(t.kg * 100), t.reps])]));
+    const id = 'cxl_' + meta.sid; if (sigs[meta.sid] === sig) return false;
+    const unit = State.settings.unit || 'lb', date = meta.date || todayISO(), dd = new Date(date + 'T12:00:00'), wk = AR.weekOf(date);
+    const ex = logs.filter(l => l.sets.length && stations[l.i]).map(l => {
+      const st = stations[l.i], key = st.key && !String(st.key).startsWith('cx:') && Program.exDef(st.key) ? st.key : (st.key || 'circuit_ex');
+      const x = Workout.buildEx({ uid: uid('cxe'), ex: key, type: 'reps', sets: l.sets.length, reps: null, title: st.name, note: st.note || '' });
+      x.name = st.name; x.weighted = true; x.cat = x.cat || 'strength';
+      x.sets.forEach((t, k) => { const s = l.sets[k] || {}; Object.assign(t, { reps: s.reps != null ? +s.reps : null, pReps: null, done: true, ts: Date.now(),
+        w: s.kg != null ? (s.u && s.v != null ? { kg: +s.kg, v: +s.v, u: s.u } : Units.wt(Math.round(Units.fromKg(+s.kg, unit) * 10) / 10, unit)) : null }); });
+      return x;
+    });
+    if (!ex.length) return false;
+    const old = State.sessions.find(s => s.id === id), t = old ? old.startedAt : dd.getTime();
+    const rec = Object.assign(old || {}, { id, tid: 'free', kind: 'free', week: wk, day: 0, cycle: Program.cycleOf(wk).id, title: `Circuit lifts · ${meta.name}`, category: 'free', date,
+      startedAt: t, endedAt: t + 60000, pausedAt: null, pausedMs: 0, clockOn: false, status: 'completed', cur: 0, notes: meta.team ? `Logged in the circuit with ${meta.team}` : '', ex, circuitLog: { sid: meta.sid, name: meta.name },
+      createdAt: old ? old.createdAt : Date.now(), updatedAt: Date.now() });
+    Store.save('sessions', rec); sigs[meta.sid] = sig; LSX.set(this.sigK(), sigs);
+    try { Achievements.evaluate(); } catch (e) { } try { Cloud.dirty(); } catch (e) { }
+    return true;
+  }
+});
+(() => {
+  const ip = CxMine.importPast.bind(CxMine);
+  CxMine.importPast = function (L) {
+    ip(L); let n = 0;
+    (L || []).forEach(p => { if (!p.logs || !p.logs.length) return;
+      const d = p.started_at ? new Date(CxClock.ts(p.started_at)) : new Date(), date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      try { if (this.logSession({ sid: p.id, name: p.name, team: p.team, date }, p.stations || [], p.logs)) n++; } catch (e) { } });
+    if (n && ['history', 'home', 'progress'].includes(UI.route.name)) UI.render();
+  };
+  /* "missed a circuit?" — on the home screen, under the live banner */
+  const bn = CxMine.banner.bind(CxMine);
+  CxMine.banner = function (view) {
+    bn(view); const old = $('.cx-missed', view); if (old) old.remove();
+    const M = (this.data && this.data.missed) || [], top = $('.cx-banner', view) || $('.topbar', view); if (!top || !M.length) return;
+    const s = M[0];
+    top.insertAdjacentHTML('afterend', `<button type="button" class="panel cx-banner cx-missed" data-act="go" data-r="cxsolo" data-p="${s.id}"><span class="cx-hd" aria-hidden="true">${icon('timer')}</span><span class="grow"><b>Missed ${esc(s.name)}?</b><small>${esc(s.team_name || '')} · do it on your own and log it</small></span><span class="btn sm">${icon('chevron-right')}</span></button>`);
+    UI.icons(view);
+  };
+})();
+
+/* ---------- the athlete doing a team circuit alone: their own timer, then log it ---------- */
+const CxSolo = {
+  id: null, d: null, err: '', t0: null, paused: null, iv: null,
+  async load(id) {
+    if (this.id !== id) { this.id = id; this.d = null; this.err = ''; this.t0 = null; this.paused = null; }
+    try { this.d = await Social.rpc('circuit_solo', { p_id: id }); this.d.plan = CxTime.units(this.d.plan); } catch (e) { this.err = Social.msg(e); }
+    if (UI.route.name === 'cxsolo') UI.render();
+  },
+  el() { if (this.t0 == null) return null; return ((this.paused != null ? this.paused : Date.now()) - this.t0) / 1000 - CxTime.LEAD; },
+  screen(id) {
+    if (this.id !== id || (!this.d && !this.err)) { if (this.id !== id || !this.loading) { this.loading = true; this.load(id).finally(() => { this.loading = false; }); } }
+    const d = this.d;
+    if (!d) return `<div class="screen cxl">${backBar('Circuit')}${this.err ? `<section class="panel serr"><p class="err-msg">${esc(this.err)}</p></section>` : Social.skel(2)}</div>`;
+    const P = d.plan, T = CxTime.build(P, [0]), e = this.el(), logs = d.logs || [], done = CxLog.filled(logs);
+    let clock = '';
+    if (e == null) clock = `<button type="button" class="btn primary big block" data-act="cxo-go">${icon('play')} Start my timer</button><p class="muted cx-note">Same exercises and times as the team did. You can also skip the timer and just log.</p>`;
+    else {
+      const g = CxTime.at(T, Math.max(e, -CxTime.LEAD)), ts = CxTime.team(T, g, 0);
+      if (ts.phase === 'done') clock = `<div class="cx-fin-ic">${icon('trophy')}</div><p><b>Done!</b> Now log what you lifted.</p>`;
+      else { const s = T.S[ts.st] || {}, end = ts.phase === 'ready' ? 0 : ts.phase === 'work' ? g.slotStart + +s.w : g.slotEnd;
+        clock = `<div class="cx-solo-c phase-${this.paused != null ? 'paused' : ts.phase}"><span class="label">${this.paused != null ? 'Paused' : { ready: 'Get ready', work: 'Go!', rest: P.tabs ? 'Move to the next group' : 'Rest', recovery: 'Round recovery' }[ts.phase]}</span>
+          <b class="cx-big" data-solo-end="${end}">${CxTime.fmt(end - e)}</b><span>${esc(P.tabs ? `Tablet ${s.tab}: ${s.name}` : s.name || '')}</span>
+          <div class="row"><button type="button" class="btn" data-act="cxo-pause">${icon(this.paused != null ? 'play' : 'pause')} ${this.paused != null ? 'Resume' : 'Pause'}</button><button type="button" class="btn ghost" data-act="cxo-skip">${icon('skip-forward')} Skip</button><button type="button" class="btn ghost" data-act="cxo-stop">${icon('square')} Stop</button></div></div>`; }
+    }
+    const G = CxPhone.groups(P);
+    return `<div class="screen cxl cx-solo">${backBar(esc(d.name))}
+      <section class="panel stack" data-stg><span class="label">${esc(d.team_name || '')} · on your own</span><h2 class="h2">${esc(d.name)}</h2>
+        <p class="muted">${(P.src || P.stations).length} exercises${P.tabs ? ` in ${P.stations.length} groups` : ''} · ${P.rounds ? `${P.rounds} round${P.rounds === 1 ? '' : 's'}` : 'as many rounds as you like'}${T && T.total != null ? ` · ≈ ${Math.round(T.total / 60)} min` : ''}</p>${clock}</section>
+      ${G.map(g => `<section class="panel" data-stg>${g.title ? `<h3 class="h3">${esc(g.title)}</h3>` : ''}<ol class="cx-mini">${g.ex.map(x => `<li><span>${esc(x.name)}</span><small>${x.note ? esc(x.note) : ''}${logs.some(l => l.i === x.i && l.sets.length) ? ` ${icon('check')}` : ''}</small></li>`).join('')}</ol></section>`).join('')}
+      <div data-stg><button type="button" class="btn primary big block" data-act="cxo-log">${icon('clipboard-pen')} ${done ? 'Change my sets' : 'Log my sets'}</button></div></div>`;
+  },
+  tick() {
+    if (UI.route.name !== 'cxsolo') { clearInterval(this.iv); this.iv = null; return; }
+    const e = this.el(); if (e == null || this.paused != null) return;
+    const b = $('[data-solo-end]'); if (!b) return; const left = +b.dataset.soloEnd - e;
+    if (left <= 0) { Haptics.beep([660, 990]); UI.render(); return; } b.textContent = CxTime.fmt(left);
+  }
+};
+Screens.cxsolo = id => CxSolo.screen(id);
+TAB_OF.cxsolo = 'home';
+After.cxsolo = () => { clearInterval(CxSolo.iv); CxSolo.iv = setInterval(() => CxSolo.tick(), 250); };
+Object.assign(Actions, {
+  'cxo-go': () => { CxSolo.t0 = Date.now(); CxSolo.paused = null; WakeLock.on && WakeLock.on(); UI.render(); },
+  'cxo-pause': () => { if (CxSolo.paused != null) { CxSolo.t0 += Date.now() - CxSolo.paused; CxSolo.paused = null; } else CxSolo.paused = Date.now(); UI.render(); },
+  'cxo-skip': () => { const T = CxTime.build(CxSolo.d.plan, [0]), e = CxSolo.el(), g = CxTime.at(T, Math.max(0, e)); const to = e < 0 ? 0 : g.phase === 'work' ? g.workEnd : g.slotEnd; CxSolo.t0 -= (to - e) * 1000; UI.render(); },
+  'cxo-stop': () => { CxSolo.t0 = null; CxSolo.paused = null; UI.render(); },
+  'cxo-log': () => { const d = CxSolo.d; if (!d) return; CxPhone.open({ sid: d.id, plan: d.plan, logs: d.logs, solo: true, name: d.name, meta: { sid: d.id, name: d.name, team: d.team_name, date: todayISO() } }); }
+});
+
+/* ---------- the coach: station codes for the tablets, and what everyone logged ---------- */
+const CxCodes = {
+  url(code) { return `${location.origin}${location.pathname}?station=${code}`; },
+  fmt(c) { return c.slice(0, 4) + ' ' + c.slice(4); },
+  async show(el) {
+    const G = CxS.G; if (!G) return;
+    const K = await Social.act(el, () => Social.rpc('circuit_kiosk_codes', { p_id: G.id })); if (!K) return;
+    const P = G.plan, U = P.stations || [];
+    Sheet.open({ title: 'Station tablets', wide: true, html: `<p class="muted cx-note">On each tablet, open the app and tap <b>Station tablet</b> on the login screen, then type its code — or open the link. No password goes on the tablets. Codes stop working a few hours after the circuit ends.</p>
+      <div class="cx-codes">${K.map(k => { const s = U[k.unit] || {}; return `<article class="cx-code"><span class="label">${esc(CxTime.unitName(s, k.unit))}</span><b class="cx-code-v" aria-label="Code ${k.code.split('').join(' ')}">${this.fmt(k.code)}</b>
+        <small class="muted">${esc(s.ex ? s.ex.map(x => x.name).join(', ') : s.name || '')}</small>
+        <div class="row"><button type="button" class="btn sm" data-copy="${esc(this.url(k.code))}">${icon('link')} Copy link</button></div></article>`; }).join('')}</div>`,
+      onMount: sh => $$('[data-copy]', sh).forEach(b => b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); UI.toast('Link copied.'); } catch (e) { UI.toast(b.dataset.copy); } }) });
+  },
+  async sets(el) {
+    const G = CxS.G; if (!G) return;
+    const L = await Social.act(el, () => Social.rpc('circuit_logs_get', { p_id: G.id })); if (!L) return;
+    const S = G.plan.src || G.plan.stations || [], by = {};
+    L.forEach(r => { (by[r.user.id] = by[r.user.id] || { u: r.user, rows: [] }).rows.push(r); });
+    const fmt = t => `${t.kg != null ? `${t.v != null && t.u ? fmtNum(+t.v, 1) + ' ' + t.u : fmtNum(+t.kg, 1) + ' kg'}` : 'BW'}${t.reps != null ? ' × ' + t.reps : ''}`;
+    Sheet.open({ title: 'Logged sets', wide: true, html: Object.values(by).length ? Object.values(by).map(x => `<section class="cx-lgp"><header>${Social.avatar(x.u, 28)}<b>${esc(x.u.name)}</b></header>
+        ${x.rows.map(r => `<div class="cx-lgr"><span>${esc((S[r.i] || {}).name || 'Exercise')}</span><small>${r.sets.map(fmt).join(' · ') || '—'}${r.via !== 'phone' ? ` <span class="cx-tag">${r.via === 'tablet' ? 'tablet' : 'on their own'}</span>` : ''}</small></div>`).join('')}</section>`).join('')
+      : '<p class="muted">Nothing logged yet. Athletes log on the station tablets or on their own phones.</p>' });
+  }
+};
+Object.assign(Actions, {
+  'cx-codes': el => CxCodes.show(el),
+  'cx-sets': el => CxCodes.sets(el),
+  'cx-log': () => { const G = CxS.G; if (!G) return; const T = CxS.T(), mine = G.teams.find(t => t.idx === G.my_team), e = CxS.e();
+    let focus = null; if (T && mine && G.plan.tabs && ['running', 'paused'].includes(G.status)) { const ts = CxTime.team(T, CxTime.at(T, e), mine.start); if (ts.st != null) focus = ts.st; }
+    const d = G.started_at ? new Date(CxClock.ts(G.started_at)) : new Date();
+    CxPhone.open({ sid: G.id, plan: G.plan, logs: G.logs || [], focus, name: '', meta: { sid: G.id, name: G.name, team: mine ? mine.name : '', date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` } }); }
+});
+
+/* ---------- "start from a workout": a program day, a plan day or a saved workout becomes circuit stations ---------- */
+const CxFrom = {
+  plans: null,
+  srcs() {
+    const L = [['std:los', `Standard program · ${TRACKS.los}`], ['std:skill', `Standard program · ${TRACKS.skill}`]];
+    (this.plans || []).forEach(p => L.push(['plan:' + p.id, `Plan · ${p.name}`]));
+    if (Templates.all().length) L.push(['tpl', 'My saved workouts']);
+    return L;
+  },
+  async prog(src) {
+    const c = this.cache || (this.cache = {}); if (c[src]) return c[src];
+    if (src.startsWith('std:')) return c[src] = PlanFx.raw(src.slice(4));
+    const p = await Social.rpc('plan_get', { p_id: src.slice(5) }), P = JSON.parse(JSON.stringify(PlanFx.raw(p.track || 'los'))), ch = PlanFx.norm(p.changes);
+    PlanFx.registerCustom(ch); PlanFx.apply(P, ch); return c[src] = P;
+  },
+  /* a workout's exercises → stations (times are only a start: in a weight room each group gets one block of time) */
+  stations(list) {
+    return list.filter(e => e && e.ex && (EXERCISES[e.ex] || /^c_/.test(e.ex))).slice(0, 60).map(e => {
+      const d = Program.exDef(e.ex) || {}, presc = (() => { try { return Workout.prescText(e); } catch (x) { return ''; } })();
+      return Object.assign(cxSt(e.ex, String(e.title || d.name || e.ex).slice(0, 60), e.type === 'timed' && e.sec ? Math.max(5, Math.min(1800, +e.sec)) : 45, Math.max(0, Math.min(180, +e.rest || 15))), { note: String(presc || '').slice(0, 80), sets: +e.sets || (e.scheme ? e.scheme.length : 3) });
+    });
+  },
+  /* each tablet's time: about a minute and a half per set (work + rest), rounded to 30 s */
+  qtime(st) { return Math.max(60, Math.min(3600, Math.round(st.reduce((t, s) => t + (s.sets || 3) * 90, 0) / 30) * 30)); },
+  pick() {
+    return new Promise(async res => {
+      if (this.plans == null) { try { this.plans = await Social.rpc('plan_list'); } catch (e) { this.plans = []; } }
+      let src = 'std:' + ((State.profile && State.profile.track) || 'los'), wk = 1, P = null, done = false;
+      const draw = async sh => {
+        const box = $('#cxfB', sh); if (!box) return;
+        if (src === 'tpl') {
+          const T = Templates.all();
+          box.innerHTML = T.map(t => `<button type="button" class="pe-row pk" data-t="${esc(t.id)}"><span class="grow" style="text-align:left"><b>${esc(t.name)}</b><small class="muted">${(t.ex || []).length} exercises</small></span>${icon('chevron-right')}</button>`).join('') || '<p class="muted">No saved workouts.</p>';
+          UI.icons(box); $$('[data-t]', box).forEach(b => b.onclick = async () => { const t = T.find(x => x.id === b.dataset.t); done = true; await Sheet.close(); res({ name: t.name, ex: t.ex || [] }); }); return;
+        }
+        box.innerHTML = Social.skel(1);
+        try { P = await this.prog(src); } catch (e) { box.innerHTML = `<p class="err-msg">${esc(Social.msg(e))}</p>`; return; }
+        const weeks = [...new Set(P.workouts.concat(P.prep || []).map(w => w.week))].sort((a, b) => a - b); if (!weeks.includes(wk)) wk = weeks[0];
+        const ws = P.workouts.concat(P.prep || []).filter(w => w.week === wk).sort((a, b) => a.day - b.day);
+        box.innerHTML = `<div class="chips cx-scroll" role="group" aria-label="Week">${weeks.map(n => `<button type="button" class="chip" data-w="${n}" aria-pressed="${n === wk}">${wkShort(n)}</button>`).join('')}</div>
+          ${ws.map(w => `<button type="button" class="pe-row pk" data-d="${esc(w.id)}"><span class="grow" style="text-align:left"><b>${DAYN(w.day)} — ${esc(w.title)}</b><small class="muted">${w.exercises.slice(0, 5).map(e => esc(e.title || Program.exDef(e.ex).name)).join(', ')}${w.exercises.length > 5 ? ` +${w.exercises.length - 5}` : ''}</small></span>${icon('chevron-right')}</button>`).join('') || '<p class="muted">No workouts that week.</p>'}`;
+        UI.icons(box);
+        $$('[data-w]', box).forEach(b => b.onclick = () => { wk = +b.dataset.w; draw(sh); });
+        $$('[data-d]', box).forEach(b => b.onclick = async () => { const w = ws.find(x => x.id === b.dataset.d); done = true; await Sheet.close(); res({ name: `${w.title}`, ex: w.exercises }); });
+      };
+      Sheet.open({ title: 'Start from a workout', wide: true, html: `<div class="field"><label for="cxfS">Workouts from</label><select class="input" id="cxfS">${this.srcs().map(([k, l]) => `<option value="${esc(k)}" ${k === src ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div><div id="cxfB" class="stack pk-list"></div>`,
+        onMount: sh => { $('#cxfS', sh).onchange = e => { src = e.target.value; draw(sh); }; draw(sh); }, onClose: () => { if (!done) res(null); } });
+    });
+  },
+  /* a new circuit from the picked workout: one tablet per 4 exercises when there are more than 4 */
+  async fresh() {
+    const w = await this.pick(); if (!w) return; const st = this.stations(w.ex); if (!st.length) { UI.toast('That workout has no exercises a circuit can use.', 'bad'); return; }
+    const q = st.length > 4 ? 4 : 0, quads = []; if (q) for (let i = 0; i < st.length; i += q) quads.push({ w: this.qtime(st.slice(i, i + q)), r: CxTime.QMOVE });
+    CxB.id = 'new'; CxB.d = { id: null, name: String(w.name).slice(0, 60), description: 'Built from a workout', rounds: 1, round_rest: 0, stations: st, quad: q, quads }; CxB.undo = []; CxB.edit = null; CxB.keep();
+    HQ.go('circuit:new', true); UI.toast(`${st.length} exercises added${q ? ` · ${quads.length} tablets of ${q}` : ''}. Adjust anything, then save.`);
+  },
+  /* drop a workout into the circuit being built */
+  async append() {
+    const w = await this.pick(); if (!w) return; const st = this.stations(w.ex); if (!st.length) { UI.toast('That workout has no exercises a circuit can use.', 'bad'); return; }
+    const d = CxB.d; if (d.stations.length + st.length > 60) { UI.toast('Up to 60 exercises in one circuit.', 'bad'); return; }
+    CxB.snap(); d.stations.push(...st); if (CxTime.qn(d)) { d.quads = d.quads || []; } CxB.keep(); CxB.redraw(st[0].u); CxUndo.show(`Added ${st.length} exercises from ${w.name}`, () => CxB.back());
+  }
+};
+Object.assign(Actions, { 'cx-from': () => CxFrom.fresh(), 'cx-from-add': () => CxFrom.append() });
+
+/* ---------- the station tablet: no account, opened with a code ---------- */
+const Kiosk = {
+  KEY: 'vi.kiosk', sb: null, code: '', K: null, err: '', who: null, timer: null, iv: null, ok: true, unit: 'lb', msg: '', showAll: false, idle: null,
+  param() { try { const q = new URLSearchParams(location.search).get('station'); if (q) return q.replace(/[^A-Za-z0-9]/g, '').toUpperCase(); } catch (e) { } try { return localStorage.getItem(this.KEY) || ''; } catch (e) { return ''; } },
+  async run(code) {
+    this.code = code; try { localStorage.setItem(this.KEY, code); this.unit = localStorage.getItem(this.KEY + '.u') || 'lb'; } catch (e) { }
+    try { history.replaceState(null, '', location.pathname); } catch (e) { }
+    try { await Cloud.load(); } catch (e) { this.err = 'No connection. Check the Wi-Fi and reload.'; }
+    if (window.supabase) { this.sb = window.supabase.createClient(CLOUD_CFG.url, CLOUD_CFG.anonKey, { auth: { persistSession: false, autoRefreshToken: false, storageKey: 'vi.kiosk.auth' } }); try { await Brand.pre(this.sb); } catch (e) { } }
+    document.body.classList.add('kiosk-on'); const g = $('#gate'); g.hidden = false; g.className = 'kiosk'; g.setAttribute('aria-label', 'Station tablet');
+    g.addEventListener('click', e => this.click(e)); g.addEventListener('input', () => this.touch());
+    this.paint(); this.poll(); this.iv = setInterval(() => this.tick(), 250);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) this.poll(); });
+    try { if (navigator.wakeLock) { const w = async () => { try { this.wake = await navigator.wakeLock.request('screen'); } catch (e) { } }; w(); document.addEventListener('visibilitychange', () => { if (!document.hidden) w(); }); } } catch (e) { }
+    return new Promise(() => { });   // the app itself never opens on a station tablet
+  },
+  async rpc(fn, a) { const { data, error } = await this.sb.rpc(fn, a); if (error) throw error; return data; },
+  async poll() {
+    clearTimeout(this.timer); if (!this.sb) return;
+    const t0 = Date.now();
+    try { const K = await this.rpc('kiosk_get', { p_code: this.code }); CxClock.sample(K.now, t0, Date.now()); K.plan = CxTime.units(K.plan);
+      const ch = !this.K || this.K.version !== K.version || this.K.status !== K.status || JSON.stringify(this.K.logged) !== JSON.stringify(K.logged) || JSON.stringify(this.K.teams) !== JSON.stringify(K.teams);
+      this.K = K; this.err = ''; this.ok = true; if (ch && !this.who) this.paint(); else this.net(); }
+    catch (e) { const m = Cloud.msg(e); if (/code|finished/i.test(m)) { this.err = m; this.K = null; this.paint(); } else { this.ok = false; this.net(); } }
+    const st = this.K && this.K.status; this.timer = setTimeout(() => this.poll(), document.hidden ? 8000 : st === 'running' ? 2000 : st === 'paused' || st === 'lobby' ? 3000 : 15000);
+  },
+  net() { const n = $('#kNet'); if (n) n.hidden = this.ok; },
+  T() { const K = this.K; return K && K.plan && (K.plan.stations || []).length ? CxTime.build(K.plan, K.teams.length ? K.teams.map(t => t.start) : [0]) : null; },
+  me() { const K = this.K; return K && K.plan.stations[K.unit]; },
+  range() { const s = this.me(); return s && s.ex ? s.ex.map(x => x.i) : [this.K.unit]; },
+  /* where this tablet is: which teams are here now, which come next, and the countdown */
+  where() {
+    const K = this.K, T = this.T(); if (!T || !['running', 'paused'].includes(K.status)) return null;
+    const e = CxClock.el(K), g = CxTime.at(T, e), here = [], next = [];
+    K.teams.forEach(t => { const ts = CxTime.team(T, g, t.start); if (ts.phase === 'done') return; if (ts.st === K.unit) here.push([t, ts]); else if (ts.next === K.unit) next.push([t, ts]); });
+    const wait = K.mode === 'manual' && K.status === 'running' && K.hold_el != null && e >= +K.hold_el - .05 && (K.total_s == null || +K.hold_el < +K.total_s - .05);
+    const s = this.me(), ph = here.length ? here[0][1].phase : g.phase === 'ready' ? 'ready' : 'rest';
+    const end = g.phase === 'ready' ? 0 : ph === 'work' ? g.slotStart + +s.w : g.slotEnd;
+    return { e, g, here, next, wait, ph, end, dur: ph === 'work' ? +s.w : ph === 'ready' ? CxTime.LEAD : Math.max(1, g.slotEnd - (g.slotStart + +s.w)) };
+  },
+  logged(uid) { const L = (this.K.logged || {})[uid] || [], R = this.range(); return L.filter(l => R.includes(l.i) && l.sets.length).length; },
+  names(list, big) {
+    const n = this.range().length;
+    return list.map(m => { const c = this.logged(m.id); return `<button type="button" class="k-name${c >= n ? ' done' : c ? ' part' : ''}${big ? ' big' : ''}" data-k="who" data-id="${m.id}">${c >= n ? icon('check') : ''}<b>${esc(m.name)}</b>${c && c < n ? `<small>${c}/${n}</small>` : ''}</button>`; }).join('');
+  },
+  body() {
+    if (this.err) return `<div class="k-msg">${icon('lock')}<h1>${esc(this.err)}</h1><form class="k-code" data-k-form><label for="kCode">Station code</label><input class="input" id="kCode" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABCD 2345"><button class="btn big primary">Open</button></form><button type="button" class="btn ghost" data-k="leave">Leave station mode</button></div>`;
+    const K = this.K; if (!K) return `<div class="k-msg"><div class="spinner" aria-hidden="true"></div><p>Opening the station…</p></div>`;
+    const s = this.me() || {}, W = this.where(), ex = s.ex || [{ i: K.unit, name: s.name, note: s.note }];
+    const head = `<header class="k-head"><div><span class="label">${esc(Brand.up())}${K.team_name ? ' · ' + esc(K.team_name) : ''}</span><h1>${esc(CxTime.unitName(s, K.unit))}</h1><small>${esc(K.name)}</small></div>
+      <p class="k-net" id="kNet" ${this.ok ? 'hidden' : ''}>${icon('wifi-off')} Reconnecting…</p><button type="button" class="btn sm ghost" data-k="menu" aria-label="Station settings">${icon('settings')}</button></header>`;
+    const exl = `<section class="k-ex"><h2 class="label">At this station</h2><ol>${ex.map(x => `<li><b>${esc(x.name)}</b>${x.note ? `<span>${esc(x.note)}</span>` : ''}</li>`).join('')}</ol></section>`;
+    if (this.who) return head + this.logView();
+    let clock = '', people = '';
+    const all = K.teams.flatMap(t => t.members.map(m => Object.assign({ team: t.name }, m)));
+    if (K.status === 'lobby') { clock = `<section class="k-clock phase-wait"><span class="k-lab">Waiting for the coach to start</span><b class="k-big">—</b><span>${K.teams.filter(t => t.start === K.unit).map(t => esc(t.name)).join(', ') || 'No team starts here'}${K.teams.some(t => t.start === K.unit) ? ' starts here' : ''}</span></section>`; people = all.length ? `<section class="k-people"><h2 class="label">Starting here</h2><div class="k-names">${this.names(K.teams.filter(t => t.start === K.unit).flatMap(t => t.members), true)}</div></section>` : ''; }
+    else if (['done', 'ended'].includes(K.status)) { clock = `<section class="k-clock phase-done"><span class="k-lab">${K.status === 'done' ? 'Circuit complete' : 'The coach ended the circuit'}</span><b class="k-big">${icon('flag')}</b><span>Tap your name to log your sets.</span></section>`; people = `<section class="k-people"><h2 class="label">Everyone</h2><div class="k-names">${this.names(all, true)}</div></section>`; }
+    else if (W) {
+      const paused = K.status === 'paused', lab = paused ? 'Paused' : W.wait ? 'Waiting for the coach' : { ready: 'Get ready', work: 'Work', rest: 'Time’s up — log your sets', recovery: 'Round recovery — log your sets' }[W.ph] || 'Rest';
+      clock = `<section class="k-clock phase-${paused ? 'paused' : W.wait ? 'wait' : W.ph}"><span class="k-lab">${lab}</span><b class="k-big" ${W.wait ? '' : `data-kend="${W.end}"`}>${W.wait ? '—' : CxTime.fmt(W.end - W.e)}</b>
+        <div class="cx-bar"><i ${W.wait ? '' : `data-kend="${W.end}" data-kdur="${W.dur}"`} style="--p:0"></i></div>
+        <span>${W.here.length ? `Here now: <b>${W.here.map(([t]) => esc(t.name)).join(', ')}</b>` : 'No group here right now'}${W.next.length && W.ph !== 'work' ? ` · Next: <b>${W.next.map(([t]) => esc(t.name)).join(', ')}</b>` : ''}</span></section>`;
+      const hereM = W.here.flatMap(([t]) => t.members);
+      people = `<section class="k-people"><h2 class="label">${W.ph === 'work' ? 'Working here — log when the time is up' : 'Tap your name to log your sets'}</h2><div class="k-names">${this.names(hereM, true) || '<p class="muted">No one here right now.</p>'}</div>
+        <details class="k-all"${this.showAll ? ' open' : ''}><summary data-k="all">Someone else? Show everyone</summary><div class="k-names">${this.names(all.filter(m => !hereM.some(h => h.id === m.id)), false)}</div></details></section>`;
+    }
+    return head + `<div class="k-grid">${clock}${exl}${people}</div>`;
+  },
+  logged0() { const p = {}; ((this.K.logged || {})[this.who] || []).forEach(l => { p[l.i] = l.sets; }); return p; },
+  prevSets() { const p = {}; ((this.K.logged || {})[this.who] || []).forEach(l => { p[l.i] = l.sets; }); if (this.draft) Object.assign(p, this.draft); return p; },
+  logView() {
+    const K = this.K, m = K.teams.flatMap(t => t.members).find(x => x.id === this.who) || { name: 'Athlete' }, s = this.me() || {}, prev = {};
+    Object.assign(prev, this.prevSets());
+    const ex = (s.ex || [{ i: K.unit, name: s.name, note: s.note }]);
+    return `<section class="k-log"><header><div><span class="label">Logging for</span><h2>${esc(m.full || m.name)}</h2></div>
+        <div class="seg" role="group" aria-label="Weight unit"><button type="button" data-k="unit" data-v="lb" aria-pressed="${this.unit === 'lb'}">lb</button><button type="button" data-k="unit" data-v="kg" aria-pressed="${this.unit === 'kg'}">kg</button></div></header>
+      <p class="muted">Weight × reps for each set. Leave anything you didn't do empty. Bodyweight? Just the reps.</p>
+      ${CxLog.html(ex, prev, this.unit, this.logged0())}
+      <p class="err-msg" id="kErr" role="alert"></p>
+      <div class="k-log-b"><button type="button" class="btn big ghost" data-k="cancel">${icon('x')} Not me</button><button type="button" class="btn big primary" data-k="save">${icon('check')} Save</button></div></section>`;
+  },
+  paint() {
+    const g = $('#gate'); if (!g) return; const y = g.scrollTop;
+    g.innerHTML = `<div class="k-wrap">${this.body()}</div><div class="k-toast" id="kToast" role="status" aria-live="polite">${esc(this.msg)}</div>`; UI.icons(g);
+    if (this.who) { CxLog.wire($('.k-log', g)); const f = $('.k-log input', g); f && f.focus({ preventScroll: true }); } else g.scrollTop = y;
+    this.tick();
+  },
+  tick() {
+    const K = this.K; if (!K || this.who) return;
+    const k = this.where(), key = k ? [K.status, k.ph, k.g.r, k.g.k, k.wait, k.here.map(x => x[0].idx).join()].join('|') : K.status;
+    if (key !== this.key) { const first = this.key == null; this.key = key; if (!first) { this.paint(); if (k && K.status === 'running') try { Haptics.beep(k.ph === 'work' ? [660, 990] : [880, 587]); } catch (e) { } } return; }
+    if (!k) return;
+    $$('[data-kend]', $('#gate')).forEach(el => { const left = +el.dataset.kend - k.e; if (el.dataset.kdur) el.style.setProperty('--p', Math.max(0, Math.min(1, 1 - left / +el.dataset.kdur)).toFixed(4)); else el.textContent = CxTime.fmt(left); });
+  },
+  toast(t) { this.msg = t; const b = $('#kToast'); if (b) { b.textContent = t; b.classList.add('show'); clearTimeout(this._tt); this._tt = setTimeout(() => b.classList.remove('show'), 3500); } },
+  touch() { clearTimeout(this.idle); if (this.who) this.idle = setTimeout(() => { this.who = null; this.draft = null; this.paint(); }, 90000); },   // an abandoned entry closes by itself
+  async click(e) {
+    const b = e.target.closest('[data-k]'); if (!b) return; const k = b.dataset.k; this.touch();
+    if (k === 'who') { this.who = b.dataset.id; this.draft = null; this.paint(); this.touch(); }
+    else if (k === 'cancel') { this.who = null; this.draft = null; this.paint(); }
+    else if (k === 'all') { this.showAll = !b.parentElement.open; }
+    else if (k === 'unit') {   // switching lb ↔ kg keeps what was typed, converted
+      const was = this.prevSets(), cur = this.unit; this.draft = {};
+      $$('.k-log .cxlg-ex').forEach(ex => { const i = +ex.dataset.i, old = was[i] || [];
+        this.draft[i] = $$('[data-set]', ex).map((row, k) => { const v = $('[data-k="v"]', row).value.trim().replace(',', '.'), rp = $('[data-k="reps"]', row).value.trim(), o = old[k];
+          const t = o && String(CxLog.shown(o, cur)) === v ? Object.assign({}, o) : { v: v === '' ? null : +v, u: cur, kg: v === '' ? null : (cur === 'lb' ? +v / 2.20462262 : +v) };
+          t.reps = rp === '' ? null : +rp; return t; }); });
+      this.unit = b.dataset.v; try { localStorage.setItem(this.KEY + '.u', this.unit); } catch (x) { } this.paint(); }
+    else if (k === 'save') {
+      const r = CxLog.read($('.k-log')), er = $('#kErr'); if (r.err) { er.textContent = r.err; return; }
+      if (!r.logs.length) { if (r.any) { this.who = null; this.draft = null; this.paint(); this.toast('Nothing changed.'); } else er.textContent = 'Type at least one set.'; return; }
+      b.disabled = true; const who = this.who, m = this.K.teams.flatMap(t => t.members).find(x => x.id === who) || {};
+      try { await this.rpc('kiosk_log', { p_code: this.code, p_user: who, p_logs: r.logs }); this.who = null; this.draft = null;
+        this.K.logged[who] = ((this.K.logged || {})[who] || []).filter(l => !r.logs.some(x => x.i === l.i)).concat(r.logs.map(l => ({ i: l.i, sets: l.sets.map(t => ({ v: t.v, u: t.u, kg: t.v == null ? null : (t.u === 'lb' ? t.v / 2.20462262 : t.v), reps: t.reps })) })));
+        this.paint(); this.toast(`Saved for ${m.name || 'you'} ✓`); try { Haptics.beep([523, 784], .1); } catch (x) { } this.poll(); }
+      catch (x) { b.disabled = false; er.textContent = Cloud.msg(x); }
+    }
+    else if (k === 'menu') {
+      const g = $('#gate'); g.insertAdjacentHTML('beforeend', `<div class="k-menu" role="dialog" aria-label="Station settings"><div class="k-menu-b"><h2>Station settings</h2><p class="muted">Code ${esc(CxCodes.fmt(this.code))}</p>
+        <button type="button" class="btn big" data-k="reload">${icon('refresh-cw')} Refresh</button><button type="button" class="btn big" data-k="other">${icon('hash')} Use another code</button><button type="button" class="btn big danger" data-k="leave">${icon('log-out')} Leave station mode</button><button type="button" class="btn ghost" data-k="close">Close</button></div></div>`); UI.icons(g);
+    }
+    else if (k === 'close') { const m = $('.k-menu'); m && m.remove(); }
+    else if (k === 'reload') location.reload();
+    else if (k === 'other') { this.err = 'Type the code for this station'; this.K = null; const m = $('.k-menu'); m && m.remove(); this.paint(); }
+    else if (k === 'leave') { try { localStorage.removeItem(this.KEY); } catch (x) { } location.replace(location.pathname); }
+  }
+};
+document.addEventListener('submit', e => {
+  if (!e.target.matches || !e.target.matches('[data-k-form]')) return; e.preventDefault();
+  const c = ($('#kCode').value || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase(); if (c.length !== 8) { $('#kCode').classList.add('bad'); return; }
+  Kiosk.code = c; Kiosk.err = ''; try { localStorage.setItem(Kiosk.KEY, c); } catch (x) { } Kiosk.key = null; Kiosk.paint(); Kiosk.poll();
+});
+/* boot: a station tablet never shows the login — it opens the station */
+(() => {
+  const st = Cloud.start.bind(Cloud);
+  Cloud.start = function () { const c = Cloud.on && Kiosk.param(); if (c) return Kiosk.run(c); return st(); };
+  /* the login screen gets a way in for a station tablet */
+  const sh = Cloud.shell.bind(Cloud);
+  Cloud.shell = function (inner) {
+    const g = sh(inner); if (!/id="authForm"/.test(inner)) return g;
+    const f = $('.gfoot', g); if (!f) return g;
+    f.insertAdjacentHTML('afterend', `<div class="gstation" data-gs><button type="button" class="btn ghost block" id="kGo">${icon('tablet')} Station tablet? Enter its code</button>
+      <form class="gcode k-entry" id="kEntry" hidden><label for="kEntryC">Station code from your coach</label><div class="row"><input class="input" id="kEntryC" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABCD 2345"><button class="btn red">Open</button></div><p class="gmsg" id="kEntryM" role="status"></p></form></div>`);
+    UI.icons(g);
+    $('#kGo', g).onclick = () => { $('#kEntry', g).hidden = false; $('#kGo', g).hidden = true; $('#kEntryC', g).focus(); };
+    $('#kEntry', g).onsubmit = e => { e.preventDefault(); const c = $('#kEntryC', g).value.replace(/[^A-Za-z0-9]/g, '').toUpperCase(); if (c.length !== 8) { $('#kEntryM', g).textContent = 'Station codes have 8 letters and numbers.'; return; } location.href = location.pathname + '?station=' + c; };
+    return g;
+  };
 })();
 
 </script>
