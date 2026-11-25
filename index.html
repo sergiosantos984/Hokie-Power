@@ -293,7 +293,7 @@ body.amb #gate .slot.active span::after{animation:caret 1s steps(2) infinite}
   max-width:620px;margin:0 auto}
 #intro .cam::after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,.3) 70%,transparent);pointer-events:none}
 #intro .ui .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.32em;color:var(--silver)}
-#intro .t-cliff{font-family:var(--f-display);font-weight:900;font-size:clamp(76px,26vw,150px);line-height:.78;letter-spacing:-.01em;margin:0}
+#intro .t-name{font-family:var(--f-display);font-weight:900;font-size:clamp(76px,26vw,150px);line-height:.78;letter-spacing:-.01em;margin:0}
 #intro .t-sub{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,7vw,38px);line-height:.95;letter-spacing:.04em}
 #intro .t-sub span{color:#B7BEC3}
 #intro .t-tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;color:var(--silver)}
@@ -1032,7 +1032,7 @@ body.amb .pod{animation:barGrow .8s var(--ease-out) both}body.amb .pod.silver{an
 #boot[style*="--speed: .7"] .b-stripes i,#boot[style*="--speed: .7"] .b-ball,#boot[style*="--speed: .7"] .b-word span{animation-duration:.3s}
 #boot[style*="--speed: 0"] *{animation-duration:.01ms!important;animation-delay:0s!important}
 
-/* ---- Cliff feedback: weight memory, supersets, prep ---- */
+/* ---- Athlete feedback: weight memory, supersets, prep ---- */
 .last-box{display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.28)}
 .last-box .num{font-size:15px;margin-top:2px;word-break:break-word}
 .last-box small{font-weight:500;opacity:.7}
@@ -2086,7 +2086,7 @@ html:root body:not(.theme-light) .wt-in{background:var(--pC8D9E6);color:var(--p2
 /* ---------- cinematic scenes in navy: gate, intro, locker room, quote, celebrations ---------- */
 html:root body #gate .gtitle{font-family:var(--f-display);font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1.02;font-size:clamp(36px,10vw,56px)}
 html:root body #gate .gtitle span{box-shadow:inset 0 -.12em 0 rgba(var(--pC8D9E6-rgb),.85)}
-html:root body #intro .t-cliff{font-weight:800;letter-spacing:-.045em;line-height:.9}
+html:root body #intro .t-name{font-weight:800;letter-spacing:-.045em;line-height:.9}
 html:root body #intro .t-sub{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
 html:root body :is(#intro .ui .k,#intro .t-tag,#intro .disclaimer,#qflash .qk,#qflash .qtap){font-family:var(--f-body);letter-spacing:.02em;text-transform:none}
 html:root body .c-head{font-weight:700;text-transform:none;letter-spacing:-.035em;line-height:1}
@@ -3244,7 +3244,7 @@ html:root body.theme-light #gate.kiosk{background:#0B1220;color:#F8FAFC;--fg:#F8
   <button class="btn sm ghost skip" id="skipIntro" type="button">Skip intro</button>
   <div class="ui">
     <span class="k reveal">BLACKSBURG · SUMMER 2005 · GATE 2005</span>
-    <h1 class="t-cliff reveal">CLIFF</h1>
+    <h1 class="t-name reveal">ATHLETE</h1>
     <div class="t-sub reveal">VarsityIron<br><span>FLIGHT 2005 TO GLORY</span></div>
     <p class="t-tag reveal">ELEVEN WEEKS. ONE MISSION. HIT THE GROUND RUNNING.</p>
     <button class="btn big red reveal" id="enterStadium" type="button" style="width:min(100%,360px)">Enter the stadium</button>
@@ -3256,7 +3256,7 @@ html:root body.theme-light #gate.kiosk{background:#0B1220;color:#F8FAFC;--fg:#F8
   <div class="lenv" aria-hidden="true">
     <div class="lockers"></div>
     <div class="spot" style="left:-6%"></div><div class="spot" style="left:30%"></div><div class="spot" style="left:66%"></div>
-    <div class="nameplate" id="nameplate">CLIFF</div>
+    <div class="nameplate" id="nameplate">ATHLETE</div>
     <div class="bench"></div>
     <div class="lfloor"></div>
   </div>
@@ -3495,7 +3495,7 @@ const ICONS = {
 
 'use strict';
 /* =====================================================================
-   CLIFF: HOKIE POWER — FLIGHT 2005 TO GLORY
+   VARSITYIRON
    Fan-inspired personal training app built on the Virginia Tech Summer 2005
    strength & conditioning book. Not affiliated with Virginia Tech.
    Modules (in order): 1 config · 2 motion · 3 curriculum · 4 profile ·
@@ -3505,27 +3505,27 @@ const ICONS = {
    ===================================================================== */
 
 /* ============ 1. DESIGN TOKENS & CONFIGURATION ============ */
-const APP_ID = 'cliff-big-blue-performance';
+const APP_ID = atob('Y2xpZmYtYmlnLWJsdWUtcGVyZm9ybWFuY2U=');   /* the app's storage id since the first version: keeps everyone's saved data */
 const SCHEMA_VERSION = 2;
 const LB_PER_KG = 2.2046226218;
 const CM_PER_IN = 2.54;
 const LS = { settings: 'bbp.settings', profile: 'bbp.profile', meta: 'bbp.meta', draft: 'bbp.onboardDraft', active: 'bbp.activeMirror', program: 'bbp.customProgram', gate: 'bbp.gate' };
 const C = { blue: '#861F41', red: '#E87722', redLit: '#E87722', white: '#FFFFFF', ice: '#FFFFFF', silver: '#B7BEC3', steel: '#B7BEC3', lit: '#A0335A', glow: '#B7BEC3' };
 const MOTIVATION = [
-  'CLIFF, <em>EARN EVERY YARD.</em>', 'ONE MORE REP. <em>ONE MORE STEP.</em>', 'THE WORK HAPPENS <em>BEFORE GAME DAY.</em>',
+  'EARN <em>EVERY YARD.</em>', 'ONE MORE REP. <em>ONE MORE STEP.</em>', 'THE WORK HAPPENS <em>BEFORE GAME DAY.</em>',
   '<em>BUILT</em> IN THE WEIGHT ROOM.', 'DISCIPLINE WINS WHEN <em>MOTIVATION DISAPPEARS.</em>', 'THE NEXT REP IS <em>THE ONLY REP</em> THAT MATTERS.',
-  'NO SHORTCUTS. NO EXCUSES. <em>JUST EXECUTION.</em>', 'THE LIGHTS WILL COME ON. <em>BE READY, CLIFF.</em>', 'ELEVEN WEEKS. <em>EVERY REP COUNTS.</em>',
+  'NO SHORTCUTS. NO EXCUSES. <em>JUST EXECUTION.</em>', 'THE LIGHTS WILL COME ON. <em>BE READY.</em>', 'ELEVEN WEEKS. <em>EVERY REP COUNTS.</em>',
   'BIG MOMENTS ARE BUILT IN <em>SMALL MOMENTS.</em>', 'FOURTH AND ONE. <em>YOU GO FOR IT.</em>', 'CHAMPIONS ARE BUILT <em>WHEN NOBODY IS WATCHING.</em>',
   'WIN THE REP. <em>WIN THE DAY.</em>', 'EVERY SNAP IS <em>A NEW CHANCE.</em>', 'STRONG TODAY. <em>STRONGER ON GAME DAY.</em>',
   'IF YOU CAN\'T RUN, <em>YOU CAN\'T PLAY!</em>', "THE BAR DOESN'T CARE. <em>SHOW UP ANYWAY.</em>", '<em>HIT THE GROUND</em> RUNNING!', 'MAKE YOUR FEET DO <em>WHAT YOUR MIND TELLS THEM TO!</em>',
   'SEE YOURSELF <em>MAKING YOUR GOALS.</em>', 'WORK TO <em>MAKE IT HAPPEN!</em>', 'MAROON. ORANGE. <em>IRON HOKIE.</em>', 'LIFT HEAVY. EAT A LOT. <em>GET BIG!!</em>', '<em>BREAK THE FAST!</em> FUEL THE WORK.',
-  'RESPECT THE PROCESS. <em>TRUST THE PLAN.</em>', 'QUIET WORK. <em>LOUD RESULTS.</em>', 'ONE YARD AT A TIME, <em>CLIFF.</em>',
+  'RESPECT THE PROCESS. <em>TRUST THE PLAN.</em>', 'QUIET WORK. <em>LOUD RESULTS.</em>', 'ONE YARD <em>AT A TIME.</em>',
   'REST HARD. <em>RETURN STRONGER.</em>', 'OWN THE WARM-UP. <em>OWN THE GAME.</em>', 'THE FIELD REMEMBERS <em>WHO PUT IN THE WORK.</em>'
 ];
 const COMPLETE_LINES = ["THAT'S HOW CHAMPIONS RESPOND TO ADVERSITY.", 'ANOTHER YARD GAINED. THE FIELD IS SHRINKING.', 'THE WORK IS ON THE RECORD.', 'BANKED. RECOVER WELL, COME BACK READY.'];
 const WEEK_LABELS = ['The Foundation', 'Build the Base', 'Finish the Quarter', 'Win the Battle', '2 Minute Drill', 'Half Time', 'Start of the 3rd Quarter', 'Finish the 3rd Quarter', 'Win the 4th', 'Redzone Offense', 'VICTORY'];
 const DEFAULT_SETTINGS = {
-  name: 'Cliff', unit: 'lb', incLb: 5, incKg: 2.5, rounding: 'down', restDefault: 120, restAuto: true,
+  name: 'Athlete', unit: 'lb', incLb: 5, incKg: 2.5, rounding: 'down', restDefault: 120, restAuto: true,
   sound: false, vibrate: true, motion: 'cinematic', reducedMotion: 'system', includeWarmups: false, theme: 'light'
 };
 
@@ -3790,7 +3790,7 @@ const Program = {
    localStorage  → small documents: settings, profile, meta, onboarding draft, active-session mirror.
    IndexedDB     → structured history: sessions, results, bodyweight, achievements.
    If IndexedDB is unavailable the same stores fall back to localStorage; if that also fails
-   the app keeps working in memory and tells Cliff his data is not being saved. */
+   the app keeps working in memory and tells the athlete their data is not being saved. */
 const LSX = {
   ok: true,
   get(k, d = null) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -4663,7 +4663,7 @@ const DAYN = d => (State.program.dayNames || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
 const restItem = r => r.ar ? AR.item(r) : `<div class="wk-item rest" data-stg><span class="wk-day" style="font-size:13px">${DAYN(r.day)}</span><span class="grow"><b style="display:block">${esc(r.title)}</b><span class="muted" style="font-size:12.5px">${esc(r.note)}</span></span><span class="st upcoming">Rest</span></div>`;
 const stBadge = st => `<span class="st ${st}">${ST_LABEL[st] || st}</span>`;
 const shield = (s = 30) => (typeof Brand !== 'undefined' && Brand.logo(s)) || (typeof viMark === 'function' ? viMark(s) : '') || `<svg class="shield" width="${s}" height="${s}" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="11" fill="var(--b1)"/><path d="M9 20h22" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M12.5 13.5v13M28 13.5v13" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M9 16v8M31.5 16v8" stroke="var(--b2)" stroke-width="3" stroke-linecap="round"/></svg>`;
-const brand = () => `<div class="brandmark">${shield()}<div><b class="${Brand.up().length > 11 ? 'long' : ''}" title="${esc(Brand.name())}">${esc(Brand.up())}</b><small>${Brand.school() ? 'POWERED BY VARSITYIRON' : esc(String(State.settings.name || 'Cliff').toUpperCase())}</small></div></div>`;
+const brand = () => `<div class="brandmark">${shield()}<div><b class="${Brand.up().length > 11 ? 'long' : ''}" title="${esc(Brand.name())}">${esc(Brand.up())}</b><small>${Brand.school() ? 'POWERED BY VARSITYIRON' : esc(String(State.settings.name || 'Athlete').toUpperCase())}</small></div></div>`;
 const sampleTag = () => State.program.coachPlan ? `<span class="badge ok" title="Your coach's plan">${icon('clipboard-list')} ${esc(State.program.coachPlan.name)}</span>` : State.program.source === 'vt2005' ? `<span class="badge blue">${esc(TRACKS[State.program.track])}${State.profile && State.profile.position ? ' · ' + esc(State.profile.position) : ''}</span>` : `<span class="badge ok">${esc(State.program.name || 'Imported program')}</span>`;
 /* log-out shortcut shown wherever the athlete is signed in */
 const logoutBtn = (label = true) => Cloud.on && Cloud.profile ? `<button class="btn sm logout-btn" type="button" data-act="cloud-logout" aria-label="Log out of ${esc(Cloud.profile.username)}">${icon('log-out')}${label ? ' Log out' : ''}</button>` : '';
@@ -4778,7 +4778,7 @@ const Locker = {
     const hu = u === 'kg' ? 'cm' : 'in', vj = num(d.ath.vj, hu === 'cm' ? 5 : 2, hu === 'cm' ? 150 : 60, 'ob-vj', 'Vertical jump'), s10 = num(d.ath.sprint10, .8, 5, 'ob-s10', '10-yd sprint'), s110 = num(d.ath.sprint110, 8, 40, 'ob-s110', '110-yd sprint');
     if (!d.startDate || !/^\d{4}-\d{2}-\d{2}$/.test(d.startDate)) errs.push('Choose a program start date.');
     if (errs.length) { $('#obErr').innerHTML = errs.map(esc).join('<br>'); Haptics.buzz(); return; }
-    State.settings.unit = u; State.settings.name = State.settings.name || 'Cliff'; Store.saveSettings();
+    State.settings.unit = u; State.settings.name = State.settings.name || 'Athlete'; Store.saveSettings();
     const ath = {}; if (vj) ath.vj = { o: Units.ht(vj, hu), cls: 'recorded', date: d.startDate }; if (s10) ath.sprint10 = { o: { sec: s10 }, cls: 'recorded', date: d.startDate }; if (s110) ath.sprint110 = { o: { sec: s110 }, cls: 'recorded', date: d.startDate };
     const pos = d.pos || 'OL';
     State.profile = { id: 'athlete', position: pos, track: POSITIONS[pos].track, name: State.settings.name, createdAt: Date.now(), updatedAt: Date.now(), unit: u, baselines: lifts, athletic: ath, initialBw: bw ? Units.wt(bw, u) : null, bwDate: d.startDate, targetBw: tbw ? Units.wt(tbw, u) : null, startDate: d.startDate, goals: d.goals || '', baselineHistory: [] };
@@ -5284,7 +5284,7 @@ const Screens = {
         <button class="btn big primary block" type="button" data-act="export">${icon('download')} Back up my data</button><div id="exportOut"></div></section>
       <section class="panel stack" data-stg><h2 class="h3">Restore from backup</h2><p class="muted" style="font-size:14px">Choose a backup file, or paste its JSON. It is checked before anything changes. A file with a <code>program</code> key can also replace the sample curriculum.</p>
         <div class="field"><label for="impFile">Backup file (.json)</label><input class="input" type="file" id="impFile" accept=".json,application/json"></div>
-        <div class="field"><label for="impText">…or paste JSON</label><textarea class="input" id="impText" rows="4" placeholder='{"app":"cliff-big-blue-performance", …}'></textarea></div>
+        <div class="field"><label for="impText">…or paste JSON</label><textarea class="input" id="impText" rows="4" placeholder='{"app": …, "sessions": […]}'></textarea></div>
         <button class="btn" type="button" data-act="import-check">${icon('file-check')} Check backup</button><div id="importOut"></div></section></div>`;
   },
   summary() {
@@ -5443,7 +5443,7 @@ const Backup = {
     return JSON.parse(JSON.stringify({ app: APP_ID, schema: SCHEMA_VERSION, exportedAt: new Date().toISOString(), settings: State.settings, profile: State.profile, meta: { onboarded: State.meta.onboarded, introSeen: State.meta.introSeen, finaleSeen: State.meta.finaleSeen }, sessions: State.sessions, results: State.results, bodyweight: State.bodyweight, achievements: State.achievements, program: State.program.source === 'vt2005' ? undefined : State.program }, strip));
   },
   export() {
-    const json = JSON.stringify(this.bundle(), null, 1), name = `cliff-big-blue-backup-${todayISO()}.json`;
+    const json = JSON.stringify(this.bundle(), null, 1), name = `varsityiron-backup-${todayISO()}.json`;
     let downloaded = false;
     try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([json], { type: 'application/json' })); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); downloaded = true; } catch (e) { }
     $('#exportOut').innerHTML = `<p class="muted" style="font-size:13px">${downloaded ? `If a download did not start (some embedded viewers block downloads), copy the backup below and save it as <b>${name}</b>.` : 'Copy the backup below and save it as a .json file.'}</p>
@@ -5749,7 +5749,7 @@ function bindEvents() {
       const k = t.dataset.set; let v = t.value;
       if (k === 'restDefault') { v = Math.round(+v); if (!(v >= 10 && v <= 900)) { t.classList.add('err'); return UI.toast('Rest must be between 10 and 900 seconds.', 'bad'); } }
       if (k === 'incLb' || k === 'incKg') v = +v;
-      if (k === 'name') { v = v.trim() || 'Cliff'; if (State.profile) { State.profile.name = v; Store.saveProfile(); } }
+      if (k === 'name') { v = v.trim() || 'Athlete'; if (State.profile) { State.profile.name = v; Store.saveProfile(); } }
       State.settings[k] = v; Store.saveSettings(); t.classList.remove('err'); UI.toast('Saved.'); return;
     }
     if (t.dataset.pf) {
@@ -5893,7 +5893,7 @@ const Gate = {
         <div class="gwrap"><div class="gcol">
           <header class="ghead" data-gs>${shield(40)}<div><b>${esc(Brand.up())}</b><small>${esc(Brand.sub())}</small></div></header>
           <div class="ghero" data-gs><span class="label">Restricted access · Athlete entrance</span>
-            <h1 class="gtitle">Welcome to Blacksburg, <span>Cliff.</span></h1>
+            <h1 class="gtitle">Welcome to <span>the facility.</span></h1>
             <p class="gsub">Eleven weeks. One mission. Enter your athlete code to open the facility.<br><small style="opacity:.75">Nothing is sent to you by text or email — use the code you were given. Each phone asks once, then remembers it.</small></p></div></div><div class="gcol">
           <div class="gcode" data-gs>
             <div class="spread"><span class="label" id="gateLbl">Athlete code · 6 digits</span><span class="label" id="gateStep">Digit 1 of 6</span></div>
@@ -5956,7 +5956,7 @@ const Gate = {
       setTimeout(() => { this.vals = Array(GATE_SLOTS).fill(''); this.i = 0; this.paint(); }, 700);
       return;
     }
-    this.busy = true; g.classList.add('ok'); $('#gateMsg').textContent = 'Access granted. Welcome to the facility, Cliff.';
+    this.busy = true; g.classList.add('ok'); $('#gateMsg').textContent = 'Access granted. Welcome to the facility.';
     LSX.set(GATE_KEY, GATE_HASH); Haptics.beep([523, 784, 1047], .12);
     $$('[data-gate-slot]', g).forEach((s, k) => Motion.anim(s, [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: Motion.m.std, delay: k * 60, easing: Motion.m.spring }));
     await new Promise(r => setTimeout(r, Motion.off ? 0 : 750));
@@ -6342,7 +6342,7 @@ const Awards = {
 };
 
 /* ============ PRE-SEASON PREP (6 weeks, Mon/Wed/Fri) ============
-   From Cliff's workout document: six build-up weeks before Week 1. They live beside the 11-week
+   From the original workout document: six build-up weeks before Week 1. They live beside the 11-week
    program (State.program.prep) so they never count against program completion, streaks or "missed".
    VT_PREP is injected at build time from prep.json. Weeks are numbered -5..0 (Prep 1..6). */
 const PREP_WEEKS = 6;
@@ -6396,7 +6396,7 @@ buildVTProgram = function (track, pos) {
   return P;
 };
 
-/* Denver Bronco Abs with Partner — definition from Cliff's coach (the book only names it) */
+/* Denver Bronco Abs with Partner — definition from the coach (the book only names it) */
 const BRONCO_STEPS = [
   '1 · Feet-up crunch & sit-up — on your back, hands behind head, legs together, soles to the sky; partner holds feet up',
   '2 · Bent-knee sit-ups — feet on the floor, hands behind head; partner holds feet down',
@@ -6418,13 +6418,13 @@ Object.assign(EXERCISES.denver_bronco_abs_with_partner, {
   };
 })();
 
-/* Technique videos linked in Cliff's "VT Workout" document, keyed by library id; [YouTube id, s=Short (vertical) | v=video] */
+/* Technique videos linked in the "VT Workout" document, keyed by library id; [YouTube id, s=Short (vertical) | v=video] */
 const VIDEOS = {"jump_rope":[["FJmRQ5iTXKE","v"]],"dot_drills":[["PR7s4nXtWSw","v"]],"speed_ladder":[["VE9K9w6rOmM","v"]],"bench_press":[["_FkbD0FhgVE","s"]],"test_bench":[["_FkbD0FhgVE","s"]],"incline_bench_press":[["98HWfiRonkE","s"]],"standing_military_press":[["_cfNP_VXs_U","v"]],"back_squat":[["Akd5xmZlsvg","v"]],"test_squat":[["Akd5xmZlsvg","v"]],"lateral_squat":[["KAjqdl-tJ0w","v"]],"one_arm_dumbbell_row":[["IOy2k0Cb6Vo","v"],["yHqqGd0tXcw","s"]],"reverse_hyperextension":[["ROV6iVsSJSE","v"]],"glute_ham_raises":[["1TlhdiFSJrU","v"]],"abc_sit_ups":[["2kshXvw7n-4","v"]],"abcs":[["2kshXvw7n-4","v"]],"hang_clean_front_squat_combo":[["mK2TLGURoV4","v"]],"power_shrugs":[["96NFt3oTvpI","v"]],"dumbbell_incline_bench":[["JHFd-e2_M8E","v"]],"barbell_lying_tricep_extension":[["trVzEReByPg","v"]],"medicine_ball_plyo_pushups":[["6A4w-J-uyO8","v"]],"flutter_kick":[["bfMYh_-o8qA","v"]],"flutter_kicks":[["bfMYh_-o8qA","v"]],"bicycle_abs":[["VaL7XWK3MVE","v"]],"olympic_deadlift_to_knee":[["3QzHYVfVjA4","v"]],"clean_pulls":[["xx8WkFrST2Y","v"]],"barbell_lunges":[["bBrBLS7aejI","v"]],"box_step_ups":[["Bpbs8Aakw4A","v"]],"pullups":[["eDP_OOhMTZ4","s"]],"bar_hang":[["3CEmHJXbNpc","v"]],"jump_shrug":[["3z_XoJO-8lA","v"]],"snatch_high_pulls":[["SW8SRE0ayXY","v"]],"hang_snatch":[["Php-RclQ1yU","v"]],"dumbbell_bench_press":[["QHkm4xzvHlY","v"]],"incline_dumbbell_curls":[["V8H4k8lquiU","v"]],"weighted_dips":[["22JPetRuHqE","v"],["dij0l_pL0z8","s"]],"clapping_push_ups":[["EYwWCgM198U","v"]],"push_press":[["yklSQG1_Ovc","v"]],"dumbbell_alternate_bench_press":[["-umNkuKth1U","v"]],"one_dumbbell_pullovers":[["tpLnfSQJ0gg","v"]],"power_snatch":[["ydHHsju1-Nc","v"]],"single_leg_leg_press":[["3aYsOsBA7ZE","v"]],"dumbbell_lying_tricep_extension":[["P4H5p4HoJeI","v"]],"neck_iso_with_partner":[["kwKq9n8ima4","v"]],"neck_machine":[["ITSlkMDB_Fc","v"]],"medicine_ball_partner_sit_up_throws":[["ncnmxBvkQuo","v"]],"two_man_medicine_ball_sit_up_pass":[["ncnmxBvkQuo","v"]],"power_clean":[["YG8M_-11C2A","v"]],"test_clean":[["YG8M_-11C2A","v"]],"front_squat":[["Q1R0_CbgHpc","v"]],"body_weight_dips":[["sg3PTIA3rXI","v"],["4ua3MzaU0QU","s"]],"push_jerk":[["Om7vLD6x8W0","v"]],"test_jerk":[["Om7vLD6x8W0","v"]],"towel_pullups":[["Z6o1sy-sw_I","v"]],"lying_tricep_extension_with_curl_bar":[["gWu_wIn6sA0","v"]],"speed_squats":[["ZA14FPIZJM8","v"],["Akd5xmZlsvg","v"]],"close_grip_bench_with_chains":[["rFo1t4L2Gyk","v"],["43rg7fBNP2w","s"]],"series_box_jumps":[["cLSB_Zn0awM","v"]],"seated_plate_raises":[["-7AnQEQRUjs","v"]],"hanging_leg_raises":[["hGTni2P_vZg","s"]],"twisting_sit_ups":[["NscWraLOOCs","s"]],"barbell_curls":[["OTnpHe1zDrw","s"]],"curls":[["OTnpHe1zDrw","s"],["FHY_2t7R714","s"]],"lat_pulldowns":[["5YC67yVpBGE","v"],["bNmvKpJSWKM","s"]],"bear_calf_raises":[["1cvpm--Y-4I","s"]],"crunches":[["PAdTfrpgWos","v"]],"seated_dumbbell_shoulder_press":[["JGOKmqFwzEg","s"]],"seated_barbell_shoulder_press":[["lLaa7lqJfWI","v"]],"@pnf":[["Jw3bcaQBs14","v"]],"@toe":[["Gb0kNF19NfY","v"]],"@knee":[["s2emWIC58bI","v"]],"@butt":[["D_qMNWY0tHo","v"]],"@shuffle":[["ysv-XsCrb4s","v"]],"@aseries":[["y6hBI3DEe6Y","v"]],"@fastleg":[["6RAQJuM8r2s","v"]]};
 
 /* Additional technique videos supplied by Sergio (13 Oct 2026); third value = start time in seconds */
 Object.assign(VIDEOS, {"dying_cock_roach":[["4XLEnwUr1d8","v",26]],"dying_cockroach":[["4XLEnwUr1d8","v",26]],"figure_4_double_crunch":[["meD0IeMvI0U","v"]],"figure_8s":[["B1aDGGajI3w","v"]],"hokie_leg_raises":[["l4kQd9eWclE","v"]],"medicine_ball_partner_throws":[["XR2efvj-O5M","v"]],"seated_standing_medicine_ball_throw":[["XR2efvj-O5M","v"]],"medicine_ball_stack_crunches":[["k9ju4qloS_o","v"]],"partner_leg_throws":[["AZqccZJmKUc","v"]],"plyometric_sit_ups":[["AZqccZJmKUc","v"]],"sit_ups":[["RpnujV5nIBY","v"]],"regular_sit_ups":[["RpnujV5nIBY","v"]],"twisting_stack_crunches":[["utacEvvUMC4","v"]],"bear_squat":[["iZoaF6Unr9o","v"]],"cinder_block_pushups":[["uo3w9guKn8E","v"]],"close_grip_bench_power_rack_lock_outs":[["CGqKy5wiY8o","v"]],"decline_dumbbell_bench_press":[["2B6WxyLaIrE","v"]],"explosive_box_step_ups":[["vnP-ZKi0ZAM","v"]],"extended_squat":[["YaXPRqUwItQ","v"]],"incline_dumbbell_3_level_bench_press":[["8iPEnn-ltC8","v"]],"lateral_box_jumps":[["bNHwR90FO0I","v"]],"medicine_ball_lying_pullover_throws":[["UkHqZ1DkkFk","v"]],"medicine_ball_plyo_press":[["Fh5INfTJwBc","v"]],"seated_cable_row":[["lJoozxC0Rns","v"]],"swiss_ball_alternate_dumbbell_press":[["tADkXwpqggQ","v"]],"swiss_ball_dumbbell_curls":[["XqTxGEzgdf8","v"]],"wrist_roller":[["-lOFG0U_rlY","v"]],"acceleration_ladder":[["61eMtbLHFP0","v"]],"acceleration_bullet_belts":[["uXWxVeceTBk","v"]],"full_gassers":[["cSAR2-ub5jE","v"]],"@backlunge":[["me8Rc-YoaK8","v"]],"@backhigh":[["GBX5ce_EcXM","v"]],"@backskip":[["F-Pbtwni5Wk","v"]],"@carioca":[["R3__Q_SulyM","v"]],"@lowcarioca":[["GVK5nC0xxF8","v"]],"@duck":[["IVFB5KSxGBc","v"]],"@highknees":[["ymdS7tM0zws","v"]],"@highcross":[["6i2sOkX38vk","v"]],"@lungetwist":[["3hQEQIWgF9E","v"]],"@lungewalk":[["G65aplILBXs","v"]],"@powerskip":[["aMSezdgWnRw","v"]],"@slhops":[["3_QHB0B9JyU","v"]],"@slspeed":[["I2wOxgaynQ4","v"]]});
 
-/* Pre-season prep exercises — videos from Cliff's workout document */
+/* Pre-season prep exercises — videos from the original workout document */
 Object.assign(VIDEOS, {
   squats: [['dW3zj79xfrc', 's']], leg_press: [['EotSw18oR9w', 's']], leg_curls: [['lGNeJsdqJwg', 's']], calf_raises: [['1cvpm--Y-4I', 's']],
   seated_behind_neck_press: [['lLaa7lqJfWI', 'v']], triceps_pushdowns: [['CY4oMCM7OH0', 's']], leg_extensions: [['uM86QE59Tgc', 's']],
@@ -6439,7 +6439,7 @@ Object.assign(VIDEOS, {
 
 /* ============ IN-APP TECHNIQUE VIDEOS ============
    Videos play inside the app in a bottom sheet (youtube-nocookie embed, inline on phones),
-   so Cliff never leaves the workout: the clock, rest timer and logged sets keep going.
+   so the athlete never leaves the workout: the clock, rest timer and logged sets keep going.
    Where a host blocks embedded players (for example a preview frame), the sheet says so
    after a few seconds and offers the YouTube link as a fallback. */
 const WARMUP_VIDEO = [   // order matters: the more specific names first
@@ -6471,7 +6471,7 @@ const Video = {
         ${list.length > 1 ? `<div class="chips" style="margin:0">${list.map((v, i) => `<button type="button" class="chip" data-vi="${i}" aria-pressed="${i === 0}">Video ${i + 1}${v[1] === 's' ? ' · short' : ''}</button>`).join('')}</div>` : ''}
         ${Workout.active() ? `<p class="muted" style="font-size:12.5px">${icon('timer')} Your workout clock and rest timer keep running while you watch.</p>` : ''}
         ${notes ? `<details class="panel flat"><summary class="label" style="cursor:pointer">Coaching points from the book</summary><p style="margin-top:6px;font-size:14px">${esc(notes)}</p></details>` : ''}
-        <p class="muted" style="font-size:12px">Videos from Cliff's VT Workout document, played from YouTube.</p>`,
+        <p class="muted" style="font-size:12px">Technique videos from the VT Workout document, played from YouTube.</p>`,
       onMount: sh => {
         this.load(list[0], sh);
         $$('[data-vi]', sh).forEach(b => b.onclick = () => { $$('[data-vi]', sh).forEach(x => x.setAttribute('aria-pressed', x === b)); this.load(list[+b.dataset.vi], sh); });
@@ -6923,9 +6923,8 @@ const Cloud = {
   /* ---------- admin ---------- */
   /* the intro, locker and quotes greet each athlete by their own name */
   personalize() {
-    const nm = String(State.settings.name || 'Cliff').trim(), up = nm.toUpperCase(); if (up === 'CLIFF') return;
-    MOTIVATION.forEach((q, i) => { MOTIVATION[i] = q.replace(/\bCLIFF\b/g, esc(up)); });
-    const t = $('.t-cliff'), np = $('#nameplate'); if (t) t.textContent = up; if (np) np.textContent = up;
+    const nm = String(State.settings.name || 'Athlete').trim(), up = nm.toUpperCase(); if (up === 'ATHLETE') return;
+    const t = $('.t-name'), np = $('#nameplate'); if (t) t.textContent = up; if (np) np.textContent = up;
   },
   isAdmin() { return !!(this.on && this.profile && this.profile.role === 'admin' && this.profile.status === 'active'); },
   async adminLoad(force) {
@@ -8407,7 +8406,7 @@ const socAfter = view => {
 })();
 
 /* ============ ACTIVE REST DAYS ============
-   Cliff's schedule: weeks 1–2 → Wednesday; week 3 on → Tuesday and Thursday (editable in Settings).
+   Default schedule: weeks 1–2 → Wednesday; week 3 on → Tuesday and Thursday (editable in Settings).
    On those days the athlete logs whatever he did — basketball, laps, a walk, a run — with the time,
    typed in or timed with a stopwatch. Entries are saved with the rest of the training (and synced),
    as sessions marked kind:'active' / status:'rest', so they never change workout stats or streaks. */
@@ -9730,7 +9729,7 @@ const Speed = {
 Actions['spd-log'] = el => { Sheets.logResult(null); setTimeout(() => { const s = $('#lr-m'); if (s) { s.value = el.dataset.m; s.dispatchEvent(new Event('change')); } }, 30); };
 
 /* ============ THE ULTIMATE GOAL: IRON HOKIE ============
-   Cliff's ask: make becoming an Iron Hokie the goal everything points at. In the 2005 book an Iron Hokie
+   The goal: make becoming an Iron Hokie the goal everything points at. In the 2005 book an Iron Hokie
    reaches the Iron Hokie lifting level and passes the 16 × 110 conditioning test. To "make it whole" the
    app adds the speed & agility targets. Three pillars — Strength, Conditioning, Speed — all met = the title,
    a badge on the Social profile and +500 XP. Each school can call it its own name (Iron Raider…). */
@@ -12454,7 +12453,7 @@ const Ambient = {
 };
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => Ambient.init()); else Ambient.init();
 
-/* ============ TITLE CASE for names on screen (Cliff: "Each Major Word Should Start Capitalized") ============
+/* ============ TITLE CASE for names on screen (athlete feedback: "Each Major Word Should Start Capitalized") ============
    Titles, chips, tabs, filters and small labels get capitals on every major word: "Squat & Lunge", "Pull-Up Bar",
    "Pre-Season Prep". Small words (of, the, to, and…) stay lower case unless they start the title, and units after a
    number stay as they are (225 lb, 3 sets). Sentences and questions, typed text and quotes are left alone. */
