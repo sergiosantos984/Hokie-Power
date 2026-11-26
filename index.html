@@ -3247,6 +3247,7 @@ body.kiosk-on{overflow:hidden}
 #gate.kiosk .seg button[aria-pressed="true"]{background:#fff;color:var(--k-ink);box-shadow:0 1px 3px rgba(47,65,86,.14)}
 @media (prefers-reduced-motion:reduce){.k-toast,.k-name{transition:none}}
 .k-mark{display:grid;place-items:center;width:58px;height:58px;border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(47,65,86,.08),0 6px 18px rgba(47,65,86,.08);flex:none}.k-mark img,.k-mark svg{height:30px!important;width:auto}
+.k-entry[hidden],.gstation [hidden]{display:none!important}
 /* ---- food log: edit entry — VarsityIron look: linen grouped cards, navy ink, quiet hairlines ---- */
 .food-open{all:unset;box-sizing:border-box;flex:1;min-width:0;cursor:pointer;padding:4px 2px;border-radius:10px}
 .food-open:focus-visible{outline:2px solid #46687A;outline-offset:2px}
@@ -3344,6 +3345,8 @@ body.kiosk-on{overflow:hidden}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2346687A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 15 5 5 5-5M7 9l5-5 5 5'/%3E%3C/svg%3E")!important;
   background-repeat:no-repeat!important;background-position:right 4px center!important;background-size:12px!important}
 #feSw input.input{max-width:100%}
+.fe-own .grid2{gap:10px}.fe-own .fe-quick.seg{margin:0}.fe-own .fe-quick.seg button[aria-pressed="true"]{background:#fff;color:var(--b1,#2F4156);box-shadow:0 1px 3px rgba(47,65,86,.14)}
+.fe-own .fe-quick.seg button{color:var(--b1,#2F4156)}.fe-more summary{min-height:36px;display:flex;align-items:center}
 </style>
 </head>
 <body>
@@ -10093,23 +10096,11 @@ const Food = {
     };
     Sheet.open({ title: 'Add to ' + MEALS.find(m => m[0] === meal)[1].toLowerCase(), wide: true, html: `${FoodScan.buttons(meal)}<div class="input-unit"><input class="input" type="search" id="fpQ" placeholder="Search foods" autocomplete="off"><span>${icon('search')}</span></div>
       <div id="fpList" class="stack food-list"></div>
-      <details class="panel flat" id="fpOwn"><summary class="label" style="cursor:pointer">${icon('plus')} Something else</summary><div class="stack" style="margin-top:8px">
-        <div class="field"><label for="fpN">Food</label><input class="input" id="fpN" maxlength="60" placeholder="e.g. Chicken burrito bowl"></div>
-        <div class="grid2"><div class="field"><label for="fpK">Calories (optional)</label><input class="input num" id="fpK" inputmode="numeric"></div><div class="field"><label for="fpP">Protein g (optional)</label><input class="input num" id="fpP" inputmode="numeric"></div></div>
-        <div class="field"><span class="label">Medal</span><div class="seg" role="group" id="fpM">${['gold', 'silver', 'bronze'].map(m => `<button type="button" data-m="${m}" aria-pressed="false">${MEDAL[m].label}</button>`).join('')}</div><small class="muted">We guess from the name — change it if it's wrong.</small></div>
-        <p class="err-msg" id="fpErr"></p><button class="btn primary" type="button" id="fpGo">Add</button></div></details>
+      ${FoodEdit.ownForm()}
       <button class="btn big primary block" type="button" data-sheet-close>Done</button>`,
       onMount: sh => {
         FoodScan.bind(sh); draw(sh); const qi = $('#fpQ', sh); qi.oninput = () => { q = qi.value.trim().toLowerCase(); draw(sh); const n = $('#fpN', sh); if (n && !n.dataset.typed) n.value = qi.value.trim(); };
-        let medal = null; const setM = m => { medal = m; $$('#fpM [data-m]', sh).forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m)); };
-        const n = $('#fpN', sh); n.oninput = () => { n.dataset.typed = 1; setM(this.guess(n.value)); };
-        $$('#fpM [data-m]', sh).forEach(b => b.onclick = () => setM(b.dataset.m));
-        $('#fpGo', sh).onclick = () => {
-          const nm = n.value.trim(), k = $('#fpK', sh).value.trim(), p = $('#fpP', sh).value.trim();
-          if (nm.length < 2) { $('#fpErr', sh).textContent = 'Type what you ate.'; return; }
-          if ((k && !(+k >= 0 && +k <= 5000)) || (p && !(+p >= 0 && +p <= 400))) { $('#fpErr', sh).textContent = 'Check the numbers.'; return; }
-          add({ name: nm, serv: 'serving', kcal: +k || 0, protein: +p || 0, medal: medal || this.guess(nm) }); n.value = ''; $('#fpK', sh).value = ''; $('#fpP', sh).value = ''; n.dataset.typed = ''; $('#fpErr', sh).textContent = '';
-        };
+        FoodEdit.ownBind(sh, add);
       }, onClose: () => { const y = scrollY; UI.render(); scrollTo(0, y); } });
   }
 };
@@ -16462,6 +16453,48 @@ FoodEdit.pick = function (btn, f, add) {
 };
 /* new entries remember the time they were logged */
 (() => { const sv = Food.save.bind(Food); Food.save = function (e) { if (e && !e.del && !e.time && e.date === todayISO() && !e.updatedAt) { const d = new Date(); e.time = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; } return sv(e); }; })();
+/* adding a food that isn't in the list: everything in one go — the same fields as Edit entry */
+Object.assign(FoodEdit, {
+  OWN: [['kcal', 'Calories', 'kcal', 5000], ['protein', 'Protein', 'g', 400], ['carbs', 'Carbs', 'g', 600], ['fat', 'Fat', 'g', 400]],
+  ownForm() {
+    const num = ([k, l, u]) => `<div class="field"><label for="fo-${k}">${l} <small class="muted">${u}</small></label><input class="input num" id="fo-${k}" data-o="${k}" inputmode="decimal" autocomplete="off" placeholder="—"></div>`;
+    return `<details class="panel flat fe-own" id="fpOwn"><summary class="label" style="cursor:pointer">${icon('plus')} Something else — add your own food</summary><div class="stack" style="margin-top:10px">
+      <div class="field"><label for="fpN">Food</label><input class="input" id="fpN" maxlength="60" placeholder="e.g. Chicken burrito bowl" autocomplete="off"></div>
+      <div class="grid2"><div class="field"><label for="fo-serv">Serving size</label><input class="input" id="fo-serv" maxlength="40" placeholder="e.g. 1 bowl, 1 cup, 100 g" autocomplete="off"></div>
+        <div class="field"><label for="fo-qty">Number of servings</label><input class="input num" id="fo-qty" inputmode="decimal" value="1" autocomplete="off"></div></div>
+      <div class="seg fe-quick" role="group" aria-label="Quick amounts">${this.QUICK.map(([v, l]) => `<button type="button" data-oq="${v}" aria-pressed="${v === 1}" aria-label="${v} serving${v === 1 ? '' : 's'}">${l}</button>`).join('')}</div>
+      <p class="muted fe-note" style="margin:0">Values for <b>one serving</b> — from the label if it has one. Leave anything you don't know empty.</p>
+      <div class="grid2">${this.OWN.map(num).join('')}</div>
+      <details class="fe-more"><summary class="label" style="cursor:pointer">${icon('plus')} More nutrients (optional): fiber, sugars, sodium…</summary><div class="grid2" style="margin-top:8px">${this.FACTS.filter(([k]) => !this.OWN.some(o => o[0] === k)).map(num).join('')}
+        <div class="field"><label for="fo-g">Serving weight <small class="muted">g</small></label><input class="input num" id="fo-g" inputmode="decimal" autocomplete="off" placeholder="—"></div></div></details>
+      <p class="fe-pick-sum" id="foSum" aria-live="polite"></p>
+      <div class="field"><span class="label">Medal</span><div class="seg" role="group" id="fpM" aria-label="Medal">${['gold', 'silver', 'bronze'].map(m => `<button type="button" data-m="${m}" aria-pressed="false">${MEDAL[m].label}</button>`).join('')}</div><small class="muted">We guess from the name — change it if it's wrong.</small></div>
+      <p class="err-msg" id="fpErr" role="alert"></p><button class="btn primary" type="button" id="fpGo">${icon('plus')} Add</button></div></details>`;
+  },
+  ownBind(sh, add) {
+    const n = $('#fpN', sh), q = $('#fo-qty', sh), all = [...this.OWN, ...this.FACTS.filter(([k]) => !this.OWN.some(o => o[0] === k))];
+    let medal = null; const setM = m => { medal = m; $$('#fpM [data-m]', sh).forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m)); };
+    const val = k => { const i = $(`[data-o="${k}"]`, sh); return i && i.value.trim() !== '' ? this.num(i.value) : null; };
+    const sum = () => { const k = this.num(q.value) || 0, c = val('kcal'), pr = val('protein'), cb = val('carbs'), ft = val('fat');
+      $('#foSum', sh).textContent = c != null || pr != null ? `You ate: ${fmtNum((c || 0) * k, 0)} kcal${pr != null ? ` · ${fmtNum(pr * k, 1)} g protein` : ''}${cb != null ? ` · ${fmtNum(cb * k, 1)} g carbs` : ''}${ft != null ? ` · ${fmtNum(ft * k, 1)} g fat` : ''}` : '';
+      $$('[data-oq]', sh).forEach(b => b.setAttribute('aria-pressed', Math.abs(+b.dataset.oq - k) < 1e-6)); };
+    n.oninput = () => { n.dataset.typed = 1; setM(Food.guess(n.value)); };
+    $$('#fpM [data-m]', sh).forEach(b => b.onclick = () => setM(b.dataset.m));
+    $$('[data-oq]', sh).forEach(b => b.onclick = () => { q.value = b.dataset.oq; sum(); });
+    $('#fpOwn', sh).addEventListener('input', e => { if (e.target.matches('[data-o],#fo-qty')) sum(); });
+    $('#fpGo', sh).onclick = () => {
+      const er = $('#fpErr', sh), nm = n.value.trim(), k = this.num(q.value);
+      if (nm.length < 2) { er.textContent = 'Type what you ate.'; n.focus(); return; }
+      if (!(k > 0 && k <= 100)) { er.textContent = 'Number of servings: more than 0 — fractions like 1/2 work too.'; q.focus(); return; }
+      const f = { name: nm, serv: $('#fo-serv', sh).value.trim() || 'serving', medal: medal || Food.guess(nm) };
+      for (const [key, l, , mx] of all) { const v = val(key); if (v == null) continue; if (!(v >= 0 && v <= mx)) { er.textContent = `Check ${l.toLowerCase()}.`; $(`[data-o="${key}"]`, sh).focus(); return; } f[key] = Math.round(v * 10) / 10; }
+      f.kcal = f.kcal || 0; f.protein = f.protein || 0; f.carbs = f.carbs || 0; f.fat = f.fat || 0;
+      const g = this.num($('#fo-g', sh).value); f.base = Object.assign({ serv: f.serv }, g > 0 && g <= 5000 ? { g } : this.measure(f.serv));
+      add(f, Math.round(k * 1000) / 1000);
+      $$('input', $('#fpOwn', sh)).forEach(i => { i.value = i.id === 'fo-qty' ? '1' : ''; }); n.dataset.typed = ''; er.textContent = ''; setM(null); sum();
+    };
+  }
+});
 
 </script>
 <script>
