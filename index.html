@@ -3347,6 +3347,17 @@ body.kiosk-on{overflow:hidden}
 #feSw input.input{max-width:100%}
 .fe-own .grid2{gap:10px}.fe-own .fe-quick.seg{margin:0}.fe-own .fe-quick.seg button[aria-pressed="true"]{background:#fff;color:var(--b1,#2F4156);box-shadow:0 1px 3px rgba(47,65,86,.14)}
 .fe-own .fe-quick.seg button{color:var(--b1,#2F4156)}.fe-more summary{min-height:36px;display:flex;align-items:center}
+/* the school's strength standards: five columns that fit a phone */
+#sc-goals .sc-lifts{width:100%;table-layout:fixed;border-collapse:collapse}
+#sc-goals .sc-lifts th,#sc-goals .sc-lifts td{padding:4px 2px;font-size:12px}
+#sc-goals .sc-lifts th:first-child,#sc-goals .sc-lifts td:first-child{width:24%;font-size:12.5px;line-height:1.15;overflow-wrap:anywhere;padding-left:4px}
+#sc-goals .sc-lifts th{text-align:center}
+#sc-goals .sc-lifts .input{width:100%;min-width:0;height:40px;padding:0 2px;text-align:center;font-size:14px;border-radius:10px}
+#sc-goals .sc-lifts td:last-child .input{font-weight:700}
+#sc-goals .sc-gseg button{font-size:12px;line-height:1.15;padding:8px 4px}
+/* the title on the goal screen wraps instead of running off a phone */
+html:root body .iron-hero .h1{white-space:normal!important;overflow-wrap:break-word;text-overflow:clip;overflow:visible}
+html:root body .iron-hero .grow{min-width:0}
 </style>
 </head>
 <body>
@@ -9141,7 +9152,7 @@ const TeamCalc = {
   },
   group(a) { return (POSITIONS[a.position || 'OL'] || POSITIONS.OL).goals; },
   level(a) {
-    const G = VT_GOALS[this.group(a)], m = this.maxes(a), keys = ['squat', 'bench', 'clean', 'jerk'], vals = keys.map(k => m[k] || 0), total = vals.reduce((x, y) => x + y, 0);
+    const G = Goals.group(this.group(a)), m = this.maxes(a), keys = ['squat', 'bench', 'clean', 'jerk'], vals = keys.map(k => m[k] || 0), total = vals.reduce((x, y) => x + y, 0);
     const meets = l => keys.filter((k, i) => vals[i] >= G.levels[l][i]).length;
     const maroon = meets('Maroon') === 4 && total >= G.levels.Maroon[4];
     const got = { Maroon: maroon, Orange: maroon && total >= G.levels.Orange[4] && meets('Orange') >= 3, Hokie: maroon && total >= G.levels.Hokie[4] && meets('Hokie') >= 2, 'Iron Hokie': maroon && total >= G.levels['Iron Hokie'][4] && meets('Iron Hokie') >= 1 };
@@ -9198,7 +9209,7 @@ const Coach = {
       return `<button class="ros-row" type="button" data-act="go" data-r="tathlete" data-p="${id}:${a.id}">${Social.avatar(a, 38)}<span class="grow" style="text-align:left"><b>${esc(a.name)}</b>${a.iron ? ` <span class="badge red">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}
           <small class="muted">${esc(a.position || '—')} · last workout ${TeamCalc.ago(a.last)}${a.plan && a.plan.own ? ' · own plan' : ''}</small>
           <span class="ros-stats"><span title="Workouts in the last 7 days"><b>${a.w7}</b> /7d</span><span title="Workouts in the last 28 days"><b>${a.w28}</b> /28d</span><span>${lvl ? esc(Brand.lvl(lvl)) : `<span class="muted">${a.lv.known}/4 maxes</span>`}</span>
-          <span class="pil">${['strength', 'conditioning', 'speed'].map(k => `<i class="${P[k] ? 'on' : ''}" title="${k}"></i>`).join('')}</span>${a.food7 ? `<span title="Days with food logged this week">${icon('utensils')} ${a.food7}</span>` : ''}</span></span>${icon('chevron-right')}</button>`; };
+          <span class="pil">${Goals.keys().map(k => `<i class="${P[k] ? 'on' : ''}" title="${k}"></i>`).join('')}</span>${a.food7 ? `<span title="Days with food logged this week">${icon('utensils')} ${a.food7}</span>` : ''}</span></span>${icon('chevron-right')}</button>`; };
     return `<div class="screen soc">${backBar(esc(T.name), `<button class="btn icon sm" type="button" data-act="soc-retry" data-k="roster:${id}" aria-label="Refresh">${icon('refresh-cw')}</button>`)}
       <section class="panel stack" data-stg><div class="spread"><div><span class="label">Join code</span><b class="code-big">${esc(T.join_code || '—')}</b></div><div class="row"><button class="btn sm" type="button" data-act="co-code" data-id="${id}" data-c="${esc(T.join_code || '')}">${icon('share-2')} Share</button>${T.my_role === 'owner' ? `<button class="btn sm ghost" type="button" data-act="co-code-reset" data-id="${id}" aria-label="New code">${icon('refresh-cw')}</button>` : ''}</div></div>
         <div class="row wrap" style="gap:6px"><button class="btn sm" type="button" data-act="co-plan" data-id="${id}">${icon('clipboard-list')} ${T.plan ? esc(T.plan.name) : 'Standard program'}</button><button class="btn sm" type="button" data-act="co-comp" data-id="${id}">${icon('swords')} Competition</button><button class="btn sm" type="button" data-act="co-post" data-id="${id}" data-n="${esc(T.name)}">${icon('message-circle')} Post to team</button><button class="btn sm" type="button" data-act="co-invite" data-id="${id}">${icon('user-plus')} Invite</button><button class="btn sm ghost" type="button" data-act="go" data-r="squad" data-p="${id}">${icon('users')} Team page</button></div></section>
@@ -9221,7 +9232,7 @@ const Coach = {
     const dkeys = Array.from({ length: 7 }, (_, i) => addDays(todayISO(), -i));
     return `<div class="screen soc">${backBar(esc(a.name), `<button class="btn icon sm" type="button" data-act="go" data-r="athlete" data-p="${a.id}" aria-label="Social profile">${icon('user')}</button>`)}
       <section class="panel stack" data-stg><div class="row">${Social.avatar(a, 52)}<div class="grow"><b style="font-size:20px">${esc(a.name)}</b><div class="muted" style="font-size:13px">@${esc(a.username)} · ${esc(pr.position ? POSITIONS[pr.position] ? POSITIONS[pr.position].name : pr.position : 'No position')}${pr.start ? ' · started ' + fmtDate(pr.start) : ''}</div></div></div>
-        <div class="iron-pills">${[['strength', 'Strength'], ['conditioning', 'Conditioning'], ['speed', 'Speed']].map(([k, l]) => `<span class="${P[k] ? 'on' : ''}">${icon(P[k] ? 'check' : 'circle')} ${l}</span>`).join('')}${a.iron ? `<span class="on">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}</div>
+        <div class="iron-pills">${[['strength', 'Strength'], ['conditioning', 'Conditioning'], ['speed', 'Speed']].filter(x => Goals.need(x[0])).map(([k, l]) => `<span class="${P[k] ? 'on' : ''}">${icon(P[k] ? 'check' : 'circle')} ${l}</span>`).join('')}${a.iron ? `<span class="on">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}</div>
         ${pr.goals ? `<p class="muted" style="font-size:13.5px">Goals: ${esc(pr.goals)}</p>` : ''}</section>
       <section class="panel stack" data-stg><div class="spread"><h2 class="h3">Strength</h2><span class="badge ${L.level ? 'red' : ''}">${L.level ? esc(Brand.lvl(L.level)) : 'No level yet'}</span></div>
         <div class="metrics">${Object.keys(LIFTS).map(k => `<div class="metric"><span class="label">${LIFTS[k].name}</span><div class="v">${L.m[k] != null ? fmtNum(Units.fromKg(Units.toKg(L.m[k], 'lb'), u), 0) : '—'}<small> ${L.m[k] != null ? u : ''}</small></div></div>`).join('')}</div>
@@ -9261,7 +9272,7 @@ const Coach = {
         <div class="field"><span class="label">Logo</span><div class="row"><label class="btn sm" for="sc-logo">${icon('image-plus')} ${d.logo ? 'Change logo' : 'Upload logo'}</label><input type="file" id="sc-logo" accept="image/png,image/jpeg,image/webp" class="sr-only">${d.logo ? `<button class="btn sm ghost" type="button" data-act="sc-nologo">${icon('x')} Remove</button>` : ''}</div><small class="muted">Square works best. It is shrunk to 160 px.</small></div></section>
       <section class="panel stack" data-stg><h2 class="h3">The ultimate goal</h2><div class="field"><label for="sc-bench">Its name</label><input class="input" id="sc-bench" data-sc="bench_name" maxlength="30" value="${esc(d.bench_name)}" placeholder="Iron Raider"></div>
         <div class="grid3">${[['Maroon', 'Level 1'], ['Orange', 'Level 2'], ['Hokie', 'Level 3']].map(([k, l]) => `<div class="field"><label for="sc-l${k}">${l}</label><input class="input" id="sc-l${k}" data-lv="${k}" maxlength="20" value="${esc(d.levels[k] || '')}" placeholder="${k === 'Hokie' ? esc((d.bench_name || '').replace(/^iron\s+/i, '') || 'Hokie') : k}"></div>`).join('')}</div>
-        <small class="muted">The four lifting levels below the ultimate goal (from the VT book: Maroon, Orange, Hokie, Iron Hokie).</small></section>
+        <small class="muted">The names of the lifting levels below the ultimate goal (from the VT book: Maroon, Orange, Hokie, Iron Hokie).</small></section>
       <section class="panel stack" data-stg><h2 class="h3">Speed & agility targets</h2><p class="muted" style="font-size:13px">Seconds (lower is better) and inches. Empty = the app's default. Tick the tests the ultimate goal needs.</p>
         <div class="chips">${SPEED_METRICS.map(mm => `<button type="button" class="chip" data-act="sc-req" data-m="${mm}" aria-pressed="${req.includes(mm)}">${esc(METRICS[mm].name.replace(/ \(.*\)/, ''))}</button>`).join('')}</div>
         <div class="tbl-wrap"><table class="tbl sc-std"><thead><tr><th>Group</th>${SPEED_METRICS.map(mm => `<th>${esc(METRICS[mm].name.replace(/ \(.*\)/, '').replace('-yard Dash', ''))}</th>`).join('')}</tr></thead><tbody>${Object.keys(SPEED_STD).map(g => `<tr><td>${esc(VT_GOALS[g].label)}</td>${SPEED_METRICS.map(mm => `<td><input class="input num" data-std="${g}:${mm}" inputmode="decimal" value="${sp[g] && sp[g][mm] != null ? sp[g][mm] : ''}" placeholder="${SPEED_STD[g][mm]}" aria-label="${esc(VT_GOALS[g].label)} ${esc(METRICS[mm].name)}"></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>
@@ -9386,7 +9397,7 @@ Object.assign(Actions, {
   'sc-save': async el => {
     Coach.readSchool(); const d = Coach.sst.d, id = el.dataset.id, ok = c => /^#[0-9a-fA-F]{6}$/.test(c);
     if (!ok(d.color1) || !ok(d.color2)) { UI.toast('Colours look like #1E5A32.', 'bad'); return; }
-    const p = { id, name: d.name, app_name: d.app_name, tagline: d.tagline, color1: d.color1, color2: d.color2, logo: d.logo || '', bench_name: d.bench_name, levels: d.levels, settings: { speed: d.settings.speed || {}, speed_req: d.settings.speed_req || SPEED_REQ } };
+    const p = { id, name: d.name, app_name: d.app_name, tagline: d.tagline, color1: d.color1, color2: d.color2, logo: d.logo || '', bench_name: d.bench_name, levels: d.levels, settings: { speed: d.settings.speed || {}, speed_req: d.settings.speed_req || SPEED_REQ, lifts: d.settings.lifts || {}, pillars: Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}) } };
     if (Cloud.isAdmin()) Object.assign(p, { slug: d.slug, domains: String(d.domains || '').split(/[\s,]+/).filter(Boolean), tier: d.tier });
     const o = await Social.act(el, () => Social.rpc('org_save', { p }), 'Saved.'); if (!o) return;
     Social.drop('orgs', 'org:mine'); Coach.sst = null;
@@ -12883,7 +12894,7 @@ const HQ = {
     const bwd = m.bwFirst && m.bwLast && m.bwFirst.kg && m.bwLast.kg ? Units.fromKg(m.bwLast.kg - m.bwFirst.kg, u) : null;
     const tabs = [['overview', 'Overview'], ['training', 'Training log'], ['strength', 'Strength & speed'], ['nutrition', 'Nutrition'], ['feedback', `Feedback${(fbE.v || []).length ? ` · ${fbE.v.length}` : ''}`], ['plan', 'Plan']];
     const head = `<section class="panel hq-ath-head" data-stg>${Social.avatar(a, 64)}<div class="grow"><b class="hq-ath-name">${esc(a.name)}</b><div class="muted">@${esc(a.username)} · ${esc(posName)}${pr.start ? ' · started ' + fmtDate(pr.start) : ''}</div>
-        <div class="iron-pills">${[['strength', 'Strength'], ['conditioning', 'Conditioning'], ['speed', 'Speed']].map(([k, l]) => `<span class="${P[k] ? 'on' : ''}">${icon(P[k] ? 'check' : 'circle')} ${l}</span>`).join('')}${a.iron ? `<span class="on">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}</div></div>
+        <div class="iron-pills">${[['strength', 'Strength'], ['conditioning', 'Conditioning'], ['speed', 'Speed']].filter(x => Goals.need(x[0])).map(([k, l]) => `<span class="${P[k] ? 'on' : ''}">${icon(P[k] ? 'check' : 'circle')} ${l}</span>`).join('')}${a.iron ? `<span class="on">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}</div></div>
       <div class="hq-ath-acts"><button class="btn sm primary" type="button" data-act="hq-fb" data-u="${a.id}">${icon('send')} Feedback</button><button class="btn sm" type="button" data-act="soc-chat" data-id="${a.id}">${icon('message-circle')} Message</button><button class="btn sm" type="button" data-act="hq-pdf" data-k="athlete" data-u="${a.id}">${icon('file-down')} PDF report</button></div></section>
       <div class="seg hq-tabs" role="tablist" data-stg>${tabs.map(([k, l]) => `<button type="button" role="tab" data-act="hq-st" data-k="atab" data-v="${k}" aria-selected="${tab === k}">${l}</button>`).join('')}</div>`;
     let body = '';
@@ -16495,6 +16506,96 @@ Object.assign(FoodEdit, {
     };
   }
 });
+
+</script>
+<script>
+/* ============ THE SCHOOL'S OWN "IRON ___" ============
+   The ultimate goal starts from the college standards (the VT book's lifting levels by position group, the 16 × 110 test,
+   the speed targets). A head coach (or admin) can change the lifting numbers for each position group and level, and choose
+   which pillars count, under School look. Empty boxes keep the college number. Everything that judges a level reads Goals. */
+const GOAL_LEVELS = ['Maroon', 'Orange', 'Hokie', 'Iron Hokie'];
+const GOAL_LIFTS = ['Squat', 'Bench', 'Clean', 'Jerk', 'Total'];
+const GOAL_PILLARS = [['strength', 'Strength'], ['conditioning', 'Conditioning'], ['speed', 'Speed & agility']];
+const Goals = {
+  set() { return (Brand.o().settings || {}); },
+  own(g) { const L = this.set().lifts; return L && L[g] || {}; },
+  /* one position group: its label and the four levels with the school's numbers over the college ones */
+  group(g) {
+    const base = VT_GOALS[g] || VT_GOALS.line, own = this.own(VT_GOALS[g] ? g : 'line'), levels = {};
+    GOAL_LEVELS.forEach(l => { const o = own[l] || []; levels[l] = base.levels[l].map((v, i) => o[i] != null && isFinite(+o[i]) && +o[i] > 0 ? +o[i] : v); });
+    return { label: base.label, levels };
+  },
+  custom() { const L = this.set().lifts; return !!(L && Object.keys(L).length); },
+  need(k) { const P = this.set().pillars; return !P || P[k] !== false; },
+  keys() { return GOAL_PILLARS.map(p => p[0]).filter(k => this.need(k)); },
+  /* ---------- the editor (inside School look) ---------- */
+  editor(d) {
+    const g = this.gg || 'line', own = (d.settings.lifts || {})[g] || {}, P = d.settings.pillars || {};
+    const nm = l => esc(l === 'Iron Hokie' ? (d.bench_name || 'Iron Hokie') : (d.levels[l] || (l === 'Hokie' ? ((d.bench_name || '').replace(/^iron\s+/i, '') || 'Hokie') : l)));
+    const changed = d.settings.lifts && Object.keys(d.settings.lifts).length;
+    return `<section class="panel stack" data-stg id="sc-goals"><h2 class="h3">${icon('dumbbell')} What it takes to be ${esc(d.bench_name || 'Iron Hokie')}</h2>
+      <p class="muted" style="font-size:13px">These start at the college standards. Change any number to fit your team; leave a box empty to keep the college number.</p>
+      <div class="field"><span class="label">Needed for the title</span><div class="chips" role="group" aria-label="Pillars needed for the title">${GOAL_PILLARS.map(([k, l]) => `<button type="button" class="chip" data-act="sc-pil" data-k="${k}" aria-pressed="${P[k] !== false}">${l}</button>`).join('')}</div>
+        <small class="muted">At least one. A pillar that is off is no longer part of the title; athletes still see their own results for it.</small></div>
+      <div class="field"><span class="label">Lifting levels (lb) for</span><div class="seg sc-gseg" role="group" aria-label="Position group">${Object.keys(VT_GOALS).map(k => `<button type="button" data-act="sc-gg" data-g="${k}" aria-pressed="${k === g}">${esc(VT_GOALS[k].label)}</button>`).join('')}</div></div>
+      <div class="tbl-wrap"><table class="tbl sc-std sc-lifts"><thead><tr><th>Level</th>${GOAL_LIFTS.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>
+        ${[...GOAL_LEVELS].reverse().map(l => `<tr><td>${nm(l)}</td>${GOAL_LIFTS.map((h, i) => `<td><input class="input num" data-gl="${g}|${l}|${i}" inputmode="numeric" value="${own[l] && own[l][i] != null ? own[l][i] : ''}" placeholder="${VT_GOALS[g].levels[l][i]}" aria-label="${nm(l)} ${h} for ${esc(VT_GOALS[g].label)}"></td>`).join('')}</tr>`).join('')}
+      </tbody></table></div>
+      <small class="muted">Rules stay the same: every level needs its total; the first level needs all four lifts, then 3, 2 and 1; "Super" needs every top-level lift.</small>
+      ${changed ? `<button class="btn sm ghost" type="button" data-act="sc-greset">${icon('rotate-ccw')} Back to the college standards</button>` : ''}</section>`;
+  },
+  /* the boxes on screen (one group at a time) go into the draft */
+  read(d) {
+    const box = $$('[data-gl]'); if (!box.length) return;
+    const L = d.settings.lifts = JSON.parse(JSON.stringify(d.settings.lifts || {})), g = box[0].dataset.gl.split('|')[0];
+    const rows = {}; box.forEach(i => { const [, l, k] = i.dataset.gl.split('|'), v = i.value.trim().replace(',', '.'); (rows[l] = rows[l] || [null, null, null, null, null])[+k] = v !== '' && isFinite(+v) && +v > 0 ? Math.round(+v) : null; });
+    const G = {}; Object.entries(rows).forEach(([l, a]) => { if (a.some(x => x != null)) G[l] = a; });
+    if (Object.keys(G).length) L[g] = G; else delete L[g];
+  }
+};
+
+/* everything that judges a strength level reads the school's numbers */
+Awards.group = function () { const p = State.profile; return Goals.group((POSITIONS[(p && p.position) || 'OL'] || POSITIONS.OL).goals); };
+
+(() => {
+  /* the title only asks for the pillars the school keeps */
+  const pil = IronGoal.pillars.bind(IronGoal);
+  IronGoal.pillars = function () { const P = pil(), keep = P.filter(p => Goals.need(p.k)); return keep.length ? keep : P; };
+  const scr = IronGoal.screen.bind(IronGoal);
+  IronGoal.screen = function () {
+    const n = Goals.keys().length, words = ['', 'one pillar', 'both pillars', 'all three pillars'][n] || 'every pillar';
+    let h = scr().replace('meet all three pillars to earn the title', `meet ${words} to earn the title`);
+    if (Goals.custom()) h = h.replace('Strength levels and the 16 × 110 rule come from the VT Summer 2005 book', 'Strength levels are set by your school; the 16 × 110 rule comes from the VT Summer 2005 book');
+    return h;
+  };
+  const ah = Awards.html.bind(Awards);
+  Awards.html = function () { const h = ah(); return Goals.custom() ? h.replace(' · goals in lb<', ' · goals in lb, set by your school<') : h; };
+  const ach = ACH.find(a => a.id === 'iron_hokie');
+  if (ach) Object.defineProperty(ach, 'desc', { get() { const k = Goals.keys().map(x => GOAL_PILLARS.find(p => p[0] === x)[1].toLowerCase()); return (k.length > 1 ? k.slice(0, -1).join(', ') + ' and ' + k[k.length - 1] : k[0]).replace(/^./, c => c.toUpperCase()) + (k.length > 1 ? ' — every pillar met.' : ' met.'); }, configurable: true });
+
+  /* School look: the editor sits under "The ultimate goal" */
+  const sch = Coach.school.bind(Coach);
+  Coach.school = function (param) {
+    const h = sch(param), d = this.sst && this.sst.d; if (!d || h.indexOf('<h2 class="h3">Speed & agility targets') < 0) return h;
+    d.settings.lifts = d.settings.lifts || {};
+    const at = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Speed & agility targets');
+    return h.slice(0, at) + Goals.editor(d) + h.slice(at);
+  };
+  const rd = Coach.readSchool.bind(Coach);
+  Coach.readSchool = function () { rd(); const d = this.sst && this.sst.d; if (d) Goals.read(d); };
+  const redraw = () => { const y = scrollY; UI.render(); scrollTo(0, y); };
+  Actions['sc-gg'] = el => { Coach.readSchool(); Goals.gg = el.dataset.g; redraw(); };
+  Actions['sc-pil'] = el => {
+    Coach.readSchool(); const d = Coach.sst.d, P = Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}), k = el.dataset.k;
+    if (P[k] !== false && Object.values(P).filter(v => v !== false).length === 1) { UI.toast('Keep at least one pillar.', 'bad'); return; }
+    P[k] = P[k] === false; d.settings.pillars = P; redraw();
+  };
+  Actions['sc-greset'] = async () => {
+    Coach.readSchool();
+    const ok = await Sheet.confirm({ title: 'Back to the college standards?', body: '<p>Every lifting number goes back to the college level for all position groups, and all three pillars count again. Nothing changes until you tap Save.</p>', ok: 'Reset' });
+    if (!ok) return; const d = Coach.sst.d; d.settings.lifts = {}; d.settings.pillars = { strength: true, conditioning: true, speed: true }; redraw();
+  };
+})();
 
 </script>
 <script>
