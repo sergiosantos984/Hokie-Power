@@ -16676,22 +16676,30 @@ const Goals = {
   st: null, gg: null,
   can() { return Cloud.isAdmin() || !!(Brand.me && Brand.me.goals_edit); },
   draft(o) { return { id: o.id, name: o.name, bench_name: o.bench_name, levels: o.levels || {}, settings: { lifts: JSON.parse(JSON.stringify(o.lifts || {})), pillars: Object.assign({}, o.pillars || {}), speed: JSON.parse(JSON.stringify(o.speed || {})), speed_req: Array.isArray(o.speed_req) && o.speed_req.length ? o.speed_req.slice() : SPEED_REQ.slice(), cond: JSON.parse(JSON.stringify(o.cond || {})) } }; },
-  screen(param) {
-    const adm = Cloud.isAdmin();
-    if (!this.can()) return `<div class="screen soc">${backBar('Iron standards')}${Social.empty('lock', 'Coaches only', 'Your school\'s coaches and assistant coaches set what it takes to earn the title.')}</div>`;
+  /* the page's content: a school picker (admin), or the three editors. hq = shown inside Coach HQ */
+  body(param, hq) {
+    const adm = Cloud.isAdmin(), link = id => hq ? `data-act="hq-go" data-p="standards:${id}"` : `data-act="go" data-r="standards" data-p="${id}"`;
+    if (!this.can()) return { html: Social.empty('lock', 'Coaches only', 'Your school\'s coaches and assistant coaches set what it takes to earn the title.') };
     if (adm && !param) {
       const e = Social.get('orgs', () => Social.rpc('org_list'), 15000);
-      return `<div class="screen soc">${backBar('Iron standards')}
-        <section class="panel flat" data-stg><p style="font-size:14px">Pick a school to see and change what it takes to earn its title. Every school starts at the college standards.</p></section>
-        ${e.v ? e.v.map(o => `<button class="panel list-item" type="button" data-act="go" data-r="standards" data-p="${o.id}" data-stg><span class="sch-dot" style="background:${esc(o.color1)};border-color:${esc(o.color2)}">${o.logo ? `<img src="${esc(o.logo)}" alt="">` : ''}</span><div class="grow" style="text-align:left"><b>${esc(o.name)}</b><div class="muted" style="font-size:12.5px">${esc(o.bench_name || 'Iron Hokie')}${o.settings && o.settings.lifts && Object.keys(o.settings.lifts).length ? ' · own standards' : ' · college standards'}</div></div>${icon('chevron-right')}</button>`).join('') : e.err ? Social.errBox(e.err, 'orgs') : Social.skel(3)}</div>`;
+      return { html: `<section class="panel flat" data-stg><p style="font-size:14px">Pick a school to see and change what it takes to earn its title. Every school starts at the college standards.</p></section>
+        ${e.v ? e.v.map(o => `<button class="panel list-item" type="button" ${link(o.id)} data-stg><span class="sch-dot" style="background:${esc(o.color1)};border-color:${esc(o.color2)}">${o.logo ? `<img src="${esc(o.logo)}" alt="">` : ''}</span><div class="grow" style="text-align:left"><b>${esc(o.name)}</b><div class="muted" style="font-size:12.5px">${esc(o.bench_name || 'Iron Hokie')}${o.settings && ['lifts', 'cond', 'speed'].some(k => o.settings[k] && Object.keys(o.settings[k]).length) ? ' · own standards' : ' · college standards'}</div></div>${icon('chevron-right')}</button>`).join('') : e.err ? Social.errBox(e.err, 'orgs') : Social.skel(3)}` };
     }
     const key = 'goals:' + (param || 'mine'), e = Social.get(key, () => Social.rpc('org_goals_get', param ? { p_org: param } : {}), 15000);
-    if (!e.v) return `<div class="screen soc">${backBar('Iron standards')}${e.err ? Social.errBox(e.err, key) : Social.skel(3)}</div>`;
+    if (!e.v) return { html: e.err ? Social.errBox(e.err, key) : Social.skel(3) };
     if (!this.st || this.st.id !== e.v.id) this.st = { id: e.v.id, d: this.draft(e.v) };
-    return `<div class="screen soc">${backBar('Iron standards', `<button class="btn primary" type="button" data-act="sc-gsave">${icon('save')} Save</button>`)}
-      ${adm || param ? `<p class="muted" data-stg style="font-size:13px;margin:0 2px">${icon('school')} ${esc(e.v.name)}</p>` : ''}
-      ${this.editor(this.st.d)}${this.condEditor(this.st.d)}${this.speedEditor(this.st.d)}</div>`;
+    return { save: true, name: e.v.bench_name, html: `${adm || param ? `<p class="muted" data-stg style="font-size:13px;margin:0 2px">${icon('school')} ${esc(e.v.name)}</p>` : ''}
+      ${this.editor(this.st.d)}${this.condEditor(this.st.d)}${this.speedEditor(this.st.d)}` };
   },
+  saveBtn() { return `<button class="btn primary" type="button" data-act="sc-gsave">${icon('save')} Save</button>`; },
+  screen(param) { const B = this.body(param, false); return `<div class="screen soc">${backBar('Iron standards', B.save ? this.saveBtn() : '')}${B.html}</div>`; },
+  hq(param) {
+    const B = this.body(param, true);
+    return HQ.frame(B.name ? `What it takes to be ${esc(B.name)}` : 'Iron standards', (param && Cloud.isAdmin() ? `<button type="button" class="btn sm ghost hq-back" data-act="hq-go" data-p="standards">${icon('chevron-left')} Schools</button>` : '') + B.html,
+      { sub: 'Lifting levels, the conditioning test and speed & agility targets for the title', actions: B.save ? this.saveBtn() : '' });
+  },
+  /* where "Iron standards" opens: Coach HQ for coaches, its own page for assistant coaches */
+  open(id) { return Brand.isCoach() ? `data-act="hq-go" data-p="standards${id ? ':' + id : ''}"` : `data-act="go" data-r="standards"${id ? ` data-p="${id}"` : ''}`; },
   editor(d) {
     const g = this.gg || 'line', own = (d.settings.lifts || {})[g] || {}, P = d.settings.pillars || {};
     const nm = l => esc(l === 'Iron Hokie' ? (d.bench_name || 'Iron Hokie') : (d.levels[l] || (l === 'Hokie' ? ((d.bench_name || '').replace(/^iron\s+/i, '') || 'Hokie') : l)));
@@ -16786,20 +16794,24 @@ Awards.group = function () { const p = State.profile; return Goals.group((POSITI
   Coach.school = function (param) {
     let h = sch(param); const at = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Speed & agility targets'); if (at < 0) return h;
     const end = h.indexOf('</section>', h.indexOf('</table>', at)) + 10; h = h.slice(0, at) + h.slice(end);
-    return h.slice(0, at) + `<button class="panel list-item" type="button" data-act="go" data-r="standards" ${param ? `data-p="${param}"` : ''} data-stg>${icon('dumbbell')}<div class="grow" style="text-align:left"><b>Iron standards</b><div class="muted" style="font-size:12.5px">Lifting numbers, conditioning test, speed & agility targets and which pillars count for ${esc(Brand.bench())}</div></div>${icon('chevron-right')}</button>` + h.slice(at);
+    return h.slice(0, at) + `<button class="panel list-item" type="button" ${Goals.open(param)} data-stg>${icon('dumbbell')}<div class="grow" style="text-align:left"><b>Iron standards</b><div class="muted" style="font-size:12.5px">Lifting numbers, conditioning test, speed & agility targets and which pillars count for ${esc(Brand.bench())}</div></div>${icon('chevron-right')}</button>` + h.slice(at);
   };
   const rs = Coach.readSchool.bind(Coach);
   Coach.readSchool = function () { const d = this.sst && this.sst.d, keep = d && d.settings && d.settings.speed; rs(); if (d && !$$('[data-std]').length) d.settings.speed = keep || {}; };
   /* the school's conditioning rule reaches past test workouts too (so coaches see the same pass/fail) */
   ['home', 'progress'].forEach(r => { const a = After[r]; After[r] = function (view, o) { const x = a ? a.call(After, view, o) : undefined; try { Goals.syncPassed(); } catch (e) { } return x; }; });
   Screens.standards = p => Goals.screen(p);
+  /* Coach HQ: an "Iron standards" section */
+  if (!HQ.SECTIONS.some(x => x[0] === 'standards')) { const i = HQ.SECTIONS.findIndex(x => x[0] === 'reports'); HQ.SECTIONS.splice(i < 0 ? HQ.SECTIONS.length : i, 0, ['standards', 'Standards', 'dumbbell']); }
+  const hqs = HQ.screen.bind(HQ);
+  HQ.screen = function (param) { const [sec, id] = String(param || '').split(':'); if (sec === 'standards') { const g = Cloud.isAdmin() && Social.on() ? null : this.gate(); if (g) return `<div class="screen hq">${g}</div>`; return Goals.hq(id); } return hqs(param); };
   After.standards = view => Social.hydrate(view);
   Social.live.add('standards'); TAB_OF.standards = 'more';
   if (typeof NavFive !== 'undefined') NavFive.COACH.push('standards');
   /* entry: the profile menu (More) for admins, coaches and assistant coaches */
   const mo = Screens.more; Screens.more = function () {
     const h = mo.call(Screens); if (!(Cloud.on && Cloud.profile) || !Goals.can()) return h;
-    const item = `<section class="panel" data-stg><button class="list-item" type="button" data-act="go" data-r="standards">${icon('dumbbell')}<div class="grow"><b>Iron standards</b><div class="muted" style="font-size:12.5px">What it takes to be ${esc(Brand.bench())}: lifting numbers and pillars${Cloud.isAdmin() ? ' · every school' : ''}</div></div>${icon('chevron-right')}</button></section>`;
+    const item = `<section class="panel" data-stg><button class="list-item" type="button" ${Goals.open()}>${icon('dumbbell')}<div class="grow"><b>Iron standards</b><div class="muted" style="font-size:12.5px">What it takes to be ${esc(Brand.bench())}: lifting numbers and pillars${Cloud.isAdmin() ? ' · every school' : ''}</div></div>${icon('chevron-right')}</button></section>`;
     const at = h.indexOf('<section class="panel" data-stg><button class="list-item" type="button" data-act="go" data-r="history">');
     return at < 0 ? h.replace(/<\/div>$/, item + '</div>') : h.slice(0, at) + item + h.slice(at);
   };
