@@ -3422,6 +3422,10 @@ html:root body .iron-hero .grow{min-width:0}
 .pv-note{display:flex;gap:12px;align-items:flex-start;border:1px solid rgba(183,121,31,.45);background:rgba(183,121,31,.08)}.pv-note>svg{width:22px;height:22px;flex:none;margin-top:2px}.pv-note p{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
 .legal p{font-size:14.5px;line-height:1.55}.legal h2{margin-top:6px}
 .pv-terms a{color:inherit;text-decoration:underline}
+/* viral sharing off for now (patch_noshare.py) */
+html.no-share [data-act="share-app"],html.no-share [data-act="share-pr"],html.no-share [data-act="share-level"],html.no-share [data-act="share-badge"],
+html.no-share [data-act="share-goal"],html.no-share [data-act="share-progress"],html.no-share [data-act="share-programme"],html.no-share [data-act="share-session"],
+html.no-share [data-act="beta-copy"],html.no-share .share-btn,html.no-share .share-prog{display:none!important}
 </style>
 </head>
 <body>
@@ -14172,7 +14176,7 @@ const Requal = {
     const back = step === 'intro' || step === 'exp' ? '' : `<button type="button" class="btn sm ghost path-back" data-rq="back">${icon('chevron-left')} Back</button>`;
     let b = '';
     if (step === 'intro') b = `<div class="rq-hero"><span class="badge">New in ${esc(Brand.name())}</span><h2 class="h1">Let’s set up your training</h2><p class="muted">Three quick questions so ${esc(Brand.name())} starts you in the right place. ${S.n ? 'You decide whether to keep your progress.' : ''}</p></div>
-      <ul class="rq-news"><li>${icon('route')}<span><b>Your own starting point</b><small>Prep weeks, the full programme, or a plan you build</small></span></li><li>${icon('target')}<span><b>Goals from your coach</b><small>Targets, deadlines and whether you’re on track</small></span></li><li>${icon('share-2')}<span><b>Share your wins</b><small>Pictures for Stories, posts and WhatsApp</small></span></li></ul>
+      <ul class="rq-news"><li>${icon('route')}<span><b>Your own starting point</b><small>Prep weeks, the full programme, or a plan you build</small></span></li><li>${icon('target')}<span><b>Goals from your coach</b><small>Targets, deadlines and whether you’re on track</small></span></li></ul>
       <div class="row wrap"><button type="button" class="btn primary grow" data-rq="go">Start — 30 seconds</button><button type="button" class="btn ghost" data-rq="later">Later</button></div>`;
     else if (step === 'exp') b = `<h2 class="h1">How much weightlifting have you done?</h2><p class="muted">So we start you on the right training.</p><div class="path-list">${this.card('rq-exp', 'beginner', 'footprints', 'Beginner', 'New to the barbell, or less than about six months of lifting')}${this.card('rq-exp', 'intermediate', 'dumbbell', 'Intermediate', 'You train regularly and know squat, bench and deadlift')}${this.card('rq-exp', 'expert', 'trophy', 'Expert', 'Years of structured strength training')}</div>`;
     else if (step === 'oly') b = `<h2 class="h1">Have you trained in Olympic-style weightlifting?</h2><p class="muted">Cleans, jerks and snatches — the program uses power cleans and push jerks.</p><div class="path-list">${this.card('rq-oly', 'yes', 'check', 'Yes', 'I can power clean and jerk with good technique')}${this.card('rq-oly', 'no', 'x', 'No', 'Not yet, or only a little')}</div>`;
@@ -14233,7 +14237,7 @@ const WhatsNew = {
     const coach = Brand.isCoach && Brand.isCoach(), parent = typeof Role !== 'undefined' && Role.parent();
     const items = parent ? [['line-chart', 'Your child’s progress', 'Workouts, readiness, goals and badges in one place'], ['target', 'Goals & targets', 'See what the coach set and whether it’s on track'], ['messages-square', 'Talk to the coaches', 'Messages and parent group chats'], ['file-text', 'Reports', 'Download a progress report any time']]
       : coach ? [['layout-dashboard', 'Coach HQ', 'Your team’s stats, every athlete, reports — all in one hub'], ['user-plus', 'Add athletes & invite parents', 'Pick athletes from the app and link their parents'], ['target', 'Goals & targets', 'Set measurable targets with deadlines; see who’s on track'], ['messages-square', 'Parent messages & groups', 'Message parents one-to-one or in groups']]
-      : [['route', 'Your starting point', 'Prep weeks, the full programme or your own plan'], ['target', 'Goals from your coach', 'Targets, deadlines and whether you’re on track'], ['share-2', 'Share your wins', 'PRs, workouts and progress as pictures for socials'], ['gift', 'Free beta spots', 'Invite friends while spots last — and earn Gold for life']];
+      : [['route', 'Your starting point', 'Prep weeks, the full programme or your own plan'], ['target', 'Goals from your coach', 'Targets, deadlines and whether you’re on track'], ['gift', 'Free beta spots', 'Invite friends while spots last — and earn Gold for life']];
     Sheet.open({ title: `What’s new in ${Brand.name()}`, wide: true, html: `<ul class="rq-news big">${items.map(([ic, t, s]) => `<li>${icon(ic)}<span><b>${t}</b><small>${s}</small></span></li>`).join('')}</ul>
       <div class="row wrap">${!parent ? `<button type="button" class="btn primary grow" data-act="share-app">${icon('share-2')} Invite friends</button>` : ''}<button type="button" class="btn ghost grow" data-act="sheet-close">Got it</button></div>` });
   }
@@ -17566,6 +17570,11 @@ document.addEventListener('change', e => { if (e.target.id === 'recSort') { RecH
   }
 })();
 
+</script>
+<script>
+/* viral sharing off: outward share actions do nothing */
+(() => { const off = () => {}; ['share-app', 'share-pr', 'share-level', 'share-badge', 'share-goal', 'share-progress', 'share-programme', 'share-session', 'beta-copy'].forEach(k => { if (Actions[k]) Actions[k] = off; });
+  if (typeof ShareCard !== 'undefined') ShareCard.share = off; document.documentElement.classList.add('no-share'); })();
 </script>
 </body>
 </html>
