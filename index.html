@@ -3248,6 +3248,52 @@ body.kiosk-on{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.k-toast,.k-name{transition:none}}
 .k-mark{display:grid;place-items:center;width:58px;height:58px;border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(47,65,86,.08),0 6px 18px rgba(47,65,86,.08);flex:none}.k-mark img,.k-mark svg{height:30px!important;width:auto}
 .k-entry[hidden],.gstation [hidden]{display:none!important}
+
+/* ===== the board (Cliff's layout): status banner, one card per exercise (Q1–Q4), log on the card, Next exercise ===== */
+.k-range{padding:8px 14px;border-radius:999px;background:#fff;color:var(--k-ink);font-weight:800;font-size:15px;white-space:nowrap;box-shadow:0 1px 2px rgba(47,65,86,.08)}
+.k-useg{flex:none}
+.k-ban{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px;padding:18px 22px;border-radius:24px;background:var(--ph,#2F4156);color:#fff;box-shadow:0 10px 30px rgba(47,65,86,.18)}
+.k-ban.phase-work{--ph:var(--b1,#2F4156)}.k-ban.phase-rest,.k-ban.phase-recovery{--ph:#46687A}.k-ban.phase-ready{--ph:#3A5266}.k-ban.phase-paused,.k-ban.phase-wait{--ph:#5E6672}
+.k-ban-ic{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#fff;color:var(--ph,#2F4156)}.k-ban-ic svg{width:30px;height:30px;stroke-width:2.6}
+.k-ban h2{margin:0;font-size:clamp(28px,4vw,44px);line-height:1;font-weight:900;letter-spacing:-.02em;color:#fff}
+.k-ban p{margin:6px 0 0;font-size:clamp(15px,1.8vw,19px);opacity:.92}
+.k-ban-t{display:grid;justify-items:center;padding:8px 18px;border-radius:18px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.k-ban-t span{font-size:13px;font-weight:700;opacity:.9}.k-ban-t b{font-size:clamp(40px,6vw,64px);line-height:1;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.k-ban-bar{grid-column:1/-1;height:6px;border-radius:99px;background:rgba(255,255,255,.22);overflow:hidden;margin-top:-4px}.k-ban-bar i{background:#fff}
+.k-board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.k-board.one{grid-template-columns:minmax(0,1fr)}
+@media (max-width:820px){.k-board{grid-template-columns:minmax(0,1fr)}}
+.k-card{--q:#2F4156;padding:14px 16px 10px;border-radius:22px;box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--q) 55%,transparent),0 8px 28px rgba(47,65,86,.07)}
+.k-card.q1{--q:#B4473A}.k-card.q2{--q:#3760A3}.k-card.q3{--q:#2F7D5B}.k-card.q4{--q:#B7791F}
+.k-card header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.k-q{display:grid;place-items:center;min-width:46px;height:34px;padding:0 8px;border-radius:10px;background:var(--q);color:#fff;font-weight:900;font-size:18px}
+.k-card h3{margin:0;flex:1;min-width:0;font-size:clamp(19px,2.3vw,24px);font-weight:900;letter-spacing:-.01em;color:var(--k-ink);text-transform:uppercase}
+.k-target{font-size:15px;font-weight:700;color:var(--k-soft);font-variant-numeric:tabular-nums}
+.k-cols,.k-row{display:grid;grid-template-columns:minmax(0,1fr) 92px 74px 52px;gap:8px;align-items:center}
+.k-cols{padding:0 8px 2px;font-size:12px;font-weight:700;color:var(--k-soft)}.k-cols span{text-align:center}
+.k-row{padding:6px 8px;border-radius:14px;margin-top:4px}
+.k-row.done{background:color-mix(in srgb,var(--q) 12%,#fff)}
+.k-who{border:0;background:none;padding:6px 0;text-align:left;font-size:clamp(17px,2vw,20px);font-weight:800;color:var(--k-ink);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-height:44px}
+.k-who:focus-visible{outline:3px solid var(--k-steel);outline-offset:2px;border-radius:8px}
+#gate.kiosk .k-in{min-height:48px;padding:0 4px;text-align:center;font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;background:#fff;border:0;border-radius:12px;box-shadow:inset 0 0 0 1.5px rgba(47,65,86,.16);color:var(--k-ink)}
+#gate.kiosk .k-in.pre{color:#5E6672;font-weight:700}
+#gate.kiosk .k-in:disabled{background:#EEF0F2;box-shadow:none}
+#gate.kiosk .k-in:focus{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--q) 45%,transparent)}
+.k-tick{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:2px solid rgba(47,65,86,.35);background:#fff;color:transparent;cursor:pointer;touch-action:manipulation;justify-self:center}
+.k-tick svg{width:24px;height:24px;stroke-width:3}
+.k-tick:hover{color:rgba(47,65,86,.35)}
+.k-tick[aria-pressed="true"]{background:#2F7D5B;border-color:#2F7D5B;color:#fff}
+.k-tick:focus-visible{outline:3px solid var(--k-steel);outline-offset:2px}
+.k-free{margin:8px 0 6px;color:var(--k-soft)}
+.k-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 14px 12px 20px;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(47,65,86,.05),0 8px 28px rgba(47,65,86,.07)}
+.k-grp{flex:1;display:flex;align-items:center;gap:8px;font-size:18px;color:var(--k-ink)}.k-grp svg{width:22px;height:22px}
+#gate.kiosk .k-next{min-height:60px;min-width:min(380px,100%);font-size:20px;font-weight:800;border-radius:16px;gap:10px}
+.k-all-b{background:#fff;border-radius:22px;padding:6px 20px 14px}
+@media (max-width:560px){.k-cols,.k-row{grid-template-columns:minmax(0,1fr) 72px 58px 48px}.k-ban{grid-template-columns:auto minmax(0,1fr)}.k-ban-t{grid-column:1/-1}.k-range{display:none}}
+.k-who small{display:block;font-size:13px;font-weight:700;color:var(--k-steel);font-variant-numeric:tabular-nums;margin-top:1px}
+.k-who{line-height:1.15}
+#gate.kiosk .k-head .k-useg{display:inline-flex;width:auto;flex:0 0 auto;gap:2px}
+#gate.kiosk .k-head .k-useg button{flex:0 0 auto;min-width:52px;min-height:40px;padding:0 12px;text-transform:lowercase!important}
 /* ---- food log: edit entry — VarsityIron look: linen grouped cards, navy ink, quiet hairlines ---- */
 .food-open{all:unset;box-sizing:border-box;flex:1;min-width:0;cursor:pointer;padding:4px 2px;border-radius:10px}
 .food-open:focus-visible{outline:2px solid #46687A;outline-offset:2px}
@@ -3358,6 +3404,24 @@ body.kiosk-on{overflow:hidden}
 /* the title on the goal screen wraps instead of running off a phone */
 html:root body .iron-hero .h1{white-space:normal!important;overflow-wrap:break-word;text-overflow:clip;overflow:visible}
 html:root body .iron-hero .grow{min-width:0}
+/* privacy & your data */
+.pv-state{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(var(--b1rgb),.06)}
+.pv-state>svg{width:26px;height:26px;flex:none}.pv-state b{display:block;font-size:17px}.pv-state small{color:var(--muted);font-size:13px}
+.pv-state.pv-on{background:rgba(47,125,91,.10)}.pv-state.pv-on>svg{color:#2F7D5B}
+.pv-state.pv-wait{background:rgba(183,121,31,.12)}.pv-state.pv-wait>svg{color:#8A5A12}
+.pv-list{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:14px}.pv-list li{display:flex;align-items:center;gap:8px}.pv-list svg{width:16px;height:16px;color:var(--b2d,#567C8D);flex:none}
+.pv-p{font-size:14px;margin:0}.pv-p.warn{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(183,121,31,.12)}.pv-p.warn svg{width:18px;height:18px;flex:none;margin-top:2px}
+.pv-card{display:flex;align-items:center;gap:12px;width:100%;border:1px solid rgba(var(--b2rgb),.5)}.pv-card>svg:first-child{width:28px;height:28px;flex:none;color:var(--b2d,#567C8D)}
+.pv-card b{display:block}.pv-card small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.pv-kinds{display:grid;gap:8px;margin:10px 0}
+.pv-kind{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);cursor:pointer}
+.pv-kind input{width:22px;height:22px;flex:none;accent-color:#B42318}.pv-kind b{display:block;font-size:15px}.pv-kind small{display:block;color:var(--muted);font-size:12.5px}
+.pv-k-ic{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(var(--b1rgb),.07);flex:none}.pv-k-ic svg{width:18px;height:18px}
+.pv-kind:has(input:checked){border-color:#B42318;background:rgba(180,35,24,.05)}
+.pv-badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;vertical-align:middle}.pv-badge svg{width:12px;height:12px}
+.pv-note{display:flex;gap:12px;align-items:flex-start;border:1px solid rgba(183,121,31,.45);background:rgba(183,121,31,.08)}.pv-note>svg{width:22px;height:22px;flex:none;margin-top:2px}.pv-note p{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.legal p{font-size:14.5px;line-height:1.55}.legal h2{margin-top:6px}
+.pv-terms a{color:inherit;text-decoration:underline}
 </style>
 </head>
 <body>
@@ -9206,7 +9270,7 @@ const Coach = {
     const sorted = A.slice().sort((a, b) => sort === 'last' ? String(b.last || '').localeCompare(String(a.last || '')) : sort === 'w28' ? b.w28 - a.w28 : sort === 'level' ? b.lv.total - a.lv.total : a.name.localeCompare(b.name));
     const trained = A.filter(a => a.week > 0).length, food = A.filter(a => a.food7 > 0).length, iron = A.filter(a => a.iron).length, avg = n ? A.reduce((s, a) => s + a.w28, 0) / n : 0;
     const row = a => { const P = a.pil, lvl = a.lv.level;
-      return `<button class="ros-row" type="button" data-act="go" data-r="tathlete" data-p="${id}:${a.id}">${Social.avatar(a, 38)}<span class="grow" style="text-align:left"><b>${esc(a.name)}</b>${a.iron ? ` <span class="badge red">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}
+      return `<button class="ros-row" type="button" data-act="go" data-r="tathlete" data-p="${id}:${a.id}">${Social.avatar(a, 38)}<span class="grow" style="text-align:left"><b>${esc(a.name)}</b>${Privacy.badge(a.consent)}${a.iron ? ` <span class="badge red">${icon('crown')} ${esc(Brand.bench())}</span>` : ''}
           <small class="muted">${esc(a.position || '—')} · last workout ${TeamCalc.ago(a.last)}${a.plan && a.plan.own ? ' · own plan' : ''}</small>
           <span class="ros-stats"><span title="Workouts in the last 7 days"><b>${a.w7}</b> /7d</span><span title="Workouts in the last 28 days"><b>${a.w28}</b> /28d</span><span>${lvl ? esc(Brand.lvl(lvl)) : `<span class="muted">${a.lv.known}/4 maxes</span>`}</span>
           <span class="pil">${Goals.keys().map(k => `<i class="${P[k] ? 'on' : ''}" title="${k}"></i>`).join('')}</span>${a.food7 ? `<span title="Days with food logged this week">${icon('utensils')} ${a.food7}</span>` : ''}</span></span>${icon('chevron-right')}</button>`; };
@@ -12865,7 +12929,7 @@ const HQ = {
     const sorters = { attention: (x, y) => rank(x) - rank(y) || x.name.localeCompare(y.name), name: (x, y) => x.name.localeCompare(y.name), comp: (x, y) => y.comp - x.comp, last: (x, y) => (x.since == null ? 999 : x.since) - (y.since == null ? 999 : y.since), strength: (x, y) => y.lv.total - x.lv.total, ready: (x, y) => (x.readyToday == null ? 9 : x.readyToday) - (y.readyToday == null ? 9 : y.readyToday) };
     L.sort(sorters[st.sort] || sorters.attention);
     const row = a => { const at = a.att[0];
-      return `<button type="button" class="hq-row" data-act="hq-ath" data-id="${a.id}"><span class="c-name">${Social.avatar(a, 38)}<span><b>${esc(a.name)}</b><small class="muted">${esc(a.position || '—')} · ${a.since == null ? 'no workouts yet' : TeamCalc.ago(a.last)}</small></span></span>
+      return `<button type="button" class="hq-row" data-act="hq-ath" data-id="${a.id}"><span class="c-name">${Social.avatar(a, 38)}<span><b>${esc(a.name)}</b>${Privacy.badge(a.consent)}<small class="muted">${esc(a.position || '—')} · ${a.since == null ? 'no workouts yet' : TeamCalc.ago(a.last)}</small></span></span>
         <span class="c-comp" data-l="Compliance"><span class="cbar"><i style="width:${a.comp}%" class="${a.comp >= 75 ? 'good' : a.comp < 50 ? 'bad' : ''}"></i></span><b>${a.comp}%</b></span>
         <span class="c-num" data-l="Workouts"><b>${a.w}</b><small class="muted">${S.v.days}d</small></span>
         <span class="c-num" data-l="Volume"><b>${this.volFmt(a.vol)}</b><small class="muted">${u}</small></span>
@@ -16155,7 +16219,7 @@ const Kiosk = {
     try { await Cloud.load(); } catch (e) { this.err = 'No connection. Check the Wi-Fi and reload.'; }
     if (window.supabase) { this.sb = window.supabase.createClient(CLOUD_CFG.url, CLOUD_CFG.anonKey, { auth: { persistSession: false, autoRefreshToken: false, storageKey: 'vi.kiosk.auth' } }); try { await Brand.pre(this.sb); } catch (e) { } }
     document.body.classList.add('kiosk-on'); const g = $('#gate'); g.hidden = false; g.className = 'kiosk'; g.setAttribute('aria-label', 'Station tablet');
-    g.addEventListener('click', e => this.click(e)); g.addEventListener('input', () => this.touch());
+    g.addEventListener('click', e => this.click(e)); g.addEventListener('input', e => { this.touch(); const i = e.target; if (i && i.dataset && i.dataset.b) { i.dataset.dirty = 1; i.classList.remove('pre'); } });
     this.paint(); this.poll(); this.iv = setInterval(() => this.tick(), 250);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) this.poll(); });
     try { if (navigator.wakeLock) { const w = async () => { try { this.wake = await navigator.wakeLock.request('screen'); } catch (e) { } }; w(); document.addEventListener('visibilitychange', () => { if (!document.hidden) w(); }); } } catch (e) { }
@@ -16195,24 +16259,70 @@ const Kiosk = {
     const K = this.K; if (!K) return `<div class="k-msg"><div class="spinner" aria-hidden="true"></div><p>Opening the station…</p></div>`;
     const s = this.me() || {}, W = this.where(), ex = this.exs();
     const head = `<header class="k-head"><span class="k-mark" aria-hidden="true">${shield(30)}</span><div><span class="label">${esc(Brand.up())}${K.team_name ? ' · ' + esc(K.team_name) : ''}</span><h1>${esc(CxTime.unitName(s, K.unit))}</h1><small>${esc(K.name)}</small></div>
-      <p class="k-net" id="kNet" ${this.ok ? 'hidden' : ''}>${icon('wifi-off')} Reconnecting…</p><button type="button" class="btn sm ghost" data-k="menu" aria-label="Station settings">${icon('settings')}</button></header>`;
+      <p class="k-net" id="kNet" ${this.ok ? 'hidden' : ''}>${icon('wifi-off')} Reconnecting…</p>${this.rangeChip()}<div class="seg k-useg" role="group" aria-label="Weight unit"><button type="button" data-k="unit" data-v="lb" aria-pressed="${this.unit === 'lb'}">lb</button><button type="button" data-k="unit" data-v="kg" aria-pressed="${this.unit === 'kg'}">kg</button></div><button type="button" class="btn sm ghost" data-k="menu" aria-label="Station settings">${icon('settings')}</button></header>`;
     const exl = `<section class="k-ex"><h2 class="label">At this station</h2><ol>${ex.map(x => { const p = CxLoad.presc(x); return `<li><b>${esc(x.name)}</b>${p ? `<span class="k-presc">${esc(p)}</span>` : ''}</li>`; }).join('')}</ol></section>`;
     if (this.who) return head + this.logView();
     let clock = '', people = '', lift = '';
     const all = K.teams.flatMap(t => t.members.map(m => Object.assign({ team: t.name }, m)));
-    if (K.status === 'lobby') { clock = `<section class="k-clock phase-wait"><span class="k-lab">Waiting for the coach to start</span><b class="k-big">—</b><span>${K.teams.filter(t => t.start === K.unit).map(t => esc(t.name)).join(', ') || 'No team starts here'}${K.teams.some(t => t.start === K.unit) ? ' starts here' : ''}</span></section>`; lift = this.liftTable(K.teams.filter(t => t.start === K.unit).flatMap(t => t.members), 'What to lift'); people = all.length ? `<section class="k-people"><h2 class="label">Starting here</h2><div class="k-names">${this.names(K.teams.filter(t => t.start === K.unit).flatMap(t => t.members), true)}</div></section>` : ''; }
-    else if (['done', 'ended'].includes(K.status)) { clock = `<section class="k-clock phase-done"><span class="k-lab">${K.status === 'done' ? 'Circuit complete' : 'The coach ended the circuit'}</span><b class="k-big">${icon('flag')}</b><span>Tap your name to log your sets.</span></section>`; people = `<section class="k-people"><h2 class="label">Everyone</h2><div class="k-names">${this.names(all, true)}</div></section>`; }
-    else if (W) {
-      const paused = K.status === 'paused', lab = paused ? 'Paused' : W.wait ? 'Waiting for the coach' : { ready: 'Get ready', work: 'Work', rest: 'Time’s up — log your sets', recovery: 'Round recovery — log your sets' }[W.ph] || 'Rest';
-      clock = `<section class="k-clock phase-${paused ? 'paused' : W.wait ? 'wait' : W.ph}"><span class="k-lab">${lab}</span><b class="k-big" ${W.wait ? '' : `data-kend="${W.end}"`}>${W.wait ? '—' : CxTime.fmt(W.end - W.e)}</b>
-        <div class="cx-bar"><i ${W.wait ? '' : `data-kend="${W.end}" data-kdur="${W.dur}"`} style="--p:0"></i></div>
-        <span>${W.here.length ? `Here now: <b>${W.here.map(([t]) => esc(t.name)).join(', ')}</b>` : 'No group here right now'}${W.next.length && W.ph !== 'work' ? ` · Next: <b>${W.next.map(([t]) => esc(t.name)).join(', ')}</b>` : ''}</span></section>`;
-      const hereM = W.here.flatMap(([t]) => t.members);
-      lift = this.liftTable(hereM.length ? hereM : W.next.flatMap(([t]) => t.members), hereM.length ? 'What to lift' : 'Coming next — what to lift');
-      people = `<section class="k-people"><h2 class="label">${W.ph === 'work' ? 'Working here — log when the time is up' : 'Tap your name to log your sets'}</h2><div class="k-names">${this.names(hereM, true) || '<p class="muted">No one here right now.</p>'}</div>
-        <details class="k-all"${this.showAll ? ' open' : ''}><summary data-k="all">Someone else? Show everyone</summary><div class="k-names">${this.names(all.filter(m => !hereM.some(h => h.id === m.id)), false)}</div></details></section>`;
+    if (['done', 'ended'].includes(K.status)) {
+      clock = `<section class="k-clock phase-done"><span class="k-lab">${K.status === 'done' ? 'Circuit complete' : 'The coach ended the circuit'}</span><b class="k-big">${icon('flag')}</b><span>Tap your name to log your sets.</span></section>`;
+      people = `<section class="k-people"><h2 class="label">Everyone</h2><div class="k-names">${this.names(all, true)}</div></section>`;
+      return head + `<div class="k-grid">${clock}${exl}${people}</div>`;
     }
-    return head + `<div class="k-grid">${clock}${exl}${lift}${people}</div>`;
+    /* lobby and the live circuit: Cliff's board — the group split into pods, one card per exercise, log right on the card */
+    let ban, grp = [], gname = '', coming = false;
+    if (K.status === 'lobby') {
+      const T0 = K.teams.filter(t => t.start === K.unit); grp = T0.flatMap(t => t.members); gname = T0.map(t => t.name).join(', ');
+      ban = { cls: 'wait', ic: 'timer', t: 'Waiting for the coach to start', s: grp.length ? `${esc(gname)} starts here. Check your weights below.` : 'No group starts at this tablet.', lab: '', end: null };
+    } else if (W) {
+      const paused = K.status === 'paused', hereM = W.here.flatMap(([t]) => t.members);
+      coming = !hereM.length; grp = hereM.length ? hereM : W.next.flatMap(([t]) => t.members); gname = (hereM.length ? W.here : W.next).map(([t]) => t.name).join(', ');
+      const t = paused ? 'Paused' : W.wait ? 'Waiting for the coach' : { ready: 'Get ready', work: 'Work', rest: 'Time’s up!', recovery: 'Round recovery' }[W.ph] || 'Rest';
+      const sub = paused ? 'The coach paused the clock.' : W.wait ? 'The coach moves everyone on.' : W.ph === 'work' ? (this.exs().length > 1 ? 'Work through your exercise, then tap Next exercise to rotate.' : 'Work hard — log your sets when the time is up.') : W.ph === 'ready' ? 'Find your exercise below.' : coming ? `Next here: ${esc(gname) || 'nobody'}. Check your weights below.` : `Log weights and reps for each athlete, then move to the next tablet.${W.next.length ? ` Next here: <b>${W.next.map(([t]) => esc(t.name)).join(', ')}</b>.` : ''}`;
+      ban = { cls: paused ? 'paused' : W.wait ? 'wait' : W.ph, ic: paused ? 'pause' : W.ph === 'work' ? 'flame' : W.ph === 'ready' ? 'timer' : 'check', t, s: sub, lab: W.ph === 'work' ? 'Time left' : W.ph === 'ready' ? 'Starts in' : 'Transition time', end: W.wait ? null : W.end, dur: W.dur, e: W.e };
+    } else ban = { cls: 'wait', ic: 'timer', t: 'Waiting', s: '', lab: '', end: null };
+    return head + this.banner(ban) + this.board(grp, gname, coming, W) + (all.length && K.status !== 'lobby' ? `<details class="k-all k-all-b"${this.showAll ? ' open' : ''}><summary data-k="all">Someone else? Show everyone</summary><div class="k-names">${this.names(all.filter(m => !grp.some(h => h.id === m.id)), false)}</div></details>` : '');
+  },
+  total() { const K = this.K; return ((K.plan && (K.plan.src || K.plan.stations)) || []).length; },
+  rangeChip() { const R = this.range(), n = this.total(); return n > 1 ? `<span class="k-range">Exercise${R.length > 1 ? `s ${R[0] + 1}–${R[R.length - 1] + 1}` : ` ${R[0] + 1}`} of ${n}</span>` : ''; },
+  banner(b) {
+    return `<section class="k-ban phase-${b.cls}"><span class="k-ban-ic" aria-hidden="true">${icon(b.ic)}</span><div class="grow"><h2>${b.t}</h2>${b.s ? `<p>${b.s}</p>` : ''}</div>
+      ${b.end != null ? `<div class="k-ban-t"><span>${b.lab}</span><b data-kend="${b.end}">${CxTime.fmt(b.end - b.e)}</b></div>` : ''}
+      ${b.end != null ? `<div class="cx-bar k-ban-bar"><i data-kend="${b.end}" data-kdur="${b.dur}" style="--p:0"></i></div>` : ''}</section>`;
+  },
+  /* the rotation inside a tablet: the group is split into one pod per exercise; "Next exercise" moves every pod on */
+  rotKey(W, grp) { const K = this.K; return [this.code, K.status, W ? W.g.r : 'l', W ? W.g.k : 'l', grp.map(m => m.id).join('.')].join('|'); },
+  rot(key) { try { return +(sessionStorage.getItem('vi.krot.' + key) || 0); } catch (e) { return 0; } },
+  setRot(key, v) { try { sessionStorage.setItem('vi.krot.' + key, String(v)); } catch (e) { } },
+  pods(grp, k) {
+    const n = Math.min(k, grp.length), P = Array.from({ length: n }, () => []); if (!n) return P;
+    const size = Math.ceil(grp.length / n); grp.forEach((m, j) => P[Math.min(n - 1, Math.floor(j / size))].push(m)); return P;
+  },
+  /* what goes in the boxes: what they logged, else their target / last time, else the prescribed reps */
+  pre(m, x) {
+    const L = ((this.K.logged || {})[m.id] || []).find(l => l.i === x.i && l.sets.length);
+    if (L) { const t = L.sets[0]; return { v: CxLog.shown(t, this.unit), reps: t.reps == null ? '' : t.reps, n: L.sets.length, done: true }; }
+    const R = CxLoad.for(x, (this.K.loads || {})[m.id], this.unit), S = CxLoad.sets(x), g = CxLog.guess(x.note), t0 = R.sets[0] || {};
+    const plan = R.kind === 'target' && R.sets.length > 1 && R.sets.some(t => t.v !== t0.v || t.reps !== t0.reps) ? R.sets.map(t => [t.v, t.reps]) : null;
+    return { v: R.kind && t0.v != null ? t0.v : '', reps: t0.reps != null ? t0.reps : S[0] && S[0].reps != null ? S[0].reps : g ? g.reps : '', n: R.sets.length || S.length || (g ? g.sets : 1), done: false, kind: R.kind, plan };
+  },
+  board(grp, gname, coming, W) {
+    const ex = this.exs(), k = ex.length, key = this.rotKey(W, grp), r = this.rot(key) % Math.max(1, k), P = this.pods(grp, k);
+    const at = Array.from({ length: k }, () => []); P.forEach((pod, p) => at[(p + r) % k].push(...pod));
+    const card = (x, q) => {
+      const wt = CxLoad.weighted(x), pr = CxLoad.presc(x);
+      const rows = at[q].map(m => { const v = this.pre(m, x);
+        return `<div class="k-row${v.done ? ' done' : ''}" data-row="${m.id}:${x.i}" data-n="${v.n}"${v.plan ? ` data-plan="${esc(JSON.stringify(v.plan))}"` : ''}><button type="button" class="k-who" data-k="who" data-id="${m.id}" aria-label="Log every set for ${esc(m.name)}">${esc(m.name)}${v.plan ? `<small>${v.plan.map(t => fmtNum(t[0], 1)).join(' · ')}</small>` : v.kind === 'last' ? '<small>last time</small>' : ''}</button>
+          <label class="sr-only" for="kb-${m.id}-${x.i}-v">${esc(m.name)} weight (${this.unit})</label><input class="input k-in${v.done ? '' : ' pre'}" id="kb-${m.id}-${x.i}-v" data-b="v" inputmode="decimal" autocomplete="off" ${wt ? `value="${esc(String(v.v))}" placeholder="${this.unit}"` : 'value="" placeholder="—" disabled'}>
+          <label class="sr-only" for="kb-${m.id}-${x.i}-r">${esc(m.name)} reps</label><input class="input k-in${v.done ? '' : ' pre'}" id="kb-${m.id}-${x.i}-r" data-b="r" inputmode="numeric" autocomplete="off" value="${esc(String(v.reps))}" placeholder="reps">
+          <button type="button" class="k-tick" data-k="tick" data-id="${m.id}" data-i="${x.i}" aria-pressed="${v.done}" aria-label="${v.done ? 'Saved — tap to update' : 'Save'} ${esc(m.name)}, ${esc(x.name)}">${icon('check')}</button></div>`; }).join('');
+      return `<section class="k-card q${q % 4 + 1}"><header><span class="k-q">Q${q + 1}</span><h3>${esc(x.name)}</h3>${pr ? `<span class="k-target">Target: ${esc(pr)}</span>` : ''}</header>
+        ${at[q].length ? `<div class="k-cols" aria-hidden="true"><span></span><span>${wt ? this.unit : ''}</span><span>reps</span><span></span></div>${rows}` : `<p class="k-free">${grp.length ? 'Nobody on this one this turn.' : 'No group here right now.'}</p>`}</section>`;
+    };
+    const live = W && this.K.status === 'running' && !coming && grp.length && k > 1;
+    return `<div class="k-board${k === 1 ? ' one' : ''}">${ex.map(card).join('')}</div>
+      <footer class="k-foot"><span class="k-grp">${icon('users')} ${gname ? `${coming ? 'Next: ' : ''}<b>${esc(gname)}</b>` : 'No group here'}${k > 1 && grp.length ? ` · turn ${r + 1} of ${k}` : ''}</span>
+        ${k > 1 && grp.length ? `<button type="button" class="btn big k-next${live ? ' primary' : ''}" data-k="next" data-key="${esc(key)}">Next exercise ${icon('arrow-right')}</button>` : ''}</footer>`;
   },
   /* this tablet's exercises with everything the station carries (key, note, program sets) */
   exs() { const K = this.K, s = this.me() || {}; return s.ex || [Object.assign({ i: K.unit }, s)]; },
@@ -16242,8 +16352,13 @@ const Kiosk = {
   },
   paint() {
     const g = $('#gate'); if (!g) return; const y = g.scrollTop;
+    const act = document.activeElement && document.activeElement.closest && document.activeElement.closest('.k-row') ? document.activeElement.id : null, sel = act && document.activeElement.selectionStart;
+    this.typed = this.typed || {}; $$('.k-row', g).forEach(r => { $$('[data-b]', r).forEach(i => { if (i.dataset.dirty) (this.typed[r.dataset.row] = this.typed[r.dataset.row] || {})[i.dataset.b] = i.value; }); });
     g.innerHTML = `<div class="k-wrap">${this.body()}</div><div class="k-toast" id="kToast" role="status" aria-live="polite">${esc(this.msg)}</div>`; UI.icons(g);
-    if (this.who) { CxLog.wire($('.k-log', g)); const f = $('.k-log input', g); f && f.focus({ preventScroll: true }); } else g.scrollTop = y;
+    if (this.who) { CxLog.wire($('.k-log', g)); const f = $('.k-log input', g); f && f.focus({ preventScroll: true }); } else {
+      $$('.k-row', g).forEach(r => { const t = this.typed[r.dataset.row]; if (t) Object.entries(t).forEach(([b, v]) => { const i = $(`[data-b="${b}"]`, r); if (i) { i.value = v; i.dataset.dirty = 1; i.classList.remove('pre'); } }); });
+      if (act) { const i = document.getElementById(act); if (i) { i.focus({ preventScroll: true }); try { i.setSelectionRange(sel, sel); } catch (e) { } } }
+      g.scrollTop = y; }
     this.tick();
   },
   tick() {
@@ -16259,6 +16374,24 @@ const Kiosk = {
     const b = e.target.closest('[data-k]'); if (!b) return; const k = b.dataset.k; this.touch();
     if (k === 'who') { this.who = b.dataset.id; this.draft = null; this.paint(); this.touch(); }
     else if (k === 'cancel') { this.who = null; this.draft = null; this.paint(); }
+    else if (k === 'next') { const key = b.dataset.key, n = this.exs().length; this.setRot(key, (this.rot(key) + 1) % Math.max(1, n)); this.paint(); try { Haptics.beep([660, 880], .08); } catch (x) { } }
+    else if (k === 'tick') {
+      const row = b.closest('.k-row'), who = b.dataset.id, i = +b.dataset.i, vi = $('[data-b="v"]', row), ri = $('[data-b="r"]', row);
+      const v = vi.disabled ? null : vi.value.trim().replace(',', '.'), rp = ri.value.trim(), u = this.unit, n = Math.max(1, Math.min(10, +row.dataset.n || 1));
+      const vn = v == null || v === '' ? null : +v, pn = rp === '' ? null : +rp;
+      if (vn == null && pn == null) { this.toast('Type the weight and reps first.'); return; }
+      if (vn != null && (!isFinite(vn) || vn < 0 || vn > (u === 'lb' ? 1300 : 600))) { this.toast('Check the weight — it looks wrong.'); vi.focus(); return; }
+      if (pn != null && (!Number.isInteger(pn) || pn < 0 || pn > 300)) { this.toast('Reps must be a whole number.'); ri.focus(); return; }
+      const plan = row.dataset.plan && !vi.dataset.dirty && !ri.dataset.dirty ? JSON.parse(row.dataset.plan) : null;   // untouched: each set at its own target
+      const sets = plan ? plan.map(t => ({ v: t[0], u, reps: t[1] == null ? pn : t[1] })) : Array.from({ length: n }, () => ({ v: vn, u, reps: pn })), m = this.K.teams.flatMap(t => t.members).find(x => x.id === who) || {};
+      b.disabled = true;
+      try { await this.rpc('kiosk_log', { p_code: this.code, p_user: who, p_logs: [{ i, sets }] });
+        this.K.logged = this.K.logged || {};
+        this.K.logged[who] = (this.K.logged[who] || []).filter(l => l.i !== i).concat([{ i, sets: sets.map(t => ({ v: t.v, u: t.u, kg: t.v == null ? null : (t.u === 'lb' ? t.v / 2.20462262 : t.v), reps: t.reps })) }]);
+        if (this.typed) delete this.typed[row.dataset.row];
+        this.paint(); this.toast(`Saved: ${m.name || 'athlete'} · ${plan ? sets.map(t => `${fmtNum(t.v, 1)}×${t.reps}`).join(' · ') + ' ' + u : `${sets.length} × ${pn == null ? '?' : pn}${vn != null ? ` @ ${fmtNum(vn, 1)} ${u}` : ''}`} ✓`); try { Haptics.beep([523, 784], .1); } catch (x) { } this.poll();
+      } catch (x) { b.disabled = false; this.toast(Cloud.msg(x)); }
+    }
     else if (k === 'all') { this.showAll = !b.parentElement.open; }
     else if (k === 'unit') {   // switching lb ↔ kg keeps what was typed, converted
       const was = this.prevSets(), cur = this.unit; this.draft = {};
@@ -16266,7 +16399,7 @@ const Kiosk = {
         this.draft[i] = $$('[data-set]', ex).map((row, k) => { const v = $('[data-k="v"]', row).value.trim().replace(',', '.'), rp = $('[data-k="reps"]', row).value.trim(), o = old[k];
           const t = o && String(CxLog.shown(o, cur)) === v ? Object.assign({}, o) : { v: v === '' ? null : +v, u: cur, kg: v === '' ? null : (cur === 'lb' ? +v / 2.20462262 : +v) };
           t.reps = rp === '' ? null : +rp; return t; }); });
-      if (!this.who) this.draft = null; this.unit = b.dataset.v; try { localStorage.setItem(this.KEY + '.u', this.unit); } catch (x) { } this.paint(); }
+      if (!this.who) { this.draft = null; this.typed = {}; $$('.k-row [data-b]').forEach(i => { delete i.dataset.dirty; }); } this.unit = b.dataset.v; try { localStorage.setItem(this.KEY + '.u', this.unit); } catch (x) { } this.paint(); }
     else if (k === 'save') {
       const r = CxLog.read($('.k-log')), er = $('#kErr'); if (r.err) { er.textContent = r.err; return; }
       if (!r.logs.length) { if (r.any) { this.who = null; this.draft = null; this.paint(); this.toast('Nothing changed.'); } else er.textContent = 'Type at least one set.'; return; }
@@ -16628,6 +16761,236 @@ Awards.group = function () { const p = State.profile; return Goals.group((POSITI
     Goals.st = { id: o.id, d: Goals.draft(o) }; Social.drop('goals:', 'orgs', 'org:mine');
     if (Brand.me && Brand.me.id === o.id) await Brand.mine(Cloud.sb);
     redraw();
+  };
+})();
+
+</script>
+<script>
+/* ============ PRIVACY, YOUR DATA & OWNERSHIP ============
+   • Data sharing is opt-in. An athlete's training and health data reaches their coaches only after a "yes":
+     adults (18+) give it themselves; under 18 the request goes to their linked parent, and only the parent's yes turns it on.
+     The server enforces it (sx_see in social.sql); this file is the screens.
+   • Your data (GDPR): download a copy, remove any part of it, or delete the account.
+   • Ownership: who owns the app, its code and its brand (Legal & ownership), accepted once at sign-up. */
+Object.entries({ 'shield-check': 'M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1zM9 12l2 2 4-4',
+  eraser: 'M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.828 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21M5.082 11.09l8.828 8.828' }).forEach(([k, v]) => { if (!ICONS[k]) ICONS[k] = v; });
+const TERMS_V = 'v1';
+const LEGAL = { owner: 'VarsityIron', year: 2026, updated: '27 November 2026' };   // the owner line: the legal entity's name goes here
+const Privacy = {
+  get() { return Social.get('consent', () => Social.rpc('consent_get'), 30000); },
+  athlete() { return !!(Cloud.on && Cloud.profile) && !(typeof Role !== 'undefined' && Role.parent()); },
+  state(c) {
+    if (!c) return { k: 'none', t: 'Not shared', ic: 'lock' };
+    if (c.shared) return { k: 'on', t: 'Shared with your coaches', ic: 'circle-check' };
+    if (c.status === 'pending') return { k: 'wait', t: 'Waiting for your parent', ic: 'clock' };
+    return { k: 'off', t: 'Not shared', ic: 'lock' };
+  },
+  /* coaches: a small tag on the roster, a note on the athlete page */
+  badge(c) { if (!c || c.shared) return ''; return ` <span class="badge pv-badge" title="This athlete's data is not shared with coaches">${icon(c.status === 'pending' ? 'clock' : 'lock')} ${c.status === 'pending' ? 'Parent consent pending' : 'Not shared'}</span>`; },
+  coachNote(c, name) {
+    if (!c || c.shared) return '';
+    return `<section class="panel pv-note" data-stg role="note">${icon('lock')}<div><b>${esc(name || 'This athlete')} hasn't shared their training data with coaches${c.status === 'pending' ? ' yet — a parent needs to agree' : ''}.</b><p>You see their name and team only. ${c.minor ? 'Because they are under 18, a parent decides.' : 'They can turn sharing on in More → Privacy & your data.'}</p></div></section>`;
+  },
+  WHAT: ['Workouts and sets', 'Maxes and test results', 'Body weight and measurements', 'Food log', 'Readiness, sleep and recovery check-ins', 'Weights on the circuit tablets'],
+  /* ---------- the athlete's page ---------- */
+  screen() {
+    if (!this.athlete()) return `<div class="screen">${backBar('Privacy & your data')}${this.dataSection()}${this.legalLink()}</div>`;
+    const e = this.get(); if (!e.v) return `<div class="screen">${backBar('Privacy & your data')}${e.err ? Social.errBox(e.err, 'consent') : Social.skel(2)}</div>`;
+    const c = e.v, S = this.state(c), minor = c.minor, dob = c.birth_date;
+    const who = c.shared && c.by ? (c.by_role === 'parent' ? `Allowed by ${esc(c.by.name)} (parent)` : 'You turned it on') + (c.at ? ` · ${esc(String(c.at).slice(0, 10))}` : '') : '';
+    let act = '';
+    if (!dob) act = `<div class="field"><label for="pvDob">Your date of birth</label><input class="input" id="pvDob" type="date" max="${addDays(todayISO(), -365 * 8)}" min="1920-01-01"><small class="muted">Asked once, so the app knows whether a parent needs to agree. Coaches don't see it.</small></div>
+      <div class="grid2"><button class="btn primary" type="button" data-act="pv-share" data-v="1">${icon('share-2')} Share with my coaches</button><button class="btn" type="button" data-act="pv-share" data-v="0">Don't share</button></div>`;
+    else if (c.shared) act = `<button class="btn" type="button" data-act="pv-share" data-v="0">${icon('lock')} Stop sharing</button>`;
+    else if (c.status === 'pending') act = `${c.parents.length ? `<p class="pv-p">We asked ${c.parents.map(p => `<b>${esc(p.name)}</b>`).join(' and ')}. Sharing turns on when they say yes in their app.</p>` : `<p class="pv-p warn">${icon('triangle-alert')} <span>No parent is linked to your account yet. Your parent needs a ${esc(Brand.name())} parent account linked to you — ask your coach for the school's parent link. The request waits for them.</span></p>`}
+      <button class="btn" type="button" data-act="pv-share" data-v="0">Cancel the request</button>`;
+    else act = `<button class="btn primary" type="button" data-act="pv-share" data-v="1">${icon('share-2')} ${minor ? 'Ask my parent to allow sharing' : 'Share with my coaches'}</button>`;
+    return `<div class="screen">${backBar('Privacy & your data')}
+      <section class="panel stack pv" data-stg><h2 class="h3">${icon('users')} Sharing with your coaches</h2>
+        <div class="pv-state pv-${S.k}">${icon(S.ic)}<div><b>${S.t}</b>${who ? `<small>${who}</small>` : ''}</div></div>
+        <p class="muted" style="font-size:14px">${c.shared ? 'Your coaches can see:' : 'If you share, your coaches can see:'}</p>
+        <ul class="pv-list">${this.WHAT.map(w => `<li>${icon('check')} ${w}</li>`).join('')}</ul>
+        <p class="muted" style="font-size:13px">${dob && minor ? 'You are under 18, so a parent decides. ' : ''}Without sharing, coaches only see your name and that you're on the team. Your parent${minor ? '' : ', if one is linked,'} can always see your progress. You can stop sharing at any time.</p>
+        ${act}<p class="err-msg" id="pvErr" role="alert"></p></section>
+      ${this.dataSection()}${this.legalLink()}</div>`;
+  },
+  dataSection() {
+    return `<section class="panel stack" data-stg><h2 class="h3">${icon('hard-drive-download')} Your data</h2>
+      <p class="muted" style="font-size:14px">It's yours. Take a copy, remove any part of it, or delete everything.</p>
+      <button class="list-item" type="button" data-act="go" data-r="backup">${icon('download')}<div class="grow"><b>Download a copy</b><div class="muted" style="font-size:12.5px">Everything you logged, as a file</div></div>${icon('chevron-right')}</button>
+      <button class="list-item" type="button" data-act="pv-del">${icon('eraser')}<div class="grow"><b>Remove some of my data</b><div class="muted" style="font-size:12.5px">Workouts, results, body weight, food, recovery, posts…</div></div>${icon('chevron-right')}</button>
+      ${Cloud.on && Cloud.profile ? `<button class="list-item acct-del" type="button" data-act="acct-delete">${icon('trash-2')}<div class="grow"><b>Delete my account</b><div class="muted" style="font-size:12.5px">The account and everything in it, for good</div></div>${icon('chevron-right')}</button>` : ''}</section>`;
+  },
+  legalLink() { return `<section class="panel" data-stg><button class="list-item" type="button" data-act="go" data-r="legal">${icon('scale')}<div class="grow"><b>Legal & ownership</b><div class="muted" style="font-size:12.5px">Terms of use, who owns ${esc(LEGAL.owner)}, privacy</div></div>${icon('chevron-right')}</button></section>`; },
+  /* the Home nudge, until the athlete decides */
+  card() {
+    if (!this.athlete() || !Social.on()) return '';
+    const e = this.get(); if (!e.v || !e.v.has_coach || e.v.status !== 'none') return '';
+    return `<button type="button" class="panel pv-card" data-act="go" data-r="privacy" data-stg>${icon('shield-check')}<div class="grow" style="text-align:left"><b>Share your training with your coaches?</b><small>You decide${e.v.minor ? ' — under 18, a parent agrees too' : ''}. Nothing is shared until then.</small></div>${icon('chevron-right')}</button>`;
+  },
+  /* ---------- remove some of my data ---------- */
+  KINDS: [
+    ['training', 'dumbbell', 'Workouts & training history', 'Every logged workout and set, badges, and circuit sets'],
+    ['results', 'trophy', 'Maxes & test results', 'Tested and recorded maxes, speed and jump results, baselines'],
+    ['body', 'scale', 'Body weight, measurements & progress photos', 'Weigh-ins, measurements and every progress photo'],
+    ['food', 'utensils', 'Food & nutrition', 'Food log, saved meals and water'],
+    ['recovery', 'heart-pulse', 'Readiness, sleep & recovery', 'Morning check-ins, sleep and recovery entries, team check-ins'],
+    ['social', 'messages-square', 'Posts, comments & messages', 'Everything you posted, commented, reacted or sent']],
+  del() {
+    Sheet.open({ title: 'Remove some of my data', html: `<p class="muted" style="font-size:14px">Pick what to remove. It's removed from this phone and from your account, on every phone you use. This can't be undone — download a copy first if you want one.</p>
+      <div class="pv-kinds">${this.KINDS.map(([k, ic, t, d]) => `<label class="pv-kind"><input type="checkbox" value="${k}"><span class="pv-k-ic">${icon(ic)}</span><span class="grow"><b>${t}</b><small>${d}</small></span></label>`).join('')}</div>
+      <p class="err-msg" id="pvDelErr" role="alert"></p><button class="btn danger big block" type="button" id="pvDelGo">${icon('trash-2')} Remove</button>`,
+      onMount: sh => {
+        $('#pvDelGo', sh).onclick = async () => {
+          const K = $$('.pv-kind input:checked', sh).map(i => i.value); if (!K.length) { $('#pvDelErr', sh).textContent = 'Pick at least one.'; return; }
+          const names = K.map(k => this.KINDS.find(x => x[0] === k)[2].toLowerCase());
+          await Sheet.close();
+          const ok = await Sheet.confirm({ title: 'Remove for good?', danger: true, ok: 'Remove', body: `<p>This removes your ${esc(names.join(', '))}. It can't be undone.</p>` }); if (!ok) return;
+          try { const r = await this.erase(K); UI.toast(`Removed. ${r}`); } catch (e) { UI.toast(Social.msg ? Social.msg(e) : String(e.message || e), 'bad'); }
+          UI.render();
+        };
+      } });
+  },
+  async storeClear(s) { for (const x of [...(State[s] || [])]) await Store.remove(s, x.id); },
+  listClear(L) { if (!L || !L.raw) return 0; let n = 0; L.raw().filter(x => !x.del).forEach(x => { L.del(x.id); n++; }); return n; },
+  async erase(K) {
+    const server = [], done = [];
+    if (K.includes('training')) { const n = State.sessions.length; await this.storeClear('sessions'); await this.storeClear('achievements'); if (typeof Templates !== 'undefined') this.listClear(Templates); server.push('circuits'); done.push(`${n} workout${n === 1 ? '' : 's'}`); }
+    if (K.includes('results')) { const n = State.results.length; await this.storeClear('results'); const p = State.profile; if (p) { p.baselines = {}; p.athletic = {}; p.baselineHistory = []; Store.saveProfile(); } done.push(`${n} result${n === 1 ? '' : 's'} and your baselines`); }
+    if (K.includes('body')) { const n = State.bodyweight.length; await this.storeClear('bodyweight'); if (typeof Meas !== 'undefined') this.listClear(Meas); const p = State.profile; if (p) { delete p.initialBw; Store.saveProfile(); } server.push('photos'); done.push(`${n} weigh-in${n === 1 ? '' : 's'}, measurements and photos`); }
+    if (K.includes('food')) { const n = this.listClear(Food); if (typeof Meals !== 'undefined') this.listClear(Meals); try { LSX.set(Water.key, {}); } catch (e) { } done.push(`${n} food entr${n === 1 ? 'y' : 'ies'}`); }
+    if (K.includes('recovery')) { let n = 0; if (typeof Ready !== 'undefined') n += this.listClear(Ready); if (typeof Rec !== 'undefined') n += this.listClear(Rec); server.push('checkins'); done.push(`${n} check-in${n === 1 ? '' : 's'}`); }
+    if (K.includes('social')) server.push('social');
+    if (Cloud.on && Cloud.sb && server.length) {
+      const uid = Cloud.user && Cloud.user.id;
+      const r = await Social.rpc('my_data_delete', { p_what: server });
+      if (r && r.paths && r.paths.length) { try { await Cloud.sb.storage.from('progress').remove(r.paths); } catch (e) { } }
+      if (server.includes('social') && uid) { try { const { data } = await Cloud.sb.storage.from('social').list(uid, { limit: 1000 }); const P = (data || []).filter(f => f && f.name).map(f => `${uid}/${f.name}`); if (P.length) await Cloud.sb.storage.from('social').remove(P); } catch (e) { } }
+      if (r && r.posts != null) done.push(`${r.posts} post${r.posts === 1 ? '' : 's'}, ${r.comments} comment${r.comments === 1 ? '' : 's'} and ${r.messages} message${r.messages === 1 ? '' : 's'}`);
+      Social.drop();
+    }
+    try { Achievements.evaluate(); } catch (e) { }
+    State.version++; if (Cloud.on && Cloud.dirty) Cloud.dirty(0);
+    return done.join(' · ') + '.';
+  },
+  /* ---------- parents ---------- */
+  parentCards(K) {
+    const kids = (K && K.children || []).filter(c => c.active && c.consent && c.consent.status === 'pending');
+    return kids.map(c => `<section class="panel hq-card stack pv-ask" data-stg><h2 class="h3">${icon('shield-check')} ${esc(c.athlete.name)} asks to share their training with their coaches</h2>
+      <p class="muted hq-note">Coaches would see: ${this.WHAT.map(w => w.toLowerCase()).join(', ')}. You can change your mind any time under Account.</p>
+      <div class="grid2"><button class="btn primary" type="button" data-act="pv-parent" data-id="${c.athlete.id}" data-v="1">${icon('check')} Allow</button><button class="btn" type="button" data-act="pv-parent" data-id="${c.athlete.id}" data-v="0">Don't allow</button></div></section>`).join('');
+  },
+  parentSection(K) {
+    const kids = (K && K.children || []).filter(c => c.active && c.consent); if (!kids.length) return '';
+    return `<section class="panel hq-card stack" data-stg><h2 class="h3">${icon('shield-check')} Data sharing with coaches</h2><p class="muted hq-note">For athletes under 18 you decide whether their coaches see their training data.</p>
+      ${kids.map(c => { const S = this.state(c.consent); return `<div class="att-row">${Social.avatar(c.athlete, 34)}<div class="grow"><b>${esc(c.athlete.name)}</b><small class="muted">${S.k === 'wait' ? 'Asks you to allow sharing' : S.t.replace('your coaches', 'coaches')}${c.consent.shared && c.consent.by_role === 'self' ? ' (they are 18+)' : ''}</small></div>
+        ${c.consent.shared ? `<button class="btn sm" type="button" data-act="pv-parent" data-id="${c.athlete.id}" data-v="0">Stop sharing</button>` : `<button class="btn sm primary" type="button" data-act="pv-parent" data-id="${c.athlete.id}" data-v="1">Allow</button>`}</div>`; }).join('')}</section>`;
+  },
+  /* ---------- legal & ownership ---------- */
+  legal() {
+    const o = esc(LEGAL.owner);
+    return `<div class="screen">${backBar('Legal & ownership')}
+      <section class="panel stack legal" data-stg><span class="label">Last updated ${esc(LEGAL.updated)} · Terms ${TERMS_V}</span>
+        <h2 class="h3">Ownership & intellectual property</h2>
+        <p>© ${LEGAL.year} ${o}. All rights reserved.</p>
+        <p>The ${o} application — its source code, software, design, screens, text, graphics and features — and the ${o} name, logo (the V with the barbell) and other brand elements are owned by ${o} and protected by copyright, trademark and other intellectual property laws.</p>
+        <p>You may use the app for its intended purpose while you have an account. You may not copy, modify, distribute, sell, rent, reverse-engineer or decompile the app or its code, remove ownership notices, or use the ${o} name or logo, without written permission from ${o}.</p>
+        <h2 class="h3">Schools and other content</h2>
+        <p>School names, logos and colours belong to their schools and appear for their members. Exercise videos are links to their owners' pages. Training programs and other third-party material remain the property of their owners.</p>
+        <h2 class="h3">Your content and data</h2>
+        <p>What you log — workouts, results, body weight, food, check-ins, photos and posts — stays yours. You let ${o} store and process it to run the app for you. It is shared with your coaches only if you (or, under 18, your parent) agree, and you can download it, remove any part of it or delete your account at any time in More → Privacy & your data.</p>
+        <h2 class="h3">Safety</h2>
+        <p>${o} is a training tracker, not medical advice or individual coaching. Train within your limits and follow your coaches.</p>
+      </section>
+      ${Cloud.on && Cloud.profile ? `<section class="panel" data-stg><p class="muted" style="font-size:13px;margin:0">${this.terms && this.terms.at ? `You accepted these terms on ${esc(String(this.terms.at).slice(0, 10))}.` : 'Accept these terms to keep using the app.'}</p></section>` : ''}</div>`;
+  },
+  /* ---------- terms: at sign-up; once for people who were here before ---------- */
+  terms: null,
+  async checkTerms() {
+    if (!(Cloud.on && Cloud.profile && Cloud.sb) || this._tchk) return; this._tchk = true;
+    try {
+      const t = this.terms = await Social.rpc('terms_status'); if (t && t.version === TERMS_V) return;
+      let pre = null; try { pre = localStorage.getItem('vi.terms'); } catch (e) { }
+      if (pre === TERMS_V) { this.terms = await Social.rpc('terms_accept', { p_version: TERMS_V }); try { localStorage.removeItem('vi.terms'); } catch (e) { } return; }
+      this.askTerms();
+    } catch (e) { this._tchk = false; }
+  },
+  askTerms() {
+    Sheet.open({ title: 'Terms of use', html: `<p style="font-size:15px">${esc(LEGAL.owner)} and its code, name and logo belong to ${esc(LEGAL.owner)}. Your training data stays yours, and it is shared with coaches only if you agree.</p>
+      <p><button class="btn sm ghost" type="button" id="pvTRead">${icon('scale')} Read the terms</button></p>
+      <label class="gopt"><input type="checkbox" id="pvTOk"><span>I agree to the ${esc(LEGAL.owner)} terms of use and ownership notice.</span></label>
+      <p class="err-msg" id="pvTErr" role="alert"></p><button class="btn primary big block" type="button" id="pvTGo">Continue</button>`,
+      onMount: sh => {
+        $('#pvTRead', sh).onclick = async () => { await Sheet.close(); this._tchk = false; Nav.go('legal'); };
+        $('#pvTGo', sh).onclick = async () => {
+          if (!$('#pvTOk', sh).checked) { $('#pvTErr', sh).textContent = 'Tick the box to continue.'; return; }
+          try { this.terms = await Social.rpc('terms_accept', { p_version: TERMS_V }); await Sheet.close(); UI.toast('Thanks — you\'re all set.'); } catch (e) { $('#pvTErr', sh).textContent = Social.msg ? Social.msg(e) : String(e.message || e); }
+        };
+      } });
+  }
+};
+
+/* ---------- wiring ---------- */
+Screens.privacy = () => Privacy.screen();
+Screens.legal = () => Privacy.legal();
+After.privacy = view => Social.hydrate && Social.hydrate(view);
+['privacy', 'legal'].forEach(r => { TAB_OF[r] = 'more'; Social.live.add(r); if (typeof NavFive !== 'undefined') NavFive.MORE.push(r); });
+if (typeof PRole !== 'undefined') ['privacy', 'legal'].forEach(r => PRole.ROUTES.add(r));
+(() => {
+  /* More: Privacy & your data, Legal & ownership */
+  const mo = Screens.more; Screens.more = function () {
+    const h = mo.call(Screens), it = (r, ic, t, d) => `<button class="list-item" type="button" data-act="go" data-r="${r}">${icon(ic)}<div class="grow"><b>${t}</b><div class="muted" style="font-size:12.5px">${d}</div></div>${icon('chevron-right')}</button>`;
+    const sec = `<section class="panel" data-stg>${it('privacy', 'shield-check', 'Privacy & your data', 'Sharing with coaches · download or remove your data')}${it('legal', 'scale', 'Legal & ownership', 'Terms of use and who owns ' + esc(LEGAL.owner))}</section>`;
+    const at = h.indexOf('<button class="btn block" type="button" data-act="replay-intro"');
+    return at < 0 ? h.replace(/<\/div>$/, sec + '</div>') : h.slice(0, at) + sec + h.slice(at);
+  };
+  /* About: the ownership line */
+  const ab = Screens.about; if (ab) Screens.about = function () { const h = ab.call(Screens); return h.replace(/<\/section><\/div>$/, `<p><b>Ownership.</b> © ${LEGAL.year} ${esc(LEGAL.owner)}. The app, its code, name and logo are owned by ${esc(LEGAL.owner)}. All rights reserved.</p><button class="btn sm" type="button" data-act="go" data-r="legal">${icon('scale')} Legal & ownership</button></section></div>`); };
+  /* Home: the nudge */
+  const mc = Screens.missionCard; if (mc) Screens.missionCard = function (st, act) { return Privacy.card() + mc.call(Screens, st, act); };
+  /* coaches: athlete pages say when data isn't shared */
+  const note = (html, aid) => { const k = Object.keys(Social.c).find(x => x.startsWith('tath:') && x.endsWith(':' + aid)), v = k && Social.c[k] && Social.c[k].v; if (!v || !v.consent || v.consent.shared) return html; const at = html.indexOf('<section'); return at < 0 ? html : html.slice(0, at) + Privacy.coachNote(v.consent, v.name) + html.slice(at); };
+  if (typeof HQ !== 'undefined' && HQ.athlete) { const ha = HQ.athlete.bind(HQ); HQ.athlete = function (aid) { return note(ha(aid), aid); }; }
+  const ca = Coach.athlete.bind(Coach); Coach.athlete = function (p) { const aid = String(p || '').split(':')[1]; return note(ca(p), aid); };
+  /* parents: the request on Home, the switch under Account */
+  if (typeof PRole !== 'undefined') {
+    const ph = PRole.home.bind(PRole); PRole.home = function () { const h = ph(), K = this.kids().v, c = K ? Privacy.parentCards(K) : ''; if (!c) return h; const at = h.indexOf('</header>'); return at < 0 ? h : h.slice(0, at + 9) + c + h.slice(at + 9); };
+    const pm = PRole.me.bind(PRole); PRole.me = function () {
+      const h = pm(), K = this.kids().v, s = K ? Privacy.parentSection(K) : '', at = h.indexOf('<section class="panel hq-card stack" data-stg><h2 class="h3">Appearance');
+      const o = at < 0 || !s ? h : h.slice(0, at) + s + h.slice(at);
+      return o.replace(/<\/div>$/, `<section class="panel hq-card" data-stg><button class="list-item" type="button" data-act="go" data-r="legal">${icon('scale')}<div class="grow"><b>Legal & ownership</b></div>${icon('chevron-right')}</button></section></div>`);
+    };
+    Screens['p-home'] = () => PRole.home(); Screens['p-me'] = () => PRole.me();
+  }
+  /* sign-up: agree to the terms */
+  const ef = Cloud.emailFields.bind(Cloud);
+  Cloud.emailFields = function (val, opt) { const h = ef(val, opt); return arguments.length ? h : h + `<label class="gopt pv-terms"><input type="checkbox" id="authTerms"><span>I agree to the ${esc(LEGAL.owner)} <a href="#" id="authTermsRead">terms of use and ownership notice</a>.</span></label>`; };
+  document.addEventListener('submit', e => {
+    const f = e.target; if (!f || f.id !== 'authForm') return; const t = $('#authTerms', f); if (!t) return;
+    if (!t.checked) { e.preventDefault(); e.stopImmediatePropagation(); const m = $('#authMsg'); if (m) m.textContent = 'Please agree to the terms of use to create your account.'; t.focus(); return; }
+    try { localStorage.setItem('vi.terms', TERMS_V); } catch (x) { }
+  }, true);
+  document.addEventListener('click', e => { if (e.target && e.target.id === 'authTermsRead') { e.preventDefault(); Sheet.open({ title: 'Legal & ownership', wide: true, html: Privacy.legal().replace(/^<div class="screen">[\s\S]*?<\/div>(?=<section)/, '').replace(/<\/div>$/, '') }); } });
+  /* after log-in: terms once */
+  const ah = After.home; After.home = function (view, opts) { const r = ah ? ah.call(After, view, opts) : undefined; setTimeout(() => Privacy.checkTerms(), 1200); return r; };
+  if (typeof PRole !== 'undefined') { const pa = After['p-home']; After['p-home'] = function (view, o) { const r = pa ? pa.call(After, view, o) : undefined; setTimeout(() => Privacy.checkTerms(), 1200); return r; }; }
+  if (typeof HQ !== 'undefined') { const hq = After.hq; After.hq = function (view, o) { const r = hq ? hq.call(After, view, o) : undefined; setTimeout(() => Privacy.checkTerms(), 1200); return r; }; }
+  /* actions */
+  Actions['pv-del'] = () => Privacy.del();
+  Actions['pv-share'] = async el => {
+    const er = $('#pvErr'), d = $('#pvDob'), share = el.dataset.v === '1', c = (Privacy.get().v || {});
+    const birth = d ? d.value : null; if (d && !birth) { if (er) er.textContent = 'Add your date of birth first.'; d.focus(); return; }
+    if (!share && c.shared) { const ok = await Sheet.confirm({ title: 'Stop sharing?', body: '<p>Your coaches will stop seeing your training data right away.</p>', ok: 'Stop sharing' }); if (!ok) return; }
+    const r = await Social.act(el, () => Social.rpc('consent_set', { p_birth: birth || null, p_share: share }));
+    if (!r) return; Social.c.consent = { v: r, t: Date.now() }; Social.drop('roster:', 'tath:');
+    UI.toast(r.shared ? 'Shared with your coaches.' : r.status === 'pending' ? (r.parents.length ? 'Asked your parent.' : 'Saved. Your parent needs to be linked first.') : 'Not shared.');
+    UI.render();
+  };
+  Actions['pv-parent'] = async el => {
+    const allow = el.dataset.v === '1';
+    if (!allow) { const ok = await Sheet.confirm({ title: 'Don\'t share?', body: '<p>Coaches won\'t see your child\'s training data. You can change this any time under Account.</p>', ok: 'Don\'t share' }); if (!ok) return; }
+    const r = await Social.act(el, () => Social.rpc('consent_parent', { p_athlete: el.dataset.id, p_allow: allow }), allow ? 'Sharing allowed.' : 'Not shared.');
+    if (r) { Social.drop('mykids', 'pchild:'); UI.render(); }
   };
 })();
 
