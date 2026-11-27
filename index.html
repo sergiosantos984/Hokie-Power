@@ -3404,6 +3404,12 @@ body.kiosk-on{overflow:hidden}
 /* the title on the goal screen wraps instead of running off a phone */
 html:root body .iron-hero .h1{white-space:normal!important;overflow-wrap:break-word;text-overflow:clip;overflow:visible}
 html:root body .iron-hero .grow{min-width:0}
+#sc-cond .sc-cond{max-width:520px}#sc-cond .sc-cond td:first-child{width:60%}#sc-cond .sc-cond .input{max-width:120px;text-align:center}
+#sc-speed .sc-speed{table-layout:fixed;width:100%}#sc-speed .sc-speed th,#sc-speed .sc-speed td{padding:4px 2px;font-size:12px}
+#sc-speed .sc-speed th:first-child,#sc-speed .sc-speed td:first-child{width:24%;font-size:12.5px;line-height:1.15;padding-left:4px}
+#sc-speed .sc-speed .input{width:100%;min-width:0;height:40px;padding:0 2px;text-align:center;font-size:14px;border-radius:10px}
+#sc-speed .chips{flex-wrap:wrap;overflow:visible}
+#sc-speed .sc-speed th{white-space:normal;line-height:1.15;text-align:center;vertical-align:bottom}
 /* privacy & your data */
 .pv-state{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(var(--b1rgb),.06)}
 .pv-state>svg{width:26px;height:26px;flex:none}.pv-state b{display:block;font-size:17px}.pv-state small{color:var(--muted);font-size:13px}
@@ -3426,6 +3432,7 @@ html:root body .iron-hero .grow{min-width:0}
 html.no-share [data-act="share-app"],html.no-share [data-act="share-pr"],html.no-share [data-act="share-level"],html.no-share [data-act="share-badge"],
 html.no-share [data-act="share-goal"],html.no-share [data-act="share-progress"],html.no-share [data-act="share-programme"],html.no-share [data-act="share-session"],
 html.no-share [data-act="beta-copy"],html.no-share .share-btn,html.no-share .share-prog{display:none!important}
+html.no-share .beta-card{display:none!important}   /* the beta / invite-friends card on Home */
 </style>
 </head>
 <body>
@@ -5291,7 +5298,7 @@ const Screens = {
       presc = `Target ${t.pLabel || t.pReps}${lt ? ` · last ${lt.w ? Units.fmtW(lt.w) + ' ' + u + ' × ' : ''}${lt.reps ?? '—'}` : ''}`;
     }
     else if (x.type === 'timed') { ins = inp('sec', numVal(t.sec), 'sec', 'seconds', `${lbl} seconds`); presc = `Target ${t.pSec}s`; }
-    else if (x.type === 'sprint') { ins = inp('sec', numVal(t.sec), 'sec', x.testRun ? 'time' : 'time (optional)', `${lbl} time in seconds`); presc = `${x.distLabel || t.dist + ' yd'}${x.target ? ` · target ${fmtDur(x.target * 1000)}` : ''}${t.sec && x.target ? (t.sec <= x.target ? ' · made it' : ' · over') : ''}`; }
+    else if (x.type === 'sprint') { ins = inp('sec', numVal(t.sec), 'sec', x.testRun ? 'time' : 'time (optional)', `${lbl} time in seconds`); const xt = x.testRun ? (Goals.condSec(Speed.group()) || x.target) : x.target; presc = `${x.distLabel || t.dist + ' yd'}${xt ? ` · target ${fmtDur(xt * 1000)}` : ''}${t.sec && xt ? (t.sec <= xt ? ' · made it' : ' · over') : ''}`; }
     else if (x.type === 'check') { ins = `<span class="muted" style="align-self:center;font-size:14px">${t.pLabel ? `<b style="color:var(--ink,#1A1D20)">${esc(t.pLabel.split(' — ')[0])}</b><br>${esc(t.pLabel.split(' — ')[1] || '')}` : esc(x.sets.length > 1 ? 'Tap ✓ when this set is done' : 'Tap ✓ when done')}</span>`; presc = x.sets.length > 1 ? `${t.pLabel ? 'Exercise' : 'Set'} ${t.n} of ${x.sets.length}` : ''; }
     else if (x.type === 'test') { const mu = Units.metricUnit(x.metric); ins = inp('val', t.val ? numVal(Units.metricIn(x.metric, t.val)) : '', mu, 'result', `${lbl} result in ${mu}`); presc = 'Record only a successful attempt'; }
     const rpe = x.type === 'pct' ? `<label class="sr" for="${id('rpe')}">RPE</label><select class="rpe" id="${id('rpe')}" data-f="rpe" data-e="${ei}" data-s="${si}"><option value="">RPE</option>${[6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10].map(v => `<option value="${v}" ${t.rpe === v ? 'selected' : ''}>RPE ${v}</option>`).join('')}</select>` : '';
@@ -9465,7 +9472,7 @@ Object.assign(Actions, {
   'sc-save': async el => {
     Coach.readSchool(); const d = Coach.sst.d, id = el.dataset.id, ok = c => /^#[0-9a-fA-F]{6}$/.test(c);
     if (!ok(d.color1) || !ok(d.color2)) { UI.toast('Colours look like #1E5A32.', 'bad'); return; }
-    const p = { id, name: d.name, app_name: d.app_name, tagline: d.tagline, color1: d.color1, color2: d.color2, logo: d.logo || '', bench_name: d.bench_name, levels: d.levels, settings: { speed: d.settings.speed || {}, speed_req: d.settings.speed_req || SPEED_REQ } };
+    const p = { id, name: d.name, app_name: d.app_name, tagline: d.tagline, color1: d.color1, color2: d.color2, logo: d.logo || '', bench_name: d.bench_name, levels: d.levels, settings: {} };   // speed & agility live in Iron standards now
     if (Cloud.isAdmin()) Object.assign(p, { slug: d.slug, domains: String(d.domains || '').split(/[\s,]+/).filter(Boolean), tier: d.tier });
     const o = await Social.act(el, () => Social.rpc('org_save', { p }), 'Saved.'); if (!o) return;
     Social.drop('orgs', 'org:mine'); Coach.sst = null;
@@ -16668,7 +16675,7 @@ const Goals = {
   /* ---------- the "Iron standards" page: admin (any school), coaches & assistant coaches (their own school) ---------- */
   st: null, gg: null,
   can() { return Cloud.isAdmin() || !!(Brand.me && Brand.me.goals_edit); },
-  draft(o) { return { id: o.id, name: o.name, bench_name: o.bench_name, levels: o.levels || {}, settings: { lifts: JSON.parse(JSON.stringify(o.lifts || {})), pillars: Object.assign({}, o.pillars || {}) } }; },
+  draft(o) { return { id: o.id, name: o.name, bench_name: o.bench_name, levels: o.levels || {}, settings: { lifts: JSON.parse(JSON.stringify(o.lifts || {})), pillars: Object.assign({}, o.pillars || {}), speed: JSON.parse(JSON.stringify(o.speed || {})), speed_req: Array.isArray(o.speed_req) && o.speed_req.length ? o.speed_req.slice() : SPEED_REQ.slice(), cond: JSON.parse(JSON.stringify(o.cond || {})) } }; },
   screen(param) {
     const adm = Cloud.isAdmin();
     if (!this.can()) return `<div class="screen soc">${backBar('Iron standards')}${Social.empty('lock', 'Coaches only', 'Your school\'s coaches and assistant coaches set what it takes to earn the title.')}</div>`;
@@ -16683,12 +16690,12 @@ const Goals = {
     if (!this.st || this.st.id !== e.v.id) this.st = { id: e.v.id, d: this.draft(e.v) };
     return `<div class="screen soc">${backBar('Iron standards', `<button class="btn primary" type="button" data-act="sc-gsave">${icon('save')} Save</button>`)}
       ${adm || param ? `<p class="muted" data-stg style="font-size:13px;margin:0 2px">${icon('school')} ${esc(e.v.name)}</p>` : ''}
-      ${this.editor(this.st.d)}</div>`;
+      ${this.editor(this.st.d)}${this.condEditor(this.st.d)}${this.speedEditor(this.st.d)}</div>`;
   },
   editor(d) {
     const g = this.gg || 'line', own = (d.settings.lifts || {})[g] || {}, P = d.settings.pillars || {};
     const nm = l => esc(l === 'Iron Hokie' ? (d.bench_name || 'Iron Hokie') : (d.levels[l] || (l === 'Hokie' ? ((d.bench_name || '').replace(/^iron\s+/i, '') || 'Hokie') : l)));
-    const changed = (d.settings.lifts && Object.keys(d.settings.lifts).length) || Object.values(P).some(v => v === false);
+    const S = d.settings, changed = (S.lifts && Object.keys(S.lifts).length) || Object.values(P).some(v => v === false) || (S.cond && Object.keys(S.cond).length) || (S.speed && Object.keys(S.speed).length) || (S.speed_req && S.speed_req.slice().sort().join() !== SPEED_REQ.slice().sort().join());
     return `<section class="panel stack" data-stg id="sc-goals"><h2 class="h3">${icon('dumbbell')} What it takes to be ${esc(d.bench_name || 'Iron Hokie')}</h2>
       <p class="muted" style="font-size:13px">These start at the college standards. Change any number to fit your team; leave a box empty to keep the college number.</p>
       <div class="field"><span class="label">Needed for the title</span><div class="chips" role="group" aria-label="Pillars needed for the title">${GOAL_PILLARS.map(([k, l]) => `<button type="button" class="chip" data-act="sc-pil" data-k="${k}" aria-pressed="${P[k] !== false}">${l}</button>`).join('')}</div>
@@ -16700,9 +16707,52 @@ const Goals = {
       <small class="muted">Rules stay the same: every level needs its total; the first level needs all four lifts, then 3, 2 and 1; "Super" needs every top-level lift.</small>
       ${changed ? `<button class="btn sm ghost" type="button" data-act="sc-greset">${icon('rotate-ccw')} Back to the college standards</button>` : ''}</section>`;
   },
+  /* ---------- conditioning: the 16 × 110 test, runs needed and seconds per run by group ---------- */
+  condEditor(d) {
+    const C = d.settings.cond || {}, sec = C.sec || {};
+    return `<section class="panel stack" data-stg id="sc-cond"><h2 class="h3">${icon('wind')} Conditioning test</h2>
+      <p class="muted" style="font-size:13px">The 16 × 110-yard test with 45 seconds rest. Set how many runs must be made on time, and the time per run. Empty boxes keep the book standard.</p>
+      <div class="field"><label for="gcReps">Runs that must be on time</label><div class="input-unit"><input class="input num" id="gcReps" inputmode="numeric" value="${C.reps != null ? C.reps : ''}" placeholder="16"><span>of the runs</span></div></div>
+      <div class="tbl-wrap"><table class="tbl sc-std sc-cond"><thead><tr><th>Group</th><th>Time per 110 yd (s)</th></tr></thead><tbody>
+        ${Object.keys(VT_GOALS).map(g => `<tr><td>${esc(VT_GOALS[g].label)}</td><td><input class="input num" data-gc="${g}" inputmode="decimal" value="${sec[g] != null ? sec[g] : ''}" placeholder="${this.bookSec(g)}" aria-label="Seconds per 110 yards for ${esc(VT_GOALS[g].label)}"></td></tr>`).join('')}
+      </tbody></table></div><small class="muted">Book standard shown in grey (it varies by position inside some groups).</small></section>`;
+  },
+  /* ---------- speed & agility: which tests count, and the targets ---------- */
+  speedEditor(d) {
+    const sp = d.settings.speed || {}, req = d.settings.speed_req && d.settings.speed_req.length ? d.settings.speed_req : SPEED_REQ;
+    return `<section class="panel stack" data-stg id="sc-speed"><h2 class="h3">${icon('gauge')} Speed & agility targets</h2>
+      <p class="muted" style="font-size:13px">Seconds (lower is better) and inches. Empty = the app's default. Tick the tests the title needs.</p>
+      <div class="chips" role="group" aria-label="Tests needed for the title">${SPEED_METRICS.map(m => `<button type="button" class="chip" data-act="sc-sreq" data-m="${m}" aria-pressed="${req.includes(m)}">${esc(METRICS[m].name.replace(/ \(.*\)/, ''))}</button>`).join('')}</div>
+      <div class="tbl-wrap"><table class="tbl sc-std sc-speed"><thead><tr><th>Group</th>${SPEED_METRICS.map(m => `<th>${({ sprint40: '40 yd (s)', shuttle20: 'Shuttle (s)', cone3: '3-cone (s)', vj: 'Vertical (in)', broad: 'Broad (in)' })[m] || esc(METRICS[m].name)}</th>`).join('')}</tr></thead><tbody>
+        ${Object.keys(SPEED_STD).map(g => `<tr><td>${esc(VT_GOALS[g].label)}</td>${SPEED_METRICS.map(m => `<td><input class="input num" data-gs="${g}:${m}" inputmode="decimal" value="${sp[g] && sp[g][m] != null ? sp[g][m] : ''}" placeholder="${SPEED_STD[g][m]}" aria-label="${esc(VT_GOALS[g].label)} ${esc(METRICS[m].name)}"></td>`).join('')}</tr>`).join('')}
+      </tbody></table></div></section>`;
+  },
+  BOOK110: { OL: 19, DT: 19, DE: 17, LB: 17, TE: 17, QB: 18, Spec: 18, FB: 18, WR: 16, DB: 16, TB: 16 },
+  bookSec(g) { const v = [...new Set(Object.values(POSITIONS).filter(p => p.goals === g).map(p => this.BOOK110[p.tok]).filter(Boolean))].sort((a, b) => a - b); return v.length > 1 ? `${v[0]}–${v[v.length - 1]}` : v[0] || ''; },
+  /* the school's conditioning rule, used wherever the test is judged */
+  cond() { return this.set().cond || {}; },
+  condSec(g) { const c = this.cond().sec || {}; return c[g] != null && +c[g] > 0 ? +c[g] : null; },
+  passed(x, g) {
+    const target = this.condSec(g) || x.target; if (!target) return x.passed === true;
+    const ts = (x.sets || []).filter(t => t.done && t.sec > 0), need = this.cond().reps || (x.sets || []).length;
+    return ts.filter(t => t.sec <= target + 1e-9).length >= need;
+  },
+  condLine() { const c = this.cond(), g = Speed.group(), t = this.condSec(g); return `${c.reps && c.reps !== 16 ? `${c.reps} of 16` : '16'} × 110${t ? ` in ${fmtNum(t, 1)} s` : ''}`; },
+  /* keep each test workout's pass/fail in step with the school's rule, so coaches see the same */
+  syncPassed() {
+    if (!State.profile) return; const g = Speed.group();
+    State.sessions.filter(s => s.status === 'completed' && (s.ex || []).some(x => x.testRun)).forEach(s => {
+      let ch = false; s.ex.filter(x => x.testRun).forEach(x => { const p = (x.sets || []).some(t => t.done && t.sec > 0) ? this.passed(x, g) : null; if (p !== x.passed && !(p === false && x.passed == null && !(x.sets || []).some(t => t.done))) { x.passed = p; ch = true; } });
+      if (ch) { s.updatedAt = Date.now(); Store.save('sessions', s); }
+    });
+  },
   /* the boxes on screen (one group at a time) go into the draft */
   read() {
-    const d = this.st && this.st.d, box = $$('[data-gl]'); if (!d || !box.length) return;
+    const d = this.st && this.st.d; if (!d) return;
+    const num = i => { const v = i.value.trim().replace(',', '.'); return v !== '' && isFinite(+v) && +v > 0 ? +v : null; };
+    const cr = $('#gcReps'); if (cr) { const C = {}, r = num(cr); if (r != null) C.reps = Math.round(r); const sec = {}; $$('[data-gc]').forEach(i => { const v = num(i); if (v != null) sec[i.dataset.gc] = v; }); if (Object.keys(sec).length) C.sec = sec; d.settings.cond = C; }
+    const sb = $$('[data-gs]'); if (sb.length) { const sp = {}; sb.forEach(i => { const [g, m] = i.dataset.gs.split(':'), v = num(i); if (v != null) (sp[g] = sp[g] || {})[m] = v; }); d.settings.speed = sp; }
+    const box = $$('[data-gl]'); if (!box.length) return;
     const L = d.settings.lifts = JSON.parse(JSON.stringify(d.settings.lifts || {})), g = box[0].dataset.gl.split('|')[0];
     const rows = {}; box.forEach(i => { const [, l, k] = i.dataset.gl.split('|'), v = i.value.trim().replace(',', '.'); (rows[l] = rows[l] || [null, null, null, null, null])[+k] = v !== '' && isFinite(+v) && +v > 0 ? Math.round(+v) : null; });
     const G = {}; Object.entries(rows).forEach(([l, a]) => { if (a.some(x => x != null)) G[l] = a; });
@@ -16710,6 +16760,8 @@ const Goals = {
   }
 };
 
+/* the conditioning test is judged by the school's rule */
+Awards.passedTest = function () { const g = Speed.group(); return State.sessions.some(s => s.status === 'completed' && (s.ex || []).some(x => x.testRun && Goals.passed(x, g))); };
 /* everything that judges a strength level reads the school's numbers */
 Awards.group = function () { const p = State.profile; return Goals.group((POSITIONS[(p && p.position) || 'OL'] || POSITIONS.OL).goals); };
 
@@ -16720,7 +16772,7 @@ Awards.group = function () { const p = State.profile; return Goals.group((POSITI
   const scr = IronGoal.screen.bind(IronGoal);
   IronGoal.screen = function () {
     const n = Goals.keys().length, words = ['', 'one pillar', 'both pillars', 'all three pillars'][n] || 'every pillar';
-    let h = scr().replace('meet all three pillars to earn the title', `meet ${words} to earn the title`);
+    let h = scr().replace('meet all three pillars to earn the title', `meet ${words} to earn the title`).replace(/16 × 110 test|16 × 110 conditioning test/g, m => Goals.condLine() + (m.includes('conditioning') ? ' conditioning test' : ' test'));
     if (Goals.custom()) h = h.replace('Strength levels and the 16 × 110 rule come from the VT Summer 2005 book', 'Strength levels are set by your school; the 16 × 110 rule comes from the VT Summer 2005 book');
     return h;
   };
@@ -16732,9 +16784,14 @@ Awards.group = function () { const p = State.profile; return Goals.group((POSITI
   /* School look links to the standards page (it no longer holds them) */
   const sch = Coach.school.bind(Coach);
   Coach.school = function (param) {
-    const h = sch(param), at = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Speed & agility targets'); if (at < 0) return h;
-    return h.slice(0, at) + `<button class="panel list-item" type="button" data-act="go" data-r="standards" ${param ? `data-p="${param}"` : ''} data-stg>${icon('dumbbell')}<div class="grow" style="text-align:left"><b>Iron standards</b><div class="muted" style="font-size:12.5px">Lifting numbers by position and which pillars count for ${esc(Brand.bench())}</div></div>${icon('chevron-right')}</button>` + h.slice(at);
+    let h = sch(param); const at = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Speed & agility targets'); if (at < 0) return h;
+    const end = h.indexOf('</section>', h.indexOf('</table>', at)) + 10; h = h.slice(0, at) + h.slice(end);
+    return h.slice(0, at) + `<button class="panel list-item" type="button" data-act="go" data-r="standards" ${param ? `data-p="${param}"` : ''} data-stg>${icon('dumbbell')}<div class="grow" style="text-align:left"><b>Iron standards</b><div class="muted" style="font-size:12.5px">Lifting numbers, conditioning test, speed & agility targets and which pillars count for ${esc(Brand.bench())}</div></div>${icon('chevron-right')}</button>` + h.slice(at);
   };
+  const rs = Coach.readSchool.bind(Coach);
+  Coach.readSchool = function () { const d = this.sst && this.sst.d, keep = d && d.settings && d.settings.speed; rs(); if (d && !$$('[data-std]').length) d.settings.speed = keep || {}; };
+  /* the school's conditioning rule reaches past test workouts too (so coaches see the same pass/fail) */
+  ['home', 'progress'].forEach(r => { const a = After[r]; After[r] = function (view, o) { const x = a ? a.call(After, view, o) : undefined; try { Goals.syncPassed(); } catch (e) { } return x; }; });
   Screens.standards = p => Goals.screen(p);
   After.standards = view => Social.hydrate(view);
   Social.live.add('standards'); TAB_OF.standards = 'more';
@@ -16753,14 +16810,19 @@ Awards.group = function () { const p = State.profile; return Goals.group((POSITI
     if (P[k] !== false && Object.values(P).filter(v => v !== false).length === 1) { UI.toast('Keep at least one pillar.', 'bad'); return; }
     P[k] = P[k] === false; d.settings.pillars = P; redraw();
   };
+  Actions['sc-sreq'] = el => {
+    Goals.read(); const d = Goals.st.d, cur = (d.settings.speed_req && d.settings.speed_req.length ? d.settings.speed_req : SPEED_REQ).slice(), m = el.dataset.m, i = cur.indexOf(m);
+    if (i >= 0) { if (cur.length === 1) { UI.toast('Keep at least one test.', 'bad'); return; } cur.splice(i, 1); } else cur.push(m);
+    d.settings.speed_req = cur; redraw();
+  };
   Actions['sc-greset'] = async () => {
     Goals.read();
-    const ok = await Sheet.confirm({ title: 'Back to the college standards?', body: '<p>Every lifting number goes back to the college level for all position groups, and all three pillars count again. Nothing changes until you tap Save.</p>', ok: 'Reset' });
-    if (!ok) return; const d = Goals.st.d; d.settings.lifts = {}; d.settings.pillars = { strength: true, conditioning: true, speed: true }; redraw();
+    const ok = await Sheet.confirm({ title: 'Back to the college standards?', body: '<p>Every lifting number, the conditioning test and the speed & agility targets go back to the college standards, and all three pillars count again. Nothing changes until you tap Save.</p>', ok: 'Reset' });
+    if (!ok) return; const d = Goals.st.d; d.settings.lifts = {}; d.settings.pillars = { strength: true, conditioning: true, speed: true }; d.settings.cond = {}; d.settings.speed = {}; d.settings.speed_req = SPEED_REQ.slice(); redraw();
   };
   Actions['sc-gsave'] = async el => {
     Goals.read(); const d = Goals.st && Goals.st.d; if (!d) return;
-    const o = await Social.act(el, () => Social.rpc('org_goals_save', { p_org: d.id, p_lifts: d.settings.lifts || {}, p_pillars: Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}) }), 'Saved. Athletes see the new standards next time they open the app.');
+    const o = await Social.act(el, () => Social.rpc('org_goals_save', { p_org: d.id, p_lifts: d.settings.lifts || {}, p_pillars: Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}), p_speed: d.settings.speed || {}, p_speed_req: d.settings.speed_req && d.settings.speed_req.length ? d.settings.speed_req : SPEED_REQ, p_cond: d.settings.cond || {} }), 'Saved. Athletes see the new standards next time they open the app.');
     if (!o) return;
     Goals.st = { id: o.id, d: Goals.draft(o) }; Social.drop('goals:', 'orgs', 'org:mine');
     if (Brand.me && Brand.me.id === o.id) await Brand.mine(Cloud.sb);
