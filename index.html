@@ -9397,7 +9397,7 @@ Object.assign(Actions, {
   'sc-save': async el => {
     Coach.readSchool(); const d = Coach.sst.d, id = el.dataset.id, ok = c => /^#[0-9a-fA-F]{6}$/.test(c);
     if (!ok(d.color1) || !ok(d.color2)) { UI.toast('Colours look like #1E5A32.', 'bad'); return; }
-    const p = { id, name: d.name, app_name: d.app_name, tagline: d.tagline, color1: d.color1, color2: d.color2, logo: d.logo || '', bench_name: d.bench_name, levels: d.levels, settings: { speed: d.settings.speed || {}, speed_req: d.settings.speed_req || SPEED_REQ, lifts: d.settings.lifts || {}, pillars: Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}) } };
+    const p = { id, name: d.name, app_name: d.app_name, tagline: d.tagline, color1: d.color1, color2: d.color2, logo: d.logo || '', bench_name: d.bench_name, levels: d.levels, settings: { speed: d.settings.speed || {}, speed_req: d.settings.speed_req || SPEED_REQ } };
     if (Cloud.isAdmin()) Object.assign(p, { slug: d.slug, domains: String(d.domains || '').split(/[\s,]+/).filter(Boolean), tier: d.tier });
     const o = await Social.act(el, () => Social.rpc('org_save', { p }), 'Saved.'); if (!o) return;
     Social.drop('orgs', 'org:mine'); Coach.sst = null;
@@ -16528,11 +16528,30 @@ const Goals = {
   custom() { const L = this.set().lifts; return !!(L && Object.keys(L).length); },
   need(k) { const P = this.set().pillars; return !P || P[k] !== false; },
   keys() { return GOAL_PILLARS.map(p => p[0]).filter(k => this.need(k)); },
-  /* ---------- the editor (inside School look) ---------- */
+  /* ---------- the "Iron standards" page: admin (any school), coaches & assistant coaches (their own school) ---------- */
+  st: null, gg: null,
+  can() { return Cloud.isAdmin() || !!(Brand.me && Brand.me.goals_edit); },
+  draft(o) { return { id: o.id, name: o.name, bench_name: o.bench_name, levels: o.levels || {}, settings: { lifts: JSON.parse(JSON.stringify(o.lifts || {})), pillars: Object.assign({}, o.pillars || {}) } }; },
+  screen(param) {
+    const adm = Cloud.isAdmin();
+    if (!this.can()) return `<div class="screen soc">${backBar('Iron standards')}${Social.empty('lock', 'Coaches only', 'Your school\'s coaches and assistant coaches set what it takes to earn the title.')}</div>`;
+    if (adm && !param) {
+      const e = Social.get('orgs', () => Social.rpc('org_list'), 15000);
+      return `<div class="screen soc">${backBar('Iron standards')}
+        <section class="panel flat" data-stg><p style="font-size:14px">Pick a school to see and change what it takes to earn its title. Every school starts at the college standards.</p></section>
+        ${e.v ? e.v.map(o => `<button class="panel list-item" type="button" data-act="go" data-r="standards" data-p="${o.id}" data-stg><span class="sch-dot" style="background:${esc(o.color1)};border-color:${esc(o.color2)}">${o.logo ? `<img src="${esc(o.logo)}" alt="">` : ''}</span><div class="grow" style="text-align:left"><b>${esc(o.name)}</b><div class="muted" style="font-size:12.5px">${esc(o.bench_name || 'Iron Hokie')}${o.settings && o.settings.lifts && Object.keys(o.settings.lifts).length ? ' · own standards' : ' · college standards'}</div></div>${icon('chevron-right')}</button>`).join('') : e.err ? Social.errBox(e.err, 'orgs') : Social.skel(3)}</div>`;
+    }
+    const key = 'goals:' + (param || 'mine'), e = Social.get(key, () => Social.rpc('org_goals_get', param ? { p_org: param } : {}), 15000);
+    if (!e.v) return `<div class="screen soc">${backBar('Iron standards')}${e.err ? Social.errBox(e.err, key) : Social.skel(3)}</div>`;
+    if (!this.st || this.st.id !== e.v.id) this.st = { id: e.v.id, d: this.draft(e.v) };
+    return `<div class="screen soc">${backBar('Iron standards', `<button class="btn primary" type="button" data-act="sc-gsave">${icon('save')} Save</button>`)}
+      ${adm || param ? `<p class="muted" data-stg style="font-size:13px;margin:0 2px">${icon('school')} ${esc(e.v.name)}</p>` : ''}
+      ${this.editor(this.st.d)}</div>`;
+  },
   editor(d) {
     const g = this.gg || 'line', own = (d.settings.lifts || {})[g] || {}, P = d.settings.pillars || {};
     const nm = l => esc(l === 'Iron Hokie' ? (d.bench_name || 'Iron Hokie') : (d.levels[l] || (l === 'Hokie' ? ((d.bench_name || '').replace(/^iron\s+/i, '') || 'Hokie') : l)));
-    const changed = d.settings.lifts && Object.keys(d.settings.lifts).length;
+    const changed = (d.settings.lifts && Object.keys(d.settings.lifts).length) || Object.values(P).some(v => v === false);
     return `<section class="panel stack" data-stg id="sc-goals"><h2 class="h3">${icon('dumbbell')} What it takes to be ${esc(d.bench_name || 'Iron Hokie')}</h2>
       <p class="muted" style="font-size:13px">These start at the college standards. Change any number to fit your team; leave a box empty to keep the college number.</p>
       <div class="field"><span class="label">Needed for the title</span><div class="chips" role="group" aria-label="Pillars needed for the title">${GOAL_PILLARS.map(([k, l]) => `<button type="button" class="chip" data-act="sc-pil" data-k="${k}" aria-pressed="${P[k] !== false}">${l}</button>`).join('')}</div>
@@ -16545,8 +16564,8 @@ const Goals = {
       ${changed ? `<button class="btn sm ghost" type="button" data-act="sc-greset">${icon('rotate-ccw')} Back to the college standards</button>` : ''}</section>`;
   },
   /* the boxes on screen (one group at a time) go into the draft */
-  read(d) {
-    const box = $$('[data-gl]'); if (!box.length) return;
+  read() {
+    const d = this.st && this.st.d, box = $$('[data-gl]'); if (!d || !box.length) return;
     const L = d.settings.lifts = JSON.parse(JSON.stringify(d.settings.lifts || {})), g = box[0].dataset.gl.split('|')[0];
     const rows = {}; box.forEach(i => { const [, l, k] = i.dataset.gl.split('|'), v = i.value.trim().replace(',', '.'); (rows[l] = rows[l] || [null, null, null, null, null])[+k] = v !== '' && isFinite(+v) && +v > 0 ? Math.round(+v) : null; });
     const G = {}; Object.entries(rows).forEach(([l, a]) => { if (a.some(x => x != null)) G[l] = a; });
@@ -16573,27 +16592,42 @@ Awards.group = function () { const p = State.profile; return Goals.group((POSITI
   const ach = ACH.find(a => a.id === 'iron_hokie');
   if (ach) Object.defineProperty(ach, 'desc', { get() { const k = Goals.keys().map(x => GOAL_PILLARS.find(p => p[0] === x)[1].toLowerCase()); return (k.length > 1 ? k.slice(0, -1).join(', ') + ' and ' + k[k.length - 1] : k[0]).replace(/^./, c => c.toUpperCase()) + (k.length > 1 ? ' — every pillar met.' : ' met.'); }, configurable: true });
 
-  /* School look: the editor sits under "The ultimate goal" */
+  /* School look links to the standards page (it no longer holds them) */
   const sch = Coach.school.bind(Coach);
   Coach.school = function (param) {
-    const h = sch(param), d = this.sst && this.sst.d; if (!d || h.indexOf('<h2 class="h3">Speed & agility targets') < 0) return h;
-    d.settings.lifts = d.settings.lifts || {};
-    const at = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Speed & agility targets');
-    return h.slice(0, at) + Goals.editor(d) + h.slice(at);
+    const h = sch(param), at = h.indexOf('<section class="panel stack" data-stg><h2 class="h3">Speed & agility targets'); if (at < 0) return h;
+    return h.slice(0, at) + `<button class="panel list-item" type="button" data-act="go" data-r="standards" ${param ? `data-p="${param}"` : ''} data-stg>${icon('dumbbell')}<div class="grow" style="text-align:left"><b>Iron standards</b><div class="muted" style="font-size:12.5px">Lifting numbers by position and which pillars count for ${esc(Brand.bench())}</div></div>${icon('chevron-right')}</button>` + h.slice(at);
   };
-  const rd = Coach.readSchool.bind(Coach);
-  Coach.readSchool = function () { rd(); const d = this.sst && this.sst.d; if (d) Goals.read(d); };
+  Screens.standards = p => Goals.screen(p);
+  After.standards = view => Social.hydrate(view);
+  Social.live.add('standards'); TAB_OF.standards = 'more';
+  if (typeof NavFive !== 'undefined') NavFive.COACH.push('standards');
+  /* entry: the profile menu (More) for admins, coaches and assistant coaches */
+  const mo = Screens.more; Screens.more = function () {
+    const h = mo.call(Screens); if (!(Cloud.on && Cloud.profile) || !Goals.can()) return h;
+    const item = `<section class="panel" data-stg><button class="list-item" type="button" data-act="go" data-r="standards">${icon('dumbbell')}<div class="grow"><b>Iron standards</b><div class="muted" style="font-size:12.5px">What it takes to be ${esc(Brand.bench())}: lifting numbers and pillars${Cloud.isAdmin() ? ' · every school' : ''}</div></div>${icon('chevron-right')}</button></section>`;
+    const at = h.indexOf('<section class="panel" data-stg><button class="list-item" type="button" data-act="go" data-r="history">');
+    return at < 0 ? h.replace(/<\/div>$/, item + '</div>') : h.slice(0, at) + item + h.slice(at);
+  };
   const redraw = () => { const y = scrollY; UI.render(); scrollTo(0, y); };
-  Actions['sc-gg'] = el => { Coach.readSchool(); Goals.gg = el.dataset.g; redraw(); };
+  Actions['sc-gg'] = el => { Goals.read(); Goals.gg = el.dataset.g; redraw(); };
   Actions['sc-pil'] = el => {
-    Coach.readSchool(); const d = Coach.sst.d, P = Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}), k = el.dataset.k;
+    Goals.read(); const d = Goals.st.d, P = Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}), k = el.dataset.k;
     if (P[k] !== false && Object.values(P).filter(v => v !== false).length === 1) { UI.toast('Keep at least one pillar.', 'bad'); return; }
     P[k] = P[k] === false; d.settings.pillars = P; redraw();
   };
   Actions['sc-greset'] = async () => {
-    Coach.readSchool();
+    Goals.read();
     const ok = await Sheet.confirm({ title: 'Back to the college standards?', body: '<p>Every lifting number goes back to the college level for all position groups, and all three pillars count again. Nothing changes until you tap Save.</p>', ok: 'Reset' });
-    if (!ok) return; const d = Coach.sst.d; d.settings.lifts = {}; d.settings.pillars = { strength: true, conditioning: true, speed: true }; redraw();
+    if (!ok) return; const d = Goals.st.d; d.settings.lifts = {}; d.settings.pillars = { strength: true, conditioning: true, speed: true }; redraw();
+  };
+  Actions['sc-gsave'] = async el => {
+    Goals.read(); const d = Goals.st && Goals.st.d; if (!d) return;
+    const o = await Social.act(el, () => Social.rpc('org_goals_save', { p_org: d.id, p_lifts: d.settings.lifts || {}, p_pillars: Object.assign({ strength: true, conditioning: true, speed: true }, d.settings.pillars || {}) }), 'Saved. Athletes see the new standards next time they open the app.');
+    if (!o) return;
+    Goals.st = { id: o.id, d: Goals.draft(o) }; Social.drop('goals:', 'orgs', 'org:mine');
+    if (Brand.me && Brand.me.id === o.id) await Brand.mine(Cloud.sb);
+    redraw();
   };
 })();
 
